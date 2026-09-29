@@ -215,12 +215,15 @@ body {
 				<h1>자유게시판</h1>
 			</div>
 			<div class="search">
-				<select>
+				<form action="/board/search">
+				<select id="select">
 					<option>제목</option>
 					<option>내용</option>
-					<option>글쓴이</option>
+					<option>글쓴이</option>	
 				</select> <input type="text" placeholder="검색할 게시글의 제목을 입력하세요">
+				<input type="hidden" name="option">
 				<button type="submit">검색</button>
+				</form>
 			</div>
 		</div>
 		<div class="body">
@@ -238,14 +241,14 @@ body {
 							<tr>
 								<td>${i.board_seq}</td>
 								<td>${i.title}</td>
-								<td>${i.writer}</td>
+								<td><a href="/board/detail?seq=${i.seq}">${i.writer}</a></td>
 								<td>${i.regdate}</td>
 								<td>${i.view_count}</td>
 							</tr>
 						</c:forEach>
 					</c:when>
 					<c:otherwise>
-						<tr>
+						<tr colspan="5">
 							<td>게시글이 없습니다.</td>
 						</tr>
 					</c:otherwise>
