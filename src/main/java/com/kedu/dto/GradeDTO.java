@@ -6,11 +6,9 @@ public class GradeDTO {
 	private int min_Point;
 	private int max_Point;
 
-	// 기본 생성자
 	public GradeDTO() {
 	}
 
-	// 전체 생성자
 	public GradeDTO(int grade_Id, String grade_Name, int min_Point, int max_Point) {
 		this.grade_Id = grade_Id;
 		this.grade_Name = grade_Name;
