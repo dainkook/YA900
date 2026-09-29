@@ -3,7 +3,7 @@ package com.kedu.dto;
 import java.sql.Timestamp;
 
 public class UsersDTO {
-	 private int member_seq;
+	 	private int member_seq;
 	    private String id;
 	    private String name;
 	    private String pw;
