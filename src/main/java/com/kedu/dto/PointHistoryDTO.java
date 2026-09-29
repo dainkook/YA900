@@ -10,11 +10,9 @@ public class PointHistoryDTO {
 	private String reason;
 	private Timestamp regdate;
 
-	// 기본 생성자
 	public PointHistoryDTO() {
 	}
-
-	// 전체 생성자
+	
 	public PointHistoryDTO(int point_seq, String member_id, int amount,
 			String reason, Timestamp regdate) {
 		this.point_seq = point_seq;
