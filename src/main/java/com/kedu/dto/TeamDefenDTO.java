@@ -14,7 +14,7 @@ public class TeamDefenDTO {
 	private int walks_hbp;
 	private int wild_pitches;
 	private int errors;
-	private double doublewhip;
+	private double whip;
 	private int quality_starts;
 	private int holds;
 	private int saves;
@@ -23,7 +23,7 @@ public class TeamDefenDTO {
 
 	public TeamDefenDTO(int team_id, String team_name, double era, int runs_allowed, int earned_runs,
 			double innings_pitched, int hits_allowed, int home_runs_allowed, int strikeouts, int walks_hbp,
-			int wild_pitches, int errors, double doublewhip, int quality_starts, int holds, int saves) {
+			int wild_pitches, int errors, double whip, int quality_starts, int holds, int saves) {
 		this.team_id = team_id;
 		this.team_name = team_name;
 		this.era = era;
@@ -36,7 +36,7 @@ public class TeamDefenDTO {
 		this.walks_hbp = walks_hbp;
 		this.wild_pitches = wild_pitches;
 		this.errors = errors;
-		this.doublewhip = doublewhip;
+		this.whip = whip;
 		this.quality_starts = quality_starts;
 		this.holds = holds;
 		this.saves = saves;
@@ -138,12 +138,12 @@ public class TeamDefenDTO {
 		this.errors = errors;
 	}
 
-	public double getDoublewhip() {
-		return doublewhip;
+	public double getWhip() {
+		return whip;
 	}
 
-	public void setDoublewhip(double doublewhip) {
-		this.doublewhip = doublewhip;
+	public void setWhip(double whip) {
+		this.whip = whip;
 	}
 
 	public int getQuality_starts() {
@@ -170,5 +170,7 @@ public class TeamDefenDTO {
 		this.saves = saves;
 	}
 	
-
+	
+	
+	
 }

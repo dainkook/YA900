@@ -12,7 +12,7 @@ public class BoardDTO {
 	private Timestamp write_date;
 	private String team;
 	private String teamLogo;
-	private int report_seq;
+	private Integer report_seq;
 	private String reporter;
 	
 	public int getBoard_seq() {
@@ -63,10 +63,10 @@ public class BoardDTO {
 	public void setTeamLogo(String teamLogo) {
 		this.teamLogo = teamLogo;
 	}
-	public int getReport_seq() {
+	public Integer getReport_seq() {
 		return report_seq;
 	}
-	public void setReport_seq(int report_seq) {
+	public void setReport_seq(Integer report_seq) {
 		this.report_seq = report_seq;
 	}
 	public String getReporter() {
