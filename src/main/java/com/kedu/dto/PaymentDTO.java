@@ -11,7 +11,7 @@ public class PaymentDTO {
 
 	public PaymentDTO() {}
 	
-	public PaymentDTO(int payment_id, int reservation_id, int amount, Timestamp paymeent_date) {
+	public PaymentDTO(int payment_id, int reservation_id, int amount, Timestamp payment_date) {
 		this.payment_id = payment_id;
 		this.reservation_id = reservation_id;
 		this.amount = amount;
