@@ -2,11 +2,12 @@ package com.kedu.dto;
 
 public class NoticeDTO {
 
-	int notice_seq;
-	String title;
-	String contents;
-	String writer;
-	int view_count;
+	private int notice_seq;
+	private String title;
+	private String contents;
+	private String writer;
+	private int view_count;
+	
 	public int getNotice_seq() {
 		return notice_seq;
 	}

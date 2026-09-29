@@ -4,16 +4,17 @@ import java.sql.Timestamp;
 
 public class TeamBoardDTO {
 
-	int teamBoard_seq;
-	String title;
-	String contents;
-	String writer;
-	int view_count;
-	Timestamp write_date;
-	String team;
-	String teamLogo;
-	int report_seq;
-	String reporter;
+	private int teamBoard_seq;
+	private String title;
+	private String contents;
+	private String writer;
+	private int view_count;
+	private Timestamp write_date;
+	private String team;
+	private String teamLogo;
+	private int report_seq;
+	private String reporter;
+	
 	public int getTeamBoard_seq() {
 		return teamBoard_seq;
 	}
