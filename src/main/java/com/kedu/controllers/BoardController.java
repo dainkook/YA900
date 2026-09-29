@@ -2,6 +2,8 @@ package com.kedu.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +33,19 @@ public class BoardController {
 	@RequestMapping("/detail")
 	public String detail(int seq, Model model) throws Exception {
 		model.addAttribute("board", dao.getDetail(seq));
-		return "/board/detail?seq=" + seq;
+		return "/board/detail";
+	}
+	
+	@RequestMapping("/write")
+	public String write(HttpSession session) throws Exception {
+		return "/board/write";
+	}
+	
+	@RequestMapping("/writeComplete")
+	public String writeComplete(String title, String contents, HttpSession session) throws Exception {
+		String id = (String)session.getAttribute("loginId");
+		String team = dao.isUserTeam(id);
+		dao.write(title, contents, id, team);
+		return "redirect:/board/board";
 	}
 }
