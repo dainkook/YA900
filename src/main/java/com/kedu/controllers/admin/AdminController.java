@@ -1,5 +1,8 @@
 package com.kedu.controllers.admin;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,9 +57,18 @@ public class AdminController {
 		int reservationCount = adminDAO.getReservationCount();
 		int todayReservationCount = adminDAO.getTodayReservationCount();
 
+		List<Map<String, Object>> monthlyReservation = adminDAO.getMonthlyReservation();
+		List<Map<String, Object>> genderStats = adminDAO.getGenderStats();
+		List<Map<String, Object>> ageStats = adminDAO.getAgeStats();
+		
 		model.addAttribute("memberCount", memberCount);
 		model.addAttribute("reservationCount", reservationCount);
 		model.addAttribute("todayReservationCount", todayReservationCount);
+		
+		model.addAttribute("monthlyReservation", monthlyReservation);
+		model.addAttribute("genderStats", genderStats);
+		model.addAttribute("ageStats", ageStats);
+		
 		return "admin/main";
 	}
 
