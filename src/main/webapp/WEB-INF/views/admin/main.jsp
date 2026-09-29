@@ -212,6 +212,10 @@ body {
 	color: #68718a;
 	font-size: 13px;
 }
+.menu-item a {
+    text-decoration: none;
+    color: inherit;
+}
 </style>
 
 </head>
@@ -238,17 +242,29 @@ body {
 
 			<div class="menu">
 
-				<div class="menu-item active">대시보드</div>
+				<div class="menu-item active">
+				<a href ="/admin/main">대시보드</a>
+				</div>
 
-				<div class="menu-item">공지관리</div>
+				<div class="menu-item">
+				<a href ="/admin/notice">공지관리</a>
+				</div>
 
-				<div class="menu-item">회원관리</div>
+				<div class="menu-item">
+				<a href ="/admin/member">회원관리</a>
+				</div>
 
-				<div class="menu-item">예매관리</div>
+				<div class="menu-item">
+				<a href ="/admin/reservation">예매관리</a>
+				</div>
 
-				<div class="menu-item">경기관리</div>
+				<div class="menu-item">
+				<a href ="/admin/schedule">경기관리</a>
+				</div>
 
-				<div class="menu-item">신고관리</div>
+				<div class="menu-item">
+				<a href ="/admin/report">신고관리</a>
+				</div>
 
 			</div>
 
