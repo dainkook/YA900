@@ -109,6 +109,10 @@ body {
 	table-layout: fixed;
 }
 
+a {
+	color: inherit;
+}
+
 .container>.body table tr:first-child {
 	height: 55px;
 	background-color: #f7f7f7;
@@ -264,7 +268,7 @@ body {
 			<div class="navi">
 			</div>
 			<div class="write">
-				<button>글쓰기</button>
+				<button id="write">글쓰기</button>
 			</div>
 		</div>
 	</div>
@@ -320,6 +324,14 @@ body {
 			last.setAttribute("href", "/board/board?cpage=" + pageTotalCount);
 			last.innerHTML = " >>";
 			navi.append(last);
+			
+		$("#write").on("click", function() {
+			if('${loginId}'=='') {
+				alert("로그인이 필요한 서비스입니다.");
+			} else {
+				location.href = "/board/write";
+			}
+		});
     </script>
 </body>
 </html>
