@@ -205,6 +205,11 @@ body {
 .container>.footer>.write button:hover {
 	background-color: #444;
 }
+
+.container>.footer>.navi a{
+	font-size:16pt;
+	
+}
 </style>
 </head>
 
@@ -240,9 +245,9 @@ body {
 						<c:forEach var="i" items="${list}">
 							<tr>
 								<td>${i.board_seq}</td>
-								<td>${i.title}</td>
-								<td><a href="/board/detail?seq=${i.seq}">${i.writer}</a></td>
-								<td>${i.regdate}</td>
+								<td><a href="/board/detail?seq=${i.board_seq}">${i.title}</a></td>
+								<td>${i.writer}</td>
+								<td>${i.write_date}</td>
 								<td>${i.view_count}</td>
 							</tr>
 						</c:forEach>
@@ -256,7 +261,8 @@ body {
 			</table>
 		</div>
 		<div class="footer">
-			<div class="navi"></div>
+			<div class="navi">
+			</div>
 			<div class="write">
 				<button>글쓰기</button>
 			</div>
@@ -283,36 +289,35 @@ body {
 		let needPrev = startNavi > 1;
 		let needNext = endNavi < pageTotalCount;
 		
-		let navi = document.getElementById("navigation");
-		
+		let navi = document.querySelector(".navi");		
 			let first = document.createElement("a");
-			first.setAttribute("href", "/boards/board?cpage=" + 1);
+			first.setAttribute("href", "/board/board?cpage=" + 1);
 			first.innerHTML = " << ";
 			navi.append(first);
 		
 		if(needPrev) {
 			let prev = document.createElement("a");
-			prev.setAttribute("href", "/boards/board?cpage=" + (currentPage - naviCountPerPage));
+			prev.setAttribute("href", "/board/board?cpage=" + (currentPage - naviCountPerPage));
 			prev.innerHTML = "< ";
 			navi.append(prev);
 		}
 		
 		for(let i= startNavi; i<=endNavi; i++) {
 			let num = document.createElement("a");
-			num.setAttribute("href", "/boards/board?cpage=" + i);
+			num.setAttribute("href", "/board/board?cpage=" + i);
 			num.innerHTML =" " + i + " ";
 			navi.append(num);
 		}
 		
 		if(needNext) {
 			let next = document.createElement("a");
-			next.setAttribute("href", "/boards/board?cpage=" + (currentPage + naviCountPerPage));
+			next.setAttribute("href", "/board/board?cpage=" + (currentPage + naviCountPerPage));
 			next.innerHTML = " >";
 			navi.append(next);
 			}
 		
 			let last = document.createElement("a");
-			last.setAttribute("href", "/boards/board?cpage=" + pageTotalCount);
+			last.setAttribute("href", "/board/board?cpage=" + pageTotalCount);
 			last.innerHTML = " >>";
 			navi.append(last);
     </script>

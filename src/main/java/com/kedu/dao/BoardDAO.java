@@ -21,7 +21,7 @@ public class BoardDAO {
 	}
 	
 	public List<BoardDTO> listOfPage(int first, int last) {
-		String sql = "select * from (select board.*, row_number() over(order by seq desc) rn from board) where rn between ? and ?";
+		String sql = "select * from (select board.*, row_number() over(order by board_seq desc) rn from board) where rn between ? and ?";
 		return jdbc.query(sql, new BeanPropertyRowMapper<>(BoardDTO.class), first, last);
 	}
 	
