@@ -1657,18 +1657,18 @@ body {
                         </div>
 
                         <div class="game-team">
-                            <img src="${pageContext.request.contextPath}/resources/images/doosan_logo.svg" alt="두산">
+                            <img src="${pageContext.request.contextPath}/resources/images/team/doosan.png" alt="두산">
                             <span>VS</span>
-                            <img src="${pageContext.request.contextPath}/resources/images/LG_logo.svg" alt="LG">
+                            <img src="${pageContext.request.contextPath}/resources/images/team/lg.png" alt="LG">
                         </div>
 
                         <div class="game-place">
                             잠실야구장
                         </div>
 
-                        <button type="button" class="reserve-btn" onclick="location.href='/booking/1'">
-                            예매하기
-                        </button>
+                        <button type="button" class="reserve-btn" onclick="openBooking(event, '${pageContext.request.contextPath}/booking/1')">
+						    예매하기
+						</button>
                     </div>
 
                     <!-- 경기 2 -->
@@ -1678,9 +1678,9 @@ body {
                         </div>
 
                         <div class="game-team">
-                            <img src="${pageContext.request.contextPath}/resources/images/samsung_logo.svg" alt="삼성">
+                            <img src="${pageContext.request.contextPath}/resources/images/team/samsung.png" alt="삼성">
                             <span>VS</span>
-                            <img src="${pageContext.request.contextPath}/resources/images/hanhwa_logo.svg" alt="한화">
+                            <img src="${pageContext.request.contextPath}/resources/images/team/hanhwa.png" alt="한화">
                         </div>
 
                         <div class="game-place">
@@ -1699,9 +1699,9 @@ body {
                         </div>
 
                         <div class="game-team">
-                            <img src="${pageContext.request.contextPath}/resources/images/lotte_logo.svg" alt="롯데">
+                            <img src="${pageContext.request.contextPath}/resources/images/team/lotte.png" alt="롯데">
                             <span>VS</span>
-                            <img src="${pageContext.request.contextPath}/resources/images/SSG_logo.svg" alt="SSG">
+                            <img src="${pageContext.request.contextPath}/resources/images/team/ssg.png" alt="SSG">
                         </div>
 
                         <div class="game-place">
@@ -1720,9 +1720,9 @@ body {
                         </div>
 
                         <div class="game-team">
-                            <img src="${pageContext.request.contextPath}/resources/images/KIA_logo.svg" alt="KIA">
+                            <img src="${pageContext.request.contextPath}/resources/images/team/kia.png" alt="KIA">
                             <span>VS</span>
-                            <img src="${pageContext.request.contextPath}/resources/images/KT_logo.svg" alt="KT">
+                            <img src="${pageContext.request.contextPath}/resources/images/team/kt.png" alt="KT">
                         </div>
 
                         <div class="game-place">
@@ -1741,9 +1741,9 @@ body {
                         </div>
 
                         <div class="game-team">
-                            <img src="${pageContext.request.contextPath}/resources/images/kiwoom_logo.svg" alt="키움">
+                            <img src="${pageContext.request.contextPath}/resources/images/team/kiwoom.png" alt="키움">
                             <span>VS</span>
-                            <img src="${pageContext.request.contextPath}/resources/images/NC_logo.svg" alt="NC">
+                            <img src="${pageContext.request.contextPath}/resources/images/team/nc.png" alt="NC">
                         </div>
 
                         <div class="game-place">
@@ -1824,61 +1824,61 @@ body {
 
                 <div class="team-ranking-item">
                     <span class="rank">1</span>
-                    <img src="${pageContext.request.contextPath}/resources/images/KT_logo.svg" alt="KT">
+                    <img src="${pageContext.request.contextPath}/resources/images/team/kt.png" alt="KT">
                     <span class="team">KT 위즈</span>
                 </div>
 
                 <div class="team-ranking-item">
                     <span class="rank">2</span>
-                    <img src="${pageContext.request.contextPath}/resources/images/samsung_logo.svg" alt="삼성">
+                    <img src="${pageContext.request.contextPath}/resources/images/team/samsung.png" alt="삼성">
                     <span class="team">삼성 라이온즈</span>
                 </div>
 
                 <div class="team-ranking-item">
                     <span class="rank">3</span>
-                    <img src="${pageContext.request.contextPath}/resources/images/LG_logo.svg" alt="LG">
+                    <img src="${pageContext.request.contextPath}/resources/images/team/lg.png" alt="LG">
                     <span class="team">LG 트윈스</span>
                 </div>
 
                 <div class="team-ranking-item">
                     <span class="rank">4</span>
-                    <img src="${pageContext.request.contextPath}/resources/images/KIA_logo.svg" alt="KIA">
+                    <img src="${pageContext.request.contextPath}/resources/images/team/kia.png" alt="KIA">
                     <span class="team">KIA 타이거즈</span>
                 </div>
 
                 <div class="team-ranking-item">
                     <span class="rank">5</span>
-                    <img src="${pageContext.request.contextPath}/resources/images/doosan_logo.svg" alt="두산">
+                    <img src="${pageContext.request.contextPath}/resources/images/team/doosan.png" alt="두산">
                     <span class="team">두산 베어스</span>
                 </div>
 
                 <div class="team-ranking-item">
                     <span class="rank">6</span>
-                    <img src="${pageContext.request.contextPath}/resources/images/NC_logo.svg" alt="NC">
+                    <img src="${pageContext.request.contextPath}/resources/images/team/nc.png" alt="NC">
                     <span class="team">NC 다이노스</span>
                 </div>
 
                 <div class="team-ranking-item">
                     <span class="rank">9</span>
-                    <img src="${pageContext.request.contextPath}/resources/images/lotte_logo.svg" alt="롯데">
+                    <img src="${pageContext.request.contextPath}/resources/images/team/lotte.png" alt="롯데">
                     <span class="team">롯데 자이언츠</span>
                 </div>
 
                 <div class="team-ranking-item">
                     <span class="rank">7</span>
-                    <img src="${pageContext.request.contextPath}/resources/images/SSG_logo.svg" alt="SSG">
+                    <img src="${pageContext.request.contextPath}/resources/images/team/ssg.png" alt="SSG">
                     <span class="team">SSG 랜더스</span>
                 </div>
 
                 <div class="team-ranking-item">
                     <span class="rank">8</span>
-                    <img src="${pageContext.request.contextPath}/resources/images/hanhwa_logo.svg" alt="한화">
+                    <img src="${pageContext.request.contextPath}/resources/images/team/hanhwa.png" alt="한화">
                     <span class="team">한화 이글스</span>
                 </div>
 
                 <div class="team-ranking-item">
                     <span class="rank">10</span>
-                    <img src="${pageContext.request.contextPath}/resources/images/kiwoom_logo.svg" alt="키움">
+                    <img src="${pageContext.request.contextPath}/resources/images/team/kiwoom.png" alt="키움">
                     <span class="team">키움 히어로즈</span>
                 </div>
 
@@ -1919,11 +1919,11 @@ body {
         <div class="schedule-box">
             <div class="schedule-date">09.16(수)</div>
             <div class="schedule-team">
-                <img src="${pageContext.request.contextPath}/resources/images/doosan_logo.svg" alt="두산">
+                <img src="${pageContext.request.contextPath}/resources/images/team/doosan.png" alt="두산">
                 <span>두산</span>
                 <b>VS</b>
                 <span>LG</span>
-                <img src="${pageContext.request.contextPath}/resources/images/LG_logo.svg" alt="LG">
+                <img src="${pageContext.request.contextPath}/resources/images/team/lg.png" alt="LG">
             </div>
             <div class="schedule-time">18:30</div>
         </div>
@@ -1931,11 +1931,11 @@ body {
         <div class="schedule-box">
             <div class="schedule-date">09.17(목)</div>
             <div class="schedule-team">
-                <img src="${pageContext.request.contextPath}/resources/images/samsung_logo.svg" alt="삼성">
+                <img src="${pageContext.request.contextPath}/resources/images/team/samsung.png" alt="삼성">
                 <span>삼성</span>
                 <b>VS</b>
                 <span>한화</span>
-                <img src="${pageContext.request.contextPath}/resources/images/hanhwa_logo.svg" alt="한화">
+                <img src="${pageContext.request.contextPath}/resources/images/team/hanhwa.png" alt="한화">
             </div>
             <div class="schedule-time">18:30</div>
         </div>
@@ -1943,11 +1943,11 @@ body {
         <div class="schedule-box">
             <div class="schedule-date">09.18(금)</div>
             <div class="schedule-team">
-                <img src="${pageContext.request.contextPath}/resources/images/lotte_logo.svg" alt="롯데">
+                <img src="${pageContext.request.contextPath}/resources/images/team/lotte.png" alt="롯데">
                 <span>롯데</span>
                 <b>VS</b>
                 <span>SSG</span>
-                <img src="${pageContext.request.contextPath}/resources/images/SSG_logo.svg" alt="SSG">
+                <img src="${pageContext.request.contextPath}/resources/images/team/ssg.png" alt="SSG">
             </div>
             <div class="schedule-time">18:30</div>
         </div>
@@ -1955,11 +1955,11 @@ body {
         <div class="schedule-box">
             <div class="schedule-date">09.19(토)</div>
             <div class="schedule-team">
-                <img src="${pageContext.request.contextPath}/resources/images/KIA_logo.svg" alt="KIA">
+                <img src="${pageContext.request.contextPath}/resources/images/team/kia.png" alt="KIA">
                 <span>KIA</span>
                 <b>VS</b>
                 <span>KT</span>
-                <img src="${pageContext.request.contextPath}/resources/images/KT_logo.svg" alt="KT">
+                <img src="${pageContext.request.contextPath}/resources/images/team/kt.png" alt="KT">
             </div>
             <div class="schedule-time">17:00</div>
         </div>
@@ -1967,11 +1967,11 @@ body {
         <div class="schedule-box">
             <div class="schedule-date">09.20(일)</div>
             <div class="schedule-team">
-                <img src="${pageContext.request.contextPath}/resources/images/kiwoom_logo.svg" alt="키움">
+                <img src="${pageContext.request.contextPath}/resources/images/team/kiwoom.png" alt="키움">
                 <span>키움</span>
                 <b>VS</b>
                 <span>NC</span>
-                <img src="${pageContext.request.contextPath}/resources/images/NC_logo.svg" alt="NC">
+                <img src="${pageContext.request.contextPath}/resources/images/team/nc.png" alt="NC">
             </div>
             <div class="schedule-time">14:00</div>
         </div>
@@ -2055,7 +2055,7 @@ body {
                     <!-- KT -->
                     <div class="content-card">
                         <div class="team-channel">
-                            <img src="${pageContext.request.contextPath}/resources/images/KT_logo.svg" alt="KT">
+                            <img src="${pageContext.request.contextPath}/resources/images/team/kt.png" alt="KT">
                             <span class="channel-team">KT 위즈</span>
                             <strong>WIZ TV</strong>
                         </div>
@@ -2070,7 +2070,7 @@ body {
                     <!-- 삼성 -->
                     <div class="content-card">
                         <div class="team-channel">
-                            <img src="${pageContext.request.contextPath}/resources/images/samsung_logo.svg" alt="삼성">
+                            <img src="${pageContext.request.contextPath}/resources/images/team/samsung.png" alt="삼성">
                             <span class="channel-team">삼성 라이온즈</span>
                             <strong>LIONS TV</strong>
                         </div>
@@ -2085,7 +2085,7 @@ body {
                     <!-- LG -->
                     <div class="content-card">
                         <div class="team-channel">
-                            <img src="${pageContext.request.contextPath}/resources/images/LG_logo.svg" alt="LG">
+                            <img src="${pageContext.request.contextPath}/resources/images/team/lg.png" alt="LG">
                             <span class="channel-team">LG 트윈스</span>
                             <strong>TWINS TV</strong>
                         </div>
@@ -2100,7 +2100,7 @@ body {
                     <!-- KIA -->
                     <div class="content-card">
                         <div class="team-channel">
-                            <img src="${pageContext.request.contextPath}/resources/images/KIA_logo.svg" alt="KIA">
+                            <img src="${pageContext.request.contextPath}/resources/images/team/kia.png" alt="KIA">
                             <span class="channel-team">KIA 타이거즈</span>
                             <strong>KIA TV</strong>
                         </div>
@@ -2115,7 +2115,7 @@ body {
                     <!-- 두산 -->
                     <div class="content-card">
                         <div class="team-channel">
-                            <img src="${pageContext.request.contextPath}/resources/images/doosan_logo.svg" alt="두산">
+                            <img src="${pageContext.request.contextPath}/resources/images/team/doosan.png" alt="두산">
                             <span class="channel-team">두산 베어스</span>
                             <strong>BEARS TV</strong>
                         </div>
@@ -2130,7 +2130,7 @@ body {
                     <!-- NC -->
                     <div class="content-card">
                         <div class="team-channel">
-                            <img src="${pageContext.request.contextPath}/resources/images/NC_logo.svg" alt="NC">
+                            <img src="${pageContext.request.contextPath}/resources/images/team/nc.png" alt="NC">
                             <span class="channel-team">NC 다이노스</span>
                             <strong>다이노스 TV</strong>
                         </div>
@@ -2145,7 +2145,7 @@ body {
                     <!-- 롯데 -->
                     <div class="content-card">
                         <div class="team-channel">
-                            <img src="${pageContext.request.contextPath}/resources/images/lotte_logo.svg" alt="롯데">
+                            <img src="${pageContext.request.contextPath}/resources/images/team/lotte.png" alt="롯데">
                             <span class="channel-team">롯데 자이언츠</span>
                             <strong>자이언츠 TV</strong>
                         </div>
@@ -2160,7 +2160,7 @@ body {
                     <!-- SSG -->
                     <div class="content-card">
                         <div class="team-channel">
-                            <img src="${pageContext.request.contextPath}/resources/images/SSG_logo.svg" alt="SSG">
+                            <img src="${pageContext.request.contextPath}/resources/images/team/ssg.png" alt="SSG">
                             <span class="channel-team">SSG 랜더스</span>
                             <strong>LANDERS TV</strong>
                         </div>
@@ -2175,7 +2175,7 @@ body {
                     <!-- 한화 -->
                     <div class="content-card">
                         <div class="team-channel">
-                            <img src="${pageContext.request.contextPath}/resources/images/hanhwa_logo.svg" alt="한화">
+                            <img src="${pageContext.request.contextPath}/resources/images/team/hanhwa.png" alt="한화">
                             <span class="channel-team">한화 이글스</span>
                             <strong>EAGLES TV</strong>
                         </div>
@@ -2190,7 +2190,7 @@ body {
                     <!-- 키움 -->
                     <div class="content-card">
                         <div class="team-channel">
-                            <img src="${pageContext.request.contextPath}/resources/images/kiwoom_logo.svg" alt="키움">
+                            <img src="${pageContext.request.contextPath}/resources/images/team/kiwoom.png" alt="키움">
                             <span class="channel-team">키움 히어로즈</span>
                             <strong>히어로즈 TV</strong>
                         </div>
@@ -2289,14 +2289,13 @@ function openBooking(event, page) {
     const width = 1000;
     const height = 600;
 
-    // 화면 가운데 위치 계산
     const left = (screen.width - width) / 2;
     const top = (screen.height - height) / 2;
 
     window.open(
         page,
         '_blank',
-        `width=${width},height=${height},left=${left},top=${top},scrollbars=yes,resizable=yes`
+        `width=${width},height=${height},left=${left},top=${top},scrollbars=no,resizable=yes`
     );
 }
 

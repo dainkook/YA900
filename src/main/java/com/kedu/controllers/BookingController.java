@@ -10,7 +10,7 @@ public class BookingController {
 	@RequestMapping("/1")
 	public String booking1() {
 	    System.out.println("===== BOOKING 1 진입 =====");
-	    return "redirect:/main-book/booking1";
+	    return "/main-book/booking1";
 	}
 	
 	@RequestMapping("/2")
