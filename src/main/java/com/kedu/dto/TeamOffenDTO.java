@@ -17,13 +17,14 @@ public class TeamOffenDTO {
     private int strikeouts;
     private int double_plays;
     private double on_base_percentage;
-    private int slugging_percentage;
+    private double slugging_percentage;
+    private double ops;
     
     public TeamOffenDTO () {}
 
 	public TeamOffenDTO(int team_id, String team_name, double batting_average, int runs, int rbi, int at_bats,
 			int home_runs, int hits, int doubles, int triples, int stolen_bases, int walks_hbp, int strikeouts,
-			int double_plays, double on_base_percentage, int slugging_percentage) {
+			int double_plays, double on_base_percentage, double slugging_percentage,double ops) {
 		this.team_id = team_id;
 		this.team_name = team_name;
 		this.batting_average = batting_average;
@@ -40,6 +41,7 @@ public class TeamOffenDTO {
 		this.double_plays = double_plays;
 		this.on_base_percentage = on_base_percentage;
 		this.slugging_percentage = slugging_percentage;
+		this.ops = ops;
 	}
 
 	public int getTeam_id() {
@@ -162,12 +164,20 @@ public class TeamOffenDTO {
 		this.on_base_percentage = on_base_percentage;
 	}
 
-	public int getSlugging_percentage() {
+	public double getSlugging_percentage() {
 		return slugging_percentage;
 	}
 
-	public void setSlugging_percentage(int slugging_percentage) {
+	public void setSlugging_percentage(double slugging_percentage) {
 		this.slugging_percentage = slugging_percentage;
+	}
+	
+	public double getOps() {
+	    return ops;
+	}
+
+	public void setOps(double ops) {
+	    this.ops = ops;
 	}
 	
 	

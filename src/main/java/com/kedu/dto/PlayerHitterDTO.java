@@ -4,6 +4,7 @@ public class PlayerHitterDTO {
 
 	private int player_id;
 	private String player_team;
+	private String player_name;
 	private double batting_avg;
 	private int games;
 	private int at_bats;
@@ -26,12 +27,13 @@ public class PlayerHitterDTO {
 	
 	public PlayerHitterDTO() {}
 	
-	public PlayerHitterDTO(int player_id, String player_team, double batting_avg, int games, int at_bats, int hits,
+	public PlayerHitterDTO(int player_id, String player_team, String player_name, double batting_avg, int games, int at_bats, int hits,
 			int home_runs, int doubles, int triples, int runs_batted_in, int runs, int stolen_bases, int base_on_balls,
 			int hit_by_pitch, int strikeouts, double on_base_percentage, double slugging_percentage, double ops,
 			double wrc, double war) {
 		this.player_id = player_id;
 		this.player_team = player_team;
+		this.player_name = player_name;
 		this.batting_avg = batting_avg;
 		this.games = games;
 		this.at_bats = at_bats;
@@ -62,6 +64,12 @@ public class PlayerHitterDTO {
 	}
 	public void setPlayer_team(String player_team) {
 		this.player_team = player_team;
+	}
+	public String getPlayer_name() {
+		return player_name;
+	}
+	public void setPlayer_name(String player_name) {
+		this.player_name = player_name;
 	}
 	public double getBatting_avg() {
 		return batting_avg;

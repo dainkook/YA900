@@ -4,13 +4,14 @@ public class PlayerPitcherDTO {
 
 	private int player_id;
 	private String player_team;
+	private String player_name;
 	private double era;
 	private int games;
 	private int wins;
 	private int losses;
 	private int holds;
 	private int saves;
-	private double innings;
+	private String innings;
 	private int strikeouts;
 	private int hits_allowed;
 	private int home_runs_allowed;
@@ -25,11 +26,12 @@ public class PlayerPitcherDTO {
 	
 	public PlayerPitcherDTO() {}
 	
-	public PlayerPitcherDTO(int player_id, String player_team, double era, int games, int wins, int losses, int holds,
-			int saves, double innings, int strikeouts, int hits_allowed, int home_runs_allowed, int runs_allowed,
+	public PlayerPitcherDTO(int player_id, String player_team, String player_name, double era, int games, int wins, int losses, int holds,
+			int saves, String innings, int strikeouts, int hits_allowed, int home_runs_allowed, int runs_allowed,
 			int earned_runs, int base_on_balls, int hit_by_pitch, double win_rate, double wpa, double war) {
 		this.player_id = player_id;
 		this.player_team = player_team;
+		this.player_name = player_name;
 		this.era = era;
 		this.games = games;
 		this.wins = wins;
@@ -59,6 +61,12 @@ public class PlayerPitcherDTO {
 	}
 	public void setPlayer_team(String player_team) {
 		this.player_team = player_team;
+	}
+	public String getPlayer_name() {
+		return player_name;
+	}
+	public void setPlayer_name(String player_name) {
+		this.player_name = player_name;
 	}
 	public double getEra() {
 		return era;
@@ -96,10 +104,10 @@ public class PlayerPitcherDTO {
 	public void setSaves(int saves) {
 		this.saves = saves;
 	}
-	public double getInnings() {
+	public String getInnings() {
 		return innings;
 	}
-	public void setInnings(double innings) {
+	public void setInnings(String innings) {
 		this.innings = innings;
 	}
 	public int getStrikeouts() {

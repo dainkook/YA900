@@ -12,11 +12,18 @@ public class ScheduleDTO {
 	private int winner_id;
 	private int home_id;
 	private int away_id;
+	private String home_team;
+	private String away_team;
+	private int home_score;
+	private int away_score;
+	private String game_status;
+	private String home_logo;
+	private String away_logo;
 
 	public ScheduleDTO() {}
 
 	public ScheduleDTO(int game_id, String title, String location, Timestamp start_date, Timestamp end_date,
-			int winner_id, int home_id, int away_id) {
+			int winner_id, int home_id, int away_id, String home_team, String away_team) {;
 		this.game_id = game_id;
 		this.title = title;
 		this.location = location;
@@ -25,6 +32,8 @@ public class ScheduleDTO {
 		this.winner_id = winner_id;
 		this.home_id = home_id;
 		this.away_id = away_id;
+		this.home_team = home_team;
+		this.away_team = away_team;
 	}
 
 	public int getGame_id() {
@@ -90,4 +99,65 @@ public class ScheduleDTO {
 	public void setAway_id(int away_id) {
 		this.away_id = away_id;
 	}
+
+	public String getHome_team() {
+		return home_team;
+	}
+
+	public void setHome_team(String home_team) {
+		this.home_team = home_team;
+	}
+
+	public String getAway_team() {
+		return away_team;
+	}
+
+	public void setAway_team(String away_team) {
+		this.away_team = away_team;
+	}
+	
+	public int getHome_score() {
+	    return home_score;
+	}
+
+	public void setHome_score(int home_score) {
+	    this.home_score = home_score;
+	}
+
+	public int getAway_score() {
+	    return away_score;
+	}
+
+	public void setAway_score(int away_score) {
+	    this.away_score = away_score;
+	}
+
+	public String getGame_status() {
+	    return game_status;
+	}
+
+	public void setGame_status(String game_status) {
+	    this.game_status = game_status;
+	}
+	
+	public String getHome_logo() {
+	    return home_logo;
+	}
+
+	public void setHome_logo(String home_logo) {
+	    this.home_logo = home_logo;
+	}
+
+	public String getAway_logo() {
+	    return away_logo;
+	}
+
+	public void setAway_logo(String away_logo) {
+	    this.away_logo = away_logo;
+	}
+
+	
+	
+	
 }
+
