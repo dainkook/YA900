@@ -60,22 +60,47 @@ public class AdminController {
 		List<Map<String, Object>> monthlyReservation = adminDAO.getMonthlyReservation();
 		List<Map<String, Object>> genderStats = adminDAO.getGenderStats();
 		List<Map<String, Object>> ageStats = adminDAO.getAgeStats();
-		
+
 		model.addAttribute("memberCount", memberCount);
 		model.addAttribute("reservationCount", reservationCount);
 		model.addAttribute("todayReservationCount", todayReservationCount);
-		
+
 		model.addAttribute("monthlyReservation", monthlyReservation);
 		model.addAttribute("genderStats", genderStats);
 		model.addAttribute("ageStats", ageStats);
-		
+
 		return "admin/main";
 	}
 
-	@RequestMapping("logout")
+	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		System.out.println("·Î±×¾Æ¿ôµÊ");
 		session.invalidate();
 		return "redirect:/admin";
+	}
+
+	@RequestMapping("/notice")
+	public String notice() {
+		return "admin/notice";
+	}
+
+	@RequestMapping("/member")
+	public String member() {
+		return "admin/member";
+	}
+
+	@RequestMapping("/reservation")
+	public String reservation() {
+		return "admin/reservation";
+	}
+
+	@RequestMapping("/schedule")
+	public String schedule() {
+		return "admin/schedule";
+	}
+
+	@RequestMapping("/report")
+	public String report() {
+		return "admin/report";
 	}
 }
