@@ -239,44 +239,50 @@ body {
 	border-top: 1px solid #ddd;
 }
 
-@media (max-width: 950px) {
+@media ( max-width : 950px) {
 	.container {
 		width: 100%;
 	}
 }
 
-@media (max-width: 600px) {
+@media ( max-width : 600px) {
 	.header {
 		padding: 0 20px;
 	}
-
 	.logo {
 		margin-right: 30px;
 	}
-
 	.main-menu {
 		gap: 15px;
 	}
-
 	.user-menu {
 		display: none;
 	}
-
 	.month-arrow {
 		width: 45px;
 	}
-
 	.month-tab {
 		font-size: 13px;
 	}
-
 	.game-content {
 		gap: 10px;
 	}
-
 	.team {
 		width: 120px;
 	}
+}
+.game-link {
+	display: block;
+	text-decoration: none !important;
+	color: #222 !important;
+}
+
+.game-link:visited {
+	color: #222 !important;
+}
+
+.game-link:hover {
+	color: #222 !important;
 }
 </style>
 
@@ -307,8 +313,7 @@ body {
 
 		<nav class="kbo-navigation">
 
-			<a href="${pageContext.request.contextPath}/schedule/schedule"
-				class="active">
+			<a href="${pageContext.request.contextPath}/schedule/schedule"class="active">
 				일정
 			</a>
 
@@ -323,25 +328,11 @@ body {
 		<div class="month-navigation">
 
 			<c:choose>
-
 				<c:when test="${month >= 7}">
-
-					<a
-						href="${pageContext.request.contextPath}/schedule/schedule?month=6"
-						class="month-arrow">
+					<a href="${pageContext.request.contextPath}/schedule/schedule?month=6" class="month-arrow">
 						‹
 					</a>
-
 				</c:when>
-
-				<c:otherwise>
-
-					<div class="month-arrow">
-						‹
-					</div>
-
-				</c:otherwise>
-
 			</c:choose>
 
 			<div class="month-tabs">
@@ -349,109 +340,66 @@ body {
 				<c:choose>
 
 					<c:when test="${month <= 6}">
-
 						<c:forEach var="i" begin="1" end="6">
-
 							<a
 								href="${pageContext.request.contextPath}/schedule/schedule?month=${i}"
 								class="month-tab ${month == i ? 'active' : ''}">
 								${i}월
 							</a>
-
 						</c:forEach>
 
 					</c:when>
 
 					<c:otherwise>
-
 						<c:forEach var="i" begin="7" end="12">
-
 							<a
 								href="${pageContext.request.contextPath}/schedule/schedule?month=${i}"
 								class="month-tab ${month == i ? 'active' : ''}">
 								${i}월
 							</a>
-
 						</c:forEach>
-
 					</c:otherwise>
-
 				</c:choose>
-
 			</div>
 
 			<c:choose>
-
 				<c:when test="${month <= 6}">
-
 					<a
 						href="${pageContext.request.contextPath}/schedule/schedule?month=7"
 						class="month-arrow">
 						›
 					</a>
-
 				</c:when>
-
-				<c:otherwise>
-
-					<div class="month-arrow">
-						›
-					</div>
-
-				</c:otherwise>
-
 			</c:choose>
-
 		</div>
 
 	</section>
 
 	<section class="game-area">
-
 		<div class="month-title">
 			2026년 ${month}월 경기 일정
 		</div>
-
 		<div id="schedule-list">
-
 			<c:choose>
-
 				<c:when test="${empty list}">
-
 					<div class="no-game">
 						해당 월에 경기 일정이 없습니다.
 					</div>
-
 				</c:when>
-
 				<c:otherwise>
-
 					<c:forEach var="dto" items="${list}">
-
 						<div class="schedule-day">
-
 							<div class="schedule-date">
-
-								<fmt:formatDate
-									value="${dto.start_date}"
-									pattern="yyyy년 MM월 dd일" />
-
+								<fmt:formatDate value="${dto.start_date}" pattern="yyyy년 MM월 dd일" />
 							</div>
-
+							
+							<a href="${pageContext.request.contextPath}/schedule/scheduledetail?game_id=${dto.game_id}" class="game-link">
 							<div class="game-card">
-
 								<div class="game-header">
-
 									<span>
-
-										<fmt:formatDate
-											value="${dto.start_date}"
-											pattern="HH:mm" />
-
+										<fmt:formatDate value="${dto.start_date}" pattern="HH:mm" />
 									</span>
-
 									<c:choose>
-
 										<c:when test="${dto.start_date lt now}">
 											<span>경기종료</span>
 										</c:when>
@@ -467,77 +415,40 @@ body {
 								<div class="game-content">
 
 									<div class="team">
-
-										<img
-											src="${pageContext.request.contextPath}${dto.away_logo}"
-											class="team-logo">
-
-										<div class="team-name">
-											${dto.away_team}
-										</div>
-
+										<img src="${pageContext.request.contextPath}${dto.away_logo}" class="team-logo">
+										<div class="team-name">${dto.away_team}</div>
 									</div>
 
 									<div class="score">
-
 										<c:choose>
-
-											<c:when test="${dto.start_date lt now}">
-
-												${dto.away_score}
+											<c:when test="${dto.start_date lt now}"> ${dto.away_score}
 
 												<span class="vs">:</span>
 
 												${dto.home_score}
-
 											</c:when>
-
 											<c:otherwise>
-
 												-
-
 												<span class="vs">:</span>
-
 												-
-
 											</c:otherwise>
-
 										</c:choose>
-
 									</div>
-
 									<div class="team">
-
-										<div class="team-name">
-											${dto.home_team}
-										</div>
-
-										<img
-											src="${pageContext.request.contextPath}${dto.home_logo}"
-											class="team-logo">
-
+										<div class="team-name">${dto.home_team}</div>
+										<img src="${pageContext.request.contextPath}${dto.home_logo}" class="team-logo">
 									</div>
-
 								</div>
-
-								<div class="stadium">
-									${dto.location}
-								</div>
+								<div class="stadium">${dto.location}</div>
 
 							</div>
-
 						</div>
-
+						</a>
 					</c:forEach>
-
 				</c:otherwise>
-
 			</c:choose>
-
 		</div>
-
 	</section>
-
 </main>
 
 </body>

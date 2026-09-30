@@ -1,6 +1,9 @@
 package com.kedu.dao;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -63,5 +66,56 @@ public class PlayerHitterDAO {
 				dto.getWrc(),
 				dto.getWar()
 		);
+	}
+	
+	public List<PlayerHitterDTO> getTop10Hitters() {
+
+	    String sql =
+	            "SELECT PLAYER_NAME, PLAYER_TEAM, BATTING_AVG, GAMES, AT_BATS "
+	            + "FROM ("
+	            + " SELECT PLAYER_NAME, PLAYER_TEAM, BATTING_AVG, GAMES, AT_BATS "
+	            + " FROM playerHitter "
+	            + " WHERE AT_BATS >= 400 "
+	            + " ORDER BY BATTING_AVG DESC"
+	            + ") "
+	            + "WHERE ROWNUM <= 10";
+
+	    return jdbc.query(
+	            sql,
+	            new BeanPropertyRowMapper<>(PlayerHitterDTO.class)
+	    );
+	}
+	public List<PlayerHitterDTO> selectAll() {
+
+	    String sql =
+	            "SELECT "
+	            + "player_id, "
+	            + "player_team, "
+	            + "player_name, "
+	            + "batting_avg, "
+	            + "games, "
+	            + "at_bats, "
+	            + "hits, "
+	            + "home_runs, "
+	            + "doubles, "
+	            + "triples, "
+	            + "runs_batted_in, "
+	            + "runs, "
+	            + "stolen_bases, "
+	            + "base_on_balls, "
+	            + "hit_by_pitch, "
+	            + "strikeouts, "
+	            + "on_base_percentage, "
+	            + "slugging_percentage, "
+	            + "ops, "
+	            + "wrc, "
+	            + "war "
+	            + "FROM playerHitter "
+	            + "ORDER BY player_id";
+
+	    return jdbc.query(
+	            sql,
+	            new BeanPropertyRowMapper<>(PlayerHitterDTO.class)
+	    );
 	}
 }

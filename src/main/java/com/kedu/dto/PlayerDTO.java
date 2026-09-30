@@ -3,15 +3,13 @@ package com.kedu.dto;
 public class PlayerDTO {
 	
 	private int player_id;
-	private String palyer_team;
-	private int backnum;
+	private String player_team;
 	
 	public PlayerDTO () {}
 
-	public PlayerDTO(int player_id, String palyer_team, int backnum) {
+	public PlayerDTO(int player_id, String player_team) {
 		this.player_id = player_id;
-		this.palyer_team = palyer_team;
-		this.backnum = backnum;
+		this.player_team = player_team;
 	}
 
 	public int getPlayer_id() {
@@ -23,23 +21,12 @@ public class PlayerDTO {
 	}
 
 	public String getPalyer_team() {
-		return palyer_team;
+		return player_team;
 	}
 
 	public void setPalyer_team(String palyer_team) {
-		this.palyer_team = palyer_team;
+		this.player_team = player_team;
 	}
 
-	public int getBacknum() {
-		return backnum;
-	}
-
-	public void setBacknum(int backnum) {
-		this.backnum = backnum;
-	}
-	
-	
-	
-	
 
 }
