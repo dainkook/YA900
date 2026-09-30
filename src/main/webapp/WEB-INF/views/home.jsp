@@ -15,1581 +15,1090 @@
 /* =========================
    전체
 ========================= */
-
 * {
-    box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 body {
-    margin: 0;
-    background: linear-gradient(
-        to bottom,
-        #111936 0%,
-        #111936 15%,
-        #0b1026 25%,
-        #171f46 35%,
-        #252f67 48%,
-        #71809f 65%,
-        #aeb7ca 76%,
-        #d5dae5 86%,
-        #eef1f8 94%,
-        #eef1f8 100%
-    );
-    color: #18213f;
+	margin: 0;
+	background: linear-gradient(to bottom, #111936 0%, #111936 15%, #0b1026 25%, #171f46
+		35%, #252f67 48%, #71809f 65%, #aeb7ca 76%, #d5dae5 86%, #eef1f8 94%,
+		#eef1f8 100%);
+	color: #18213f;
 }
-
 
 /* =========================
    HEADER
 ========================= */
-
 .header {
-    width: 100%;
-    height: 100px;
-    background: linear-gradient(135deg, #0b1026, #171f46);
-    color: white;
-
-    display: flex;
-    align-items: center;
-
-    padding: 0 50px;
-
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-
-    border-bottom: 1px solid #303b70;
-    box-shadow: 0 3px 15px rgba(11, 16, 38, 0.18);
+	width: 100%;
+	height: 100px;
+	background: linear-gradient(135deg, #0b1026, #171f46);
+	color: white;
+	display: flex;
+	align-items: center;
+	padding: 0 50px;
+	position: sticky;
+	top: 0;
+	z-index: 1000;
+	border-bottom: 1px solid #303b70;
+	box-shadow: 0 3px 15px rgba(11, 16, 38, 0.18);
 }
 
 .logo {
-    font-size: 30px;
-    font-weight: bold;
-    margin-right: 60px;
-    color: white;
-    letter-spacing: 1px;
+	font-size: 30px;
+	font-weight: bold;
+	margin-right: 60px;
+	color: white;
+	letter-spacing: 1px;
 }
 
 .main-menu {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    gap: 40px;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	gap: 40px;
 }
 
 .menu-item {
-    position: relative;
-    height: 100%;
-    display: flex;
-    align-items: center;
+	position: relative;
+	height: 100%;
+	display: flex;
+	align-items: center;
 }
 
-.menu-item > a {
-    font-size: 18px;
-    font-weight: bold;
-    text-decoration: none;
-    color: #f7f8ff;
-    padding: 10px 5px;
-    transition: color 0.2s ease;
+.menu-item>a {
+	font-size: 18px;
+	font-weight: bold;
+	text-decoration: none;
+	color: #f7f8ff;
+	padding: 10px 5px;
+	transition: color 0.2s ease;
 }
 
-.menu-item > a:hover {
-    color: #aebee7;
+.menu-item>a:hover {
+	color: #aebee7;
 }
-
 
 /* =========================
    서브 메뉴
 ========================= */
-
 .sub-menu {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-
-    transform: translateX(-50%) translateY(-10px);
-
-    width: 130px;
-
-    background: #171f46;
-    border: 1px solid #394575;
-
-    display: flex;
-    flex-direction: column;
-
-    opacity: 0;
-    visibility: hidden;
-
-    transition:
-        opacity 0.2s ease,
-        transform 0.2s ease;
-
-    box-shadow: 0 10px 25px rgba(8, 12, 30, 0.25);
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-10px);
+	width: 130px;
+	background: #171f46;
+	border: 1px solid #394575;
+	display: flex;
+	flex-direction: column;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.2s ease, transform 0.2s ease;
+	box-shadow: 0 10px 25px rgba(8, 12, 30, 0.25);
 }
 
 .menu-item:hover .sub-menu {
-    opacity: 1;
-    visibility: visible;
-
-    transform: translateX(-50%) translateY(0);
+	opacity: 1;
+	visibility: visible;
+	transform: translateX(-50%) translateY(0);
 }
 
 .sub-menu a {
-    padding: 13px 15px;
-
-    text-decoration: none;
-    color: #f5f7ff;
-
-    font-size: 14px;
-
-    border-bottom: 1px solid #35406b;
+	padding: 13px 15px;
+	text-decoration: none;
+	color: #f5f7ff;
+	font-size: 14px;
+	border-bottom: 1px solid #35406b;
 }
 
 .sub-menu a:last-child {
-    border-bottom: none;
+	border-bottom: none;
 }
 
 .sub-menu a:hover {
-    background: #252f67;
+	background: #252f67;
 }
-
 
 /* =========================
    로그인 / 회원가입
 ========================= */
-
 .member-menu {
-    font-size: 14px;
-    margin-left: auto;
+	font-size: 14px;
+	margin-left: auto;
 }
 
-.login-btn,
-.sign-btn {
-    border: 1px solid #7180b1;
-    background: transparent;
-    color: white;
-
-    border-radius: 5px;
-
-    transition: 0.2s ease;
+.login-btn, .sign-btn {
+	border: 1px solid #7180b1;
+	background: transparent;
+	color: white;
+	border-radius: 5px;
+	transition: 0.2s ease;
 }
 
-.login-btn:hover,
-.sign-btn:hover {
-    background: #476aaa;
-    border-color: #476aaa;
-    color: white;
+.login-btn:hover, .sign-btn:hover {
+	background: #476aaa;
+	border-color: #476aaa;
+	color: white;
 }
-
 
 /* =========================
    BANNER
 ========================= */
-
 .banner {
-    width: 100%;
-    height: 550px;
-
-    position: relative;
-    overflow: hidden;
-
-    background: #080d22;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	width: 100%;
+	height: 550px;
+	position: relative;
+	overflow: hidden;
+	background: #080d22;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .banner-slide {
-    position: absolute;
-
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 100%;
-
-    background-size: cover;
-    background-position: center;
-
-    opacity: 0;
-
-    animation: bannerFade 20s infinite;
-
-    filter: blur(5px);
-    transform: scale(1.05);
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-size: cover;
+	background-position: center;
+	opacity: 0;
+	animation: bannerFade 20s infinite;
+	filter: blur(5px);
+	transform: scale(1.05);
 }
 
 .banner-slide::after {
-    content: "";
-
-    position: absolute;
-    inset: 0;
-
-    background: rgba(8, 13, 34, 0.6);
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: rgba(8, 13, 34, 0.6);
 }
 
 .banner-slide:nth-child(1) {
-    background-image: url("${pageContext.request.contextPath}/resources/images/banner/banner1.jpg");
-    animation-delay: 0s;
+	background-image:
+		url("${pageContext.request.contextPath}/resources/images/banner/banner1.jpg");
+	animation-delay: 0s;
 }
 
 .banner-slide:nth-child(2) {
-    background-image: url("${pageContext.request.contextPath}/resources/images/banner/banner2.jpg");
-    animation-delay: 4s;
+	background-image:
+		url("${pageContext.request.contextPath}/resources/images/banner/banner2.jpg");
+	animation-delay: 4s;
 }
 
 .banner-slide:nth-child(3) {
-    background-image: url("${pageContext.request.contextPath}/resources/images/banner/banner3.jpg");
-    animation-delay: 8s;
+	background-image:
+		url("${pageContext.request.contextPath}/resources/images/banner/banner3.jpg");
+	animation-delay: 8s;
 }
 
 .banner-slide:nth-child(4) {
-    background-image: url("${pageContext.request.contextPath}/resources/images/banner/banner4.jpg");
-    animation-delay: 12s;
+	background-image:
+		url("${pageContext.request.contextPath}/resources/images/banner/banner4.jpg");
+	animation-delay: 12s;
 }
 
 .banner-slide:nth-child(5) {
-    background-image: url("${pageContext.request.contextPath}/resources/images/banner/banner5.jpg");
-    animation-delay: 16s;
+	background-image:
+		url("${pageContext.request.contextPath}/resources/images/banner/banner5.jpg");
+	animation-delay: 16s;
 }
 
-
-@keyframes bannerFade {
-
-    0% {
-        opacity: 0;
-    }
-
-    5% {
-        opacity: 1;
-    }
-
-    20% {
-        opacity: 1;
-    }
-
-    25% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 0;
-    }
+@
+keyframes bannerFade { 0% {
+	opacity: 0;
 }
 
+5
+%
+{
+opacity
+:
+1;
+}
+20
+%
+{
+opacity
+:
+1;
+}
+25
+%
+{
+opacity
+:
+0;
+}
+100
+%
+{
+opacity
+:
+0;
+}
+}
 .banner h1 {
-    position: relative;
-    z-index: 2;
-
-    color: white;
-
-    letter-spacing: 1px;
-
-    text-shadow: 0 3px 15px rgba(0, 0, 0, 0.5);
+	position: relative;
+	z-index: 2;
+	color: white;
+	letter-spacing: 1px;
+	text-shadow: 0 3px 15px rgba(0, 0, 0, 0.5);
 }
-
 
 /* =========================
    메인 영역
 ========================= */
-
 .main-content {
-    width: 1200px;
-
-    margin: 50px auto;
-
-    display: flex;
-    flex-direction: column;
-
-    gap: 30px;
+	width: 1200px;
+	margin: 50px auto;
+	display: flex;
+	flex-direction: column;
+	gap: 30px;
 }
-
 
 /* =========================
    공통 카드
 ========================= */
-
-.reservation,
-.recent-board,
-.ranking,
-.schedule,
-.bottom-menu1,
-.bottom-menu2 {
-
-    background: #ffffff;
-
-    border: 1px solid #d6dceb;
-
-    border-radius: 12px;
-
-    box-shadow: 0 5px 18px rgba(17, 25, 54, 0.06);
+.reservation, .recent-board, .ranking, .schedule, .bottom-menu1,
+	.bottom-menu2 {
+	background: #ffffff;
+	border: 1px solid #d6dceb;
+	border-radius: 12px;
+	box-shadow: 0 5px 18px rgba(17, 25, 54, 0.06);
 }
-
 
 /* =========================
    예매 영역
 ========================= */
-
 .reservation {
-    width: 100%;
-
-    min-height: 350px;
-    height: auto;
-
-    padding: 25px 30px;
-
-    overflow: visible;
+	width: 100%;
+	min-height: 350px;
+	height: auto;
+	padding: 25px 30px;
+	overflow: visible;
 }
 
 .reservation h2 {
-    text-align: center;
-
-    margin: 0 0 15px 0;
-
-    color: #111936;
+	text-align: center;
+	margin: 0 0 15px 0;
+	color: #111936;
 }
-
 
 /* =========================
    경기 카드 영역
 ========================= */
-
 .game-area {
-    height: 250px;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 15px;
-
-    overflow: visible;
+	height: 250px;
+	display: flex;
+	align-items: center;
+	gap: 15px;
+	overflow: visible;
 }
 
 .game-list {
-    width: 100%;
-    height: 230px;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 20px;
-
-    padding: 20px 5px 10px;
-
-    overflow-x: auto;
-    overflow-y: hidden;
+	width: 100%;
+	height: 230px;
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	padding: 20px 5px 10px;
+	overflow-x: auto;
+	overflow-y: hidden;
 }
-
 
 /* =========================
    경기 카드
 ========================= */
-
 .game-card {
-
-    width: 260px;
-    height: 190px;
-
-    flex-shrink: 0;
-
-    padding: 20px;
-
-    display: flex;
-    flex-direction: column;
-
-    justify-content: center;
-    align-items: center;
-
-    text-align: center;
-
-    cursor: pointer;
-
-    background: #fbfcff;
-
-    border: 1px solid #d6dceb;
-
-    border-radius: 10px;
-
-    transition:
-        transform 0.2s ease,
-        border-color 0.2s ease,
-        box-shadow 0.2s ease;
+	width: 260px;
+	height: 190px;
+	flex-shrink: 0;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	cursor: pointer;
+	background: #fbfcff;
+	border: 1px solid #d6dceb;
+	border-radius: 10px;
+	transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s
+		ease;
 }
 
 .game-card:hover {
-
-    transform: translateY(-4px);
-
-    border-color: #476aaa;
-
-    box-shadow:
-        0 8px 20px rgba(71, 106, 170, 0.14);
+	transform: translateY(-4px);
+	border-color: #476aaa;
+	box-shadow: 0 8px 20px rgba(71, 106, 170, 0.14);
 }
 
 .game-date {
-    font-size: 14px;
-
-    margin-bottom: 15px;
-
-    color: #68718a;
+	font-size: 14px;
+	margin-bottom: 15px;
+	color: #68718a;
 }
-
 
 /* =========================
    경기 팀
 ========================= */
-
 .game-team {
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    gap: 15px;
-
-    margin: 10px 0;
-
-    color: #111936;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 15px;
+	margin: 10px 0;
+	color: #111936;
 }
 
 .game-team img {
-
-    width: 45px;
-    height: 45px;
-
-    object-fit: contain;
+	width: 45px;
+	height: 45px;
+	object-fit: contain;
 }
 
 .game-team span {
-
-    font-size: 16px;
-
-    font-weight: bold;
-
-    color: #476aaa;
+	font-size: 16px;
+	font-weight: bold;
+	color: #476aaa;
 }
-
 
 /* 현재 JSP에서는 img 없이 span만 사용하므로
    팀 이름 간격 유지 */
-
 .game-team span:nth-child(2) {
-
-    color: #8b93a8;
-
-    font-size: 13px;
+	color: #8b93a8;
+	font-size: 13px;
 }
-
 
 /* =========================
    경기장
 ========================= */
-
 .game-place {
-
-    font-size: 13px;
-
-    margin: 15px 0;
-
-    color: #69738d;
+	font-size: 13px;
+	margin: 15px 0;
+	color: #69738d;
 }
-
 
 /* =========================
    예매 버튼
 ========================= */
-
 .reserve-btn {
-
-    width: 100px;
-    height: 35px;
-
-    background: #111936;
-
-    color: white;
-
-    border: 1px solid #111936;
-
-    border-radius: 5px;
-
-    cursor: pointer;
-
-    transition: 0.2s ease;
+	width: 100px;
+	height: 35px;
+	background: #111936;
+	color: white;
+	border: 1px solid #111936;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: 0.2s ease;
 }
 
 .reserve-btn:hover {
-
-    background: #476aaa;
-
-    border-color: #476aaa;
+	background: #476aaa;
+	border-color: #476aaa;
 }
-
 
 /* =========================
    아래 3개 영역
 ========================= */
-
 .bottom-content {
-
-    width: 100%;
-
-    display: flex;
-
-    gap: 30px;
+	width: 100%;
+	display: flex;
+	gap: 30px;
 }
-
 
 /* =========================
    최근 게시글
 ========================= */
-
 .recent-board {
-
-    width: 33%;
-    height: 450px;
-
-    padding: 25px;
+	width: 33%;
+	height: 450px;
+	padding: 25px;
 }
 
 .recent-header {
-
-    display: flex;
-
-    justify-content: space-between;
-    align-items: center;
-
-    margin-bottom: 15px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 15px;
 }
 
 .recent-header h2 {
-
-    margin: 0;
-
-    font-size: 22px;
-    font-weight: 700;
-
-    color: #111936;
+	margin: 0;
+	font-size: 22px;
+	font-weight: 700;
+	color: #111936;
 }
 
 .recent-more {
-
-    border: none;
-
-    background: none;
-
-    font-size: 13px;
-
-    color: #476aaa;
-
-    cursor: pointer;
-
-    padding: 0;
+	border: none;
+	background: none;
+	font-size: 13px;
+	color: #476aaa;
+	cursor: pointer;
+	padding: 0;
 }
 
 .recent-more:hover {
-    color: #252f67;
+	color: #252f67;
 }
 
 .board-item {
-
-    height: 40px;
-
-    border-bottom: 1px solid #d6dceb;
-
-    display: flex;
-
-    align-items: center;
-
-    font-size: 14px;
-
-    color: #36405d;
+	height: 40px;
+	border-bottom: 1px solid #d6dceb;
+	display: flex;
+	align-items: center;
+	font-size: 14px;
+	color: #36405d;
 }
-
 
 /* =========================
    랭킹
 ========================= */
-
 .ranking {
-
-    width: 33%;
-    height: 450px;
-
-    padding: 25px;
+	width: 33%;
+	height: 450px;
+	padding: 25px;
 }
 
 .ranking h2 {
-
-    text-align: center;
-
-    margin: 0 0 20px 0;
-
-    color: #111936;
+	text-align: center;
+	margin: 0 0 20px 0;
+	color: #111936;
 }
-
 
 /* =========================
    랭킹 탭
 ========================= */
-
 .record-tabs {
-
-    display: flex;
-
-    justify-content: center;
-
-    gap: 30px;
-
-    border-bottom: 1px solid #d6dceb;
-
-    margin-bottom: 15px;
-
-    position: relative;
-
-    z-index: 2;
+	display: flex;
+	justify-content: center;
+	gap: 30px;
+	border-bottom: 1px solid #d6dceb;
+	margin-bottom: 15px;
+	position: relative;
+	z-index: 2;
 }
 
 .record-tab {
-
-    position: relative;
-
-    border: none;
-
-    background: white;
-
-    padding: 10px 8px;
-
-    font-size: 15px;
-
-    font-weight: 600;
-
-    color: #8b93a8;
-
-    cursor: pointer;
+	position: relative;
+	border: none;
+	background: white;
+	padding: 10px 8px;
+	font-size: 15px;
+	font-weight: 600;
+	color: #8b93a8;
+	cursor: pointer;
 }
 
 .record-tab:hover {
-    color: #476aaa;
+	color: #476aaa;
 }
 
 .record-tab.active {
-    color: #111936;
+	color: #111936;
 }
 
 .record-tab.active::after {
-
-    content: "";
-
-    position: absolute;
-
-    left: 0;
-    right: 0;
-
-    bottom: -1px;
-
-    height: 3px;
-
-    background: #476aaa;
-
-    border-radius: 3px 3px 0 0;
+	content: "";
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: -1px;
+	height: 3px;
+	background: #476aaa;
+	border-radius: 3px 3px 0 0;
 }
-
 
 /* =========================
    랭킹 리스트
 ========================= */
-
 .ranking-list {
-
-    height: 260px;
-
-    overflow-y: auto;
+	height: 260px;
+	overflow-y: auto;
 }
 
-#hitter-ranking,
-#pitcher-ranking {
-    display: none;
+#hitter-ranking, #pitcher-ranking {
+	display: none;
 }
 
 .ranking-list div {
-
-    height: 40px;
-
-    border-bottom: 1px solid #d6dceb;
-
-    display: flex;
-
-    align-items: center;
-
-    padding: 0 10px;
+	height: 40px;
+	border-bottom: 1px solid #d6dceb;
+	display: flex;
+	align-items: center;
+	padding: 0 10px;
 }
 
 .ranking-list div:hover {
-    background: #f5f7fc;
+	background: #f5f7fc;
 }
-
 
 /* =========================
    팀 순위
 ========================= */
-
 .team-ranking-item {
-
-    height: 40px;
-
-    border-bottom: 1px solid #d6dceb;
-
-    display: flex;
-
-    align-items: center;
-
-    padding: 0 10px;
+	height: 40px;
+	border-bottom: 1px solid #d6dceb;
+	display: flex;
+	align-items: center;
+	padding: 0 10px;
 }
 
 .team-ranking-item img {
-
-    width: 28px;
-    height: 28px;
-
-    object-fit: contain;
-
-    margin-right: 10px;
+	width: 28px;
+	height: 28px;
+	object-fit: contain;
+	margin-right: 10px;
 }
 
 .team-ranking-item .rank {
-
-    width: 25px;
-
-    font-weight: bold;
+	width: 25px;
+	font-weight: bold;
 }
 
 .team-ranking-item .team {
-
-    font-weight: 500;
+	font-weight: 500;
 }
-
 
 /* =========================
    경기 일정
 ========================= */
-
 .schedule {
-
-    width: 33%;
-    height: 450px;
-
-    padding: 25px;
-
-    display: flex;
-
-    flex-direction: column;
+	width: 33%;
+	height: 450px;
+	padding: 25px;
+	display: flex;
+	flex-direction: column;
 }
 
 .schedule h2 {
-
-    text-align: center;
-
-    margin: 0 0 20px 0;
-
-    color: #111936;
+	text-align: center;
+	margin: 0 0 20px 0;
+	color: #111936;
 }
 
 .schedule-box {
-
-    width: 100%;
-    height: 55px;
-
-    border-bottom: 1px solid #d6dceb;
-
-    display: flex;
-
-    align-items: center;
-
-    padding: 0 10px;
-
-    font-size: 13px;
+	width: 100%;
+	height: 55px;
+	border-bottom: 1px solid #d6dceb;
+	display: flex;
+	align-items: center;
+	padding: 0 10px;
+	font-size: 13px;
 }
 
 .schedule-box:first-of-type {
-
-    border-top: 1px solid #d6dceb;
+	border-top: 1px solid #d6dceb;
 }
 
 .schedule-box:hover {
-    background: #f3f6fc;
+	background: #f3f6fc;
 }
 
 .schedule-date {
-
-    width: 55px;
-
-    font-weight: bold;
+	width: 55px;
+	font-weight: bold;
 }
 
 .schedule-team {
-
-    flex: 1;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 5px;
-
-    font-weight: 600;
+	flex: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 5px;
+	font-weight: 600;
 }
 
 .schedule-team img {
-
-    width: 25px;
-    height: 25px;
-
-    object-fit: contain;
+	width: 25px;
+	height: 25px;
+	object-fit: contain;
 }
 
 .schedule-team span {
-
-    font-size: 13px;
-
-    min-width: 28px;
+	font-size: 13px;
+	min-width: 28px;
 }
 
 .schedule-team b {
-
-    font-size: 11px;
-
-    color: #8b93a8;
-
-    margin: 0 2px;
+	font-size: 11px;
+	color: #8b93a8;
+	margin: 0 2px;
 }
 
 .schedule-time {
-
-    width: 45px;
-
-    text-align: right;
-
-    font-size: 12px;
-
-    color: #476aaa;
+	width: 45px;
+	text-align: right;
+	font-size: 12px;
+	color: #476aaa;
 }
-
 
 /* =========================
    더보기 버튼
 ========================= */
-
 .more-btn {
-
-    width: 100px;
-    height: 35px;
-
-    background: #111936;
-
-    color: white;
-
-    border: 1px solid #111936;
-
-    border-radius: 5px;
-
-    cursor: pointer;
-
-    margin: auto auto 0 auto;
-
-    transition: 0.2s ease;
+	width: 100px;
+	height: 35px;
+	background: #111936;
+	color: white;
+	border: 1px solid #111936;
+	border-radius: 5px;
+	cursor: pointer;
+	margin: auto auto 0 auto;
+	transition: 0.2s ease;
 }
 
 .more-btn:hover {
-
-    background: #476aaa;
-
-    border-color: #476aaa;
+	background: #476aaa;
+	border-color: #476aaa;
 }
-
 
 /* =========================
    퀵 메뉴
 ========================= */
-
 .quick-menu {
-
-    width: 280px;
-
-    position: fixed;
-
-    left: -250px;
-
-    top: 50%;
-
-    transform: translateY(-50%);
-
-    border: 1px solid #3b4778;
-
-    transition: left 0.5s ease;
-
-    z-index: 1000;
-
-    background: #111936;
-
-    color: white;
-
-    box-shadow: 5px 8px 25px rgba(10, 15, 35, 0.18);
+	width: 280px;
+	position: fixed;
+	left: -250px;
+	top: 50%;
+	transform: translateY(-50%);
+	border: 1px solid #3b4778;
+	transition: left 0.5s ease;
+	z-index: 1000;
+	background: #111936;
+	color: white;
+	box-shadow: 5px 8px 25px rgba(10, 15, 35, 0.18);
 }
 
 .quick-menu:hover {
-    left: 0;
+	left: 0;
 }
 
 .quick-menu div {
-
-    width: 100%;
-    height: 55px;
-
-    display: flex;
-
-    justify-content: center;
-    align-items: center;
-
-    cursor: pointer;
-
-    border-bottom: 1px solid #303b68;
+	width: 100%;
+	height: 55px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	border-bottom: 1px solid #303b68;
 }
 
 .quick-menu div:last-child {
-    border-bottom: none;
+	border-bottom: none;
 }
 
 .quick-menu div:hover {
-    background: #252f67;
+	background: #252f67;
 }
 
-.quick-menu .menu,
-.quick-menu .menu:hover {
-
-    background: #476aaa;
-
-    color: white;
+.quick-menu .menu, .quick-menu .menu:hover {
+	background: #476aaa;
+	color: white;
 }
-
 
 /* =========================
    뉴스 / 아래 메뉴
 ========================= */
-
 .bottom-menu {
-
-    width: 1200px;
-
-    margin: 30px auto 0;
-
-    display: flex;
-
-    flex-direction: row;
-
-    align-items: stretch;
-
-    gap: 30px;
+	width: 1200px;
+	margin: 30px auto 0;
+	display: flex;
+	flex-direction: row;
+	align-items: stretch;
+	gap: 30px;
 }
 
-.bottom-menu1,
-.bottom-menu2 {
-
-    width: calc(50% - 15px);
-
-    height: 320px;
-
-    flex-shrink: 0;
-
-    border: 1px solid #d6dceb;
-
-    border-radius: 12px;
-
-    background: white;
-
-    box-shadow: 0 5px 18px rgba(17, 25, 54, 0.06);
+.bottom-menu1, .bottom-menu2 {
+	width: calc(50% - 15px);
+	height: 320px;
+	flex-shrink: 0;
+	border: 1px solid #d6dceb;
+	border-radius: 12px;
+	background: white;
+	box-shadow: 0 5px 18px rgba(17, 25, 54, 0.06);
 }
 
 .bottom-menu1 {
-    padding: 25px 30px;
+	padding: 25px 30px;
 }
 
 .bottom-menu2 {
-    padding: 25px 30px;
-
-    overflow: hidden;
+	padding: 25px 30px;
+	overflow: hidden;
 }
-
 
 /* =========================
    뉴스
 ========================= */
-
 .news-box {
-    box-sizing: border-box;
-
-    overflow: hidden;
+	box-sizing: border-box;
+	overflow: hidden;
 }
 
 .news-header {
-
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    margin-bottom: 15px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 15px;
 }
 
 .news-header h2 {
-
-    margin: 0;
-
-    font-size: 22px;
-
-    font-weight: 700;
-
-    color: #111936;
+	margin: 0;
+	font-size: 22px;
+	font-weight: 700;
+	color: #111936;
 }
 
 .news-more {
-
-    border: none;
-
-    background: none;
-
-    font-size: 13px;
-
-    color: #476aaa;
-
-    cursor: pointer;
-
-    padding: 0;
+	border: none;
+	background: none;
+	font-size: 13px;
+	color: #476aaa;
+	cursor: pointer;
+	padding: 0;
 }
 
 .news-more:hover {
-    color: #252f67;
+	color: #252f67;
 }
 
 .news-list {
-
-    display: flex;
-
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 
 .news-item {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 10px;
-
-    height: 43px;
-
-    border-bottom: 1px solid #e4e7f0;
-
-    font-size: 14px;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	height: 43px;
+	border-bottom: 1px solid #e4e7f0;
+	font-size: 14px;
 }
 
 .news-item:last-child {
-    border-bottom: none;
+	border-bottom: none;
 }
 
 .news-category {
-
-    flex-shrink: 0;
-
-    width: 42px;
-
-    padding: 4px 0;
-
-    border-radius: 4px;
-
-    border: 1px solid #b9c4de;
-
-    background: #edf1fa;
-
-    color: #111936;
-
-    font-size: 11px;
-
-    font-weight: 600;
-
-    text-align: center;
+	flex-shrink: 0;
+	width: 42px;
+	padding: 4px 0;
+	border-radius: 4px;
+	border: 1px solid #b9c4de;
+	background: #edf1fa;
+	color: #111936;
+	font-size: 11px;
+	font-weight: 600;
+	text-align: center;
 }
 
 .news-item p {
-
-    flex: 1;
-
-    margin: 0;
-
-    color: #36405d;
-
-    white-space: nowrap;
-
-    overflow: hidden;
-
-    text-overflow: ellipsis;
-
-    cursor: pointer;
+	flex: 1;
+	margin: 0;
+	color: #36405d;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	cursor: pointer;
 }
 
 .news-item p:hover {
-    color: #476aaa;
+	color: #476aaa;
 }
 
 .news-date {
-
-    flex-shrink: 0;
-
-    color: #8c95a9;
-
-    font-size: 11px;
+	flex-shrink: 0;
+	color: #8c95a9;
+	font-size: 11px;
 }
-
 
 /* =========================
    KBO 구단 볼거리
 ========================= */
-
 .bottom-menu2 h5 {
-
-    margin: 0 0 15px 0;
-
-    color: #68718a;
-
-    font-weight: normal;
+	margin: 0 0 15px 0;
+	color: #68718a;
+	font-weight: normal;
 }
 
 .content-slider {
-
-    position: relative;
-
-    width: 100%;
-
-    overflow: hidden;
+	position: relative;
+	width: 100%;
+	overflow: hidden;
 }
 
 .content-track {
-
-    display: flex;
-
-    gap: 12px;
-
-    transition: transform 0.3s ease;
+	display: flex;
+	gap: 12px;
+	transition: transform 0.3s ease;
 }
 
 .content-card {
-
-    flex: 0 0 calc((100% - 24px) / 3);
-
-    min-width: 0;
-
-    border: 1px solid #d6dceb;
-
-    border-radius: 10px;
-
-    overflow: hidden;
-
-    background: white;
-
-    box-shadow: 0 3px 10px rgba(17, 25, 54, 0.05);
+	flex: 0 0 calc(( 100% - 24px)/3);
+	min-width: 0;
+	border: 1px solid #d6dceb;
+	border-radius: 10px;
+	overflow: hidden;
+	background: white;
+	box-shadow: 0 3px 10px rgba(17, 25, 54, 0.05);
 }
-
 
 /* =========================
    구단 공식 채널
 ========================= */
-
 .team-channel {
-
-    height: 130px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    background: linear-gradient(
-        135deg,
-        #202b5c,
-        #4b629b
-    );
-
-    color: white;
+	height: 130px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background: linear-gradient(135deg, #202b5c, #4b629b);
+	color: white;
 }
 
 .team-channel img {
-
-    width: 55px;
-    height: 55px;
-
-    object-fit: contain;
-
-    margin-bottom: 8px;
+	width: 55px;
+	height: 55px;
+	object-fit: contain;
+	margin-bottom: 8px;
 }
 
 .channel-team {
-
-    font-size: 11px;
-
-    margin-bottom: 3px;
-
-    opacity: 0.85;
+	font-size: 11px;
+	margin-bottom: 3px;
+	opacity: 0.85;
 }
 
 .team-channel strong {
-    font-size: 15px;
+	font-size: 15px;
 }
-
 
 /* =========================
    구단 카드 내용
 ========================= */
-
 .content-info {
-
-    height: 60px;
-
-    padding: 9px 10px 10px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 5px;
+	height: 60px;
+	padding: 9px 10px 10px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 5px;
 }
 
 .content-info span {
-
-    flex: 1;
-
-    min-width: 0;
-
-    font-size: 10px;
-
-    color: #8a93a8;
-
-    white-space: nowrap;
-
-    overflow: hidden;
-
-    text-overflow: ellipsis;
+	flex: 1;
+	min-width: 0;
+	font-size: 10px;
+	color: #8a93a8;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .content-info button {
-
-    flex-shrink: 0;
-
-    width: 58px;
-    height: 24px;
-
-    padding: 0;
-
-    border: 1px solid #c7cee0;
-
-    border-radius: 5px;
-
-    background: white;
-
-    color: #111936;
-
-    font-size: 8px;
-
-    cursor: pointer;
-
-    white-space: nowrap;
+	flex-shrink: 0;
+	width: 58px;
+	height: 24px;
+	padding: 0;
+	border: 1px solid #c7cee0;
+	border-radius: 5px;
+	background: white;
+	color: #111936;
+	font-size: 8px;
+	cursor: pointer;
+	white-space: nowrap;
 }
 
 .content-info button:hover {
-    background: #edf1fa;
+	background: #edf1fa;
 }
-
 
 /* =========================
    슬라이더 버튼
 ========================= */
-
 .slide-btn {
-
-    position: absolute;
-
-    top: 45%;
-
-    transform: translateY(-50%);
-
-    width: 30px;
-    height: 30px;
-
-    border: 1px solid #c7cee0;
-
-    border-radius: 50%;
-
-    background: white;
-
-    color: #111936;
-
-    font-size: 20px;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    cursor: pointer;
-
-    z-index: 5;
-
-    box-shadow: 0 3px 10px rgba(17, 25, 54, 0.08);
+	position: absolute;
+	top: 45%;
+	transform: translateY(-50%);
+	width: 30px;
+	height: 30px;
+	border: 1px solid #c7cee0;
+	border-radius: 50%;
+	background: white;
+	color: #111936;
+	font-size: 20px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	z-index: 5;
+	box-shadow: 0 3px 10px rgba(17, 25, 54, 0.08);
 }
 
 .prev-btn {
-    left: 5px;
+	left: 5px;
 }
 
 .next-btn {
-    right: 5px;
+	right: 5px;
 }
 
 .slide-btn:hover {
-    background: #edf1fa;
+	background: #edf1fa;
 }
-
 
 /* =========================
    팀 이름
 ========================= */
-
 .team-name {
-
-    position: absolute;
-
-    top: 7px;
-    left: 7px;
-
-    padding: 4px 6px;
-
-    background: rgba(8, 12, 30, 0.55);
-
-    color: white;
-
-    font-size: 10px;
-
-    font-weight: bold;
-
-    border-radius: 4px;
+	position: absolute;
+	top: 7px;
+	left: 7px;
+	padding: 4px 6px;
+	background: rgba(8, 12, 30, 0.55);
+	color: white;
+	font-size: 10px;
+	font-weight: bold;
+	border-radius: 4px;
 }
-
 
 /* =========================
    경기 팝업
 ========================= */
-
 .game-popup {
-
-    display: none;
-
-    position: fixed;
-
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 100%;
-
-    background: rgba(7, 11, 28, 0.72);
-
-    justify-content: center;
-    align-items: center;
-
-    z-index: 2000;
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(7, 11, 28, 0.72);
+	justify-content: center;
+	align-items: center;
+	z-index: 2000;
 }
 
 .popup-content {
-
-    width: 400px;
-
-    padding: 30px;
-
-    background: white;
-
-    border: 1px solid #aeb8d2;
-
-    border-radius: 12px;
-
-    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.25);
-
-    position: relative;
-
-    text-align: center;
+	width: 400px;
+	padding: 30px;
+	background: white;
+	border: 1px solid #aeb8d2;
+	border-radius: 12px;
+	box-shadow: 0 15px 45px rgba(0, 0, 0, 0.25);
+	position: relative;
+	text-align: center;
 }
 
 .popup-content h2 {
-
-    margin-top: 0;
-
-    margin-bottom: 25px;
-
-    color: #111936;
+	margin-top: 0;
+	margin-bottom: 25px;
+	color: #111936;
 }
 
 .popup-content div {
-    margin: 15px 0;
+	margin: 15px 0;
 }
 
 #popup-team {
-
-    font-size: 22px;
-
-    font-weight: bold;
-
-    color: #476aaa;
+	font-size: 22px;
+	font-weight: bold;
+	color: #476aaa;
 }
 
 .popup-close {
-
-    position: absolute;
-
-    top: 10px;
-    right: 15px;
-
-    border: none;
-
-    background: none;
-
-    font-size: 25px;
-
-    cursor: pointer;
-
-    color: #111936;
+	position: absolute;
+	top: 10px;
+	right: 15px;
+	border: none;
+	background: none;
+	font-size: 25px;
+	cursor: pointer;
+	color: #111936;
 }
-
 
 /* =========================
    경기 상세 정보
 ========================= */
-
 .game-info {
-
-    display: none;
-
-    width: 100%;
-
-    margin-top: 15px;
-
-    padding: 20px 25px;
-
-    background: #f5f7fc;
-
-    border: 1px solid #d6dceb;
-
-    border-radius: 10px;
-
-    color: #18213f;
+	display: none;
+	width: 100%;
+	margin-top: 15px;
+	padding: 20px 25px;
+	background: #f5f7fc;
+	border: 1px solid #d6dceb;
+	border-radius: 10px;
+	color: #18213f;
 }
 
 .game-info.show {
-    display: block;
+	display: block;
 }
 
 #info-team {
-
-    font-size: 20px;
-
-    font-weight: bold;
-
-    color: #476aaa;
-
-    margin-bottom: 10px;
+	font-size: 20px;
+	font-weight: bold;
+	color: #476aaa;
+	margin-bottom: 10px;
 }
 
-#info-date,
-#info-time,
-#info-place {
-
-    font-size: 14px;
-
-    margin: 5px 0;
+#info-date, #info-time, #info-place {
+	font-size: 14px;
+	margin: 5px 0;
 }
-
 
 /* =========================
    FOOTER
 ========================= */
-
 .footer {
-
-    width: 100%;
-
-    height: 70px;
-
-    margin-top: 0;
-
-    background: #eef1f8;
-
-    color: #252f67;
-
-    display: flex;
-
-    justify-content: center;
-    align-items: center;
-
-    font-size: 13px;
-
-    border: none;
+	width: 100%;
+	height: 70px;
+	margin-top: 0;
+	background: #eef1f8;
+	color: #252f67;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 13px;
+	border: none;
 }
 
 .footer a {
-
-    text-decoration: none;
-
-    color: #3b4778;
+	text-decoration: none;
+	color: #3b4778;
 }
 
 .footer a:hover {
-    color: #6079b4;
+	color: #6079b4;
 }
-
 
 /* =========================
    스크롤바
 ========================= */
-
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+	width: 8px;
+	height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-
-    background: #e6eaf3;
-
-    border-radius: 10px;
+	background: #e6eaf3;
+	border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-
-    background: #476aaa;
-
-    border-radius: 10px;
+	background: #476aaa;
+	border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #7189c2;
+	background: #7189c2;
 }
 </style>
 <body>
@@ -1817,7 +1326,7 @@ body {
 
 					<c:forEach var="player" items="${hitterRanking}" varStatus="status">
 
-						<div>${status.count} ${player.player_name}
+						<div>${status.count}${player.player_name}
 							(${player.player_team})</div>
 
 					</c:forEach>
@@ -1826,16 +1335,14 @@ body {
 
 				<div id="pitcher-ranking" class="ranking-list">
 
-				    <c:forEach var="player" items="${pitcherRanking}" varStatus="status">
-				
-				        <div>
-				            ${status.index + 1}
-				            ${player.player_name}
-				            (${player.player_team})
-				        </div>
-				
-				    </c:forEach>
-				
+					<c:forEach var="player" items="${pitcherRanking}"
+						varStatus="status">
+
+						<div>${status.index + 1} ${player.player_name}
+							(${player.player_team})</div>
+
+					</c:forEach>
+
 				</div>
 
 			</div>
@@ -2113,11 +1620,9 @@ body {
 		<!-- FOOTER -->
 		<div class="footer">
 
-			<a href="#">개인정보처리방침</a> | 
-			<a href="#">전체 서비스</a> | 
-			<a href="#">문제 신고</a> | 
-			<a href="#">고객센터</a> | 
-			<a href="${pageContext.request.contextPath}/admin">관리자</a>
+			<a href="#">개인정보처리방침</a> | <a href="#">전체 서비스</a> | <a href="#">문제
+				신고</a> | <a href="#">고객센터</a> | <a
+				href="${pageContext.request.contextPath}/admin">관리자</a>
 
 		</div>
 </body>

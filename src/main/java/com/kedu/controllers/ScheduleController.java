@@ -35,8 +35,6 @@ public class ScheduleController {
 	@Autowired
 	private PlayerHitterDAO playerHitterDAO;
 
-
-
 	@RequestMapping("/schedule")
 	public String schedule(@RequestParam(value = "month", required = false) Integer month,Model model) {
 

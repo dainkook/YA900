@@ -20,12 +20,9 @@ public class PlayerHitterCrawler {
     public static void main(String[] args) {
 
     	ApplicationContext context =
-                new FileSystemXmlApplicationContext(
-                        "src/main/webapp/WEB-INF/spring/root-context.xml"
-                );
+                new FileSystemXmlApplicationContext("src/main/webapp/WEB-INF/spring/root-context.xml");
 
-        PlayerHitterDAO dao =
-                context.getBean(PlayerHitterDAO.class);
+        PlayerHitterDAO dao = context.getBean(PlayerHitterDAO.class);
 
         try {
 
