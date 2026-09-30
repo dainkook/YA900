@@ -21,7 +21,7 @@ public class UsersDAO {
 				+ "point, team, regdate, blackList, admin"
 				+ ") VALUES ("
 				+ "USERS_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "
-				+ "0, ?, SYSTIMESTAMP, 0, 'ÀÏ¹Ý'"
+				+ "0, ?, SYSTIMESTAMP, 0, 'ï¿½ì”ªè«›ï¿½'"
 				+ ")";
 
 		return jdbc.update(sql,
@@ -56,10 +56,7 @@ public class UsersDAO {
 	        return null;
 	    }
 	}
-<<<<<<< HEAD:src/main/java/com/kedu/dao/MembersDAO.java
 	
-=======
->>>>>>> eb091ff9ac6c867dd4d7a85220b46fbd9b1b58af:src/main/java/com/kedu/dao/UsersDAO.java
 	public int idCheck(String id) {
 		String sql= "select count(*) from users where id = ?";
 		return jdbc.queryForObject(sql, Integer.class, id);
