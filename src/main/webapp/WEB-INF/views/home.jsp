@@ -1866,7 +1866,7 @@ body {
 
 				</c:forEach>
 
-				<button class="more-btn">더보기</button>
+				<button type="button" class="more-btn">더보기</button>
 
 			</div>
 		</div>
@@ -2244,7 +2244,9 @@ contentPrev.addEventListener("click", function() {
     moveContentSlider();
 
 });
-
+document.querySelector(".more-btn").onclick = function () {
+    location.href = "${pageContext.request.contextPath}/schedule/schedule";
+}
 
 </script>
 </html>
