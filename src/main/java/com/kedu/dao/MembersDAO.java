@@ -21,7 +21,7 @@ public class MembersDAO {
 				+ "point, team, regdate, blackList, admin"
 				+ ") VALUES ("
 				+ "USERS_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "
-				+ "0, ?, SYSTIMESTAMP, 0, '일반'"
+				+ "0, ?, SYSTIMESTAMP, 0, '�씪諛�'"
 				+ ")";
 
 		return jdbc.update(sql,
@@ -55,6 +55,8 @@ public class MembersDAO {
 	    } catch (Exception e) {
 	        return null;
 	    }
+	}
+	
 	public int idCheck(String id) {
 		String sql= "select count(*) from users where id = ?";
 		return jdbc.queryForObject(sql, Integer.class, id);

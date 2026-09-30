@@ -74,7 +74,7 @@ public class MembersController {
 
 	    return "redirect:/";
 	}
-}
+
 
 	@RequestMapping(value="/idcheck", method=RequestMethod.POST)
 	@ResponseBody
