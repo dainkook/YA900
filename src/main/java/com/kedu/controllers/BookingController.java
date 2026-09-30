@@ -12,12 +12,14 @@ import com.kedu.dto.ScheduleDTO;
 @Controller
 @RequestMapping("/booking")
 public class BookingController {
-	
-	@Autowired
+    
+    @Autowired
     private ScheduleDAO scheduleDAO;
 
-	@RequestMapping("/{game_id}")
-    public String booking(@PathVariable int game_id, Model model) {
+    @RequestMapping("/{game_id}")
+    public String booking(
+            @PathVariable int game_id,
+            Model model) {
 
         ScheduleDTO game = scheduleDAO.selectByGameId(game_id);
 
@@ -25,5 +27,5 @@ public class BookingController {
 
         return "/main-book/booking";
     }
-	
+    
 }
