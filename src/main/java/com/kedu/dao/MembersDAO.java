@@ -20,8 +20,8 @@ public class MembersDAO {
 				+ "address1, address2, gender, age, birth, profile_img, "
 				+ "point, team, regdate, blackList, admin"
 				+ ") VALUES ("
-				+ "member_seq_seq.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "
-				+ "0, ?, SYSTIMESTAMP, 0, '�Ϲ�'"
+				+ "USERS_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "
+				+ "0, ?, SYSTIMESTAMP, 0, '일반'"
 				+ ")";
 
 		return jdbc.update(sql,
@@ -40,7 +40,7 @@ public class MembersDAO {
 				dto.getTeam()
 				);
 	}
-	
+  
 	public UsersDTO login(String id, String pw) {
 
 	    String sql = "SELECT * FROM users WHERE id = ? AND pw = ?";
@@ -55,5 +55,12 @@ public class MembersDAO {
 	    } catch (Exception e) {
 	        return null;
 	    }
+	public int idCheck(String id) {
+		String sql= "select count(*) from users where id = ?";
+		return jdbc.queryForObject(sql, Integer.class, id);
+	}
+	public int emailCheck(String email) {
+		String sql = "select count(*) from users where id =?";
+		return jdbc.queryForObject(sql, Integer.class, email);
 	}
 }
