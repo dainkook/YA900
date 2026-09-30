@@ -19,7 +19,7 @@ public class BookingController {
 	@RequestMapping("/{game_id}")
     public String booking(@PathVariable int game_id, Model model) {
 
-        ScheduleDTO game = scheduleDAO.selectById(game_id);
+        ScheduleDTO game = scheduleDAO.selectByGameId(game_id);
 
         model.addAttribute("game", game);
 

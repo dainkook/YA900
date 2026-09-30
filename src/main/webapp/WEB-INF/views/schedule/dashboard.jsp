@@ -239,44 +239,50 @@ body {
 	border-top: 1px solid #ddd;
 }
 
-@media (max-width: 950px) {
+@media ( max-width : 950px) {
 	.container {
 		width: 100%;
 	}
 }
 
-@media (max-width: 600px) {
+@media ( max-width : 600px) {
 	.header {
 		padding: 0 20px;
 	}
-
 	.logo {
 		margin-right: 30px;
 	}
-
 	.main-menu {
 		gap: 15px;
 	}
-
 	.user-menu {
 		display: none;
 	}
-
 	.month-arrow {
 		width: 45px;
 	}
-
 	.month-tab {
 		font-size: 13px;
 	}
-
 	.game-content {
 		gap: 10px;
 	}
-
 	.team {
 		width: 120px;
 	}
+}
+.game-link {
+	display: block;
+	text-decoration: none !important;
+	color: #222 !important;
+}
+
+.game-link:visited {
+	color: #222 !important;
+}
+
+.game-link:hover {
+	color: #222 !important;
 }
 </style>
 
@@ -307,8 +313,7 @@ body {
 
 		<nav class="kbo-navigation">
 
-			<a href="${pageContext.request.contextPath}/schedule/schedule"
-				class="active">
+			<a href="${pageContext.request.contextPath}/schedule/schedule"class="active">
 				일정
 			</a>
 
@@ -387,6 +392,8 @@ body {
 							<div class="schedule-date">
 								<fmt:formatDate value="${dto.start_date}" pattern="yyyy년 MM월 dd일" />
 							</div>
+							
+							<a href="${pageContext.request.contextPath}/schedule/scheduledetail?game_id=${dto.game_id}" class="game-link">
 							<div class="game-card">
 								<div class="game-header">
 									<span>
@@ -436,6 +443,7 @@ body {
 
 							</div>
 						</div>
+						</a>
 					</c:forEach>
 				</c:otherwise>
 			</c:choose>

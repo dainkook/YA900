@@ -1,5 +1,7 @@
 package com.kedu.dao;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -57,5 +59,29 @@ public class TeamRankDAO {
                 dto.getBatting_avg(),
                 dto.getEra()
         );
+    }
+    public List<TeamRankDTO> selectAll() {
+        String sql = "SELECT team_id, team_name, win_rate, games_behind, games, wins, losses, draws, "
+                + "winning_streak, batting_avg, era "
+                + "FROM teamRank "
+                + "ORDER BY team_id";
+
+        return jdbc.query(sql, (rs, rowNum) -> {
+            TeamRankDTO dto = new TeamRankDTO();
+
+            dto.setTeam_id(rs.getInt("team_id"));
+            dto.setTeam_name(rs.getString("team_name"));
+            dto.setWin_rate(rs.getDouble("win_rate"));
+            dto.setGames_behind(rs.getDouble("games_behind"));
+            dto.setGames(rs.getInt("games"));
+            dto.setWins(rs.getInt("wins"));
+            dto.setLosses(rs.getInt("losses"));
+            dto.setDraws(rs.getInt("draws"));
+            dto.setWinning_streak(rs.getString("winning_streak"));
+            dto.setBatting_avg(rs.getDouble("batting_avg"));
+            dto.setEra(rs.getDouble("era"));
+
+            return dto;
+        });
     }
 }

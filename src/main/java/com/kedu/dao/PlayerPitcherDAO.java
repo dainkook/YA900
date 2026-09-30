@@ -128,4 +128,38 @@ public class PlayerPitcherDAO {
             new BeanPropertyRowMapper<>(PlayerPitcherDTO.class)
         );
     }
+    public List<PlayerPitcherDTO> selectAll() {
+        String sql = "SELECT player_id, player_team, player_name, era, games, wins, losses, "
+                + "holds, saves, innings, strikeouts, hits_allowed, home_runs_allowed, "
+                + "runs_allowed, earned_runs, base_on_balls, hit_by_pitch, win_rate, wpa, war "
+                + "FROM playerPitcher "
+                + "ORDER BY player_id";
+
+        return jdbc.query(sql, (rs, rowNum) -> {
+            PlayerPitcherDTO dto = new PlayerPitcherDTO();
+
+            dto.setPlayer_id(rs.getInt("player_id"));
+            dto.setPlayer_team(rs.getString("player_team"));
+            dto.setPlayer_name(rs.getString("player_name"));
+            dto.setEra(rs.getDouble("era"));
+            dto.setGames(rs.getInt("games"));
+            dto.setWins(rs.getInt("wins"));
+            dto.setLosses(rs.getInt("losses"));
+            dto.setHolds(rs.getInt("holds"));
+            dto.setSaves(rs.getInt("saves"));
+            dto.setInnings(rs.getString("innings"));
+            dto.setStrikeouts(rs.getInt("strikeouts"));
+            dto.setHits_allowed(rs.getInt("hits_allowed"));
+            dto.setHome_runs_allowed(rs.getInt("home_runs_allowed"));
+            dto.setRuns_allowed(rs.getInt("runs_allowed"));
+            dto.setEarned_runs(rs.getInt("earned_runs"));
+            dto.setBase_on_balls(rs.getInt("base_on_balls"));
+            dto.setHit_by_pitch(rs.getInt("hit_by_pitch"));
+            dto.setWin_rate(rs.getDouble("win_rate"));
+            dto.setWpa(rs.getDouble("wpa"));
+            dto.setWar(rs.getDouble("war"));
+
+            return dto;
+        });
+    }
 }
