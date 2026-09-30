@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kedu.dao.MembersDAO;
+import com.kedu.dao.UsersDAO;
 import com.kedu.dto.UsersDTO;
 
 @Controller
-public class MembersController {
+public class UsersController {
 
 	@Autowired
-	private MembersDAO dao;
+	private UsersDAO dao;
 
 	@RequestMapping("/signup")
 	public String signup() {

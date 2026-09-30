@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.kedu.dto.UsersDTO;
 
 @Repository
-public class MembersDAO {
+public class UsersDAO {
 
 	@Autowired
 	private JdbcTemplate jdbc;
