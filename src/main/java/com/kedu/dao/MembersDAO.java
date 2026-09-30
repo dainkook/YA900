@@ -1,6 +1,7 @@
 package com.kedu.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -20,7 +21,7 @@ public class MembersDAO {
 				+ "point, team, regdate, blackList, admin"
 				+ ") VALUES ("
 				+ "USERS_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "
-				+ "0, ?, SYSTIMESTAMP, 0, '¿œπ›'"
+				+ "0, ?, SYSTIMESTAMP, 0, 'ÏùºÎ∞ò'"
 				+ ")";
 
 		return jdbc.update(sql,
@@ -39,6 +40,21 @@ public class MembersDAO {
 				dto.getTeam()
 				);
 	}
+  
+	public UsersDTO login(String id, String pw) {
+
+	    String sql = "SELECT * FROM users WHERE id = ? AND pw = ?";
+
+	    try {
+	        return jdbc.queryForObject(
+	            sql,
+	            new BeanPropertyRowMapper<UsersDTO>(UsersDTO.class),
+	            id,
+	            pw
+	        );
+	    } catch (Exception e) {
+	        return null;
+	    }
 	public int idCheck(String id) {
 		String sql= "select count(*) from users where id = ?";
 		return jdbc.queryForObject(sql, Integer.class, id);

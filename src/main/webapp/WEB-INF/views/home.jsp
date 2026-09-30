@@ -2112,13 +2112,7 @@ body {
 
 		<!-- FOOTER -->
 		<div class="footer">
-
-			<a href="#">개인정보처리방침</a> | 
-			<a href="#">전체 서비스</a> | 
-			<a href="#">문제 신고</a> | 
-			<a href="#">고객센터</a> | 
-			<a href="${pageContext.request.contextPath}/admin">관리자</a>
-
+			<a href="#">개인정보처리방침</a>　|　<a href="#">전체 서비스</a>　|　<a href="#">문제 신고</a>　|　<a href="#">고객센터</a>　|　<a href="${pageContext.request.contextPath}/admin">관리자</a>
 		</div>
 </body>
 
@@ -2184,19 +2178,23 @@ function showGame(date, team, time, place) {
     selectedGame = team;
 }
 
-function openBooking(event, page) {
+function openBooking(event, url) {
     event.stopPropagation();
 
     const width = 1000;
-    const height = 600;
+    const height = 650;
 
     const left = (screen.width - width) / 2;
     const top = (screen.height - height) / 2;
 
     window.open(
-        page,
-        '_blank',
-        `width=${width},height=${height},left=${left},top=${top},scrollbars=no,resizable=yes`
+        url,
+        "_blank",
+        "width=" + width +
+        ",height=" + height +
+        ",left=" + left +
+        ",top=" + top +
+        ",resizable=yes,scrollbars=yes"
     );
 }
 

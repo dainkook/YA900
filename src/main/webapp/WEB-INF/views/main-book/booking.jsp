@@ -1179,6 +1179,8 @@ body {
 
 <script>
 
+const isLogin = ${sessionScope.id != null ? "true" : "false"};
+
 /* =========================
    기본 설정
 ========================= */
@@ -1277,6 +1279,18 @@ function goPayment() {
     if (selectedSeats.length === 0) {
 
         alert("좌석을 선택해주세요.");
+
+        return;
+    }
+
+
+    // 로그인하지 않은 경우
+    if (!isLogin) {
+
+        alert("결제를 진행하려면 로그인이 필요합니다.");
+
+        location.href =
+            "${pageContext.request.contextPath}/login";
 
         return;
     }
