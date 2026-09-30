@@ -1619,7 +1619,7 @@ body {
 
         <div class="member-menu">
             <button class="login-btn" onclick="location.href='login.html'">로그인</button>　
-            <button class="sign-btn" onclick="location.href='signup.html'">회원가입</button>
+            <button class="sign-btn" onclick="location.href='signup'">회원가입</button>
         </div>
 
     </div>
