@@ -78,29 +78,4 @@ public class AdminController {
 		session.invalidate();
 		return "redirect:/admin";
 	}
-
-	@RequestMapping("/notice")
-	public String notice() {
-		return "admin/notice";
-	}
-
-	@RequestMapping("/member")
-	public String member() {
-		return "admin/member";
-	}
-
-	@RequestMapping("/reservation")
-	public String reservation() {
-		return "admin/reservation";
-	}
-
-	@RequestMapping("/schedule")
-	public String schedule() {
-		return "admin/schedule";
-	}
-
-	@RequestMapping("/report")
-	public String report() {
-		return "admin/report";
-	}
 }
