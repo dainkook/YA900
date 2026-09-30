@@ -55,6 +55,7 @@ public class MembersDAO {
 	    } catch (Exception e) {
 	        return null;
 	    }
+	}
 	public int idCheck(String id) {
 		String sql= "select count(*) from users where id = ?";
 		return jdbc.queryForObject(sql, Integer.class, id);

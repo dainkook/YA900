@@ -1619,15 +1619,9 @@ opacity
 
 		<!-- FOOTER -->
 		<div class="footer">
-<<<<<<< HEAD
 
-			<a href="#">개인정보처리방침</a> | <a href="#">전체 서비스</a> | <a href="#">문제
-				신고</a> | <a href="#">고객센터</a> | <a
-				href="${pageContext.request.contextPath}/admin">관리자</a>
-
-=======
 			<a href="#">개인정보처리방침</a>　|　<a href="#">전체 서비스</a>　|　<a href="#">문제 신고</a>　|　<a href="#">고객센터</a>　|　<a href="${pageContext.request.contextPath}/admin">관리자</a>
->>>>>>> 88ebb3d6ee17e413aeb45e45fcf9d276d034aea1
+
 		</div>
 </body>
 
