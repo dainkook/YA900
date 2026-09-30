@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kedu.dao.MembersDAO;
+import com.kedu.dao.UsersDAO;
 import com.kedu.dto.UsersDTO;
 
 @Controller
-public class MembersController {
+public class UsersController {
 
 	@Autowired
-	private MembersDAO dao;
+	private UsersDAO dao;
 
 	@RequestMapping("/signup")
 	public String signup() {
@@ -74,7 +74,10 @@ public class MembersController {
 
 	    return "redirect:/";
 	}
+<<<<<<< HEAD:src/main/java/com/kedu/controllers/MembersController.java
 
+=======
+>>>>>>> eb091ff9ac6c867dd4d7a85220b46fbd9b1b58af:src/main/java/com/kedu/controllers/UsersController.java
 
 	@RequestMapping(value="/idcheck", method=RequestMethod.POST)
 	@ResponseBody

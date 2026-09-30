@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.kedu.dto.UsersDTO;
 
 @Repository
-public class MembersDAO {
+public class UsersDAO {
 
 	@Autowired
 	private JdbcTemplate jdbc;
@@ -56,7 +56,10 @@ public class MembersDAO {
 	        return null;
 	    }
 	}
+<<<<<<< HEAD:src/main/java/com/kedu/dao/MembersDAO.java
 	
+=======
+>>>>>>> eb091ff9ac6c867dd4d7a85220b46fbd9b1b58af:src/main/java/com/kedu/dao/UsersDAO.java
 	public int idCheck(String id) {
 		String sql= "select count(*) from users where id = ?";
 		return jdbc.queryForObject(sql, Integer.class, id);
