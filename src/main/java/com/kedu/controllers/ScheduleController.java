@@ -10,40 +10,72 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kedu.dao.PlayerHitterDAO;
+import com.kedu.dao.PlayerPitcherDAO;
 import com.kedu.dao.ScheduleDAO;
+import com.kedu.dao.TeamRankDAO;
+import com.kedu.dto.PlayerHitterDTO;
+import com.kedu.dto.PlayerPitcherDTO;
 import com.kedu.dto.ScheduleDTO;
+import com.kedu.dto.TeamRankDTO;
 
 @Controller
 @RequestMapping("/schedule")
 public class ScheduleController {
 
-    @Autowired
-    private ScheduleDAO dao;
+	@Autowired
+	private ScheduleDAO scheduleDAO;
 
-    @RequestMapping("/schedule")
-    public String schedule(
-            @RequestParam(value = "month", required = false) Integer month,
-            Model model) {
+	@Autowired
+	private TeamRankDAO teamRankDAO;
 
-        Calendar calendar = Calendar.getInstance();
+	@Autowired
+	private PlayerPitcherDAO playerPitcherDAO;
 
-        if (month == null) {
-            month = calendar.get(Calendar.MONTH) + 1;
-        }
+	@Autowired
+	private PlayerHitterDAO playerHitterDAO;
 
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
 
-        Timestamp today = new Timestamp(calendar.getTimeInMillis());
 
-        List<ScheduleDTO> list = dao.selectByMonth(month);
+	@RequestMapping("/schedule")
+	public String schedule(@RequestParam(value = "month", required = false) Integer month,Model model) {
 
-        model.addAttribute("list", list);
-        model.addAttribute("month", month);
-        model.addAttribute("now", today);
+		Calendar calendar = Calendar.getInstance();
 
-        return "detail/dashboard";
-    }
+		if (month == null) {
+			month = calendar.get(Calendar.MONTH) + 1;
+		}
+
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+
+		Timestamp today = new Timestamp(calendar.getTimeInMillis());
+
+		List<ScheduleDTO> list = scheduleDAO.selectByMonth(month);
+
+		model.addAttribute("list", list);
+		model.addAttribute("month", month);
+		model.addAttribute("now", today);
+
+		return "schedule/dashboard";
+	}
+
+	@RequestMapping("/scheduledetail")
+	public String list(@RequestParam("game_id") int game_id,Model model) {
+
+	    ScheduleDTO schedule = scheduleDAO.selectByGameId(game_id);
+
+	    List<TeamRankDTO> teamList = teamRankDAO.selectAll();
+	    List<PlayerPitcherDTO> pitcherList = playerPitcherDAO.selectAll();
+	    List<PlayerHitterDTO> hitterList = playerHitterDAO.selectAll();
+
+	    model.addAttribute("schedule", schedule);
+	    model.addAttribute("teamList", teamList);
+	    model.addAttribute("pitcherList", pitcherList);
+	    model.addAttribute("hitterList", hitterList);
+
+	    return "schedule/scheduledetail";
+	}
 }

@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -28,88 +30,145 @@ public class PlayerPitcherCrawler {
 
         try {
 
-            String urlString =
-                    "https://api-gw.sports.naver.com/statistics/categories/kbo/seasons/2026/players"
-                    + "?sortField=pitcherEra"
-                    + "&sortDirection=asc"
-                    + "&playerType=PITCHER"
-                    + "&gameType=REGULAR_SEASON";
+            Map<String, JSONObject> playerMap =
+                    new HashMap<>();
 
-            URL url = new URL(urlString);
+            String[] sortFields = {
+                    "pitcherEra",
+                    "pitcherHold",
+                    "pitcherSave"
+            };
 
-            HttpURLConnection conn =
-                    (HttpURLConnection) url.openConnection();
+            for (String sortField : sortFields) {
 
-            conn.setRequestMethod("GET");
-            conn.setRequestProperty("User-Agent", "Mozilla/5.0");
-            conn.setRequestProperty("Accept", "application/json");
+                String urlString =
+                        "https://api-gw.sports.naver.com/statistics/categories/kbo/seasons/2026/players"
+                        + "?sortField=" + sortField
+                        + "&sortDirection=desc"
+                        + "&playerType=PITCHER"
+                        + "&gameType=REGULAR_SEASON";
 
-            int responseCode = conn.getResponseCode();
+                URL url = new URL(urlString);
 
-            System.out.println("응답 코드 : " + responseCode);
+                HttpURLConnection conn =
+                        (HttpURLConnection) url.openConnection();
 
-            BufferedReader br =
-                    new BufferedReader(
-                            new InputStreamReader(
-                                    conn.getInputStream(),
-                                    "UTF-8"
-                            )
+                conn.setRequestMethod("GET");
+                conn.setRequestProperty(
+                        "User-Agent",
+                        "Mozilla/5.0"
+                );
+                conn.setRequestProperty(
+                        "Accept",
+                        "application/json"
+                );
+
+                int responseCode =
+                        conn.getResponseCode();
+
+                System.out.println(
+                        sortField
+                        + " 응답 코드 : "
+                        + responseCode
+                );
+
+                BufferedReader br =
+                        new BufferedReader(
+                                new InputStreamReader(
+                                        conn.getInputStream(),
+                                        "UTF-8"
+                                )
+                        );
+
+                StringBuilder responseBody =
+                        new StringBuilder();
+
+                String line;
+
+                while ((line = br.readLine()) != null) {
+                    responseBody.append(line);
+                }
+
+                br.close();
+                conn.disconnect();
+
+                JSONParser parser =
+                        new JSONParser();
+
+                JSONObject root =
+                        (JSONObject) parser.parse(
+                                responseBody.toString()
+                        );
+
+                JSONObject result =
+                        (JSONObject) root.get("result");
+
+                JSONArray players =
+                        (JSONArray) result.get(
+                                "seasonPlayerStats"
+                        );
+
+                System.out.println(
+                        sortField
+                        + " 선수 수 : "
+                        + players.size()
+                );
+
+                for (Object obj : players) {
+
+                    JSONObject player =
+                            (JSONObject) obj;
+
+                    String playerId =
+                            String.valueOf(
+                                    player.get("playerId")
+                            );
+
+                    playerMap.put(
+                            playerId,
+                            player
                     );
-
-            StringBuilder responseBody =
-                    new StringBuilder();
-
-            String line;
-
-            while ((line = br.readLine()) != null) {
-                responseBody.append(line);
+                }
             }
 
-            br.close();
+            System.out.println(
+                    "중복 제거 후 선수 수 : "
+                    + playerMap.size()
+            );
 
-            JSONParser parser = new JSONParser();
-
-            JSONObject root =
-                    (JSONObject) parser.parse(
-                            responseBody.toString()
-                    );
-
-            JSONObject result =
-                    (JSONObject) root.get("result");
-
-            JSONArray players =
-                    (JSONArray) result.get("seasonPlayerStats");
-
-            System.out.println("선수 수 : " + players.size());
-
-            for (Object obj : players) {
-
-                JSONObject player =
-                        (JSONObject) obj;
+            for (JSONObject player : playerMap.values()) {
 
                 PlayerPitcherDTO dto =
                         new PlayerPitcherDTO();
 
-                // 선수 기본 정보
-                dto.setPlayer_id(
-                        Integer.parseInt(
-                                String.valueOf(
-                                        player.get("playerId")
-                                )
-                        )
-                );
+                // 선수 ID
+                if (player.get("playerId") != null) {
+                    dto.setPlayer_id(
+                            Integer.parseInt(
+                                    String.valueOf(
+                                            player.get("playerId")
+                                    )
+                            )
+                    );
+                }
 
-                dto.setPlayer_team(
-                        String.valueOf(
-                                player.get("teamName")
-                        )
-                );
+                // 팀
+                if (player.get("teamName") != null) {
+                    dto.setPlayer_team(
+                            String.valueOf(
+                                    player.get("teamName")
+                            )
+                    );
+                }
 
-                dto.setPlayer_name(
-                        String.valueOf(
-                                player.get("playerName")
-                        )
-                );
+                // 선수 이름
+                if (player.get("playerName") != null) {
+                    dto.setPlayer_name(
+                            String.valueOf(
+                                    player.get("playerName")
+                            )
+                    );
+                }
 
                 // ERA
                 if (player.get("pitcherEra") != null) {
@@ -122,7 +181,7 @@ public class PlayerPitcherCrawler {
                     );
                 }
 
-                // 경기 수
+                // 경기
                 if (player.get("pitcherGameCount") != null) {
                     dto.setGames(
                             Integer.parseInt(
@@ -308,6 +367,10 @@ public class PlayerPitcherCrawler {
                         + dto.getWins()
                         + " / 패 : "
                         + dto.getLosses()
+                        + " / 홀드 : "
+                        + dto.getHolds()
+                        + " / 세이브 : "
+                        + dto.getSaves()
                         + " / 이닝 : "
                         + dto.getInnings()
                         + " / 탈삼진 : "
@@ -320,8 +383,6 @@ public class PlayerPitcherCrawler {
             }
 
             System.out.println("크롤링 완료");
-
-            conn.disconnect();
 
         } catch (Exception e) {
             e.printStackTrace();
