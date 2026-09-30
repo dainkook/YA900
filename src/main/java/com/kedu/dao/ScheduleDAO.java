@@ -109,7 +109,66 @@ public class ScheduleDAO {
 					teamId
 					);
 		} catch (Exception e) {
-			return "╧ла╓";
+			return "О©╫О©╫О©╫О©╫";
 		}
+	}
+	
+	public List<ScheduleDTO> selectHomeSchedules() {
+
+	    String sql =
+	            "SELECT * "
+	          + "FROM ("
+	          + "    SELECT "
+	          + "        s.game_id, "
+	          + "        s.title, "
+	          + "        s.location, "
+	          + "        s.start_date, "
+	          + "        s.end_date, "
+	          + "        s.winner_id, "
+	          + "        s.home_id, "
+	          + "        s.away_id, "
+	          + "        s.home_score, "
+	          + "        s.away_score, "
+	          + "        s.game_status, "
+	          + "        h.team_name AS home_team, "
+	          + "        a.team_name AS away_team, "
+	          + "        h.team_logo AS home_logo, "
+	          + "        a.team_logo AS away_logo "
+	          + "    FROM schedule s "
+	          + "    JOIN team h ON s.home_id = h.team_id "
+	          + "    JOIN team a ON s.away_id = a.team_id "
+	          + "    ORDER BY s.start_date"
+	          + ") "
+	          + "WHERE ROWNUM <= 5";
+
+	    return jdbc.query(
+	            sql,
+	            new BeanPropertyRowMapper<>(ScheduleDTO.class)
+	    );
+	}
+	
+	public ScheduleDTO selectById(int game_id) {
+
+	    String sql =
+	        "SELECT "
+	        + "s.game_id, "
+	        + "s.title, "
+	        + "s.location, "
+	        + "s.start_date, "
+	        + "s.end_date, "
+	        + "s.home_id, "
+	        + "s.away_id, "
+	        + "h.team_name AS home_team, "
+	        + "a.team_name AS away_team "
+	        + "FROM schedule s "
+	        + "JOIN team h ON s.home_id = h.team_id "
+	        + "JOIN team a ON s.away_id = a.team_id "
+	        + "WHERE s.game_id = ?";
+
+	    return jdbc.queryForObject(
+	        sql,
+	        new BeanPropertyRowMapper<>(ScheduleDTO.class),
+	        game_id
+	    );
 	}
 }

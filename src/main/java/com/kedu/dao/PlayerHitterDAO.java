@@ -1,6 +1,9 @@
 package com.kedu.dao;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -63,5 +66,23 @@ public class PlayerHitterDAO {
 				dto.getWrc(),
 				dto.getWar()
 		);
+	}
+	
+	public List<PlayerHitterDTO> getTop10Hitters() {
+
+	    String sql =
+	            "SELECT PLAYER_NAME, PLAYER_TEAM, BATTING_AVG, GAMES, AT_BATS "
+	            + "FROM ("
+	            + " SELECT PLAYER_NAME, PLAYER_TEAM, BATTING_AVG, GAMES, AT_BATS "
+	            + " FROM playerHitter "
+	            + " WHERE AT_BATS >= 400 "
+	            + " ORDER BY BATTING_AVG DESC"
+	            + ") "
+	            + "WHERE ROWNUM <= 10";
+
+	    return jdbc.query(
+	            sql,
+	            new BeanPropertyRowMapper<>(PlayerHitterDTO.class)
+	    );
 	}
 }

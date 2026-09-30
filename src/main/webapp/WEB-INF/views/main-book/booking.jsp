@@ -771,20 +771,19 @@ body {
     <div class="game-info">
 
         <div class="game-date">
-            09.18 (금)<br>
-            18:30
-        </div>
-
-        <div class="game-teams">
-            <strong>롯데 GIANTS</strong>
-            &nbsp; VS &nbsp;
-            <strong>SSG LANDERS</strong>
-        </div>
-
-        <div class="game-stadium">
-            사직야구장
-        </div>
-
+		    <fmt:formatDate value="${game.start_date}" pattern="MM.dd (E)" /><br>
+		    <fmt:formatDate value="${game.start_date}" pattern="HH:mm" />
+		</div>
+		
+		<div class="game-teams">
+		    <strong>${game.away_team}</strong>
+		    &nbsp; VS &nbsp;
+		    <strong>${game.home_team}</strong>
+		</div>
+		
+		<div class="game-stadium">
+		    ${game.location}
+		</div>
     </div>
 
 
@@ -1037,17 +1036,23 @@ body {
 
             <div class="summary-item">
                 <div class="summary-label">경기</div>
-                <div class="summary-value">롯데 VS SSG</div>
+                <div class="summary-value">
+				    ${game.away_team} VS ${game.home_team}
+				</div>
             </div>
 
             <div class="summary-item">
                 <div class="summary-label">날짜</div>
-                <div class="summary-value">09.18 (금) 18:30</div>
+                <div class="summary-value">
+				    <fmt:formatDate value="${game.start_date}" pattern="MM.dd (E) HH:mm" />
+				</div>
             </div>
 
             <div class="summary-item">
                 <div class="summary-label">구장</div>
-                <div class="summary-value">사직야구장</div>
+                <div class="summary-value">
+				    ${game.location}
+				</div>
             </div>
 
             <div class="summary-item">
@@ -1096,17 +1101,21 @@ body {
 
                 <div class="payment-info">
                     <span>경기</span>
-                    <span>롯데 GIANTS VS SSG LANDERS</span>
+                    <span>
+					    ${game.away_team} VS ${game.home_team}
+					</span>
                 </div>
 
                 <div class="payment-info">
                     <span>경기일</span>
-                    <span>09.18 (금) 18:30</span>
+                    <span>
+					    <fmt:formatDate value="${game.start_date}" pattern="MM.dd (E) HH:mm" />
+					</span>
                 </div>
 
                 <div class="payment-info">
                     <span>구장</span>
-                    <span>사직야구장</span>
+                    <span>${game.location}</span>
                 </div>
 
                 <div class="payment-info">
