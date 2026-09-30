@@ -323,25 +323,11 @@ body {
 		<div class="month-navigation">
 
 			<c:choose>
-
 				<c:when test="${month >= 7}">
-
-					<a
-						href="${pageContext.request.contextPath}/schedule/schedule?month=6"
-						class="month-arrow">
+					<a href="${pageContext.request.contextPath}/schedule/schedule?month=6" class="month-arrow">
 						‹
 					</a>
-
 				</c:when>
-
-				<c:otherwise>
-
-					<div class="month-arrow">
-						‹
-					</div>
-
-				</c:otherwise>
-
 			</c:choose>
 
 			<div class="month-tabs">
@@ -349,109 +335,64 @@ body {
 				<c:choose>
 
 					<c:when test="${month <= 6}">
-
 						<c:forEach var="i" begin="1" end="6">
-
 							<a
 								href="${pageContext.request.contextPath}/schedule/schedule?month=${i}"
 								class="month-tab ${month == i ? 'active' : ''}">
 								${i}월
 							</a>
-
 						</c:forEach>
 
 					</c:when>
 
 					<c:otherwise>
-
 						<c:forEach var="i" begin="7" end="12">
-
 							<a
 								href="${pageContext.request.contextPath}/schedule/schedule?month=${i}"
 								class="month-tab ${month == i ? 'active' : ''}">
 								${i}월
 							</a>
-
 						</c:forEach>
-
 					</c:otherwise>
-
 				</c:choose>
-
 			</div>
 
 			<c:choose>
-
 				<c:when test="${month <= 6}">
-
 					<a
 						href="${pageContext.request.contextPath}/schedule/schedule?month=7"
 						class="month-arrow">
 						›
 					</a>
-
 				</c:when>
-
-				<c:otherwise>
-
-					<div class="month-arrow">
-						›
-					</div>
-
-				</c:otherwise>
-
 			</c:choose>
-
 		</div>
 
 	</section>
 
 	<section class="game-area">
-
 		<div class="month-title">
 			2026년 ${month}월 경기 일정
 		</div>
-
 		<div id="schedule-list">
-
 			<c:choose>
-
 				<c:when test="${empty list}">
-
 					<div class="no-game">
 						해당 월에 경기 일정이 없습니다.
 					</div>
-
 				</c:when>
-
 				<c:otherwise>
-
 					<c:forEach var="dto" items="${list}">
-
 						<div class="schedule-day">
-
 							<div class="schedule-date">
-
-								<fmt:formatDate
-									value="${dto.start_date}"
-									pattern="yyyy년 MM월 dd일" />
-
+								<fmt:formatDate value="${dto.start_date}" pattern="yyyy년 MM월 dd일" />
 							</div>
-
 							<div class="game-card">
-
 								<div class="game-header">
-
 									<span>
-
-										<fmt:formatDate
-											value="${dto.start_date}"
-											pattern="HH:mm" />
-
+										<fmt:formatDate value="${dto.start_date}" pattern="HH:mm" />
 									</span>
-
 									<c:choose>
-
 										<c:when test="${dto.start_date lt now}">
 											<span>경기종료</span>
 										</c:when>
@@ -467,77 +408,39 @@ body {
 								<div class="game-content">
 
 									<div class="team">
-
-										<img
-											src="${pageContext.request.contextPath}${dto.away_logo}"
-											class="team-logo">
-
-										<div class="team-name">
-											${dto.away_team}
-										</div>
-
+										<img src="${pageContext.request.contextPath}${dto.away_logo}" class="team-logo">
+										<div class="team-name">${dto.away_team}</div>
 									</div>
 
 									<div class="score">
-
 										<c:choose>
-
-											<c:when test="${dto.start_date lt now}">
-
-												${dto.away_score}
+											<c:when test="${dto.start_date lt now}"> ${dto.away_score}
 
 												<span class="vs">:</span>
 
 												${dto.home_score}
-
 											</c:when>
-
 											<c:otherwise>
-
 												-
-
 												<span class="vs">:</span>
-
 												-
-
 											</c:otherwise>
-
 										</c:choose>
-
 									</div>
-
 									<div class="team">
-
-										<div class="team-name">
-											${dto.home_team}
-										</div>
-
-										<img
-											src="${pageContext.request.contextPath}${dto.home_logo}"
-											class="team-logo">
-
+										<div class="team-name">${dto.home_team}</div>
+										<img src="${pageContext.request.contextPath}${dto.home_logo}" class="team-logo">
 									</div>
-
 								</div>
-
-								<div class="stadium">
-									${dto.location}
-								</div>
+								<div class="stadium">${dto.location}</div>
 
 							</div>
-
 						</div>
-
 					</c:forEach>
-
 				</c:otherwise>
-
 			</c:choose>
-
 		</div>
-
 	</section>
-
 </main>
 
 </body>

@@ -44,6 +44,6 @@ public class ScheduleController {
         model.addAttribute("month", month);
         model.addAttribute("now", today);
 
-        return "detail/dashboard";
+        return "schedule/dashboard";
     }
 }
