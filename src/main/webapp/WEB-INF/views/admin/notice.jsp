@@ -147,6 +147,12 @@ body {
 	box-shadow: 0 5px 18px rgba(17, 25, 54, 0.06);
 }
 
+.search-area form {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
 .search-area select {
 	width: 150px;
 	height: 42px;
@@ -338,11 +344,6 @@ body {
 	color: #68718a;
 	font-size: 13px;
 }
-.search-area form {
-	display: flex;
-	align-items: center;
-	gap: 10px;
-}
 </style>
 
 </head>
@@ -359,7 +360,7 @@ body {
 
 				<div class="login">
 
-					<span> ${admin_name} 관리자님 </span>
+					<span>${admin_name} 관리자님</span>
 
 					<button type="button" class="logout-btn"
 						onclick="location.href='/admin/logout'">로그아웃</button>
@@ -371,27 +372,27 @@ body {
 			<div class="menu">
 
 				<div class="menu-item">
-					<a href="/admin/main"> 대시보드 </a>
+					<a href="/admin/main">대시보드</a>
 				</div>
 
 				<div class="menu-item active">
-					<a href="/admin/notice"> 공지관리 </a>
+					<a href="/admin/notice">공지관리</a>
 				</div>
 
 				<div class="menu-item">
-					<a href="/admin/member"> 회원관리 </a>
+					<a href="/admin/member">회원관리</a>
 				</div>
 
 				<div class="menu-item">
-					<a href="/admin/reservation"> 예매관리 </a>
+					<a href="/admin/reservation">예매관리</a>
 				</div>
 
 				<div class="menu-item">
-					<a href="/admin/schedule"> 경기관리 </a>
+					<a href="/admin/schedule">경기관리</a>
 				</div>
 
 				<div class="menu-item">
-					<a href="/admin/report"> 신고관리 </a>
+					<a href="/admin/report">신고관리</a>
 				</div>
 
 			</div>
@@ -410,15 +411,18 @@ body {
 			</div>
 
 
+			<!-- 검색 -->
 			<div class="search-area">
 
 				<form action="/admin/notice" method="get">
 
 					<select name="category">
 
-						<option value="all" ${category == 'all' ? 'selected' : ''}>전체</option>
+						<option value="all" ${category == 'all' ? 'selected' : ''}>
+							전체</option>
 
-						<option value="title" ${category == 'title' ? 'selected' : ''}>제목</option>
+						<option value="title" ${category == 'title' ? 'selected' : ''}>
+							제목</option>
 
 						<option value="contents"
 							${category == 'contents' ? 'selected' : ''}>내용</option>
@@ -433,6 +437,7 @@ body {
 			</div>
 
 
+			<!-- 공지사항 목록 -->
 			<div class="notice-list">
 
 				<div class="notice-row header-row">
@@ -459,7 +464,6 @@ body {
 						<div class="notice-title">
 
 							<a href="/admin/notice/detail?notice_seq=${notice.notice_seq}">
-
 								${notice.title} </a>
 
 						</div>
@@ -493,6 +497,7 @@ body {
 			</div>
 
 
+			<!-- 공지 작성 버튼 -->
 			<div class="notice-bottom">
 
 				<button type="button" class="write-btn"
@@ -501,14 +506,43 @@ body {
 			</div>
 
 
-			<div class="pagination">
+			<!-- 페이지네이션 -->
+			<c:if test="${totalPage > 0}">
 
-				<a href="#" class="arrow"> ◀ </a> <a href="#" class="active"> 1
-				</a> <a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">5</a>
-				<a href="#">6</a> <a href="#">7</a> <a href="#">8</a> <a href="#">9</a>
-				<a href="#">10</a> <a href="#" class="arrow"> ▶ </a>
+				<div class="pagination">
 
-			</div>
+					<!-- 이전 페이지 블록 -->
+					<c:if test="${prevPage >= 1}">
+
+						<a class="arrow"
+							href="/admin/notice?page=${prevPage}&category=${category}&search=${search}">
+							◀ </a>
+
+					</c:if>
+
+
+					<!-- 페이지 번호 -->
+					<c:forEach var="p" begin="${startPage}" end="${endPage}">
+
+						<a
+							href="/admin/notice?page=${p}&category=${category}&search=${search}"
+							class="${p == page ? 'active' : ''}"> ${p} </a>
+
+					</c:forEach>
+
+
+					<!-- 다음 페이지 블록 -->
+					<c:if test="${nextPage <= totalPage}">
+
+						<a class="arrow"
+							href="/admin/notice?page=${nextPage}&category=${category}&search=${search}">
+							▶ </a>
+
+					</c:if>
+
+				</div>
+
+			</c:if>
 
 		</div>
 
