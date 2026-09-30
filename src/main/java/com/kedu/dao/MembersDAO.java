@@ -1,6 +1,7 @@
 package com.kedu.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -20,7 +21,7 @@ public class MembersDAO {
 				+ "point, team, regdate, blackList, admin"
 				+ ") VALUES ("
 				+ "member_seq_seq.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "
-				+ "0, ?, SYSTIMESTAMP, 0, 'ÀÏ¹Ý'"
+				+ "0, ?, SYSTIMESTAMP, 0, 'ï¿½Ï¹ï¿½'"
 				+ ")";
 
 		return jdbc.update(sql,
@@ -38,5 +39,21 @@ public class MembersDAO {
 				dto.getProfile_img(),
 				dto.getTeam()
 				);
+	}
+	
+	public UsersDTO login(String id, String pw) {
+
+	    String sql = "SELECT * FROM users WHERE id = ? AND pw = ?";
+
+	    try {
+	        return jdbc.queryForObject(
+	            sql,
+	            new BeanPropertyRowMapper<UsersDTO>(UsersDTO.class),
+	            id,
+	            pw
+	        );
+	    } catch (Exception e) {
+	        return null;
+	    }
 	}
 }

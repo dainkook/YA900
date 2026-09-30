@@ -1,5 +1,7 @@
 package com.kedu.controllers;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,13 +19,15 @@ public class BookingController {
     private ScheduleDAO scheduleDAO;
 
 	@RequestMapping("/{game_id}")
-    public String booking(@PathVariable int game_id, Model model) {
+	public String booking(
+	        @PathVariable int game_id,
+	        Model model) {
 
-        ScheduleDTO game = scheduleDAO.selectById(game_id);
+	    ScheduleDTO game = scheduleDAO.selectById(game_id);
 
-        model.addAttribute("game", game);
+	    model.addAttribute("game", game);
 
-        return "/main-book/booking";
-    }
+	    return "/main-book/booking";
+	}
 	
 }

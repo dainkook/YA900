@@ -2,6 +2,8 @@ package com.kedu.controllers;
 
 import java.sql.Timestamp;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,5 +32,23 @@ public class MembersController {
 
 		dao.insert(dto);
 		return "redirect:/";
+	}
+	
+	@RequestMapping(value="/login", method=RequestMethod.POST)
+	public String login(
+	        UsersDTO dto,
+	        HttpSession session) {
+
+	    UsersDTO result = dao.login(dto.getId(), dto.getPw());
+
+	    // 로그인 실패
+	    if (result == null) {
+	        return "redirect:/login";
+	    }
+
+	    // 로그인 성공
+	    session.setAttribute("id", result.getId());
+
+	    return "redirect:/";
 	}
 }
