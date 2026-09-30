@@ -230,28 +230,28 @@ body {
 }
 
 .banner-slide:nth-child(1) {
-    background-image:
-        url("${pageContext.request.contextPath}/resources/images/banner/banner1.jpg");
+    background-image: url("${pageContext.request.contextPath}/resources/images/banner/banner1.jpg");
+    animation-delay: 0s;
 }
 
 .banner-slide:nth-child(2) {
-    background-image:
-        url("${pageContext.request.contextPath}/resources/images/banner/banner2.jpg");
+    background-image: url("${pageContext.request.contextPath}/resources/images/banner/banner2.jpg");
+    animation-delay: 4s;
 }
 
 .banner-slide:nth-child(3) {
-    background-image:
-        url("${pageContext.request.contextPath}/resources/images/banner/banner3.jpg");
+    background-image: url("${pageContext.request.contextPath}/resources/images/banner/banner3.jpg");
+    animation-delay: 8s;
 }
 
 .banner-slide:nth-child(4) {
-    background-image:
-        url("${pageContext.request.contextPath}/resources/images/banner/banner4.jpg");
+    background-image: url("${pageContext.request.contextPath}/resources/images/banner/banner4.jpg");
+    animation-delay: 12s;
 }
 
 .banner-slide:nth-child(5) {
-    background-image:
-        url("${pageContext.request.contextPath}/resources/images/banner/banner5.jpg");
+    background-image: url("${pageContext.request.contextPath}/resources/images/banner/banner5.jpg");
+    animation-delay: 16s;
 }
 
 
@@ -2113,10 +2113,11 @@ body {
 		<!-- FOOTER -->
 		<div class="footer">
 
-			<a href="${pageContext.request.contextPath}/admin">개인정보처리방침 </a>|<a
-				href="${pageContext.request.contextPath}/admin"> 전체 서비스 </a>|<a
-				href="${pageContext.request.contextPath}/admin"> 문제 신고 </a>|<a
-				href="${pageContext.request.contextPath}/admin"> 고객센터</a>
+			<a href="#">개인정보처리방침</a> | 
+			<a href="#">전체 서비스</a> | 
+			<a href="#">문제 신고</a> | 
+			<a href="#">고객센터</a> | 
+			<a href="${pageContext.request.contextPath}/admin">관리자</a>
 
 		</div>
 </body>
