@@ -19,7 +19,7 @@ public class MembersDAO {
 				+ "address1, address2, gender, age, birth, profile_img, "
 				+ "point, team, regdate, blackList, admin"
 				+ ") VALUES ("
-				+ "member_seq_seq.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "
+				+ "USERS_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "
 				+ "0, ?, SYSTIMESTAMP, 0, '¿œπ›'"
 				+ ")";
 
@@ -38,5 +38,13 @@ public class MembersDAO {
 				dto.getProfile_img(),
 				dto.getTeam()
 				);
+	}
+	public int idCheck(String id) {
+		String sql= "select count(*) from users where id = ?";
+		return jdbc.queryForObject(sql, Integer.class, id);
+	}
+	public int emailCheck(String email) {
+		String sql = "select count(*) from users where id =?";
+		return jdbc.queryForObject(sql, Integer.class, email);
 	}
 }
