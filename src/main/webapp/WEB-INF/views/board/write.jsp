@@ -152,8 +152,8 @@ body {
 		});
 		
 		$("#submit").on("click", function() {
-			$("#titleSubmit").val($("#title").text());
-			$("#contentSubmit").val($("#contents").text());
+			$("#titleSubmit").val($("#title").html());
+			$("#contentSubmit").val($("#contents").html());
 		})
     </script>
 </body>

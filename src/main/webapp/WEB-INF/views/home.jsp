@@ -1211,7 +1211,7 @@ body {
 				<div class="recent-header">
 					<h2>최근 게시글</h2>
 					<button class="recent-more"
-						onclick="location.href='${pageContext.request.contextPath}/board/detail?cpage=1">더보기
+						onclick="location.href='${pageContext.request.contextPath}/board/board?cpage=1'">더보기
 						→</button>
 				</div>
 
