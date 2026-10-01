@@ -128,11 +128,6 @@ public class TeamRankDTO {
     }
 
     public void setTeam_logo(String team_logo) {
-        this.team_logo = team_logo;
-    	return team_logo;
-    }
-
-    public void setTeam_logo(String team_logo) {
     	this.team_logo = team_logo;
     }
 }

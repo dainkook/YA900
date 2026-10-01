@@ -37,11 +37,6 @@ public class UsersController {
 	    return "member/login";
 	}
 
-	@RequestMapping("/login")
-	public String login() {
-		return "member/login";
-	}
-
 	@RequestMapping("finduserid")
 	public String finduserid() {
 		return "member/finduserid";
