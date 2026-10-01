@@ -558,44 +558,108 @@ body {
 
 			<div class="pagination">
 
+				<%-- 이전 페이지 --%>
 				<c:if test="${page.currentPage > 1}">
-					<a href="/admin/member?cpage=${page.currentPage-1}" class="arrow">
-						◀ </a>
+
+					<c:choose>
+
+						<%-- 검색 중인 경우 --%>
+						<c:when test="${not empty searchType}">
+
+							<a
+								href="/admin/member/search?searchType=${searchType}&keyword=${keyword}&cpage=${page.currentPage-1}"
+								class="arrow"> ◀ </a>
+
+						</c:when>
+
+						<%-- 일반 회원 목록인 경우 --%>
+						<c:otherwise>
+
+							<a href="/admin/member?cpage=${page.currentPage-1}" class="arrow">
+								◀ </a>
+
+						</c:otherwise>
+
+					</c:choose>
+
 				</c:if>
 
 
+				<%-- 페이지 번호 --%>
 				<c:forEach begin="${page.startPage}" end="${page.endPage}" var="i">
 
 					<c:choose>
 
+						<%-- 현재 페이지 --%>
 						<c:when test="${i == page.currentPage}">
+
 							<span class="active"> ${i} </span>
+
 						</c:when>
 
 
+						<%-- 다른 페이지 --%>
 						<c:otherwise>
-							<a href="/admin/member?cpage=${i}"> ${i} </a>
-						</c:otherwise>
 
+							<c:choose>
+
+								<%-- 검색 중 --%>
+								<c:when test="${not empty searchType}">
+
+									<a
+										href="/admin/member/search?searchType=${searchType}&keyword=${keyword}&cpage=${i}">
+										${i} </a>
+
+								</c:when>
+
+
+								<%-- 일반 목록 --%>
+								<c:otherwise>
+
+									<a href="/admin/member?cpage=${i}"> ${i} </a>
+
+								</c:otherwise>
+
+							</c:choose>
+
+						</c:otherwise>
 
 					</c:choose>
 
 				</c:forEach>
 
 
+				<%-- 다음 페이지 --%>
 				<c:if test="${page.currentPage < page.pageTotal}">
-					<a href="/admin/member?cpage=${page.currentPage+1}" class="arrow">
-						▶ </a>
+
+					<c:choose>
+
+						<%-- 검색 중 --%>
+						<c:when test="${not empty searchType}">
+
+							<a
+								href="/admin/member/search?searchType=${searchType}&keyword=${keyword}&cpage=${page.currentPage+1}"
+								class="arrow"> ▶ </a>
+
+						</c:when>
+
+						<%-- 일반 목록 --%>
+						<c:otherwise>
+
+							<a href="/admin/member?cpage=${page.currentPage+1}" class="arrow">
+								▶ </a>
+
+						</c:otherwise>
+
+					</c:choose>
+
 				</c:if>
 
 			</div>
 
+			<div class="footer">YA900 ADMIN</div>
+
 		</div>
-
-		<div class="footer">YA900 ADMIN</div>
-
-	</div>
-
 </body>
 
 </html>

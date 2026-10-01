@@ -3,213 +3,206 @@ package com.kedu.dto;
 import java.sql.Timestamp;
 
 public class UsersDTO {
-	 	private int member_seq;
-	    private String id;
-	    private String name;
-	    private String pw;
-	    private String email;
-	    private String phone;
-	    private String zipcode;
-	    private String address1;
-	    private String address2;
-	    private String gender;
-	    private int age;
-	    private Timestamp birth;
-	    private String profile_img;
-	    private int point;
-	    private String team;
-	    private Timestamp regdate;
-	    private int blackList;
-	    private String admin;
+	private int member_seq;
+	private String id;
+	private String name;
+	private String pw;
+	private String email;
+	private String phone;
+	private String zipcode;
+	private String address1;
+	private String address2;
+	private String gender;
+	private int age;
+	private Timestamp birth;
+	private String profile_img;
+	private int point;
+	private String team;
+	private Timestamp regdate;
+	private int blackList;
+	private String admin;
 
-	    public UsersDTO() {
-	    }
+	public UsersDTO() {
+	}
 
-	    public UsersDTO(int member_seq, String id, String name, String pw,
-	                    String email, String phone, String zipcode,
-	                    String address1, String address2, String gender,
-	                    int age, Timestamp birth, String profile_img,
-	                    int point, String team, Timestamp regdate,
-	                    int blackList, String admin) {
+	public UsersDTO(int member_seq, String id, String name, String pw, String email, String phone, String zipcode,
+			String address1, String address2, String gender, int age, Timestamp birth, String profile_img, int point,
+			String team, Timestamp regdate, int blackList, String admin) {
 
-	        this.member_seq = member_seq;
-	        this.id = id;
-	        this.name = name;
-	        this.pw = pw;
-	        this.email = email;
-	        this.phone = phone;
-	        this.zipcode = zipcode;
-	        this.address1 = address1;
-	        this.address2 = address2;
-	        this.gender = gender;
-	        this.age = age;
-	        this.birth = birth;
-	        this.profile_img = profile_img;
-	        this.point = point;
-	        this.team = team;
-	        this.regdate = regdate;
-	        this.blackList = blackList;
-	        this.admin = admin;
-	    }
-	    
-	    public String getPhoneFormat() {
+		this.member_seq = member_seq;
+		this.id = id;
+		this.name = name;
+		this.pw = pw;
+		this.email = email;
+		this.phone = phone;
+		this.zipcode = zipcode;
+		this.address1 = address1;
+		this.address2 = address2;
+		this.gender = gender;
+		this.age = age;
+		this.birth = birth;
+		this.profile_img = profile_img;
+		this.point = point;
+		this.team = team;
+		this.regdate = regdate;
+		this.blackList = blackList;
+		this.admin = admin;
+	}
 
-			if(phone == null) {
-				return "";
-			}
+	public String getPhoneFormat() {
 
-			if(phone.length() == 11) {
-				return phone.substring(0,3)
-						+ "-"
-						+ phone.substring(3,7)
-						+ "-"
-						+ phone.substring(7);
-			}
-
-			return phone;
+		if (phone == null) {
+			return "";
 		}
 
-	    public int getMember_seq() {
-	        return member_seq;
-	    }
+		if (phone.length() == 11) {
+			return phone.substring(0, 3) + "-" + phone.substring(3, 7) + "-" + phone.substring(7);
+		}
 
-	    public void setMember_seq(int member_seq) {
-	        this.member_seq = member_seq;
-	    }
+		return phone;
+	}
 
-	    public String getId() {
-	        return id;
-	    }
+	public int getMember_seq() {
+		return member_seq;
+	}
 
-	    public void setId(String id) {
-	        this.id = id;
-	    }
+	public void setMember_seq(int member_seq) {
+		this.member_seq = member_seq;
+	}
 
-	    public String getName() {
-	        return name;
-	    }
+	public String getId() {
+		return id;
+	}
 
-	    public void setName(String name) {
-	        this.name = name;
-	    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-	    public String getPw() {
-	        return pw;
-	    }
+	public String getName() {
+		return name;
+	}
 
-	    public void setPw(String pw) {
-	        this.pw = pw;
-	    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-	    public String getEmail() {
-	        return email;
-	    }
+	public String getPw() {
+		return pw;
+	}
 
-	    public void setEmail(String email) {
-	        this.email = email;
-	    }
+	public void setPw(String pw) {
+		this.pw = pw;
+	}
 
-	    public String getPhone() {
-	        return phone;
-	    }
+	public String getEmail() {
+		return email;
+	}
 
-	    public void setPhone(String phone) {
-	        this.phone = phone;
-	    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-	    public String getZipcode() {
-	        return zipcode;
-	    }
+	public String getPhone() {
+		return phone;
+	}
 
-	    public void setZipcode(String zipcode) {
-	        this.zipcode = zipcode;
-	    }
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 
-	    public String getAddress1() {
-	        return address1;
-	    }
+	public String getZipcode() {
+		return zipcode;
+	}
 
-	    public void setAddress1(String address1) {
-	        this.address1 = address1;
-	    }
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
+	}
 
-	    public String getAddress2() {
-	        return address2;
-	    }
+	public String getAddress1() {
+		return address1;
+	}
 
-	    public void setAddress2(String address2) {
-	        this.address2 = address2;
-	    }
+	public void setAddress1(String address1) {
+		this.address1 = address1;
+	}
 
-	    public String getGender() {
-	        return gender;
-	    }
+	public String getAddress2() {
+		return address2;
+	}
 
-	    public void setGender(String gender) {
-	        this.gender = gender;
-	    }
+	public void setAddress2(String address2) {
+		this.address2 = address2;
+	}
 
-	    public int getAge() {
-	        return age;
-	    }
+	public String getGender() {
+		return gender;
+	}
 
-	    public void setAge(int age) {
-	        this.age = age;
-	    }
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
 
-	    public Timestamp getBirth() {
-	        return birth;
-	    }
+	public int getAge() {
+		return age;
+	}
 
-	    public void setBirth(Timestamp birth) {
-	        this.birth = birth;
-	    }
+	public void setAge(int age) {
+		this.age = age;
+	}
 
-	    public String getProfile_img() {
-	        return profile_img;
-	    }
+	public Timestamp getBirth() {
+		return birth;
+	}
 
-	    public void setProfile_img(String profile_img) {
-	        this.profile_img = profile_img;
-	    }
+	public void setBirth(Timestamp birth) {
+		this.birth = birth;
+	}
 
-	    public int getPoint() {
-	        return point;
-	    }
+	public String getProfile_img() {
+		return profile_img;
+	}
 
-	    public void setPoint(int point) {
-	        this.point = point;
-	    }
+	public void setProfile_img(String profile_img) {
+		this.profile_img = profile_img;
+	}
 
-	    public String getTeam() {
-	        return team;
-	    }
+	public int getPoint() {
+		return point;
+	}
 
-	    public void setTeam(String team) {
-	        this.team = team;
-	    }
+	public void setPoint(int point) {
+		this.point = point;
+	}
 
-	    public Timestamp getRegdate() {
-	        return regdate;
-	    }
+	public String getTeam() {
+		return team;
+	}
 
-	    public void setRegdate(Timestamp regdate) {
-	        this.regdate = regdate;
-	    }
+	public void setTeam(String team) {
+		this.team = team;
+	}
 
-	    public int getBlackList() {
-	        return blackList;
-	    }
+	public Timestamp getRegdate() {
+		return regdate;
+	}
 
-	    public void setBlackList(int blackList) {
-	        this.blackList = blackList;
-	    }
+	public void setRegdate(Timestamp regdate) {
+		this.regdate = regdate;
+	}
 
-	    public String getAdmin() {
-	        return admin;
-	    }
+	public int getBlackList() {
+		return blackList;
+	}
 
-	    public void setAdmin(String admin) {
-	        this.admin = admin;
-	    }
+	public void setBlackList(int blackList) {
+		this.blackList = blackList;
+	}
+
+	public String getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(String admin) {
+		this.admin = admin;
+	}
 }
