@@ -245,42 +245,32 @@ body {
 	background-color: #fafbfe;
 }
 
-.col-check {
-	width: 6%;
-}
-
 .col-no {
 	width: 10%;
 }
 
 .col-id {
-	width: 17%;
-}
-
-.col-name {
-	width: 12%;
-}
-
-.col-phone {
 	width: 19%;
 }
 
+.col-name {
+	width: 13%;
+}
+
+.col-phone {
+	width: 20%;
+}
+
 .col-regdate {
-	width: 15%;
+	width: 16%;
 }
 
 .col-status {
-	width: 10%;
+	width: 11%;
 }
 
 .col-manage {
 	width: 11%;
-}
-
-.member-table input[type="checkbox"] {
-	width: 16px;
-	height: 16px;
-	cursor: pointer;
 }
 
 .status-normal {
@@ -486,20 +476,12 @@ body {
 
 						<tr>
 
-							<th class="col-check">선택</th>
-
 							<th class="col-no">회원번호</th>
-
 							<th class="col-id">아이디</th>
-
 							<th class="col-name">이름</th>
-
 							<th class="col-phone">전화번호</th>
-
 							<th class="col-regdate">가입일</th>
-
 							<th class="col-status">상태</th>
-
 							<th class="col-manage">관리</th>
 
 						</tr>
@@ -511,9 +493,6 @@ body {
 						<c:forEach var="member" items="${list}">
 
 							<tr>
-
-								<td><input type="checkbox" name="memberSeq"
-									value="${member.member_seq}"></td>
 
 								<td>${member.member_seq}</td>
 
@@ -660,6 +639,9 @@ body {
 			<div class="footer">YA900 ADMIN</div>
 
 		</div>
+
+	</div>
+
 </body>
 
 </html>
