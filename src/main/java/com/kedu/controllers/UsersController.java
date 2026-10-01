@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,8 +21,11 @@ import com.kedu.dto.UsersDTO;
 @Controller
 public class UsersController {
 
+
 	@Autowired
 	private UsersDAO dao;
+
+
 
 	@RequestMapping("/signup")
 	public String signup() {
@@ -33,8 +37,18 @@ public class UsersController {
 	    return "member/login";
 	}
 
-	@RequestMapping(value="/insert", method=RequestMethod.POST)
-	public String insert(
+	@RequestMapping("/login")
+	public String login() {
+		return "member/login";
+	}
+
+	@RequestMapping("finduserid")
+	public String finduserid() {
+		return "member/finduserid";
+	}
+
+	@RequestMapping(value="/signup", method=RequestMethod.POST)
+	public String singup(
 			UsersDTO dto,
 			String phone1,
 			String phone2,
@@ -61,7 +75,7 @@ public class UsersController {
 			dto.setProfile_img(fileName);
 		}
 
-		dao.insert(dto);
+		dao.signup(dto);
 
 		return "redirect:/";
 	}
@@ -94,4 +108,16 @@ public class UsersController {
 		return dao.emailCheck(email);
 	}
 
+	@RequestMapping(value="/logout", method=RequestMethod.POST)
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return"redirect:/";
+	}
+
+	@RequestMapping(value="/finduserid", method=RequestMethod.POST)
+	public String findUserId(String name, String email, Model model) {
+		String id= dao.findUserId(name, email);
+		model.addAttribute("id",id);
+		return "member/finduserid";
+	}
 }

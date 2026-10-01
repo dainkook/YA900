@@ -267,7 +267,7 @@ body {
 
 			<h2 class="signup-title">회원가입</h2>
 
-			<form action="${pageContext.request.contextPath}/insert"
+			<form action="${pageContext.request.contextPath}/signup"
 				method="post" enctype="multipart/form-data" id="signupForm">
 
 				<div class="input-group">
@@ -797,72 +797,35 @@ nameInput.addEventListener("input", function(){
 });
 
 
-let phone1 =
-    document.getElementById("phone1");
+let phone1 = document.getElementById("phone1");
+let phone2 = document.getElementById("phone2");
+let phone3 = document.getElementById("phone3");
 
-let phone2 =
-    document.getElementById("phone2");
-
-let phone3 =
-    document.getElementById("phone3");
-
-let phoneMessage =
-    document.getElementById("phone-message");
-
-
-let phone1Regex = /^010$/;
-
+let phone1Regex = /^[0-9]{3}$/;
 let phone2Regex = /^[0-9]{4}$/;
-
 let phone3Regex = /^[0-9]{4}$/;
-
 
 function checkPhone(){
 
-    if(phone1.value === "" ||
-       phone2.value === "" ||
-       phone3.value === ""){
-
-        phoneMessage.textContent = "";
-
+    if(phone1.value === "" || phone2.value === "" || phone3.value === ""){
         return;
     }
 
     if(!phone1Regex.test(phone1.value)){
-
-        phoneMessage.textContent =
-            "010으로 입력해주세요.";
-
+        return;
     }
 
-    else if(!phone2Regex.test(phone2.value)){
-
-        phoneMessage.textContent =
-            "휴대전화 중간 4자리를 입력해주세요.";
-
+    if(!phone2Regex.test(phone2.value)){
+        return;
     }
 
-    else if(!phone3Regex.test(phone3.value)){
-
-        phoneMessage.textContent =
-            "휴대전화 마지막 4자리를 입력해주세요.";
-
+    if(!phone3Regex.test(phone3.value)){
+        return;
     }
-
-    else{
-
-        phoneMessage.textContent =
-            "사용 가능한 전화번호입니다.";
-
-    }
-
 }
 
-
 phone1.addEventListener("input", checkPhone);
-
 phone2.addEventListener("input", checkPhone);
-
 phone3.addEventListener("input", checkPhone);
 
 
