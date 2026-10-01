@@ -51,6 +51,23 @@ public class UsersDTO {
 	        this.blackList = blackList;
 	        this.admin = admin;
 	    }
+	    
+	    public String getPhoneFormat() {
+
+			if(phone == null) {
+				return "";
+			}
+
+			if(phone.length() == 11) {
+				return phone.substring(0,3)
+						+ "-"
+						+ phone.substring(3,7)
+						+ "-"
+						+ phone.substring(7);
+			}
+
+			return phone;
+		}
 
 	    public int getMember_seq() {
 	        return member_seq;
