@@ -38,4 +38,9 @@ public class BoardDAO {
 		String sql = "insert into board values(board_seq.nextval, ?, ?, 0, sysdate, ?, null, 0, null";
 		return jdbc.update(sql, title, contents, id, team);
 	}
+	
+	public List<BoardDTO> getRecentBoards() {
+	    String sql = "select * from (select board.*, row_number() over(order by board_seq desc) rn from board) where rn between 1 and 8";
+	    return jdbc.query(sql, new BeanPropertyRowMapper<>(BoardDTO.class));
+	}
 }

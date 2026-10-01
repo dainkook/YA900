@@ -167,6 +167,11 @@ body {
 .game-teams {
     width: 350px;
 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
     text-align: center;
 
     color: var(--navy);
@@ -174,6 +179,12 @@ body {
 
 .game-teams strong {
     font-size: 22px;
+}
+
+.game-teams img {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
 }
 
 .game-stadium {
@@ -776,9 +787,19 @@ body {
 		</div>
 		
 		<div class="game-teams">
+
+		    <img src="${pageContext.request.contextPath}${game.away_logo}"
+		         alt="${game.away_team}">
+		
 		    <strong>${game.away_team}</strong>
-		    &nbsp; VS &nbsp;
+		
+		    <span>VS</span>
+		
 		    <strong>${game.home_team}</strong>
+		
+		    <img src="${pageContext.request.contextPath}${game.home_logo}"
+		         alt="${game.home_team}">
+		
 		</div>
 		
 		<div class="game-stadium">
@@ -869,7 +890,7 @@ body {
                     <button class="seat">31</button>
                     <button class="seat">32</button>
                     <button class="seat">33</button>
-                    <button class="seat sold">34</button>
+                    <button class="seat">34</button>
                     <button class="seat">35</button>
 
                     <div class="aisle"></div>
