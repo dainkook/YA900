@@ -8,14 +8,15 @@
 <title>YA900 - 순위</title>
 <style>
 * {
-	box-sizing: border-box
+	box-sizing: border-box;
 }
 
 body {
 	margin: 0;
-	background: #f5f6f8;
+	background: linear-gradient(to bottom, #111936 0%, #111936 12%, #171f46 22%, #252f67 32%, #71809f 43%, #aeb7ca 55%, #d5dae5 70%, #eef1f8 85%, #eef1f8 100%);
 	font-family: Arial, "Malgun Gothic", sans-serif;
-	color: #222
+	color: #18213f;
+	min-height: 100vh;
 }
 
 .header {
@@ -24,50 +25,76 @@ body {
 	left: 0;
 	width: 100%;
 	height: 80px;
-	background-color: white;
-	border-bottom: 1px solid #ddd;
+	background: linear-gradient(135deg, #0b1026, #171f46);
+	color: white;
 	display: flex;
 	align-items: center;
 	padding: 0 50px;
-	z-index: 1000
+	z-index: 1000;
+	border-bottom: 1px solid #303b70;
+	box-shadow: 0 3px 15px rgba(11, 16, 38, 0.18);
 }
 
 .logo {
-	font-size: 28px;
+	font-size: 30px;
 	font-weight: bold;
-	margin-right: 70px
+	margin-right: 60px;
+	color: white;
+	letter-spacing: 1px;
 }
 
 .main-menu {
+	height: 100%;
 	display: flex;
-	gap: 45px
+	align-items: center;
+	gap: 40px;
 }
 
 .main-menu a {
 	text-decoration: none;
-	color: #222;
-	font-size: 16px
+	color: #f7f8ff;
+	font-size: 16px;
+	font-weight: bold;
+	padding: 10px 5px;
+	transition: 0.2s ease;
+}
+
+.main-menu a:hover {
+	color: #aebee7;
 }
 
 .user-menu {
 	margin-left: auto;
 	display: flex;
-	gap: 10px
+	gap: 8px;
 }
 
 .user-menu button {
-	background: #fff;
-	border: 1px solid #aaa;
+	background: transparent;
+	border: 1px solid #7180b1;
+	border-radius: 5px;
 	padding: 8px 15px;
-	cursor: pointer
+	color: white;
+	cursor: pointer;
+	transition: 0.2s ease;
+}
+
+.user-menu button:hover {
+	background: #476aaa;
+	border-color: #476aaa;
 }
 
 .container {
 	width: 1050px;
 	margin: 0 auto;
-	background: #fff;
+	background: #f5f6f8;
 	min-height: 100vh;
-	padding-top: 80px
+	padding-top: 80px;
+	box-shadow: 0 0 30px rgba(17, 25, 54, 0.08);
+}
+
+.title-area {
+	padding: 35px 35px 0;
 }
 
 .kbo-navigation {
@@ -76,98 +103,145 @@ body {
 	align-items: center;
 	justify-content: center;
 	gap: 45px;
-	border-bottom: 1px solid #ddd;
-	background: #fff
+	border-bottom: 1px solid #d6dceb;
+	background: white;
+	border-radius: 8px 8px 0 0;
 }
 
 .kbo-navigation a {
 	text-decoration: none;
-	color: #777;
-	font-size: 15px
+	color: #8b93a8;
+	font-size: 15px;
+	font-weight: 500;
+	padding: 18px 5px;
+	transition: 0.2s ease;
+}
+
+.kbo-navigation a:hover {
+	color: #476aaa;
 }
 
 .kbo-navigation a.active {
-	color: #222;
-	font-weight: bold
+	color: #111936;
+	font-weight: bold;
+	border-bottom: 2px solid #476aaa;
 }
 
 .content {
-	padding: 30px 35px 60px
+	padding: 35px 35px 60px;
 }
 
 .page-title {
-	font-size: 24px;
+	font-size: 25px;
 	font-weight: bold;
-	margin-bottom: 25px
+	color: #111936;
+	margin-bottom: 25px;
 }
 
 .record-tabs {
 	display: flex;
-	border-bottom: 1px solid #ddd;
-	margin-bottom: 25px
+	border-bottom: 1px solid #d6dceb;
+	margin-bottom: 25px;
+	background: white;
+	border-radius: 8px 8px 0 0;
+	padding: 0 10px;
 }
 
 .record-tabs button {
 	height: 48px;
 	padding: 0 28px;
-	background: #fff;
+	background: white;
 	border: 0;
-	border-bottom: 2px solid transparent;
+	border-bottom: 3px solid transparent;
 	font-size: 15px;
-	color: #777;
-	cursor: pointer
+	font-weight: 500;
+	color: #8b93a8;
+	cursor: pointer;
+	transition: 0.2s ease;
+}
+
+.record-tabs button:hover {
+	color: #476aaa;
 }
 
 .record-tabs button.active {
-	color: #222;
+	color: #111936;
 	font-weight: bold;
-	border-bottom: 2px solid #222
+	border-bottom-color: #476aaa;
 }
 
 .season-area {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	margin-bottom: 20px
+	margin-bottom: 20px;
 }
 
 .season-title {
 	font-size: 18px;
-	font-weight: bold
+	font-weight: bold;
+	color: #111936;
 }
 
 .season-select {
 	padding: 8px 30px 8px 12px;
-	border: 1px solid #ccc;
-	background: #fff
+	border: 1px solid #c7cee0;
+	border-radius: 5px;
+	background: white;
+	color: #36405d;
+	outline: none;
+}
+
+.season-select:focus {
+	border-color: #476aaa;
 }
 
 .table-wrap {
-	border-top: 2px solid #222
+	background: white;
+	border: 1px solid #d6dceb;
+	border-radius: 10px;
+	overflow: hidden;
+	box-shadow: 0 5px 18px rgba(17, 25, 54, 0.05);
 }
 
 .rank-table {
 	width: 100%;
-	border-collapse: collapse
+	border-collapse: collapse;
 }
 
 .rank-table th {
-	background: #f7f7f7;
+	background: #f1f3f8;
+	color: #36405d;
 	padding: 14px 8px;
-	border-bottom: 1px solid #ddd;
-	font-size: 13px
+	border-bottom: 1px solid #d6dceb;
+	font-size: 13px;
+	font-weight: bold;
 }
 
 .rank-table td {
-	padding: 16px 8px;
-	border-bottom: 1px solid #eee;
+	padding: 15px 8px;
+	border-bottom: 1px solid #e7eaf1;
 	text-align: center;
-	font-size: 14px
+	font-size: 14px;
+	color: #4b556f;
+}
+
+.rank-table tbody tr {
+	transition: 0.15s ease;
+}
+
+.rank-table tbody tr:hover {
+	background: #f7f9fd;
+}
+
+.rank-table tbody tr:last-child td {
+	border-bottom: none;
 }
 
 .rank-table .rank {
 	font-weight: bold;
-	width: 55px
+	color: #68718a;
+	width: 55px;
 }
 
 .team-cell {
@@ -176,13 +250,14 @@ body {
 	justify-content: flex-start;
 	gap: 12px;
 	padding-left: 15px;
-	font-weight: bold
+	font-weight: bold;
+	color: #18213f;
 }
 
 .team-logo {
 	width: 38px;
 	height: 38px;
-	object-fit: contain
+	object-fit: contain;
 }
 
 .player-cell {
@@ -192,74 +267,119 @@ body {
 	gap: 12px;
 	padding-left: 15px;
 	font-weight: bold;
+	color: #18213f;
 }
 
 .player-img {
-	width: 45px;
+	width: 40px;
 	height: 45px;
-	border-radius: 50%;
-	object-fit: cover;
-	border: 1px solid #eee;
+	object-fit: contain;
+	border-radius: 6px;
+	border: 1px solid #d6dceb;
+	background: #f5f6f8;
 }
 
 .record-highlight {
-	font-weight: bold
+	font-weight: bold;
+	color: #476aaa !important;
 }
 
-.rank-table tbody tr:hover {
-	background: #fafafa
-}
-
-.rank-table tbody tr:nth-child(1) .rank {
-	font-size: 18px
-}
-
-.rank-table tbody tr:nth-child(2) .rank {
-	font-size: 18px
-}
-
+.rank-table tbody tr:nth-child(1) .rank,
+.rank-table tbody tr:nth-child(2) .rank,
 .rank-table tbody tr:nth-child(3) .rank {
-	font-size: 18px
+	font-size: 18px;
+	color: #476aaa;
 }
 
-@media ( max-width :1100px) {
+.rank-table tbody tr:nth-child(1) .team-cell,
+.rank-table tbody tr:nth-child(2) .team-cell,
+.rank-table tbody tr:nth-child(3) .team-cell {
+	color: #111936;
+}
+
+@media (max-width: 1100px) {
 	.container {
-		width: 100%
+		width: 100%;
 	}
 }
 
-@media ( max-width :750px) {
+@media (max-width: 750px) {
 	.header {
-		padding: 0 20px
+		padding: 0 20px;
 	}
+
 	.logo {
-		margin-right: 30px
+		margin-right: 30px;
 	}
+
 	.main-menu {
-		gap: 20px
+		gap: 20px;
 	}
+
 	.container {
-		width: 100%
+		width: 100%;
 	}
+
+	.title-area {
+		padding: 25px 15px 0;
+	}
+
 	.content {
-		padding: 25px 15px 50px
+		padding: 25px 15px 50px;
 	}
+
 	.rank-table {
-		min-width: 850px
+		min-width: 850px;
 	}
+
 	.table-wrap {
-		overflow-x: auto
+		overflow-x: auto;
 	}
+
 	.kbo-navigation {
-		gap: 30px
+		gap: 30px;
 	}
+
 	.record-tabs {
-		overflow-x: auto
+		overflow-x: auto;
 	}
+
 	.record-tabs button {
 		white-space: nowrap;
-		padding: 0 20px
+		padding: 0 20px;
 	}
+}
+
+@media (max-width: 600px) {
+	.user-menu {
+		display: none;
+	}
+
+	.main-menu {
+		gap: 15px;
+	}
+
+	.main-menu a {
+		font-size: 14px;
+	}
+}
+
+::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+
+::-webkit-scrollbar-track {
+	background: #e6eaf3;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #476aaa;
+	border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: #7189c2;
 }
 </style>
 </head>
@@ -275,11 +395,16 @@ body {
 		</div>
 	</header>
 	<main class="container">
-		<nav class="kbo-navigation">
-			<a href="${pageContext.request.contextPath}/schedule/schedule">일정</a>
-			<a href="${pageContext.request.contextPath}/rankdetail"
-				class="active">순위</a>
-		</nav>
+		<section class="title-area">
+			<nav class="kbo-navigation">
+			    <a href="${pageContext.request.contextPath}/schedule/schedule">
+			        일정
+			    </a>
+			    <a href="${pageContext.request.contextPath}/schedule/rankdetail" class="active">
+			        랭킹 및 기록
+			    </a>
+			</nav>
+		</section>
 		<section class="content">
 			<div class="page-title">KBO 순위</div>
 			<nav class="record-tabs">

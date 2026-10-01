@@ -14,9 +14,10 @@
 
 body {
 	margin: 0;
-	background-color: #f5f6f8;
+	background: linear-gradient(to bottom, #111936 0%, #111936 12%, #171f46 22%, #252f67 32%, #71809f 43%, #aeb7ca 55%, #d5dae5 70%, #eef1f8 85%, #eef1f8 100%);
 	font-family: Arial, "Malgun Gothic", sans-serif;
-	color: #222;
+	color: #18213f;
+	min-height: 100vh;
 }
 
 .header {
@@ -25,90 +26,122 @@ body {
 	left: 0;
 	width: 100%;
 	height: 80px;
-	background-color: white;
-	border-bottom: 1px solid #ddd;
+	background: linear-gradient(135deg, #0b1026, #171f46);
+	color: white;
 	display: flex;
 	align-items: center;
 	padding: 0 50px;
 	z-index: 1000;
+	border-bottom: 1px solid #303b70;
+	box-shadow: 0 3px 15px rgba(11, 16, 38, 0.18);
 }
 
 .logo {
-	font-size: 28px;
+	font-size: 30px;
 	font-weight: bold;
-	margin-right: 70px;
+	margin-right: 60px;
+	color: white;
+	letter-spacing: 1px;
 }
 
 .main-menu {
+	height: 100%;
 	display: flex;
-	gap: 45px;
+	align-items: center;
+	gap: 40px;
 }
 
 .main-menu a {
 	text-decoration: none;
-	color: #222;
+	color: #f7f8ff;
 	font-size: 16px;
+	font-weight: bold;
+	padding: 10px 5px;
+	transition: 0.2s ease;
+}
+
+.main-menu a:hover {
+	color: #aebee7;
 }
 
 .user-menu {
 	margin-left: auto;
 	display: flex;
-	gap: 10px;
+	gap: 8px;
 }
 
 .user-menu button {
-	background-color: white;
-	border: 1px solid #aaa;
+	background: transparent;
+	border: 1px solid #7180b1;
+	border-radius: 5px;
 	padding: 8px 15px;
+	color: white;
 	cursor: pointer;
+	transition: 0.2s ease;
+}
+
+.user-menu button:hover {
+	background: #476aaa;
+	border-color: #476aaa;
 }
 
 .container {
-	width: 900px;
+	width: 1050px;
 	margin: 0 auto;
-	background-color: white;
+	background: #f5f6f8;
 	min-height: 100vh;
 	padding-top: 80px;
+	box-shadow: 0 0 30px rgba(17, 25, 54, 0.08);
 }
 
 .title-area {
-	padding: 40px;
+	padding: 35px 35px 0;
 }
 
 .kbo-navigation {
+	height: 55px;
 	display: flex;
-	gap: 30px;
-	border-bottom: 1px solid #ddd;
-	margin-bottom: 30px;
+	align-items: center;
+	justify-content: center;
+	gap: 45px;
+	border-bottom: 1px solid #d6dceb;
+	background: white;
+	border-radius: 8px 8px 0 0;
 }
 
 .kbo-navigation a {
 	text-decoration: none;
-	color: #777;
-	font-size: 16px;
-	padding: 0 5px 12px;
+	color: #8b93a8;
+	font-size: 15px;
+	font-weight: 500;
+	padding: 18px 5px;
+	transition: 0.2s ease;
 }
 
 .kbo-navigation a:hover {
-	color: #222;
+	color: #476aaa;
 }
 
 .kbo-navigation a.active {
-	color: #222;
+	color: #111936;
 	font-weight: bold;
-	border-bottom: 2px solid #222;
+	border-bottom: 2px solid #476aaa;
 }
 
 .title-area h1 {
-	margin: 0 0 30px;
-	font-size: 26px;
+	margin: 30px 0 25px;
+	font-size: 25px;
+	color: #111936;
 }
 
 .month-navigation {
 	display: flex;
 	align-items: center;
-	border-top: 1px solid #ddd;
-	border-bottom: 1px solid #ddd;
+	background: white;
+	border: 1px solid #d6dceb;
+	border-radius: 10px;
+	overflow: hidden;
+	box-shadow: 0 5px 18px rgba(17, 25, 54, 0.05);
 }
 
 .month-arrow {
@@ -117,14 +150,15 @@ body {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	font-size: 22px;
-	color: #777;
+	font-size: 24px;
+	color: #68718a;
 	text-decoration: none;
+	transition: 0.2s ease;
 }
 
 .month-arrow:hover {
-	background-color: #f5f5f5;
-	color: #222;
+	background: #f1f3f8;
+	color: #476aaa;
 }
 
 .month-tabs {
@@ -138,70 +172,88 @@ body {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	color: #777;
+	color: #8b93a8;
 	font-size: 15px;
 	text-decoration: none;
+	transition: 0.2s ease;
 }
 
 .month-tab:hover {
-	background-color: #f5f5f5;
+	background: #f5f7fb;
+	color: #476aaa;
 }
 
 .month-tab.active {
 	color: white;
-	background-color: #222;
+	background: #476aaa;
 	font-weight: bold;
 }
 
 .game-area {
-	padding: 0 40px 50px;
+	padding: 0 35px 60px;
 }
 
 .month-title {
-	font-size: 20px;
+	font-size: 19px;
 	font-weight: bold;
-	padding: 25px 0 20px;
+	color: #111936;
+	padding: 30px 5px 20px;
 }
 
 .schedule-day {
-	border-top: 1px solid #ddd;
-	padding: 20px 0;
+	padding: 20px 0 10px;
 }
 
 .schedule-date {
-	font-size: 17px;
+	font-size: 16px;
 	font-weight: bold;
+	color: #36405d;
 	margin-bottom: 12px;
+	padding-left: 5px;
 }
 
 .game-card {
-	border: 1px solid #ddd;
-	border-radius: 6px;
+	background: white;
+	border: 1px solid #d6dceb;
+	border-radius: 10px;
 	padding: 18px 20px;
 	margin-bottom: 10px;
+	box-shadow: 0 5px 18px rgba(17, 25, 54, 0.05);
+	transition: 0.2s ease;
+}
+
+.game-card:hover {
+	transform: translateY(-2px);
+	border-color: #476aaa;
+	box-shadow: 0 8px 22px rgba(17, 25, 54, 0.09);
 }
 
 .game-header {
 	display: flex;
 	justify-content: space-between;
-	margin-bottom: 15px;
+	margin-bottom: 18px;
 	font-size: 13px;
-	color: #777;
+	color: #8b93a8;
+}
+
+.game-header span:last-child {
+	color: #476aaa;
+	font-weight: bold;
 }
 
 .game-content {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	gap: 40px;
+	gap: 45px;
 }
 
 .team {
-	width: 180px;
+	width: 220px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	gap: 10px;
+	gap: 12px;
 }
 
 .team-logo {
@@ -213,77 +265,157 @@ body {
 .team-name {
 	font-size: 17px;
 	font-weight: bold;
+	color: #18213f;
 }
 
 .score {
+	min-width: 85px;
+	text-align: center;
 	font-size: 24px;
 	font-weight: bold;
+	color: #111936;
 }
 
 .vs {
-	color: #aaa;
-	margin: 0 8px;
+	color: #9aa2b5;
+	margin: 0 7px;
+	font-size: 20px;
 }
 
 .stadium {
 	margin-top: 15px;
+	padding-top: 12px;
+	border-top: 1px solid #eef0f5;
 	text-align: center;
 	font-size: 13px;
-	color: #888;
+	color: #8b93a8;
 }
 
 .no-game {
-	padding: 50px 0;
+	background: white;
+	padding: 60px 0;
 	text-align: center;
-	color: #888;
-	border-top: 1px solid #ddd;
-}
-
-@media ( max-width : 950px) {
-	.container {
-		width: 100%;
-	}
-}
-
-@media ( max-width : 600px) {
-	.header {
-		padding: 0 20px;
-	}
-	.logo {
-		margin-right: 30px;
-	}
-	.main-menu {
-		gap: 15px;
-	}
-	.user-menu {
-		display: none;
-	}
-	.month-arrow {
-		width: 45px;
-	}
-	.month-tab {
-		font-size: 13px;
-	}
-	.game-content {
-		gap: 10px;
-	}
-	.team {
-		width: 120px;
-	}
+	color: #8b93a8;
+	border: 1px solid #d6dceb;
+	border-radius: 10px;
+	box-shadow: 0 5px 18px rgba(17, 25, 54, 0.05);
 }
 
 .game-link {
 	display: block;
 	text-decoration: none !important;
-	color: #222 !important;
+	color: #18213f !important;
 }
 
 .game-link:visited {
-	color: #222 !important;
+	color: #18213f !important;
 }
 
 .game-link:hover {
-	color: #222 !important;
+	color: #18213f !important;
+}
+
+@media (max-width: 1100px) {
+	.container {
+		width: 100%;
+	}
+}
+
+@media (max-width: 750px) {
+	.header {
+		padding: 0 20px;
+	}
+
+	.logo {
+		margin-right: 30px;
+	}
+
+	.main-menu {
+		gap: 20px;
+	}
+
+	.container {
+		width: 100%;
+	}
+
+	.title-area {
+		padding: 25px 15px 0;
+	}
+
+	.game-area {
+		padding: 0 15px 50px;
+	}
+
+	.game-content {
+		gap: 15px;
+	}
+
+	.team {
+		width: 150px;
+	}
+
+	.team-name {
+		font-size: 15px;
+	}
+
+	.month-arrow {
+		width: 45px;
+	}
+
+	.month-tab {
+		font-size: 13px;
+	}
+}
+
+@media (max-width: 600px) {
+	.user-menu {
+		display: none;
+	}
+
+	.main-menu {
+		gap: 15px;
+	}
+
+	.main-menu a {
+		font-size: 14px;
+	}
+
+	.game-content {
+		gap: 5px;
+	}
+
+	.team {
+		width: 120px;
+		flex-direction: column;
+	}
+
+	.score {
+		min-width: 55px;
+		font-size: 20px;
+	}
+
+	.team-logo {
+		width: 40px;
+		height: 40px;
+	}
+}
+
+::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+
+::-webkit-scrollbar-track {
+	background: #e6eaf3;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #476aaa;
+	border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: #7189c2;
 }
 </style>
 
@@ -314,10 +446,12 @@ body {
 
 			<nav class="kbo-navigation">
 
-				<a href="${pageContext.request.contextPath}/schedule/schedule"
-					class="active"> 일정 </a> <a
-					href="${pageContext.request.contextPath}/schedule/rankdetail">
-					순위 </a>
+				<a href="${pageContext.request.contextPath}/schedule/schedule"class="active"> 
+					일정 
+					</a> 
+					<a href="${pageContext.request.contextPath}/schedule/rankdetail">
+					랭킹 및 기록 
+					</a>
 
 			</nav>
 
