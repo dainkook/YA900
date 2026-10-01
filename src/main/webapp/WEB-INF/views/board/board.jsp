@@ -393,12 +393,15 @@ body {
 .container>.footer>.navi a {
 	font-size:14pt;
 }
+.header>.logo:hover {
+	cursor:pointer;
+}
 </style>
 </head>
 <body>
 	<div class="header">
 
-		<div class="logo">YA900</div>
+		<div class="logo" onclick="location.href='/'">YA900</div>
 
 		<!-- 메인 메뉴 -->
 		<nav class="main-menu">
@@ -495,6 +498,7 @@ body {
 				<button id="write">글쓰기</button>
 			</div>
 		</div>
+		<button onclick="location.href='/board/test'">테스트</button>
 	</div>
 	<script>
 let recordTotalCount = ${recordTotalCount};

@@ -245,6 +245,10 @@ body {
 .container>.footer>.buttons button:hover {
 	background-color: #f5f5f5;
 }
+
+.header>.logo:hover {
+	cursor: pointer;
+}
 </style>
 </head>
 <body>

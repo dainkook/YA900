@@ -15,7 +15,7 @@ import com.kedu.dto.BoardDTO;
 @Controller
 @RequestMapping("/board")
 public class BoardController {
-
+	
 	@Autowired
 	private BoardDAO dao;
 	
@@ -43,6 +43,7 @@ public class BoardController {
 	
 	@RequestMapping("/write")
 	public String write(HttpSession session) throws Exception {
+		System.out.println(session.getAttribute("loginId"));
 		return "/board/write";
 	}
 	
@@ -51,7 +52,7 @@ public class BoardController {
 		String id = (String)session.getAttribute("loginId");
 		String team = dao.isUserTeam(id);
 		dao.write(title, contents, id, team);
-		return "redirect:/board/board";
+		return "redirect:/board/board?cpage=1";
 	}
 	
 	@RequestMapping("/search")
@@ -71,5 +72,11 @@ public class BoardController {
 		} else {
 			return "redirect:/board/board?cpage=1";		
 			}
+	}
+	
+	@RequestMapping("/test")
+	public String test(HttpSession session) throws Exception {
+		session.setAttribute("loginId", "admin");
+		return "redirect:/";
 	}
 }

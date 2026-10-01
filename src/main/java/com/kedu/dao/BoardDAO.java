@@ -2,6 +2,7 @@ package com.kedu.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -46,14 +47,14 @@ public class BoardDAO {
 	}
 	
 	public String isUserTeam(String id) {
-		String sql = "select team from users where id = ?";
-		return jdbc.queryForObject(sql, String.class, id);
+	    String sql = "select team from users where id = '" + id + "'";
+	    return jdbc.queryForObject(sql, String.class);
 	}
 	
-	public int write(String title, String contents, String id, String team) {
-		String sql = "insert into board values(board_seq.nextval, ?, ?, 0, sysdate, ?, null, 0, null";
-		return jdbc.update(sql, title, contents, id, team);
-	}
+		public int write(String title, String contents, String id, String team) {
+			String sql = "insert into board values(board_seq.nextval, ?, ?, ?, 0, sysdate, ?, null, 0, null)";
+			return jdbc.update(sql, title, contents, id, team);
+		}
 	
 	public List<BoardDTO> searchBoard(String option, String search, int first, int last) {
 		if(option.equals("Á¦¸ñ")) {
