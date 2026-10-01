@@ -131,13 +131,6 @@ body {
 .member-menu {
 	font-size: 14px;
 	margin-left: auto;
-	display : flex;
-	align-items:center;
-	flex-wrap:nowrap;
-}
-
-.member-menu form{
-	margin:0;
 }
 
 .login-btn, .sign-btn {
@@ -1217,42 +1210,10 @@ body {
 			</div>
 		</nav>
 
-		
 		<div class="member-menu">
-
-    <c:choose>
-
-        <c:when test="${not empty sessionScope.id}">
-            <span>${sessionScope.id}님</span>
-
-            <button class="login-btn"
-                    onclick="location.href='${pageContext.request.contextPath}/mypage'">
-                마이페이지
-            </button>
-
-            <form action="${pageContext.request.contextPath}/logout"
-                  method="post">
-                <button type="submit" class="sign-btn">
-                    로그아웃
-                </button>
-            </form>
-        </c:when>
-
-        <c:otherwise>
-            <button class="login-btn"
-                    onclick="location.href='${pageContext.request.contextPath}/login'">
-                로그인
-            </button>
-
-            <button class="sign-btn"
-                    onclick="location.href='${pageContext.request.contextPath}/signup'">
-                회원가입
-            </button>
-        </c:otherwise>
-
-    </c:choose>
-
-	</div>
+			<button class="login-btn" onclick="location.href='login'">로그인</button>
+			<button class="sign-btn" onclick="location.href='signup'">회원가입</button>
+		</div>
 
 	</div>
 
@@ -1368,7 +1329,7 @@ body {
 			    </div>
 			</div>
 		</div>
-		</div>
+
 		<div class="bottom-content">
 			<!-- 최근 게시글 -->
 			<div class="recent-board">
@@ -1432,7 +1393,6 @@ body {
 				</div>
 				
 				<div id="pitcher-ranking" class="ranking-list">
-
 				    <c:forEach var="player" items="${pitcherRanking}" varStatus="status">
 				        <div class="team-ranking-item">
 				            <span class="rank">${status.index + 1}</span>
