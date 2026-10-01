@@ -27,6 +27,11 @@ public class UsersController {
 	public String signup() {
 		return "member/signup";
 	}
+	
+	@RequestMapping("/login")
+	public String login() {
+	    return "member/login";
+	}
 
 	@RequestMapping(value="/insert", method=RequestMethod.POST)
 	public String insert(

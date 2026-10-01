@@ -19,7 +19,7 @@ public class TeamRankDTO {
     }
 
     public TeamRankDTO(int team_id, String team_name, double win_rate, double games_behind, int games,
-            int wins, int losses, int draws, String winning_streak, double batting_avg, double era) {
+            int wins, int losses, int draws, String winning_streak, double batting_avg, double era, String team_logo) {
 
         this.team_id = team_id;
         this.team_name = team_name;
@@ -32,6 +32,7 @@ public class TeamRankDTO {
         this.winning_streak = winning_streak;
         this.batting_avg = batting_avg;
         this.era = era;
+        this.team_logo = team_logo;
     }
 
     public int getTeam_id() {
@@ -123,6 +124,11 @@ public class TeamRankDTO {
     }
     
     public String getTeam_logo() {
+        return team_logo;
+    }
+
+    public void setTeam_logo(String team_logo) {
+        this.team_logo = team_logo;
     	return team_logo;
     }
 

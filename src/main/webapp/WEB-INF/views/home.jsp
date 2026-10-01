@@ -19,6 +19,10 @@
 	box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
 	margin: 0;
 	background: linear-gradient(to bottom, #111936 0%, #111936 15%, #0b1026 25%, #171f46
@@ -229,6 +233,7 @@ body {
         opacity: 0;
     }
 }
+
 .banner h1 {
 	position: relative;
 	z-index: 2;
@@ -335,31 +340,104 @@ body {
    경기 팀
 ========================= */
 .game-team {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: 15px;
-	margin: 10px 0;
-	color: #111936;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin: 10px 0;
+    color: #111936;
 }
 
-.game-team img {
-	width: 45px;
-	height: 45px;
-	object-fit: contain;
+.game-team .team {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #476aaa;
 }
 
-.game-team span {
-	font-size: 16px;
-	font-weight: bold;
-	color: #476aaa;
+.game-team .team-logo {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
 }
 
-/* 현재 JSP에서는 img 없이 span만 사용하므로
-   팀 이름 간격 유지 */
-.game-team span:nth-child(2) {
-	color: #8b93a8;
-	font-size: 13px;
+.game-team .vs {
+    font-size: 13px;
+    font-weight: bold;
+    color: #8b93a8;
+}
+
+.pitcher-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 100px;   /* ← 이걸 추가 */
+    margin-top: 20px;
+}
+
+.pitcher {
+    width: 250px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.away-pitcher {
+    justify-content: flex-end;
+    text-align: right;
+}
+
+.home-pitcher {
+    justify-content: flex-start;
+    text-align: left;
+}
+
+.pitcher-photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #eef2f8;
+    border: 1px solid #d6dceb;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.pitcher-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.pitcher-detail {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    white-space: nowrap;
+}
+
+.pitcher-logo {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+}
+
+.pitcher-team-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.player-photo {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: #eef2f8;
+    border: 1px solid #d6dceb;
+    display: inline-block;
+    flex-shrink: 0;
 }
 
 /* =========================
@@ -535,6 +613,7 @@ body {
 	display: flex;
 	align-items: center;
 	padding: 0 10px;
+	gap: 10px;
 }
 
 .team-ranking-item img {
@@ -1023,6 +1102,7 @@ body {
 	border: 1px solid #d6dceb;
 	border-radius: 10px;
 	color: #18213f;
+	text-align: center;
 }
 
 .game-info.show {
@@ -1049,7 +1129,7 @@ body {
 	height: 70px;
 	margin-top: 0;
 	background: #eef1f8;
-	color: #252f67;
+	color: #838ec9;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -1058,12 +1138,13 @@ body {
 }
 
 .footer a {
-	text-decoration: none;
-	color: #3b4778;
+    margin: 0 4px;
+    text-decoration: none;
+	color: #838ec9;
 }
 
 .footer a:hover {
-	color: #6079b4;
+	color: #a9b1db;
 }
 
 /* =========================
@@ -1103,8 +1184,8 @@ body {
 				<a href="#">야구</a>
 
 				<div class="sub-menu">
-					<a href="#">예매</a> <a href="#">경기일정</a> <a href="#">팀순위</a> <a
-						href="#">선수순위</a> <a href="#">게시판</a>
+					<a href="#">예매</a> <a href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a> <a href="#team-ranking-section">팀순위</a> <a
+						href="#">선수순위</a> <a href="${pageContext.request.contextPath}/board/board?cpage=1">게시판</a>
 				</div>
 			</div>
 
@@ -1155,7 +1236,7 @@ body {
 	<div class="main-content">
 
 		<!-- 예매하기 -->
-		<div class="reservation">
+		<div class="reservation" id="reservation">
 
 			<h2>예매</h2>
 
@@ -1170,8 +1251,7 @@ body {
                  '<fmt:formatDate value="${game.start_date}" pattern="MM.dd (E)"/>',
                  '${game.away_team} VS ${game.home_team}',
                  '<fmt:formatDate value="${game.start_date}" pattern="HH:mm"/>',
-                 '${game.location}'
-             )">
+                 '${game.location}', '${game.away_logo}', '${game.home_logo}')">
 
 							<div class="game-date">
 								<fmt:formatDate value="${game.start_date}"
@@ -1179,7 +1259,17 @@ body {
 							</div>
 
 							<div class="game-team">
-								<span>${game.away_team}</span> <span>VS</span> <span>${game.home_team}</span>
+
+								<span class="team"> <img
+									src="${pageContext.request.contextPath}${game.away_logo}"
+									class="team-logo" alt="${game.away_team}">
+									${game.away_team}
+								</span> <span class="vs">VS</span> <span class="team">
+									${game.home_team} <img
+									src="${pageContext.request.contextPath}${game.home_logo}"
+									class="team-logo" alt="${game.home_team}">
+								</span>
+
 							</div>
 
 							<div class="game-place">${game.location}</div>
@@ -1197,12 +1287,47 @@ body {
 			</div>
 
 			<div id="game-info" class="game-info">
-				<div id="info-date"></div>
-				<div id="info-team"></div>
-				<div id="info-time"></div>
-				<div id="info-place"></div>
+			    <div id="info-date"></div>
+			    <div id="info-team"></div>
+			    <div id="info-time"></div>
+			    <div id="info-place"></div>
+			
+			    <div class="pitcher-info">
+			
+			        <!-- 원정 선발 -->
+			        <div class="pitcher away-pitcher">
+			            <div class="pitcher-detail">
+			                <strong>선발 예정</strong>
+			                <div class="pitcher-logo">
+			                    <img id="away-pitcher-logo"
+			                         src=""
+			                         alt="원정팀 로고"
+			                         class="pitcher-team-logo">
+			                </div>
+			            </div>
+			            <div class="pitcher-photo">
+			                <img src="" alt="원정 선발 투수">
+			            </div>
+			        </div>
+			
+			        <!-- 홈 선발 -->
+			        <div class="pitcher home-pitcher">
+			            <div class="pitcher-photo">
+			                <img src="" alt="홈 선발 투수">
+			            </div>
+			            <div class="pitcher-detail">
+			
+			                <div class="pitcher-logo">
+			                    <img id="home-pitcher-logo"
+			                         src=""
+			                         alt="홈팀 로고"
+			                         class="pitcher-team-logo">
+			                </div>
+			                <strong>선발 예정</strong>
+			            </div>
+			        </div>
+			    </div>
 			</div>
-
 		</div>
 
 		<div class="bottom-content">
@@ -1210,31 +1335,18 @@ body {
 			<div class="recent-board">
 				<div class="recent-header">
 					<h2>최근 게시글</h2>
-					<button class="recent-more"
-						onclick="location.href='${pageContext.request.contextPath}/board/board?cpage=1'">더보기
-						→</button>
+					<button class="recent-more" onclick="location.href='${pageContext.request.contextPath}/board/board?cpage=1'">더보기 →</button>
 				</div>
-
-
-				<div class="board-item">야구장 처음 가는데 좌석 추천해주세요</div>
-
-				<div class="board-item">이번 주 경기 보러 가시는 분?</div>
-
-				<div class="board-item">응원가 추천해주세요!</div>
-
-				<div class="board-item">티켓 양도합니다</div>
-
-				<div class="board-item">이번 경기 라인업 어떻게 생각하세요?</div>
-
-				<div class="board-item">저희 팀 가을야구 갈 수 있을까요...ㅠ</div>
-
-				<div class="board-item">오늘 감독의 촉이 좀 안좋았던것 같아요.</div>
-
-				<div class="board-item">해체 기원 좀</div>
+				
+				<c:forEach var="board" items="${recentBoards}">
+				    <div class="board-item">
+				        ${board.title}
+				    </div>
+				</c:forEach>
 			</div>
 
 			<!-- 팀 순위 -->
-			<div class="ranking">
+			<div class="ranking" id="team-ranking-section">
 
 				<h2>랭킹</h2>
 
@@ -1247,142 +1359,100 @@ body {
 
 				<div id="team-ranking" class="ranking-list">
 
-					<div class="team-ranking-item">
-						<span class="rank">1</span> <img
-							src="${pageContext.request.contextPath}/resources/images/team/kt.png"
-							alt="KT"> <span class="team">KT 위즈</span>
-					</div>
-
-					<div class="team-ranking-item">
-						<span class="rank">2</span> <img
-							src="${pageContext.request.contextPath}/resources/images/team/samsung.png"
-							alt="삼성"> <span class="team">삼성 라이온즈</span>
-					</div>
-
-					<div class="team-ranking-item">
-						<span class="rank">3</span> <img
-							src="${pageContext.request.contextPath}/resources/images/team/lg.png"
-							alt="LG"> <span class="team">LG 트윈스</span>
-					</div>
-
-					<div class="team-ranking-item">
-						<span class="rank">4</span> <img
-							src="${pageContext.request.contextPath}/resources/images/team/kia.png"
-							alt="KIA"> <span class="team">KIA 타이거즈</span>
-					</div>
-
-					<div class="team-ranking-item">
-						<span class="rank">5</span> <img
-							src="${pageContext.request.contextPath}/resources/images/team/doosan.png"
-							alt="두산"> <span class="team">두산 베어스</span>
-					</div>
-
-					<div class="team-ranking-item">
-						<span class="rank">6</span> <img
-							src="${pageContext.request.contextPath}/resources/images/team/nc.png"
-							alt="NC"> <span class="team">NC 다이노스</span>
-					</div>
-
-					<div class="team-ranking-item">
-						<span class="rank">9</span> <img
-							src="${pageContext.request.contextPath}/resources/images/team/lotte.png"
-							alt="롯데"> <span class="team">롯데 자이언츠</span>
-					</div>
-
-					<div class="team-ranking-item">
-						<span class="rank">7</span> <img
-							src="${pageContext.request.contextPath}/resources/images/team/ssg.png"
-							alt="SSG"> <span class="team">SSG 랜더스</span>
-					</div>
-
-					<div class="team-ranking-item">
-						<span class="rank">8</span> <img
-							src="${pageContext.request.contextPath}/resources/images/team/hanhwa.png"
-							alt="한화"> <span class="team">한화 이글스</span>
-					</div>
-
-					<div class="team-ranking-item">
-						<span class="rank">10</span> <img
-							src="${pageContext.request.contextPath}/resources/images/team/kiwoom.png"
-							alt="키움"> <span class="team">키움 히어로즈</span>
-					</div>
-
+				    <c:forEach var="team" items="${teamRanking}" varStatus="status">
+				
+				        <div class="team-ranking-item">
+				
+				            <span class="rank">${status.index + 1}</span>
+				
+				            <span class="team-logo">
+				                <img src="${pageContext.request.contextPath}${team.team_logo}">
+				            </span>
+				
+				            <span class="team">${team.team_name}</span>
+				
+				        </div>
+				
+				    </c:forEach>
+				
 				</div>
 
 				<div id="hitter-ranking" class="ranking-list">
-
-					<c:forEach var="player" items="${hitterRanking}" varStatus="status">
-
-						<div>${status.count}${player.player_name}
-							(${player.player_team})</div>
-
-					</c:forEach>
-
+				    <c:forEach var="player" items="${hitterRanking}" varStatus="status">
+				        <div class="team-ranking-item">
+				            <span class="rank">${status.index + 1}</span>
+				            <span class="player-photo"></span>
+				            <span class="team">
+				                ${player.player_name}
+				            </span>
+				            <span class="player-team">
+				                (${player.player_team})
+				            </span>
+				        </div>
+				    </c:forEach>
 				</div>
-
+				
 				<div id="pitcher-ranking" class="ranking-list">
 
-					<c:forEach var="player" items="${pitcherRanking}"
-						varStatus="status">
-
-						<div>${status.index + 1}${player.player_name}
-							(${player.player_team})</div>
-
-					</c:forEach>
-
+				    <c:forEach var="player" items="${pitcherRanking}" varStatus="status">
+				        <div class="team-ranking-item">
+				            <span class="rank">${status.index + 1}</span>
+				            <span class="player-photo"></span>
+				            <span class="team">
+				                ${player.player_name}
+				            </span>
+				            <span class="player-team">
+				                (${player.player_team})
+				            </span>
+				        </div>
+				    </c:forEach>
 				</div>
-
 			</div>
 
 			<div class="schedule">
-
 				<h2>경기 일정</h2>
-
 				<c:forEach var="game" items="${scheduleList}" begin="0" end="4">
-
 					<div class="schedule-box">
-
 						<div class="schedule-date">
 							<fmt:formatDate value="${game.start_date}" pattern="MM.dd(E)" />
 						</div>
-
+						
 						<div class="schedule-team">
-
-							<span>${game.away_team}</span> <b>VS</b> <span>${game.home_team}</span>
-
-						</div>
+					    <img src="${pageContext.request.contextPath}${game.away_logo}"
+					         alt="${game.away_team}">
+					    <span>${game.away_team}</span>
+					    <b>VS</b>
+					    <span>${game.home_team}</span>
+					    <img src="${pageContext.request.contextPath}${game.home_logo}"
+					         alt="${game.home_team}">
+					</div>
 
 						<div class="schedule-time">
 							<fmt:formatDate value="${game.start_date}" pattern="HH:mm" />
 						</div>
-
 					</div>
-
 				</c:forEach>
-
 				<button type="button" class="more-btn">더보기</button>
-
 			</div>
 		</div>
 
 		<!-- 오른쪽 퀵메뉴 -->
+	<!-- 오른쪽 퀵메뉴 -->
 		<div class="quick-menu">
-			<div class="menu">QUICK MENU</div>
-			<div>홈</div>
-			<div>예매</div>
-			<div>승부예측</div>
-			<div>야구 상식퀴즈</div>
-			<div>마이페이지</div>
-
+		    <div class="menu">QUICK MENU</div>
+		    <div onclick="location.href='${pageContext.request.contextPath}/'">홈</div>
+		    <div onclick="location.href='${pageContext.request.contextPath}/#reservation'">예매</div>
+		    <div>승부예측</div>
+		    <div>야구 상식퀴즈</div>
+		    <div>마이페이지</div>
 		</div>
-
 		<div class="bottom-menu">
 
 			<div class="bottom-menu1 news-box">
 
 				<div class="news-header">
 					<h2>오늘의 야구 뉴스</h2>
-					<button class="news-more">더보기 →</button>
+					<button class="news-more" onclick="window.open('https://m.sports.naver.com/kbaseball/news', '_blank')">더보기 →</button>
 				</div>
 
 				<div class="news-list">
@@ -1654,7 +1724,7 @@ gameList.addEventListener("wheel", function(e) {
 
 let selectedGame = null;
 
-function showGame(date, team, time, place) {
+function showGame(date, team, time, place, awayLogo, homeLogo) {
 
     const gameInfo = document.getElementById("game-info");
 
@@ -1670,6 +1740,14 @@ function showGame(date, team, time, place) {
     document.getElementById("info-team").innerText = team;
     document.getElementById("info-time").innerText = time;
     document.getElementById("info-place").innerText = place;
+    
+    // 원정팀 로고
+    document.getElementById("away-pitcher-logo").src =
+        "${pageContext.request.contextPath}" + awayLogo;
+
+    // 홈팀 로고
+    document.getElementById("home-pitcher-logo").src =
+        "${pageContext.request.contextPath}" + homeLogo;
 
     gameInfo.classList.add("show");
 

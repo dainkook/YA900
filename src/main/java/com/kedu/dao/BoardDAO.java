@@ -89,4 +89,9 @@ public class BoardDAO {
 		return jdbc.queryForObject(sql2, String.class, team);
 		} return null;
 	}
+	
+	public List<BoardDTO> getRecentBoards() {
+	    String sql = "select * from (select board.*, row_number() over(order by board_seq desc) rn from board) where rn between 1 and 8";
+	    return jdbc.query(sql, new BeanPropertyRowMapper<>(BoardDTO.class));
+	}
 }
