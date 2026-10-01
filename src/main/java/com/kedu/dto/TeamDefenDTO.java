@@ -18,6 +18,7 @@ public class TeamDefenDTO {
 	private int quality_starts;
 	private int holds;
 	private int saves;
+	private String team_logo;
 	
 	public TeamDefenDTO () {}
 
@@ -170,7 +171,13 @@ public class TeamDefenDTO {
 		this.saves = saves;
 	}
 	
-	
+	public String getTeam_logo() {
+		return team_logo;
+	}
+
+	public void setTeam_logo(String team_logo) {
+		this.team_logo = team_logo;
+	}
 	
 	
 }

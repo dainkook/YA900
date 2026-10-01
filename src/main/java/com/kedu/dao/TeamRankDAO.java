@@ -61,27 +61,43 @@ public class TeamRankDAO {
         );
     }
     public List<TeamRankDTO> selectAll() {
-        String sql = "SELECT team_id, team_name, win_rate, games_behind, games, wins, losses, draws, "
-                + "winning_streak, batting_avg, era "
-                + "FROM teamRank "
-                + "ORDER BY team_id";
 
-        return jdbc.query(sql, (rs, rowNum) -> {
-            TeamRankDTO dto = new TeamRankDTO();
+    	String sql =
+    			"SELECT "
+    			+ "r.team_id, "
+    			+ "r.team_name, "
+    			+ "t.team_logo, "
+    			+ "r.win_rate, "
+    			+ "r.games_behind, "
+    			+ "r.games, "
+    			+ "r.wins, "
+    			+ "r.losses, "
+    			+ "r.draws, "
+    			+ "r.winning_streak, "
+    			+ "r.batting_avg, "
+    			+ "r.era "
+    			+ "FROM teamRank r "
+    			+ "JOIN team t ON r.team_id = t.team_id "
+    			+ "ORDER BY r.win_rate DESC";
 
-            dto.setTeam_id(rs.getInt("team_id"));
-            dto.setTeam_name(rs.getString("team_name"));
-            dto.setWin_rate(rs.getDouble("win_rate"));
-            dto.setGames_behind(rs.getDouble("games_behind"));
-            dto.setGames(rs.getInt("games"));
-            dto.setWins(rs.getInt("wins"));
-            dto.setLosses(rs.getInt("losses"));
-            dto.setDraws(rs.getInt("draws"));
-            dto.setWinning_streak(rs.getString("winning_streak"));
-            dto.setBatting_avg(rs.getDouble("batting_avg"));
-            dto.setEra(rs.getDouble("era"));
+    	return jdbc.query(sql, (rs, rowNum) -> {
 
-            return dto;
-        });
+    		TeamRankDTO dto = new TeamRankDTO();
+
+    		dto.setTeam_id(rs.getInt("team_id"));
+    		dto.setTeam_name(rs.getString("team_name"));
+    		dto.setTeam_logo(rs.getString("team_logo"));
+    		dto.setWin_rate(rs.getDouble("win_rate"));
+    		dto.setGames_behind(rs.getDouble("games_behind"));
+    		dto.setGames(rs.getInt("games"));
+    		dto.setWins(rs.getInt("wins"));
+    		dto.setLosses(rs.getInt("losses"));
+    		dto.setDraws(rs.getInt("draws"));
+    		dto.setWinning_streak(rs.getString("winning_streak"));
+    		dto.setBatting_avg(rs.getDouble("batting_avg"));
+    		dto.setEra(rs.getDouble("era"));
+
+    		return dto;
+    	});
     }
 }

@@ -88,7 +88,7 @@ public class UsersController {
 
 		return "redirect:/";
 	}
-
+	
 	@RequestMapping(value="/idcheck", method=RequestMethod.POST)
 	@ResponseBody
 	public int idcheck(String id) {
@@ -103,6 +103,7 @@ public class UsersController {
 		return dao.emailCheck(email);
 	}
 
+<<<<<<< HEAD
 	@RequestMapping(value="/logout", method=RequestMethod.POST)
 	public String logout(HttpSession session) {
 		session.invalidate();
@@ -115,4 +116,6 @@ public class UsersController {
 		model.addAttribute("id",id);
 		return "member/finduserid";
 	}
+=======
+>>>>>>> master
 }

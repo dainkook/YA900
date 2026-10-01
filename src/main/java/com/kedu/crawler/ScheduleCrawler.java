@@ -149,6 +149,9 @@ public class ScheduleCrawler {
 
                     totalGameCount++;
 
+                    /*
+                     * 네이버 실제 경기 ID
+                     */
                     String gameId =
                             game.path("gameId")
                                 .asText();
@@ -349,8 +352,16 @@ public class ScheduleCrawler {
                         }
                     }
 
+                    /*
+                     * ScheduleDTO 생성
+                     */
                     ScheduleDTO dto =
                             new ScheduleDTO();
+
+                    /*
+                     * ★ 네이버 경기 ID 저장
+                     */
+                    dto.setNaver_game_id(gameId);
 
                     dto.setTitle(title);
                     dto.setLocation(location);
@@ -377,6 +388,11 @@ public class ScheduleCrawler {
 
                         System.out.println(
                                 "저장 성공"
+                        );
+
+                        System.out.println(
+                                "네이버 경기 ID : "
+                                + gameId
                         );
 
                         System.out.println(

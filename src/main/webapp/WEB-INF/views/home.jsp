@@ -215,39 +215,26 @@ body {
 	animation-delay: 16s;
 }
 
-@
-keyframes bannerFade { 0% {
-	opacity: 0;
-}
+@keyframes bannerFade {
+    0% {
+        opacity: 0;
+    }
 
-5
-%
-{
-opacity
-:
-1;
-}
-20
-%
-{
-opacity
-:
-1;
-}
-25
-%
-{
-opacity
-:
-0;
-}
-100
-%
-{
-opacity
-:
-0;
-}
+    5% {
+        opacity: 1;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    25% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }
 .banner h1 {
 	position: relative;
@@ -1263,7 +1250,7 @@ opacity
 				<div class="recent-header">
 					<h2>최근 게시글</h2>
 					<button class="recent-more"
-						onclick="location.href='${pageContext.request.contextPath}/board/detail?cpage=1">더보기
+						onclick="location.href='${pageContext.request.contextPath}/board/board?cpage=1'">더보기
 						→</button>
 				</div>
 
@@ -1377,7 +1364,7 @@ opacity
 					<c:forEach var="player" items="${pitcherRanking}"
 						varStatus="status">
 
-						<div>${status.index + 1} ${player.player_name}
+						<div>${status.index + 1}${player.player_name}
 							(${player.player_team})</div>
 
 					</c:forEach>
@@ -1659,7 +1646,9 @@ opacity
 		<!-- FOOTER -->
 		<div class="footer">
 
-			<a href="#">개인정보처리방침</a>　|　<a href="#">전체 서비스</a>　|　<a href="#">문제 신고</a>　|　<a href="#">고객센터</a>　|　<a href="${pageContext.request.contextPath}/admin">관리자</a>
+			<a href="#">개인정보처리방침</a> | <a href="#">전체 서비스</a> | <a href="#">문제
+				신고</a> | <a href="#">고객센터</a> | <a
+				href="${pageContext.request.contextPath}/admin">관리자</a>
 
 		</div>
 </body>
