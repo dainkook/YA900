@@ -62,6 +62,7 @@ public class TeamRankDAO {
     }
     
     public List<TeamRankDTO> selectAll() {
+
     	String sql = "SELECT tr.team_id, tr.team_name, t.team_logo, "
     	        + "tr.win_rate, tr.games_behind, tr.games, tr.wins, tr.losses, tr.draws, "
     	        + "tr.winning_streak, tr.batting_avg, tr.era "
@@ -87,5 +88,6 @@ public class TeamRankDAO {
 
             return dto;
         });
+
     }
 }

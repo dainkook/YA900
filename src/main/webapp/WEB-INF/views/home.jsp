@@ -1393,6 +1393,7 @@ body {
 				</div>
 				
 				<div id="pitcher-ranking" class="ranking-list">
+
 				    <c:forEach var="player" items="${pitcherRanking}" varStatus="status">
 				        <div class="team-ranking-item">
 				            <span class="rank">${status.index + 1}</span>

@@ -19,6 +19,7 @@ public class ScheduleDTO {
 	private String game_status;
 	private String home_logo;
 	private String away_logo;
+	private String naver_game_id;
 
 	public ScheduleDTO() {}
 
@@ -155,7 +156,14 @@ public class ScheduleDTO {
 	public void setAway_logo(String away_logo) {
 	    this.away_logo = away_logo;
 	}
+	
+	public String getNaver_game_id() {
+	    return naver_game_id;
+	}
 
+	public void setNaver_game_id(String naver_game_id) {
+	    this.naver_game_id = naver_game_id;
+	}
 	
 	
 	
