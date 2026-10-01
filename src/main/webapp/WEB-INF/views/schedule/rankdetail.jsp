@@ -551,7 +551,7 @@ body {
 
 									<td>
 										<div class="team-cell">
-											<span>${team.team_name}</span>
+											<img src="${team.team_logo}" class="team-logo"> <span>${team.team_name}</span>
 										</div>
 									</td>
 
