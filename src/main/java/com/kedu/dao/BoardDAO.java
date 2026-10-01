@@ -47,8 +47,8 @@ public class BoardDAO {
 	}
 	
 	public String isUserTeam(String id) {
-	    String sql = "select team from users where id = '" + id + "'";
-	    return jdbc.queryForObject(sql, String.class);
+	    String sql = "select team from users where id = ?";
+	    return jdbc.queryForObject(sql, String.class, id);
 	}
 	
 		public int write(String title, String contents, String id, String team) {
