@@ -238,12 +238,6 @@ body {
 	color: #333;
 }
 
-/* 팀 로고 */
-.team-logo {
-	width: 35px;
-	height: 35px;
-	object-fit: contain;
-}
 
 /* 내용 */
 .container > .body > .contents {
@@ -255,6 +249,12 @@ body {
 	color: #333;
 	white-space: pre-wrap;
 	word-break: break-word;
+}
+
+#files {
+	width: 100%;
+	min-height: 80px;
+	outline: none;
 }
 
 #contents {
@@ -492,6 +492,13 @@ body {
 			</div>
 
 			<div class="contents">
+				<div id="files">
+					<c:forEach var="file" items="${files}">
+						<div>
+							<a href="/boards/download?oriName=${file.oriName}&sysName=${file.sysName}">${file.oriName}</a>
+							</div>
+					</c:forEach>
+				</div>
 				<div id="contents" contenteditable="false">${board.contents}</div>
 			</div>
 
@@ -507,7 +514,6 @@ body {
 
 	</div>
 
-	<!-- 수정 데이터 전달용 -->
 	<form id="updateForm" action="/board/updateDetail" method="get"
 		style="display: none;">
 		<input type="hidden" name="seq" value="${board.board_seq}">

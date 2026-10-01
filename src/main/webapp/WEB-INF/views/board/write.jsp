@@ -419,8 +419,11 @@ body {
 					<div id="title" contenteditable="true"></div>
 					<input id="titleSubmit" type="hidden" name="title" value="">
 				</div>
-
+				
 				<div class="contents">
+					<input type="file" name="files"> 
+					<input type="file" name="files">
+					<input type="file" name="files">
 					<div id="contents" contenteditable="true"></div>
 					<input id="contentSubmit" type="hidden" name="contents" value="">
 				</div>

@@ -1,6 +1,8 @@
 package com.kedu.controllers;
 
+import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -8,9 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kedu.dao.BoardDAO;
+import com.kedu.dao.FilesDAO;
 import com.kedu.dto.BoardDTO;
+import com.kedu.dto.FilesDTO;
 
 @Controller
 @RequestMapping("/board")
@@ -18,6 +23,8 @@ public class BoardController {
 	
 	@Autowired
 	private BoardDAO dao;
+	@Autowired
+	private FilesDAO fdao;
 	
 	@RequestMapping("/board")
 	public String board(Model model, int cpage) throws Exception  {
@@ -35,9 +42,12 @@ public class BoardController {
 	public String detail(int seq, Model model) throws Exception {
 		model.addAttribute("board", dao.getDetail(seq));
 		String logo = dao.teamLogoEditer(seq);
+		List<FilesDTO> files = fdao.getFiles(seq);
 		if(logo!=null) {
 		model.addAttribute("logo", logo);
 		}
+		model.addAttribute("files", files);
+		dao.viewCount(seq);
 		return "/board/detail";
 	}
 	
@@ -48,10 +58,24 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/writeComplete")
-	public String writeComplete(String title, String contents, HttpSession session) throws Exception {
+	public String writeComplete(BoardDTO dto, HttpSession session, MultipartFile[] files) throws Exception {
 		String id = (String)session.getAttribute("loginId");
 		String team = dao.isUserTeam(id);
-		dao.write(title, contents, id, team);
+		int seq = dao.getNextval();
+		dto.setBoard_seq(seq);
+		dao.write(dto.getTitle(), dto.getContents(), id, team);
+		String path = "d:/uploads/";
+		for(MultipartFile file : files) {
+			if(file.isEmpty()) {
+				continue;
+			}
+			String oriName = file.getOriginalFilename();
+			String sysName = UUID.randomUUID() + "_" + oriName;
+			System.out.println("파일 이름 : " + file.getOriginalFilename());
+			file.transferTo(new File(path + sysName));
+			
+			fdao.insertFile(new FilesDTO(0,oriName,sysName,null,seq));
+		}
 		return "redirect:/board/board?cpage=1";
 	}
 	
@@ -72,6 +96,18 @@ public class BoardController {
 		} else {
 			return "redirect:/board/board?cpage=1";		
 			}
+	}
+	
+	@RequestMapping("/updateDetail")
+	public String updateDetail(int seq, String title, String contents) throws Exception {
+		dao.updateDetail(seq, title, contents);
+		return "redirect:/board/detail?seq="+seq;
+	}
+	
+	@RequestMapping("/delete")
+	public String delete(int seq) throws Exception {
+		dao.deleteDetail(seq);
+		return "redirect:/board/board?cpage=1";
 	}
 	
 	@RequestMapping("/test")
