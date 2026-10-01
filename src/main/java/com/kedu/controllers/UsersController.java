@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,16 +21,29 @@ import com.kedu.dto.UsersDTO;
 @Controller
 public class UsersController {
 
+
 	@Autowired
 	private UsersDAO dao;
+
+
 
 	@RequestMapping("/signup")
 	public String signup() {
 		return "member/signup";
 	}
 
-	@RequestMapping(value="/insert", method=RequestMethod.POST)
-	public String insert(
+	@RequestMapping("/login")
+	public String login() {
+		return "member/login";
+	}
+
+	@RequestMapping("finduserid")
+	public String finduserid() {
+		return "member/finduserid";
+	}
+
+	@RequestMapping(value="/signup", method=RequestMethod.POST)
+	public String singup(
 			UsersDTO dto,
 			String phone1,
 			String phone2,
@@ -56,23 +70,23 @@ public class UsersController {
 			dto.setProfile_img(fileName);
 		}
 
-		dao.insert(dto);
+		dao.signup(dto);
 
 		return "redirect:/";
 	}
-	
+
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public String loginCheck(
-	        UsersDTO dto,
-	        HttpSession session) {
+			UsersDTO dto,
+			HttpSession session) {
 
-	    UsersDTO result = dao.login(dto.getId(), dto.getPw());
-	    if (result == null) {
-	        return "redirect:/login";
-	    }
-	    session.setAttribute("id", result.getId());
+		UsersDTO result = dao.login(dto.getId(), dto.getPw());
+		if (result == null) {
+			return "redirect:/login";
+		}
+		session.setAttribute("id", result.getId());
 
-	    return "redirect:/";
+		return "redirect:/";
 	}
 
 	@RequestMapping(value="/idcheck", method=RequestMethod.POST)
@@ -85,7 +99,20 @@ public class UsersController {
 	@RequestMapping(value="/emailcheck", method=RequestMethod.POST)
 	@ResponseBody
 	public int emailCheck(String email) {
-    
+
 		return dao.emailCheck(email);
+	}
+
+	@RequestMapping(value="/logout", method=RequestMethod.POST)
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return"redirect:/";
+	}
+
+	@RequestMapping(value="/finduserid", method=RequestMethod.POST)
+	public String findUserId(String name, String email, Model model) {
+		String id= dao.findUserId(name, email);
+		model.addAttribute("id",id);
+		return "member/finduserid";
 	}
 }

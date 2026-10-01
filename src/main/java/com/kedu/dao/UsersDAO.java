@@ -13,7 +13,7 @@ public class UsersDAO {
 	@Autowired
 	private JdbcTemplate jdbc;
 
-	public int insert(UsersDTO dto) {
+	public int signup(UsersDTO dto) {
 
 		String sql = "INSERT INTO users ("
 				+ "member_seq, id, name, pw, email, phone, zipcode, "
@@ -40,28 +40,36 @@ public class UsersDAO {
 				dto.getTeam()
 				);
 	}
-  
+
 	public UsersDTO login(String id, String pw) {
 
-	    String sql = "SELECT * FROM users WHERE id = ? AND pw = ?";
+		String sql = "SELECT * FROM users WHERE id = ? AND pw = ?";
 
-	    try {
-	        return jdbc.queryForObject(
-	            sql,
-	            new BeanPropertyRowMapper<UsersDTO>(UsersDTO.class),
-	            id,
-	            pw
-	        );
-	    } catch (Exception e) {
-	        return null;
-	    }
+		try {
+			return jdbc.queryForObject(
+					sql,
+					new BeanPropertyRowMapper<UsersDTO>(UsersDTO.class),
+					id,
+					pw
+					);
+		} catch (Exception e) {
+			return null;
+		}
+
 	}
 	public int idCheck(String id) {
 		String sql= "select count(*) from users where id = ?";
 		return jdbc.queryForObject(sql, Integer.class, id);
 	}
+
 	public int emailCheck(String email) {
-		String sql = "select count(*) from users where id =?";
+		String sql = "select count(*) from users where email =?";
 		return jdbc.queryForObject(sql, Integer.class, email);
 	}
+
+	public String findUserId(String name, String email) {
+		String sql= "select id from users where name=? and email=?";
+		return jdbc.queryForObject(sql, String.class , name, email);
+	}
+
 }
