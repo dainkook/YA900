@@ -13,6 +13,7 @@ public class TeamRankDTO {
     private String winning_streak;
     private double batting_avg;
     private double era;
+    private String team_logo;
 
     public TeamRankDTO() {
     }
@@ -119,5 +120,13 @@ public class TeamRankDTO {
 
     public void setEra(double era) {
         this.era = era;
+    }
+    
+    public String getTeam_logo() {
+    	return team_logo;
+    }
+
+    public void setTeam_logo(String team_logo) {
+    	this.team_logo = team_logo;
     }
 }

@@ -87,35 +87,68 @@ public class PlayerHitterDAO {
 	}
 	public List<PlayerHitterDTO> selectAll() {
 
-	    String sql =
-	            "SELECT "
-	            + "player_id, "
-	            + "player_team, "
-	            + "player_name, "
-	            + "batting_avg, "
-	            + "games, "
-	            + "at_bats, "
-	            + "hits, "
-	            + "home_runs, "
-	            + "doubles, "
-	            + "triples, "
-	            + "runs_batted_in, "
-	            + "runs, "
-	            + "stolen_bases, "
-	            + "base_on_balls, "
-	            + "hit_by_pitch, "
-	            + "strikeouts, "
-	            + "on_base_percentage, "
-	            + "slugging_percentage, "
-	            + "ops, "
-	            + "wrc, "
-	            + "war "
-	            + "FROM playerHitter "
-	            + "ORDER BY player_id";
+		String sql =
+			    "SELECT "
+			    + "ph.player_id, "
+			    + "ph.player_team, "
+			    + "ph.player_name, "
+			    + "ph.batting_avg, "
+			    + "ph.games, "
+			    + "ph.at_bats, "
+			    + "ph.hits, "
+			    + "ph.home_runs, "
+			    + "ph.doubles, "
+			    + "ph.triples, "
+			    + "ph.runs_batted_in, "
+			    + "ph.runs, "
+			    + "ph.stolen_bases, "
+			    + "ph.base_on_balls, "
+			    + "ph.hit_by_pitch, "
+			    + "ph.strikeouts, "
+			    + "ph.on_base_percentage, "
+			    + "ph.slugging_percentage, "
+			    + "ph.ops, "
+			    + "ph.wrc, "
+			    + "ph.war, "
+			    + "p.player_image, "
+			    + "t.team_name, "
+			    + "t.team_logo "
+			    + "FROM playerHitter ph "
+			    + "LEFT JOIN player p ON ph.player_id = p.player_id "
+			    + "LEFT JOIN team t ON ph.player_team = t.team_name "
+			    + "WHERE p.player_image IS NOT NULL "
+			    + "ORDER BY ph.war DESC";
 
-	    return jdbc.query(
-	            sql,
-	            new BeanPropertyRowMapper<>(PlayerHitterDTO.class)
-	    );
+		return jdbc.query(sql, (rs, rowNum) -> {
+
+			PlayerHitterDTO dto = new PlayerHitterDTO();
+
+			dto.setPlayer_id(rs.getInt("player_id"));
+			dto.setPlayer_team(rs.getString("player_team"));
+			dto.setPlayer_name(rs.getString("player_name"));
+			dto.setPlayer_image(rs.getString("player_image"));
+			dto.setTeam_name(rs.getString("team_name"));
+			dto.setTeam_logo(rs.getString("team_logo"));
+			dto.setBatting_avg(rs.getDouble("batting_avg"));
+			dto.setGames(rs.getInt("games"));
+			dto.setAt_bats(rs.getInt("at_bats"));
+			dto.setHits(rs.getInt("hits"));
+			dto.setHome_runs(rs.getInt("home_runs"));
+			dto.setDoubles(rs.getInt("doubles"));
+			dto.setTriples(rs.getInt("triples"));
+			dto.setRuns_batted_in(rs.getInt("runs_batted_in"));
+			dto.setRuns(rs.getInt("runs"));
+			dto.setStolen_bases(rs.getInt("stolen_bases"));
+			dto.setBase_on_balls(rs.getInt("base_on_balls"));
+			dto.setHit_by_pitch(rs.getInt("hit_by_pitch"));
+			dto.setStrikeouts(rs.getInt("strikeouts"));
+			dto.setOn_base_percentage(rs.getDouble("on_base_percentage"));
+			dto.setSlugging_percentage(rs.getDouble("slugging_percentage"));
+			dto.setOps(rs.getDouble("ops"));
+			dto.setWrc(rs.getDouble("wrc"));
+			dto.setWar(rs.getDouble("war"));
+
+			return dto;
+		});
 	}
 }

@@ -60,19 +60,19 @@ public class UsersController {
 
 		return "redirect:/";
 	}
-	
+
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public String loginCheck(
-	        UsersDTO dto,
-	        HttpSession session) {
+			UsersDTO dto,
+			HttpSession session) {
 
-	    UsersDTO result = dao.login(dto.getId(), dto.getPw());
-	    if (result == null) {
-	        return "redirect:/login";
-	    }
-	    session.setAttribute("id", result.getId());
+		UsersDTO result = dao.login(dto.getId(), dto.getPw());
+		if (result == null) {
+			return "redirect:/login";
+		}
+		session.setAttribute("id", result.getId());
 
-	    return "redirect:/";
+		return "redirect:/";
 	}
 
 	@RequestMapping(value="/idcheck", method=RequestMethod.POST)
@@ -85,7 +85,8 @@ public class UsersController {
 	@RequestMapping(value="/emailcheck", method=RequestMethod.POST)
 	@ResponseBody
 	public int emailCheck(String email) {
-    
+
 		return dao.emailCheck(email);
 	}
+
 }

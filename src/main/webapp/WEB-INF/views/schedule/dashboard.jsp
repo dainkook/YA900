@@ -271,6 +271,7 @@ body {
 		width: 120px;
 	}
 }
+
 .game-link {
 	display: block;
 	text-decoration: none !important;
@@ -290,166 +291,160 @@ body {
 
 <body>
 
-<header class="header">
+	<header class="header">
 
-	<div class="logo">YA900</div>
+		<div class="logo">YA900</div>
 
-	<nav class="main-menu">
-		<a href="#">야구</a>
-		<a href="#">축구</a>
-		<a href="#">미니게임</a>
-	</nav>
-
-	<div class="user-menu">
-		<button>로그인</button>
-		<button>회원가입</button>
-	</div>
-
-</header>
-
-<main class="container">
-
-	<section class="title-area">
-
-		<nav class="kbo-navigation">
-
-			<a href="${pageContext.request.contextPath}/schedule/schedule"class="active">
-				일정
-			</a>
-
-			<a href="#">
-				순위
-			</a>
-
+		<nav class="main-menu">
+			<a href="#">야구</a> <a href="#">축구</a> <a href="#">미니게임</a>
 		</nav>
 
-		<h1>KBO 리그</h1>
+		<div class="user-menu">
+			<button class="login-btn"
+				onclick="location.href='/member/login'">로그인</button>
+			<button class="sign-btn"
+				onclick="location.href='member/signup'">회원가입</button>
+		</div>
 
-		<div class="month-navigation">
+	</header>
 
-			<c:choose>
-				<c:when test="${month >= 7}">
-					<a href="${pageContext.request.contextPath}/schedule/schedule?month=6" class="month-arrow">
-						‹
-					</a>
-				</c:when>
-			</c:choose>
+	<main class="container">
 
-			<div class="month-tabs">
+		<section class="title-area">
+
+			<nav class="kbo-navigation">
+
+				<a href="${pageContext.request.contextPath}/schedule/schedule"
+					class="active"> 일정 </a> <a
+					href="${pageContext.request.contextPath}/schedule/rankdetail">
+					순위 </a>
+
+			</nav>
+
+			<h1>KBO 리그</h1>
+
+			<div class="month-navigation">
 
 				<c:choose>
-
-					<c:when test="${month <= 6}">
-						<c:forEach var="i" begin="1" end="6">
-							<a
-								href="${pageContext.request.contextPath}/schedule/schedule?month=${i}"
-								class="month-tab ${month == i ? 'active' : ''}">
-								${i}월
-							</a>
-						</c:forEach>
-
+					<c:when test="${month >= 7}">
+						<a
+							href="${pageContext.request.contextPath}/schedule/schedule?month=6"
+							class="month-arrow"> ‹ </a>
 					</c:when>
+				</c:choose>
 
-					<c:otherwise>
-						<c:forEach var="i" begin="7" end="12">
-							<a
-								href="${pageContext.request.contextPath}/schedule/schedule?month=${i}"
-								class="month-tab ${month == i ? 'active' : ''}">
-								${i}월
-							</a>
-						</c:forEach>
-					</c:otherwise>
+				<div class="month-tabs">
+
+					<c:choose>
+
+						<c:when test="${month <= 6}">
+							<c:forEach var="i" begin="1" end="6">
+								<a
+									href="${pageContext.request.contextPath}/schedule/schedule?month=${i}"
+									class="month-tab ${month == i ? 'active' : ''}"> ${i}월 </a>
+							</c:forEach>
+
+						</c:when>
+
+						<c:otherwise>
+							<c:forEach var="i" begin="7" end="12">
+								<a
+									href="${pageContext.request.contextPath}/schedule/schedule?month=${i}"
+									class="month-tab ${month == i ? 'active' : ''}"> ${i}월 </a>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
+				</div>
+
+				<c:choose>
+					<c:when test="${month <= 6}">
+						<a
+							href="${pageContext.request.contextPath}/schedule/schedule?month=7"
+							class="month-arrow"> › </a>
+					</c:when>
 				</c:choose>
 			</div>
 
-			<c:choose>
-				<c:when test="${month <= 6}">
-					<a
-						href="${pageContext.request.contextPath}/schedule/schedule?month=7"
-						class="month-arrow">
-						›
-					</a>
-				</c:when>
-			</c:choose>
-		</div>
+		</section>
 
-	</section>
-
-	<section class="game-area">
-		<div class="month-title">
-			2026년 ${month}월 경기 일정
-		</div>
-		<div id="schedule-list">
-			<c:choose>
-				<c:when test="${empty list}">
-					<div class="no-game">
-						해당 월에 경기 일정이 없습니다.
-					</div>
-				</c:when>
-				<c:otherwise>
-					<c:forEach var="dto" items="${list}">
-						<div class="schedule-day">
-							<div class="schedule-date">
-								<fmt:formatDate value="${dto.start_date}" pattern="yyyy년 MM월 dd일" />
-							</div>
-							
-							<a href="${pageContext.request.contextPath}/schedule/scheduledetail?game_id=${dto.game_id}" class="game-link">
-							<div class="game-card">
-								<div class="game-header">
-									<span>
-										<fmt:formatDate value="${dto.start_date}" pattern="HH:mm" />
-									</span>
-									<c:choose>
-										<c:when test="${dto.start_date lt now}">
-											<span>경기종료</span>
-										</c:when>
-
-										<c:otherwise>
-											<span>경기예정</span>
-										</c:otherwise>
-
-									</c:choose>
-
+		<section class="game-area">
+			<div class="month-title">2026년 ${month}월 경기 일정</div>
+			<div id="schedule-list">
+				<c:choose>
+					<c:when test="${empty list}">
+						<div class="no-game">해당 월에 경기 일정이 없습니다.</div>
+					</c:when>
+					<c:otherwise>
+						<c:forEach var="dto" items="${list}">
+							<div class="schedule-day">
+								<div class="schedule-date">
+									<fmt:formatDate value="${dto.start_date}"
+										pattern="yyyy년 MM월 dd일" />
 								</div>
 
-								<div class="game-content">
+								<a
+									href="${pageContext.request.contextPath}/schedule/scheduledetail?game_id=${dto.game_id}"
+									class="game-link">
+									<div class="game-card">
+										<div class="game-header">
+											<span> <fmt:formatDate value="${dto.start_date}"
+													pattern="HH:mm" />
+											</span>
+											<c:choose>
+												<c:when test="${dto.start_date lt now}">
+													<span>경기종료</span>
+												</c:when>
 
-									<div class="team">
-										<img src="${pageContext.request.contextPath}${dto.away_logo}" class="team-logo">
-										<div class="team-name">${dto.away_team}</div>
-									</div>
+												<c:otherwise>
+													<span>경기예정</span>
+												</c:otherwise>
 
-									<div class="score">
-										<c:choose>
-											<c:when test="${dto.start_date lt now}"> ${dto.away_score}
+											</c:choose>
+
+										</div>
+
+										<div class="game-content">
+
+											<div class="team">
+												<img
+													src="${pageContext.request.contextPath}${dto.away_logo}"
+													class="team-logo">
+												<div class="team-name">${dto.away_team}</div>
+											</div>
+
+											<div class="score">
+												<c:choose>
+													<c:when test="${dto.start_date lt now}"> ${dto.away_score}
 
 												<span class="vs">:</span>
 
 												${dto.home_score}
 											</c:when>
-											<c:otherwise>
+													<c:otherwise>
 												-
 												<span class="vs">:</span>
 												-
 											</c:otherwise>
-										</c:choose>
-									</div>
-									<div class="team">
-										<div class="team-name">${dto.home_team}</div>
-										<img src="${pageContext.request.contextPath}${dto.home_logo}" class="team-logo">
-									</div>
-								</div>
-								<div class="stadium">${dto.location}</div>
+												</c:choose>
+											</div>
+											<div class="team">
+												<div class="team-name">${dto.home_team}</div>
+												<img
+													src="${pageContext.request.contextPath}${dto.home_logo}"
+													class="team-logo">
+											</div>
+										</div>
+										<div class="stadium">${dto.location}</div>
 
+									</div>
 							</div>
-						</div>
-						</a>
-					</c:forEach>
-				</c:otherwise>
-			</c:choose>
-		</div>
-	</section>
-</main>
+							</a>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</section>
+	</main>
 
 </body>
 </html>

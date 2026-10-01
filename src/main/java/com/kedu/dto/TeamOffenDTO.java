@@ -19,6 +19,7 @@ public class TeamOffenDTO {
     private double on_base_percentage;
     private double slugging_percentage;
     private double ops;
+    private String team_logo;
     
     public TeamOffenDTO () {}
 
@@ -180,6 +181,13 @@ public class TeamOffenDTO {
 	    this.ops = ops;
 	}
 	
+	public String getTeam_logo() {
+		return team_logo;
+	}
+
+	public void setTeam_logo(String team_logo) {
+		this.team_logo = team_logo;
+	}
 	
     
     
