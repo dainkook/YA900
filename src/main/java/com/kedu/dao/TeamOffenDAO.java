@@ -1,6 +1,9 @@
 package com.kedu.dao;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -56,6 +59,34 @@ public class TeamOffenDAO {
                 dto.getOps()
         );
     }
+    public List<TeamOffenDTO> selectAll() {
+
+    	String sql =
+    			"SELECT "
+    			+ "o.team_id, "
+    			+ "o.team_name, "
+    			+ "t.team_logo, "
+    			+ "o.batting_average, "
+    			+ "o.runs, "
+    			+ "o.rbi, "
+    			+ "o.at_bats, "
+    			+ "o.home_runs, "
+    			+ "o.hits, "
+    			+ "o.doubles, "
+    			+ "o.triples, "
+    			+ "o.stolen_bases, "
+    			+ "o.walks_hbp, "
+    			+ "o.strikeouts, "
+    			+ "o.double_plays, "
+    			+ "o.on_base_percentage, "
+    			+ "o.slugging_percentage, "
+    			+ "o.ops "
+    			+ "FROM TeamOffen o "
+    			+ "JOIN team t ON o.team_id = t.team_id "
+    			+ "ORDER BY o.batting_average DESC";
+
+    	return jdbc.query(sql,new BeanPropertyRowMapper<>(TeamOffenDTO.class));
+    }
 
     public int findTeamId(String teamName) {
 
@@ -64,10 +95,6 @@ public class TeamOffenDAO {
                 + "FROM team "
                 + "WHERE team_name = ?";
 
-        return jdbc.queryForObject(
-                sql,
-                Integer.class,
-                teamName
-        );
+        return jdbc.queryForObject(sql, Integer.class, teamName);
     }
 }

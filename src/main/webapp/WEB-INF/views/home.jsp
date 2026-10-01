@@ -208,39 +208,26 @@ body {
 	animation-delay: 16s;
 }
 
-@
-keyframes bannerFade { 0% {
-	opacity: 0;
-}
+@keyframes bannerFade {
+    0% {
+        opacity: 0;
+    }
 
-5
-%
-{
-opacity
-:
-1;
-}
-20
-%
-{
-opacity
-:
-1;
-}
-25
-%
-{
-opacity
-:
-0;
-}
-100
-%
-{
-opacity
-:
-0;
-}
+    5% {
+        opacity: 1;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    25% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }
 .banner h1 {
 	position: relative;
@@ -1338,7 +1325,7 @@ opacity
 					<c:forEach var="player" items="${pitcherRanking}"
 						varStatus="status">
 
-						<div>${status.index + 1} ${player.player_name}
+						<div>${status.index + 1}${player.player_name}
 							(${player.player_team})</div>
 
 					</c:forEach>
@@ -1620,7 +1607,9 @@ opacity
 		<!-- FOOTER -->
 		<div class="footer">
 
-			<a href="#">개인정보처리방침</a>　|　<a href="#">전체 서비스</a>　|　<a href="#">문제 신고</a>　|　<a href="#">고객센터</a>　|　<a href="${pageContext.request.contextPath}/admin">관리자</a>
+			<a href="#">개인정보처리방침</a> | <a href="#">전체 서비스</a> | <a href="#">문제
+				신고</a> | <a href="#">고객센터</a> | <a
+				href="${pageContext.request.contextPath}/admin">관리자</a>
 
 		</div>
 </body>
