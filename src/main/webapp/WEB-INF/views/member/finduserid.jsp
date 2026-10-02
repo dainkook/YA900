@@ -132,6 +132,7 @@ body {
     font-size: 13px;
 }
 
+
 </style>
 
 </head>
@@ -183,8 +184,13 @@ body {
                        required>
 
             </div>
+            <button class="sendEmail" type="button" id="sendEmail" style="display:none">인증번호 받기</button>
 
             <div id="emailcheck-message"></div>
+			
+			<div id="vertify" style="display:none;">
+			<input type="text" class="input" id="email-code" placeholder="인증번호를 입력하세요">
+			<button type="button" id="verifyemail">인증하기</button>
 
 
             <div class="button-group">
@@ -242,7 +248,15 @@ let nameRegex = /^[가-힣]{2,5}$/;
 let emailRegex =
     /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
-
+function checkInput(){
+	if(nameRegex.test(name.value)&& emailRegex.test(email.value)){
+		$("#sendEmail").show();
+	}else{
+		$("#sendEmail").hide();
+	}
+}
+    
+    
 findUserId.addEventListener("submit", function(event) {
 
     if (!nameRegex.test(name.value)) {
@@ -280,7 +294,7 @@ name.addEventListener("input", function() {
         namecheck_message.innerHTML = "";
 
     }
-
+    checkInput();
 });
 
 
@@ -291,7 +305,22 @@ email.addEventListener("input", function() {
         emailcheck_message.innerHTML = "";
 
     }
+    checkInput();
+});
 
+$("#sendEmail").click(function(){
+	let emailvalue= $("#email").val();
+	$.ajax({
+	url:"${pageContext.request.contextPath}/sendemail",
+	type:"post",
+	data:{ email:emailvalue},
+	success:function(result){
+		if(result == "success"){
+			alert("인증번호가 전송되었습니다.");
+			$("#vertify").show();
+		}
+	}
+	});
 });
 
 </script>
