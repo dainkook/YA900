@@ -23,6 +23,7 @@ import com.kedu.dao.BoardDAO;
 import com.kedu.dao.FilesDAO;
 import com.kedu.dto.BoardDTO;
 import com.kedu.dto.FilesDTO;
+import com.kedu.dto.LiveChatDTO;
 
 @Controller
 @RequestMapping("/board")
@@ -161,5 +162,22 @@ public class BoardController {
 		file.transferTo(new File(path + sysName));
 		result.put("url", "/uploads/files/" + sysName);
 		return result;
+	}
+	
+	@RequestMapping("/chat")
+	@ResponseBody
+	public String chat(LiveChatDTO dto, HttpSession session, Model model) throws Exception {
+	    String id = (String)session.getAttribute("loginId");
+	    String team = dao.isUserTeam(id);
+	    dto.setWriter(id);
+	    dto.setTeam(team);
+	    dao.addChat(dto);
+	    return "success";
+	}
+	
+	@RequestMapping("/chatList")
+	@ResponseBody
+	public List<LiveChatDTO> chatList(int game_id) throws Exception {
+		return dao.getChatList(game_id);
 	}
 }

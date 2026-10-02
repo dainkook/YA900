@@ -2,7 +2,6 @@ package com.kedu.dao;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -10,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kedu.dto.BoardDTO;
+import com.kedu.dto.LiveChatDTO;
 
 @Repository
 public class BoardDAO {
@@ -115,5 +115,15 @@ public class BoardDAO {
 		int seq= jdbc.queryForObject(sql, Integer.class);
 		System.out.println(seq);
 		return seq;
+	}
+	
+	public int addChat(LiveChatDTO dto) {
+		String sql = "insert into livechat(liveChat_seq, contents, writer, game_id, regdate, team) values(liveChat_seq.nextval, ?, ?, ?, sysdate, ?)";
+		return jdbc.update(sql, dto.getContents(), dto.getWriter(), dto.getGame_id(), dto.getTeam());
+	}
+	
+	public List<LiveChatDTO> getChatList(int game_id) {
+		String sql = "select * from livechat where game_id = ? order by liveChat_seq desc";
+		return jdbc.query(sql, new BeanPropertyRowMapper<>(LiveChatDTO.class), game_id);
 	}
 }

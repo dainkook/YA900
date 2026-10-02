@@ -7,6 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>경기 상세</title>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
 <style>
 * {
 	box-sizing: border-box;
@@ -1301,11 +1303,9 @@ body {
 
 					<div class="chat-input">
 
-						<input type="text" id="chatInput_${schedule.game_id}"
-							placeholder="메시지를 입력하세요">
+						<input type="text" id="chat" placeholder="메시지를 입력하세요">
 
-						<button type="button" onclick="sendChat(${schedule.game_id})">
-							등록</button>
+						<button type="button" id="chatBtn">등록</button>
 
 					</div>
 
@@ -1330,7 +1330,62 @@ function showTab(tabId,button){
 	button.classList.add("active");
 }
 
-function sendChat(gameId){
+$("#chatBtn").on("click", function() {
+    let chat = $("#chat").val();
+
+    if("${loginId}" == "") {
+        alert("로그인이 필요한 서비스입니다.");
+        return;
+    }
+
+    if(chat.trim() == "") {
+        alert("메시지를 입력해주세요.");
+        return;
+    }
+
+    $.ajax({
+        url:"/board/chat",
+        type:"post",
+        data:{
+            contents:chat,
+            game_id:"${schedule.game_id}"
+        },
+        dataType:"text"
+    }).done(function(resp) {
+        if(resp == "success") {
+            $("#chat").val("");
+            loadChat();
+        }
+    });
+});
+
+function loadChat() {
+    $.ajax({
+        url:"/board/chatList",
+        type:"get",
+        data:{
+            game_id:"${schedule.game_id}"
+        },
+        dataType:"json"
+    }).done(function(resp) {
+        let chatList = $(".chat-list");
+        chatList.empty();
+
+        for(let i = 0; i < resp.length; i++) {
+            let chat = $("<p>");
+            chat.text(resp[i].writer + " : " + resp[i].contents);
+            chatList.append(chat);
+        }
+    });
+}
+
+loadChat();
+
+setInterval(function() {
+    loadChat();
+}, 3000);
+
+/* function sendChat(gameId){
 	const input=document.getElementById("chatInput_"+gameId);
 	const message=input.value.trim();
 
@@ -1348,16 +1403,16 @@ function sendChat(gameId){
 
 	input.value="";
 	chatList.scrollTop=chatList.scrollHeight;
-}
+} */
 
-document.querySelectorAll("[id^='chatInput_']").forEach(function(input){
+/* document.querySelectorAll("[id^='chatInput_']").forEach(function(input){
 	input.addEventListener("keydown",function(event){
 		if(event.key==="Enter"){
 			const gameId=this.id.replace("chatInput_","");
 			sendChat(gameId);
 		}
 	});
-});
+}); */
 </script>
 
 </body>
