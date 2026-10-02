@@ -258,7 +258,7 @@ body {
 
             |
 
-            <a href="${pageContext.request.contextPath}/findPw.jsp">
+            <a href="${pageContext.request.contextPath}/finduserpw">
                 비밀번호 찾기
             </a>
 

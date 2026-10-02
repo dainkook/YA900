@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kedu.commons.EmailService;
+import com.kedu.commons.EncryptionUtils;
 import com.kedu.dao.UsersDAO;
 import com.kedu.dto.UsersDTO;
 
@@ -24,6 +26,9 @@ public class UsersController {
 
 	@Autowired
 	private UsersDAO dao;
+	
+	@Autowired
+	private EmailService emailService;
 
 
 
@@ -42,6 +47,16 @@ public class UsersController {
 		return "member/finduserid";
 	}
 
+	@RequestMapping("finduserpw")
+	public String finduserpw() {
+		return "member/finduserpw";
+	}
+	@RequestMapping("/mypage")
+	public String myPage() {
+		return "member/mypage";
+	}
+	
+	
 	@RequestMapping(value="/signup", method=RequestMethod.POST)
 	public String singup(
 			UsersDTO dto,
@@ -58,6 +73,8 @@ public class UsersController {
 		Timestamp birth = Timestamp.valueOf(birthString + " 00:00:00");
 		dto.setPhone(phone);
 		dto.setBirth(birth);
+		String hashedPw= EncryptionUtils.encryptSHA512(dto.getPw());
+		dto.setPw(hashedPw);
 
 		if(!file.isEmpty()) {
 
@@ -79,8 +96,10 @@ public class UsersController {
 	public String loginCheck(
 			UsersDTO dto,
 			HttpSession session) {
-
-		UsersDTO result = dao.login(dto.getId(), dto.getPw());
+		
+		String hashedpw = EncryptionUtils.encryptSHA512(dto.getPw());
+		
+		UsersDTO result = dao.login(dto.getId(), hashedpw);
 		if (result == null) {
 			return "redirect:/login";
 		}
@@ -115,4 +134,24 @@ public class UsersController {
 		model.addAttribute("id",id);
 		return "member/finduserid";
 	}
+	@RequestMapping(value="/sendemail")
+	@ResponseBody
+	public String sendEmail(String email , HttpSession session) {
+		String code = String.valueOf((int)(Math.random() * 900000)+ 100000);
+		session.setAttribute("emailcode", code);
+		emailService.sendEmail(email,"이메일 인증번호", "인증번호는 " + code + "입니다.");
+		return "success";
+	}
+	@RequestMapping(value="/verifyemail")
+	@ResponseBody
+	public String verifyEmail(String code, HttpSession session) {
+		String savedCode=(String) session.getAttribute("emailcode");
+		if(savedCode != null && savedCode.equals(code)) {
+			return "success";
+			
+		}
+		return "fail";
+	}
+	
+	
 }

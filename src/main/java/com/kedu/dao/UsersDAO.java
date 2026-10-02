@@ -21,7 +21,7 @@ public class UsersDAO {
 				+ "point, team, regdate, blackList, admin"
 				+ ") VALUES ("
 				+ "USERS_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "
-				+ "0, ?, SYSTIMESTAMP, 0, 'ï¿½ì”ªè«›ï¿½'"
+				+ "0, ?, SYSTIMESTAMP, 0, 'ÀÏ¹Ý'"
 				+ ")";
 
 		return jdbc.update(sql,
@@ -40,37 +40,44 @@ public class UsersDAO {
 				dto.getTeam()
 				);
 	}
-
+  
 	public UsersDTO login(String id, String pw) {
 
-		String sql = "SELECT * FROM users WHERE id = ? AND pw = ?";
+	    String sql = "SELECT * FROM users WHERE id = ? AND pw = ?";
 
-		try {
-			return jdbc.queryForObject(
-					sql,
-					new BeanPropertyRowMapper<UsersDTO>(UsersDTO.class),
-					id,
-					pw
-					);
-		} catch (Exception e) {
-			return null;
-		}
-
+	    try {
+	        return jdbc.queryForObject(
+	            sql,
+	            new BeanPropertyRowMapper<UsersDTO>(UsersDTO.class),
+	            id,
+	            pw
+	        );
+	    } catch (Exception e) {
+	        return null;
+	    }
 	}
-	
 	public int idCheck(String id) {
 		String sql= "select count(*) from users where id = ?";
 		return jdbc.queryForObject(sql, Integer.class, id);
 	}
-
 	public int emailCheck(String email) {
-		String sql = "select count(*) from users where email =?";
+		String sql = "select count(*) from users where id =?";
 		return jdbc.queryForObject(sql, Integer.class, email);
 	}
 
 	public String findUserId(String name, String email) {
-		String sql= "select id from users where name=? and email=?";
-		return jdbc.queryForObject(sql, String.class , name, email);
-	}
 
+	    String sql = "SELECT id FROM users WHERE name = ? AND email = ?";
+
+	    try {
+	        return jdbc.queryForObject(
+	            sql,
+	            String.class,
+	            name,
+	            email
+	        );
+	    } catch (Exception e) {
+	        return null;
+	    }
+	}
 }

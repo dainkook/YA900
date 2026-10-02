@@ -790,7 +790,7 @@ nameInput.addEventListener("input", function(){
     else{
 
         nameMessage.textContent =
-            "사용 가능한 이름입니다.";
+            "이름 형식이 올바르게 입력 되었습니다.";
 
     }
 
