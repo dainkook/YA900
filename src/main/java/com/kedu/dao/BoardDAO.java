@@ -51,9 +51,9 @@ public class BoardDAO {
 	    return jdbc.queryForObject(sql, String.class, id);
 	}
 	
-		public int write(String title, String contents, String id, String team) {
-			String sql = "insert into board values(board_seq.nextval, ?, ?, ?, 0, sysdate, ?, null, 0, null)";
-			return jdbc.update(sql, title, contents, id, team);
+		public int write(BoardDTO dto) {
+			String sql = "insert into board values(?, ?, ?, ?, 0, sysdate, ?, null, 0, null)";
+			return jdbc.update(sql, dto.getBoard_seq(), dto.getTitle(), dto.getContents(), dto.getWriter(), dto.getTeam());
 		}
 	
 	public List<BoardDTO> searchBoard(String option, String search, int first, int last) {

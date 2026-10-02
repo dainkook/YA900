@@ -6,6 +6,9 @@
 <html>
 <head>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/lang/summernote-ko-KR.min.js"></script>
 <meta charset="UTF-8">
 <title>게시글 상세 | YA900</title>
 
@@ -243,7 +246,7 @@ body {
 .container > .body > .contents {
 	width: 100%;
 	min-height: 430px;
-	padding: 30px 10px;
+	padding: 0 10px;
 	font-size: 16px;
 	line-height: 1.9;
 	color: #333;
@@ -253,15 +256,26 @@ body {
 
 #files {
 	width: 100%;
-	min-height: 80px;
-	outline: none;
+	min-height: 65px;
+	padding: 17px 10px;
+	border-bottom: 1px solid #e5e7ec;
+	font-size: 14px;
+	color: #555;
 }
+
+#files a { color: #293d78; text-decoration: none; }
+#files a:hover { text-decoration: underline; }
+#files:empty { display: none; }
 
 #contents {
 	width: 100%;
 	min-height: 350px;
 	outline: none;
 }
+
+#contents img { max-width: 100%; height: auto; }
+.note-editor.note-frame { width: 100%; border-color: #dce3f3; box-shadow: none; }
+.note-editable { font-family: Arial, sans-serif; font-size: 16px; line-height: 1.9; }
 
 /* 수정 모드 */
 #title[contenteditable="true"],
@@ -281,22 +295,22 @@ body {
 /* =========================
    하단 버튼
 ========================= */
-.container > .footer {
+.container > .body > .footer {
 	width: 100%;
-	height: 85px;
-	margin-top: 18px;
+	min-height: 85px;
+	margin-top: 0;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	padding: 0 25px;
 	background-color: white;
-	border: 1px solid #e2e5eb;
-	border-radius: 10px;
-	box-shadow: 0 4px 15px rgba(20, 30, 60, 0.025);
+	border-top: 1px solid #e5e7ec;
+	border-radius: 0 0 10px 10px;
+	box-shadow: none;
 }
 
-.container > .footer > .list button,
-.container > .footer > .buttons button {
+.container > .body > .footer > .list button,
+.container > .body > .footer > .buttons button {
 	height: 43px;
 	padding: 0 20px;
 	border-radius: 5px;
@@ -307,30 +321,30 @@ body {
 }
 
 /* 목록 버튼 */
-.container > .footer > .list button {
+.container > .body > .footer > .list button {
 	border: 1px solid #293d78;
 	background: linear-gradient(135deg, #171f46, #293d78);
 	color: white;
 }
 
-.container > .footer > .list button:hover {
+.container > .body > .footer > .list button:hover {
 	background: #354d91;
 }
 
 /* 수정 / 삭제 */
-.container > .footer > .buttons {
+.container > .body > .footer > .buttons {
 	display: flex;
 	gap: 9px;
 }
 
-.container > .footer > .buttons button {
+.container > .body > .footer > .buttons button {
 	min-width: 80px;
 	border: 1px solid #d5d8df;
 	background-color: white;
 	color: #333;
 }
 
-.container > .footer > .buttons button:hover {
+.container > .body > .footer > .buttons button:hover {
 	background-color: #f3f4f7;
 	border-color: #aeb4c1;
 }
@@ -491,18 +505,16 @@ body {
 				</div>
 			</div>
 
-			<div class="contents">
-				<div id="files">
+			<div id="files">
 					<c:forEach var="file" items="${files}">
 						<div>
-							<a href="/boards/download?oriName=${file.oriName}&sysName=${file.sysName}">${file.oriName}</a>
+							<a href="/board/download?oriName=${file.oriName}&sysName=${file.sysName}">${file.oriName}</a>
 							</div>
 					</c:forEach>
-				</div>
+			</div>
+			<div class="contents">
 				<div id="contents" contenteditable="false">${board.contents}</div>
 			</div>
-
-		</div>
 
 		<div class="footer">
 			<div class="list">
@@ -511,6 +523,8 @@ body {
 
 			<div class="buttons"></div>
 		</div>
+
+	</div>
 
 	</div>
 
@@ -550,18 +564,28 @@ body {
 
 			if ($(this).text() == "수정") {
 
-				$("#contents").attr("contenteditable", true);
 				$("#title").attr("contenteditable", true);
+				$("#contents").summernote({
+					height: 400,
+					lang: "ko-KR",
+					toolbar: [
+						["font", ["fontname", "fontsize"]],
+						["style", ["bold", "italic", "underline", "strikethrough"]],
+						["color", ["color"]],
+						["para", ["ul", "ol", "paragraph"]],
+						["insert", ["link", "picture"]],
+						["view", ["fullscreen", "codeview"]]
+					]
+				});
 
 				$(this).text("수정완료");
 				$("#delete").text("취소");
-
 				$("#title").focus();
 
 			} else {
 
 				if ($("#title").text().trim() == ""
-					|| $("#contents").text().trim() == "") {
+					|| $("#contents").summernote("isEmpty")) {
 					alert("제목과 내용을 입력해주세요.");
 					return;
 				}
@@ -571,7 +595,7 @@ body {
 				}
 
 				$("#updateTitle").val($("#title").text());
-				$("#updateContents").val($("#contents").text());
+				$("#updateContents").val($("#contents").summernote("code"));
 
 				$("#updateForm").submit();
 			}
@@ -588,6 +612,7 @@ body {
 
 			} else {
 
+				$("#contents").summernote("destroy");
 				$("#contents").html(originalContents);
 				$("#title").html(originalTitle);
 

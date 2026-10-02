@@ -1,15 +1,22 @@
 package com.kedu.controllers;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kedu.dao.BoardDAO;
@@ -63,7 +70,9 @@ public class BoardController {
 		String team = dao.isUserTeam(id);
 		int seq = dao.getNextval();
 		dto.setBoard_seq(seq);
-		dao.write(dto.getTitle(), dto.getContents(), id, team);
+		dto.setTeam(team);
+		dto.setWriter(id);
+		dao.write(dto);
 		String path = "d:/uploads/";
 		for(MultipartFile file : files) {
 			if(file.isEmpty()) {
@@ -71,7 +80,6 @@ public class BoardController {
 			}
 			String oriName = file.getOriginalFilename();
 			String sysName = UUID.randomUUID() + "_" + oriName;
-			System.out.println("파일 이름 : " + file.getOriginalFilename());
 			file.transferTo(new File(path + sysName));
 			
 			fdao.insertFile(new FilesDTO(0,oriName,sysName,null,seq));
@@ -110,9 +118,48 @@ public class BoardController {
 		return "redirect:/board/board?cpage=1";
 	}
 	
+	@RequestMapping("/download")
+	public void download(String oriName, String sysName, HttpServletResponse resp) throws Exception {
+		oriName = new String(oriName.getBytes(), "ISO-8859-1");
+		File target = new File("d:/uploads/" + sysName);
+		resp.setContentType("application/octet-stream");
+		resp.setHeader("Content-Disposition", "attachment; filename = \"" + oriName + "\"");
+		FileInputStream fis = new FileInputStream(target);
+		FileCopyUtils.copy(fis, resp.getOutputStream());
+	}
+	
 	@RequestMapping("/test")
 	public String test(HttpSession session) throws Exception {
 		session.setAttribute("loginId", "admin");
 		return "redirect:/";
+	}
+	
+	@RequestMapping("/uploadImage")
+	@ResponseBody
+	public Map<String, String> uploadImage(@RequestParam("file") MultipartFile file) throws Exception {
+		Map<String, String> result = new HashMap<>();
+		if(file.isEmpty()) {
+			result.put("error", "파일이 비어있습니다.");
+			return result;
+		}
+		
+		String oriName = file.getOriginalFilename();
+		String extension = oriName.substring(oriName.lastIndexOf(".") + 1).toLowerCase();
+		
+		if(!extension.matches("jpg|jpeg|png|gif|webp")) {
+			result.put("error", "지원하지 않는 파일 형식입니다.");
+			return result;
+		}
+		
+		String sysName = UUID.randomUUID().toString() + "." + extension;
+		String path = "D:/uploads/files/";
+		File uploadDir = new File(path);
+		if(!uploadDir.exists()) {
+			uploadDir.mkdirs();
+		}
+		
+		file.transferTo(new File(path + sysName));
+		result.put("url", "/uploads/files/" + sysName);
+		return result;
 	}
 }

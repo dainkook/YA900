@@ -6,6 +6,9 @@
 <html>
 <head>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/lang/summernote-ko-KR.min.js"></script>
 <meta charset="UTF-8">
 <title>게시글 작성 | YA900</title>
 
@@ -223,18 +226,34 @@ body {
 	font-weight: normal;
 }
 
+/* 첨부파일 영역 */
+.attachments {
+	min-height: 65px;
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 10px;
+	padding: 14px 5px;
+	border-bottom: 1px solid #e5e7ec;
+	font-size: 14px;
+	color: #555;
+}
+
+.attachments input[type="file"] { max-width: 100%; font-size: 13px; }
+
 /* 본문 영역 */
 .container > form > .body > .contents {
 	width: 100%;
 	min-height: 515px;
-	padding: 30px 5px;
+	padding: 0 5px;
 	font-size: 16px;
 	line-height: 1.9;
 }
 
 #contents {
 	width: 100%;
-	min-height: 450px;
+	min-height: 350px;
+	padding: 25px 5px;
 	outline: none;
 	border: none;
 	font-size: 16px;
@@ -250,6 +269,9 @@ body {
 	color: #b7bbc5;
 }
 
+.note-editor.note-frame { width: 100%; border-color: #e2e5eb; border-radius: 5px; box-shadow: none; }
+.note-editable { font-family: Arial, sans-serif; font-size: 16px; line-height: 1.9; }
+
 /* 편집 영역 포커스 */
 #title:focus, #contents:focus {
 	outline: none;
@@ -258,26 +280,26 @@ body {
 /* =========================
    하단 버튼
 ========================= */
-.container > form > .footer {
+.container > form > .body > .footer {
 	width: 100%;
-	height: 85px;
-	margin-top: 18px;
+	min-height: 85px;
+	margin-top: 0;
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
 	padding: 0 25px;
 	background-color: white;
-	border: 1px solid #e2e5eb;
-	border-radius: 10px;
-	box-shadow: 0 4px 15px rgba(20, 30, 60, 0.025);
+	border-top: 1px solid #e5e7ec;
+	border-radius: 0 0 10px 10px;
+	box-shadow: none;
 }
 
-.container > form > .footer > .buttons {
+.container > form > .body > .footer > .buttons {
 	display: flex;
 	gap: 10px;
 }
 
-.container > form > .footer > .buttons button {
+.container > form > .body > .footer > .buttons button {
 	width: 95px;
 	height: 43px;
 	border: 1px solid #d5d8df;
@@ -290,7 +312,7 @@ body {
 	transition: 0.2s ease;
 }
 
-.container > form > .footer > .buttons button:hover {
+.container > form > .body > .footer > .buttons button:hover {
 	background-color: #f3f4f7;
 	border-color: #aeb4c1;
 }
@@ -411,7 +433,7 @@ body {
 			<div class="category">COMMUNITY / WRITE</div>
 		</div>
 
-		<form action="/board/writeComplete" method="post">
+		<form action="/board/writeComplete" enctype="multipart/form-data" method="post">
 
 			<div class="body">
 
@@ -420,20 +442,22 @@ body {
 					<input id="titleSubmit" type="hidden" name="title" value="">
 				</div>
 				
+				<div class="attachments">
+					<input type="file" name="files">
+					<input type="file" name="files">
+					<input type="file" name="files">
+				</div>
+
 				<div class="contents">
-					<input type="file" name="files"> 
-					<input type="file" name="files">
-					<input type="file" name="files">
 					<div id="contents" contenteditable="true"></div>
 					<input id="contentSubmit" type="hidden" name="contents" value="">
 				</div>
 
-			</div>
-
-			<div class="footer">
-				<div class="buttons">
-					<button id="submit" type="submit">등록</button>
-					<button id="cancel" type="button">취소</button>
+				<div class="footer">
+					<div class="buttons">
+						<button id="submit" type="submit">등록</button>
+						<button id="cancel" type="button">취소</button>
+					</div>
 				</div>
 			</div>
 
@@ -442,15 +466,38 @@ body {
 	</div>
 
 	<script>
+		$(document).ready(function() {
+			$("#contents").summernote({
+				height: 400,
+				lang: "ko-KR",
+				placeholder: "게시글 내용을 입력하세요.",
+				toolbar: [
+					["font", ["fontname", "fontsize"]],
+					["style", ["bold", "italic", "underline", "strikethrough"]],
+					["color", ["color"]],
+					["para", ["ul", "ol", "paragraph"]],
+					["insert", ["link", "picture"]],
+					["view", ["fullscreen", "codeview"]]
+				]
+			});
+		});
+
 		$("#cancel").on("click", function() {
 			location.href = "/board/board?cpage=1";
 		});
-		
-		$("#submit").on("click", function() {
+
+		$("form").on("submit", function(e) {
+			let title = $("#title").text().trim();
+			let contents = $("#contents").summernote("code");
+			if (title == "" || $("#contents").summernote("isEmpty")) {
+				e.preventDefault();
+				alert("제목과 내용을 입력해주세요.");
+				return;
+			}
 			$("#titleSubmit").val($("#title").html());
-			$("#contentSubmit").val($("#contents").html());
-		})
-    </script>
+			$("#contentSubmit").val(contents);
+		});
+	</script>
 
 </body>
 </html>

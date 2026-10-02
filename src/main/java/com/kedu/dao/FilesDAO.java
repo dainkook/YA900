@@ -23,7 +23,7 @@ public class FilesDAO {
 	public List<FilesDTO> getFiles(int parent_seq) {
 		String sql = "select * from files where parent_seq = ?";
 		List<FilesDTO> list = jdbc.query(sql, new BeanPropertyRowMapper<>(FilesDTO.class),parent_seq);
-		System.out.println(list);
 		return list;
 	}
 }
+	
