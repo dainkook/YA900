@@ -438,6 +438,20 @@ body {
     border: 1px solid #d6dceb;
     display: inline-block;
     flex-shrink: 0;
+    object-fit: cover;
+}
+
+.player-stat {
+    margin-left: auto;
+    min-width: 45px;
+    text-align: right;
+    font-size: 13px;
+    font-weight: 600;
+    color: #476aaa;
+}
+
+.player-stat + .player-stat {
+    margin-left: 8px;
 }
 
 /* =========================
@@ -607,29 +621,147 @@ body {
 /* =========================
    팀 순위
 ========================= */
-.team-ranking-item {
-	height: 40px;
-	border-bottom: 1px solid #d6dceb;
-	display: flex;
-	align-items: center;
-	padding: 0 10px;
-	gap: 10px;
-}
-
-.team-ranking-item img {
-	width: 28px;
-	height: 28px;
-	object-fit: contain;
-	margin-right: 10px;
+#team-ranking .team-ranking-item {
+    height: 40px;
+    border-bottom: 1px solid #d6dceb;
+    display: grid;
+    grid-template-columns: 35px 35px 1fr 55px 55px 55px;
+    align-items: center;
+    padding: 0 10px;
+    gap: 0;
 }
 
 .team-ranking-item .rank {
 	width: 25px;
 	font-weight: bold;
+	flex-shrink: 0;
 }
 
 .team-ranking-item .team {
 	font-weight: 500;
+	margin-left: 30px;
+}
+
+#team-ranking .ranking-stat-header {
+    display: grid;
+    grid-template-columns: 35px 35px 1fr 55px 55px 55px;
+    align-items: center;
+    height: 40px;
+    padding: 0 10px;
+    border-bottom: 1px solid #d6dceb;
+}
+
+#team-ranking .ranking-stat-header span {
+    text-align: center;
+}
+
+#team-ranking .ranking-stat-header .rank-header,
+#team-ranking .ranking-stat-header .name-header {
+    text-align: left;
+}
+
+#team-ranking .ranking-stat-header .name-header {
+    margin-left: 38px;
+}
+
+/* 팀 로고 */
+.team-logo {
+	width: 30px;
+	height: 30px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+}
+
+.team-logo img {
+	width: 36px;
+	height: 36px;
+	object-fit: contain;
+}
+
+/* 선수 사진 */
+.team-ranking-item .player-photo {
+	width: 35px;
+	height: 35px;
+	border-radius: 6px;
+	object-fit: cover;
+	flex-shrink: 0;
+}
+
+/* 선수 사진 + 팀 로고 */
+.player-image-wrap {
+	position: relative;
+	width: 38px;
+	height: 38px;
+	flex-shrink: 0;
+}
+
+.player-image-wrap .player-photo {
+	width: 38px;
+	height: 38px;
+	border-radius: 6px;
+	object-fit: cover;
+}
+
+.player-image-wrap .player-team-logo {
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    right: -16px;
+    bottom: -5px;
+    object-fit: contain;
+}
+
+/* 선수 팀 */
+.team-ranking-item .player-team {
+	margin-left: auto;
+	font-size: 12px;
+	color: #8b93a8;
+}
+
+.ranking-more-btn {
+    display: block;
+    width: 100%;
+    height: 38px;
+    margin-top: 10px;
+    border: 1px solid #d6dceb;
+    background: white;
+    color: #476aaa;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.ranking-more-btn:hover {
+    background: #f5f7fc;
+}
+
+.ranking-stat-header {
+    display: flex;
+    align-items: center;
+    height: 30px;
+    padding: 0 10px;
+    color: #8b93a8;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.ranking-stat-header .rank-header {
+    width: 25px;
+    flex-shrink: 0;
+}
+
+.ranking-stat-header .name-header {
+    flex: 1;
+    margin-left: 48px;
+}
+
+.ranking-stat-header span:not(.rank-header):not(.name-header) {
+    width: 45px;
+    text-align: right;
+    flex-shrink: 0;
 }
 
 /* =========================
@@ -1248,10 +1380,14 @@ body {
 
 						<div class="game-card"
 							onclick="showGame(
-                 '<fmt:formatDate value="${game.start_date}" pattern="MM.dd (E)"/>',
-                 '${game.away_team} VS ${game.home_team}',
-                 '<fmt:formatDate value="${game.start_date}" pattern="HH:mm"/>',
-                 '${game.location}', '${game.away_logo}', '${game.home_logo}')">
+						     '${game.game_id}',
+						     '<fmt:formatDate value="${game.start_date}" pattern="MM.dd (E)"/>',
+						     '${game.away_team} VS ${game.home_team}',
+						     '<fmt:formatDate value="${game.start_date}" pattern="HH:mm"/>',
+						     '${game.location}',
+						     '${game.away_logo}',
+						     '${game.home_logo}'
+						)">
 
 							<div class="game-date">
 								<fmt:formatDate value="${game.start_date}"
@@ -1293,40 +1429,58 @@ body {
 			    <div id="info-place"></div>
 			
 			    <div class="pitcher-info">
-			
-			        <!-- 원정 선발 -->
-			        <div class="pitcher away-pitcher">
-			            <div class="pitcher-detail">
-			                <strong>선발 예정</strong>
-			                <div class="pitcher-logo">
-			                    <img id="away-pitcher-logo"
-			                         src=""
-			                         alt="원정팀 로고"
-			                         class="pitcher-team-logo">
-			                </div>
-			            </div>
-			            <div class="pitcher-photo">
-			                <img src="" alt="원정 선발 투수">
-			            </div>
-			        </div>
-			
-			        <!-- 홈 선발 -->
-			        <div class="pitcher home-pitcher">
-			            <div class="pitcher-photo">
-			                <img src="" alt="홈 선발 투수">
-			            </div>
-			            <div class="pitcher-detail">
-			
-			                <div class="pitcher-logo">
-			                    <img id="home-pitcher-logo"
-			                         src=""
-			                         alt="홈팀 로고"
-			                         class="pitcher-team-logo">
-			                </div>
-			                <strong>선발 예정</strong>
-			            </div>
-			        </div>
-			    </div>
+				    <!-- 원정팀 -->
+				    <div class="pitcher away-pitcher">
+				        <!-- 선발 이름 + 팀 로고 -->
+				        <div class="pitcher-detail">
+				            <strong id="away-pitcher-name">선발 예정</strong>
+				
+				            <div class="pitcher-logo">
+				                <img id="away-pitcher-logo"
+				                     src=""
+				                     alt="원정팀 로고"
+				                     class="pitcher-team-logo">
+				            </div>
+				
+				        </div>
+				
+				        <!-- 원정 투수 사진 -->
+				        <div class="pitcher-photo">
+				            <img id="away-pitcher-photo"
+				                 src=""
+				                 alt="원정 선발 투수">
+				        </div>
+				
+				    </div>
+				
+				
+				    <!-- 홈팀 -->
+				    <div class="pitcher home-pitcher">
+				
+				        <!-- 홈 투수 사진 -->
+				        <div class="pitcher-photo">
+				            <img id="home-pitcher-photo"
+				                 src=""
+				                 alt="홈 선발 투수">
+				        </div>
+				
+				        <!-- 팀 로고 + 선발 이름 -->
+				        <div class="pitcher-detail">
+				
+				            <div class="pitcher-logo">
+				                <img id="home-pitcher-logo"
+				                     src=""
+				                     alt="홈팀 로고"
+				                     class="pitcher-team-logo">
+				            </div>
+				
+				            <strong id="home-pitcher-name">선발 예정</strong>
+				
+				        </div>
+				
+				    </div>
+				
+				</div>
 			</div>
 		</div>
 
@@ -1358,56 +1512,109 @@ body {
 				</div>
 
 				<div id="team-ranking" class="ranking-list">
-
+				    <div class="ranking-stat-header">
+				        <span class="rank-header">순위</span>
+				        <span></span>
+				        <span class="name-header">팀</span>
+				        <span>승률</span>
+				        <span>게임차</span>
+				        <span>연속</span>
+				    </div>
 				    <c:forEach var="team" items="${teamRanking}" varStatus="status">
-				
 				        <div class="team-ranking-item">
-				
 				            <span class="rank">${status.index + 1}</span>
-				
 				            <span class="team-logo">
 				                <img src="${pageContext.request.contextPath}${team.team_logo}">
 				            </span>
-				
 				            <span class="team">${team.team_name}</span>
-				
+				            <span class="player-stat">
+				                ${team.win_rate}
+				            </span>
+				            <span class="player-stat">
+				                ${team.games_behind}
+				            </span>
+				            <span class="player-stat">
+				                ${team.winning_streak}
+				            </span>
 				        </div>
-				
 				    </c:forEach>
-				
 				</div>
 
 				<div id="hitter-ranking" class="ranking-list">
+				<div class="ranking-stat-header">
+			        <span class="rank-header">순위</span>
+			        <span class="name-header">선수</span>
+			        <span>타율</span>
+			        <span>홈런</span>
+			    </div>
 				    <c:forEach var="player" items="${hitterRanking}" varStatus="status">
 				        <div class="team-ranking-item">
 				            <span class="rank">${status.index + 1}</span>
-				            <span class="player-photo"></span>
-				            <span class="team">
-				                ${player.player_name}
-				            </span>
-				            <span class="player-team">
-				                (${player.player_team})
-				            </span>
+				            <div class="player-image-wrap">
+							    <img class="player-photo"
+							         src="https://sports-phinf.pstatic.net/player/kbo/default/${player.player_id}.png"
+							         alt="${player.player_name}">
+							
+							    <img class="player-team-logo"
+							         src="${pageContext.request.contextPath}${player.team_logo}"
+							         alt="${player.player_team}">
+							</div>
+							
+							<span class="team">
+							    ${player.player_name}
+							</span>
+							
+							<span class="player-stat">
+							    ${player.batting_avg}
+							</span>
+							
+							<span class="player-stat">
+							    ${player.home_runs} 개
+							</span>
 				        </div>
 				    </c:forEach>
 				</div>
 				
 				<div id="pitcher-ranking" class="ranking-list">
+				    <div class="ranking-stat-header">
+				        <span class="rank-header">순위</span>
+				        <span class="name-header">선수</span>
+				        <span>ERA</span>
+				        <span>승</span>
+				    </div>
 				    <c:forEach var="player" items="${pitcherRanking}" varStatus="status">
 				        <div class="team-ranking-item">
 				            <span class="rank">${status.index + 1}</span>
-				            <span class="player-photo"></span>
-				            <span class="team">
-				                ${player.player_name}
-				            </span>
-				            <span class="player-team">
-				                (${player.player_team})
-				            </span>
+				           <div class="player-image-wrap">
+							    <img class="player-photo"
+							         src="https://sports-phinf.pstatic.net/player/kbo/default/${player.player_id}.png"
+							         alt="${player.player_name}">
+							
+							    <img class="player-team-logo"
+							         src="${pageContext.request.contextPath}${player.team_logo}"
+							         alt="${player.player_team}">
+							
+							</div>
+							
+							<span class="team">
+							    ${player.player_name}
+							</span>
+							
+							<span class="player-stat">
+							    ${player.era}
+							</span>
+							
+							<span class="player-stat">
+							    ${player.wins} 승
+							</span>
 				        </div>
 				    </c:forEach>
 				</div>
+				<button type="button" class="ranking-more-btn" onclick="location.href='${pageContext.request.contextPath}/schedule/rankdetail'">
+			    더보기
+				</button>
 			</div>
-
+			
 			<div class="schedule">
 				<h2>경기 일정</h2>
 				<c:forEach var="game" items="${scheduleList}" begin="0" end="4">
@@ -1683,6 +1890,7 @@ body {
 		</div>
 </body>
 
+
 <script>
 
 function showRanking(type, button) {
@@ -1723,34 +1931,102 @@ gameList.addEventListener("wheel", function(e) {
 
 let selectedGame = null;
 
-function showGame(date, team, time, place, awayLogo, homeLogo) {
+function showGame(gameId, date, team, time, place, awayLogo, homeLogo) {
 
     const gameInfo = document.getElementById("game-info");
 
-    // 같은 카드를 다시 클릭한 경우 → 닫기
-    if (selectedGame === team) {
+    // 같은 경기 다시 클릭하면 닫기
+    if (selectedGame === gameId) {
         gameInfo.classList.remove("show");
         selectedGame = null;
         return;
     }
 
-    // 다른 카드를 클릭한 경우 → 내용 변경 후 표시
+    // 경기 정보
     document.getElementById("info-date").innerText = date;
     document.getElementById("info-team").innerText = team;
     document.getElementById("info-time").innerText = time;
     document.getElementById("info-place").innerText = place;
-    
-    // 원정팀 로고
+
+    // 팀 로고
     document.getElementById("away-pitcher-logo").src =
         "${pageContext.request.contextPath}" + awayLogo;
 
-    // 홈팀 로고
     document.getElementById("home-pitcher-logo").src =
         "${pageContext.request.contextPath}" + homeLogo;
 
-    gameInfo.classList.add("show");
+    // 기본값
+    document.getElementById("away-pitcher-name").innerText = "선발 예정";
+    document.getElementById("home-pitcher-name").innerText = "선발 예정";
 
-    selectedGame = team;
+    document.getElementById("away-pitcher-photo").src = "";
+    document.getElementById("home-pitcher-photo").src = "";
+
+    console.log("현재 경기 ID:", gameId);
+
+    // 경기별 선발투수 조회
+    fetch("${pageContext.request.contextPath}/schedule/pitchers?game_id=" + gameId)
+        .then(response => {
+
+            console.log("응답 상태:", response.status);
+
+            return response.json();
+        })
+        .then(data => {
+
+            console.log("받아온 선발 데이터:", data);
+
+            data.forEach(player => {
+
+                console.log(
+                    "선수:",
+                    player.player_name,
+                    "| 팀:",
+                    player.team,
+                    "| starter:",
+                    player.starter,
+                    "| position:",
+                    player.position
+                );
+
+                if (Number(player.starter) !== 1 || player.position !== "선발투수") {
+                    return;
+                }
+
+                if (player.team === "away") {
+
+                    document.getElementById("away-pitcher-name").innerText =
+                        player.player_name || "선발 예정";
+
+                    if (player.player_image) {
+                        document.getElementById("away-pitcher-photo").src =
+                            "${pageContext.request.contextPath}" + player.player_image;
+                    }
+                }
+
+                if (player.team === "home") {
+
+                    document.getElementById("home-pitcher-name").innerText =
+                        player.player_name || "선발 예정";
+
+                    if (player.player_image) {
+                        document.getElementById("home-pitcher-photo").src =
+                            "${pageContext.request.contextPath}" + player.player_image;
+                    }
+                }
+
+            });
+
+            gameInfo.classList.add("show");
+        })
+        .catch(error => {
+
+            console.error("선발투수 정보를 불러오지 못했습니다.", error);
+
+            gameInfo.classList.add("show");
+        });
+
+    selectedGame = gameId;
 }
 
 function openBooking(event, url) {
@@ -1823,4 +2099,5 @@ document.querySelector(".more-btn").onclick = function () {
 }
 
 </script>
+
 </html>

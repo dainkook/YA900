@@ -71,20 +71,25 @@ public class PlayerHitterDAO {
 	public List<PlayerHitterDTO> getTop10Hitters() {
 
 	    String sql =
-	            "SELECT PLAYER_NAME, PLAYER_TEAM, BATTING_AVG, GAMES, AT_BATS "
-	            + "FROM ("
-	            + " SELECT PLAYER_NAME, PLAYER_TEAM, BATTING_AVG, GAMES, AT_BATS "
-	            + " FROM playerHitter "
-	            + " WHERE AT_BATS >= 400 "
-	            + " ORDER BY BATTING_AVG DESC"
-	            + ") "
-	            + "WHERE ROWNUM <= 10";
+	        "SELECT p.PLAYER_ID, p.PLAYER_NAME, p.PLAYER_TEAM, "
+	        + "p.BATTING_AVG, p.GAMES, p.AT_BATS, p.HOME_RUNS, "
+	        + "t.TEAM_LOGO "
+	        + "FROM ( "
+	        + "    SELECT PLAYER_ID, PLAYER_NAME, PLAYER_TEAM, "
+	        + "           BATTING_AVG, GAMES, AT_BATS, HOME_RUNS "
+	        + "    FROM playerHitter "
+	        + "    WHERE AT_BATS >= 400 "
+	        + "    ORDER BY BATTING_AVG DESC "
+	        + ") p "
+	        + "JOIN team t ON p.PLAYER_TEAM = t.TEAM_NAME "
+	        + "WHERE ROWNUM <= 10";
 
 	    return jdbc.query(
-	            sql,
-	            new BeanPropertyRowMapper<>(PlayerHitterDTO.class)
+	        sql,
+	        new BeanPropertyRowMapper<>(PlayerHitterDTO.class)
 	    );
 	}
+	
 	public List<PlayerHitterDTO> selectAll() {
 
 		String sql =

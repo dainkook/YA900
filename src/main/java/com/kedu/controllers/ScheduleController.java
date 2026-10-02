@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kedu.dao.GameLineUpDAO;
 import com.kedu.dao.PlayerHitterDAO;
@@ -113,5 +114,14 @@ public class ScheduleController {
 		
 
 		return "schedule/rankdetail";
+	}
+	
+	@ResponseBody
+	@RequestMapping("/pitchers")
+	public List<GameLineUpDTO> pitchers(@RequestParam("game_id") int game_id) {
+
+	    ScheduleDTO schedule = scheduleDAO.selectByGameId(game_id);
+
+	    return gameLineUpDAO.selectByGameId(schedule.getNaver_game_id());
 	}
 }
