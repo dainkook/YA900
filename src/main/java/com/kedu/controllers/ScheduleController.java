@@ -86,13 +86,15 @@ public class ScheduleController {
 		List<PlayerHitterDTO> hitterList = playerHitterDAO.selectAll();
 
 		List<GameLineUpDTO> lineupList = gameLineUpDAO.selectByGameId(schedule.getNaver_game_id());
+		
+		Timestamp now = new Timestamp(System.currentTimeMillis());
 
 		model.addAttribute("schedule", schedule);
 		model.addAttribute("teamList", teamList);
 		model.addAttribute("pitcherList", pitcherList);
 		model.addAttribute("hitterList", hitterList);
 		model.addAttribute("lineupList", lineupList);
-
+		model.addAttribute("now", now);
 		return "schedule/scheduledetail";
 	}
 

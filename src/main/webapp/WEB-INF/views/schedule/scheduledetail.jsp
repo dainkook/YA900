@@ -830,8 +830,10 @@ body {
 				<a href="#">축구</a>
 
 				<div class="sub-menu">
-					<a href="#">예매</a> <a href="#">경기일정</a> <a href="#">팀순위</a> <a
-						href="#">선수순위</a> <a href="#">게시판</a>
+					<a href="#">예매</a> 
+					<a href="#">경기일정</a> 
+					<a href="#">팀순위</a> 
+					<a href="#">선수순위</a> <a href="#">게시판</a>
 				</div>
 			</div>
 
@@ -840,8 +842,10 @@ body {
 				<a href="#">미니게임</a>
 
 				<div class="sub-menu">
-					<a href="#">상식 퀴즈</a> <a href="#">OX 퀴즈</a> <a href="#">승부예측</a> <a
-						href="#">게임 랭킹</a>
+					<a href="#">상식 퀴즈</a> 
+					<a href="#">OX 퀴즈</a>
+					<a href="#">승부예측</a> 
+					<a href="#">게임 랭킹</a>
 				</div>
 			</div>
 		</nav>
@@ -856,22 +860,18 @@ body {
 	<main class="container">
 		<section class="title-area">
 			<nav class="kbo-navigation">
-				<a href="${pageContext.request.contextPath}/schedule/schedule">
-					일정 </a> <a
-					href="${pageContext.request.contextPath}/schedule/rankdetail">
-					랭킹 및 기록 </a>
+				<a href="${pageContext.request.contextPath}/schedule/schedule">일정 </a> 
+				<a href="${pageContext.request.contextPath}/schedule/rankdetail">랭킹 및 기록 </a>
 			</nav>
 		</section>
 		<section class="game-info">
 			<div class="game-date">
-				<fmt:formatDate value="${schedule.start_date}"
-					pattern="yyyy년 MM월 dd일 HH:mm" />
+				<fmt:formatDate value="${schedule.start_date}" pattern="yyyy년 MM월 dd일 HH:mm" />
 			</div>
 
 			<div class="game-teams">
 				<div class="team">
-					<img src="${schedule.away_logo}" class="team-logo"
-						alt="${schedule.away_team} 로고">
+					<img src="${schedule.away_logo}" class="team-logo" alt="${schedule.away_team} 로고">
 					<div class="team-name">${schedule.away_team}</div>
 					<div class="team-score">${schedule.away_score}</div>
 				</div>
@@ -879,8 +879,7 @@ body {
 				<div class="vs">VS</div>
 
 				<div class="team">
-					<img src="${schedule.home_logo}" class="team-logo"
-						alt="${schedule.home_team} 로고">
+					<img src="${schedule.home_logo}" class="team-logo" alt="${schedule.home_team} 로고">
 					<div class="team-name">${schedule.home_team}</div>
 					<div class="team-score">${schedule.home_score}</div>
 				</div>
@@ -889,14 +888,17 @@ body {
 			<div class="game-status">
 				<c:choose>
 
-					<c:when
-						test="${schedule.home_score >= 0 || schedule.away_score >= 0}">
-			경기종료
-		</c:when>
+					<c:when test="${now lt schedule.start_date}">
+						<span>경기예정</span>
+					</c:when>
+
+					<c:when test="${now ge schedule.start_date and now lt schedule.end_date}">
+						<span>진행중</span>
+					</c:when>
 
 					<c:otherwise>
-			경기예정
-		</c:otherwise>
+						<span>경기종료</span>
+					</c:otherwise>
 
 				</c:choose>
 			</div>
@@ -928,26 +930,25 @@ body {
 
 									<div class="compare-team">
 
-										<img src="${schedule.away_logo}" class="compare-team-logo"
-											alt="${schedule.away_team} 로고">
+										<img src="${schedule.away_logo}" class="compare-team-logo" alt="${schedule.away_team} 로고">
 
 										<h3>${team.team_name}</h3>
 
 										<div class="compare-row">
-											<span>승률</span> <span> <fmt:formatNumber
-													value="${team.win_rate}" pattern="0.000" />
+											<span>승률</span> <span> 
+											<fmt:formatNumber value="${team.win_rate}" pattern="0.000" />
 											</span>
 										</div>
 
 										<div class="compare-row">
-											<span>타율</span> <span> <fmt:formatNumber
-													value="${team.batting_avg}" pattern="0.000" />
+											<span>타율</span> <span> 
+											<fmt:formatNumber value="${team.batting_avg}" pattern="0.000" />
 											</span>
 										</div>
 
 										<div class="compare-row">
-											<span>ERA</span> <span> <fmt:formatNumber
-													value="${team.era}" pattern="0.00" />
+											<span>ERA</span> <span> 
+											<fmt:formatNumber value="${team.era}" pattern="0.00" />
 											</span>
 										</div>
 
@@ -963,26 +964,25 @@ body {
 
 									<div class="compare-team">
 
-										<img src="${schedule.home_logo}" class="compare-team-logo"
-											alt="${schedule.home_team} 로고">
+										<img src="${schedule.home_logo}" class="compare-team-logo" alt="${schedule.home_team} 로고">
 
 										<h3>${team.team_name}</h3>
 
 										<div class="compare-row">
-											<span>승률</span> <span> <fmt:formatNumber
-													value="${team.win_rate}" pattern="0.000" />
+											<span>승률</span> <span> 
+											<fmt:formatNumber value="${team.win_rate}" pattern="0.000" />
 											</span>
 										</div>
 
 										<div class="compare-row">
-											<span>타율</span> <span> <fmt:formatNumber
-													value="${team.batting_avg}" pattern="0.000" />
+											<span>타율</span> <span> 
+											<fmt:formatNumber value="${team.batting_avg}" pattern="0.000" />
 											</span>
 										</div>
 
 										<div class="compare-row">
-											<span>ERA</span> <span> <fmt:formatNumber
-													value="${team.era}" pattern="0.00" />
+											<span>ERA</span> <span> 
+											<fmt:formatNumber value="${team.era}" pattern="0.00" />
 											</span>
 										</div>
 
@@ -1002,23 +1002,18 @@ body {
 								<c:set var="awayPitcherFound" value="false" />
 
 								<c:forEach var="pitcher" items="${pitcherList}">
-									<c:if
-										test="${!awayPitcherFound && pitcher.player_team == schedule.away_team}">
+									<c:if test="${!awayPitcherFound && pitcher.player_team == schedule.away_team}">
 
 										<c:set var="awayPitcherFound" value="true" />
 
 										<div class="player-compare-team">
-
 											<div class="player-team-name">${schedule.away_team}</div>
-
 											<div class="player-info">
 
-												<img src="${pitcher.player_image}" class="player-image"
-													alt="${pitcher.player_name}">
+												<img src="${pitcher.player_image}" class="player-image" alt="${pitcher.player_name}">
 
 												<div>
 													<div class="player-name">${pitcher.player_name}</div>
-
 													<div class="player-detail">${pitcher.player_team}</div>
 												</div>
 
@@ -1027,20 +1022,23 @@ body {
 											<div class="player-stat">
 
 												<div class="player-stat-row">
-													<span>승</span> <span>${pitcher.wins}</span>
+													<span>승</span> 
+													<span>${pitcher.wins}</span>
 												</div>
 
 												<div class="player-stat-row">
-													<span>패</span> <span>${pitcher.losses}</span>
+													<span>패</span> 
+													<span>${pitcher.losses}</span>
 												</div>
 
 												<div class="player-stat-row">
-													<span>이닝</span> <span>${pitcher.innings}</span>
+													<span>이닝</span> 
+													<span>${pitcher.innings}</span>
 												</div>
 
 												<div class="player-stat-row">
-													<span>평균자책</span> <span> <fmt:formatNumber
-															value="${pitcher.era}" pattern="0.00" />
+													<span>평균자책</span> 
+													<span> <fmt:formatNumber value="${pitcher.era}" pattern="0.00" />
 													</span>
 												</div>
 
@@ -1056,19 +1054,16 @@ body {
 								<c:set var="homePitcherFound" value="false" />
 
 								<c:forEach var="pitcher" items="${pitcherList}">
-									<c:if
-										test="${!homePitcherFound && pitcher.player_team == schedule.home_team}">
+									<c:if test="${!homePitcherFound && pitcher.player_team == schedule.home_team}">
 
 										<c:set var="homePitcherFound" value="true" />
 
 										<div class="player-compare-team">
 
 											<div class="player-team-name">${schedule.home_team}</div>
-
 											<div class="player-info">
 
-												<img src="${pitcher.player_image}" class="player-image"
-													alt="${pitcher.player_name}">
+												<img src="${pitcher.player_image}" class="player-image" alt="${pitcher.player_name}">
 
 												<div>
 													<div class="player-name">${pitcher.player_name}</div>
@@ -1081,20 +1076,24 @@ body {
 											<div class="player-stat">
 
 												<div class="player-stat-row">
-													<span>승</span> <span>${pitcher.wins}</span>
+													<span>승</span> 
+													<span>${pitcher.wins}</span>
 												</div>
 
 												<div class="player-stat-row">
-													<span>패</span> <span>${pitcher.losses}</span>
+													<span>패</span>
+													<span>${pitcher.losses}</span>
 												</div>
 
 												<div class="player-stat-row">
-													<span>이닝</span> <span>${pitcher.innings}</span>
+													<span>이닝</span> 
+													<span>${pitcher.innings}</span>
 												</div>
 
 												<div class="player-stat-row">
-													<span>평균자책</span> <span> <fmt:formatNumber
-															value="${pitcher.era}" pattern="0.00" />
+													<span>평균자책</span> 
+													<span> 
+													<fmt:formatNumber value="${pitcher.era}" pattern="0.00" />
 													</span>
 												</div>
 
@@ -1128,14 +1127,11 @@ body {
 
 											<div class="key-player">
 
-												<img src="${hitter.player_image}" class="key-player-image"
-													alt="${hitter.player_name}">
+												<img src="${hitter.player_image}" class="key-player-image" alt="${hitter.player_name}">
 
 												<div>
 													<div class="key-player-name">${hitter.player_name}</div>
-
-													<div class="key-player-detail">${hitter.player_team}
-													</div>
+													<div class="key-player-detail">${hitter.player_team}</div>
 												</div>
 
 											</div>
@@ -1143,8 +1139,9 @@ body {
 											<div class="key-player-stat">
 
 												<div class="key-player-stat-row">
-													<span>타율</span> <span> <fmt:formatNumber
-															value="${hitter.batting_avg}" pattern="0.000" />
+													<span>타율</span> 
+													<span> 
+													<fmt:formatNumber value="${hitter.batting_avg}" pattern="0.000" />
 													</span>
 												</div>
 
