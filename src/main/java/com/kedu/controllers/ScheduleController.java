@@ -96,22 +96,22 @@ public class ScheduleController {
 	}
 
 	@RequestMapping("/rankdetail")
-	public String rank(Model model) {
+	public String rank(@RequestParam(value = "tab", required = false, defaultValue = "team") String tab,Model model) {
 
-		List<TeamRankDTO> teamrankList = teamRankDAO.selectAll();
-		List<PlayerPitcherDTO> pitcherList = playerPitcherDAO.selectAll();
-		List<PlayerHitterDTO> hitterList = playerHitterDAO.selectAll();
-		List<TeamOffenDTO> offenlist = teamOffenDAO.selectAll();
-		List<TeamDefenDTO> dffenlist = teamDefenDAO.selectAll();
+	    List<TeamRankDTO> teamrankList = teamRankDAO.selectAll();
+	    List<PlayerPitcherDTO> pitcherList = playerPitcherDAO.selectAll();
+	    List<PlayerHitterDTO> hitterList = playerHitterDAO.selectAll();
+	    List<TeamOffenDTO> offenlist = teamOffenDAO.selectAll();
+	    List<TeamDefenDTO> dffenlist = teamDefenDAO.selectAll();
 
-		
-		model.addAttribute("teamrankList", teamrankList);
-		model.addAttribute("pitcherList", pitcherList);
-		model.addAttribute("hitterList", hitterList);
-		model.addAttribute("offenlist", offenlist);
-		model.addAttribute("dffenlist", dffenlist);
-		
+	    model.addAttribute("teamrankList", teamrankList);
+	    model.addAttribute("pitcherList", pitcherList);
+	    model.addAttribute("hitterList", hitterList);
+	    model.addAttribute("offenlist", offenlist);
+	    model.addAttribute("dffenlist", dffenlist);
 
-		return "schedule/rankdetail";
+	    model.addAttribute("tab", tab);
+
+	    return "schedule/rankdetail";
 	}
 }

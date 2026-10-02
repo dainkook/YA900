@@ -14,23 +14,23 @@
 
 body {
 	margin: 0;
-	background: linear-gradient(to bottom, #111936 0%, #111936 12%, #171f46 22%, #252f67 32%, #71809f 43%, #aeb7ca 55%, #d5dae5 70%, #eef1f8 85%, #eef1f8 100%);
+	background: linear-gradient(to bottom, #111936 0%, #111936 12%, #171f46 22%, #252f67
+		32%, #71809f 43%, #aeb7ca 55%, #d5dae5 70%, #eef1f8 85%, #eef1f8 100%);
 	font-family: Arial, "Malgun Gothic", sans-serif;
 	color: #18213f;
 	min-height: 100vh;
 }
 
 .header {
-	position: fixed;
-	top: 0;
-	left: 0;
 	width: 100%;
-	height: 80px;
+	height: 100px;
 	background: linear-gradient(135deg, #0b1026, #171f46);
 	color: white;
 	display: flex;
 	align-items: center;
 	padding: 0 50px;
+	position: sticky;
+	top: 0;
 	z-index: 1000;
 	border-bottom: 1px solid #303b70;
 	box-shadow: 0 3px 15px rgba(11, 16, 38, 0.18);
@@ -43,7 +43,9 @@ body {
 	color: white;
 	letter-spacing: 1px;
 }
-
+.header>.logo:hover {
+	cursor:pointer;
+}
 .main-menu {
 	height: 100%;
 	display: flex;
@@ -51,17 +53,87 @@ body {
 	gap: 40px;
 }
 
-.main-menu a {
+.menu-item {
+	position: relative;
+	height: 100%;
+	display: flex;
+	align-items: center;
+}
+
+.menu-item>a {
+	font-size: 18px;
+	font-weight: bold;
 	text-decoration: none;
 	color: #f7f8ff;
-	font-size: 16px;
-	font-weight: bold;
 	padding: 10px 5px;
+	transition: color 0.2s ease;
+}
+
+.menu-item>a:hover {
+	color: #aebee7;
+}
+
+/* =========================
+   서브 메뉴
+========================= */
+.sub-menu {
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-10px);
+	width: 130px;
+	background: #171f46;
+	border: 1px solid #394575;
+	display: flex;
+	flex-direction: column;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.2s ease, transform 0.2s ease;
+	box-shadow: 0 10px 25px rgba(8, 12, 30, 0.25);
+}
+
+.menu-item:hover .sub-menu {
+	opacity: 1;
+	visibility: visible;
+	transform: translateX(-50%) translateY(0);
+}
+
+.sub-menu a {
+	padding: 13px 15px;
+	text-decoration: none;
+	color: #f5f7ff;
+	font-size: 14px;
+	border-bottom: 1px solid #35406b;
+}
+
+.sub-menu a:last-child {
+	border-bottom: none;
+}
+
+.sub-menu a:hover {
+	background: #252f67;
+}
+
+/* =========================
+   로그인 / 회원가입
+========================= */
+.member-menu {
+	font-size: 14px;
+	margin-left: auto;
+}
+
+.login-btn, .sign-btn {
+	border: 1px solid #7180b1;
+	background: transparent;
+	color: white;
+	border-radius: 5px;
 	transition: 0.2s ease;
 }
 
-.main-menu a:hover {
-	color: #aebee7;
+.login-btn:hover, .sign-btn:hover {
+	background: #476aaa;
+	border-color: #476aaa;
+	color: white;
 }
 
 .user-menu {
@@ -90,7 +162,7 @@ body {
 	margin: 0 auto;
 	background: #f5f6f8;
 	min-height: 100vh;
-	padding-top: 80px;
+	padding-top: 30px;
 	box-shadow: 0 0 30px rgba(17, 25, 54, 0.08);
 }
 
@@ -315,85 +387,69 @@ body {
 	color: #18213f !important;
 }
 
-@media (max-width: 1100px) {
+@media ( max-width : 1100px) {
 	.container {
 		width: 100%;
 	}
 }
 
-@media (max-width: 750px) {
+@media ( max-width : 750px) {
 	.header {
 		padding: 0 20px;
 	}
-
 	.logo {
 		margin-right: 30px;
 	}
-
 	.main-menu {
 		gap: 20px;
 	}
-
 	.container {
 		width: 100%;
 	}
-
 	.title-area {
 		padding: 25px 15px 0;
 	}
-
 	.game-area {
 		padding: 0 15px 50px;
 	}
-
 	.game-content {
 		gap: 15px;
 	}
-
 	.team {
 		width: 150px;
 	}
-
 	.team-name {
 		font-size: 15px;
 	}
-
 	.month-arrow {
 		width: 45px;
 	}
-
 	.month-tab {
 		font-size: 13px;
 	}
 }
 
-@media (max-width: 600px) {
+@media ( max-width : 600px) {
 	.user-menu {
 		display: none;
 	}
-
 	.main-menu {
 		gap: 15px;
 	}
-
 	.main-menu a {
 		font-size: 14px;
 	}
-
 	.game-content {
 		gap: 5px;
 	}
-
 	.team {
 		width: 120px;
 		flex-direction: column;
 	}
-
 	.score {
 		min-width: 55px;
 		font-size: 20px;
 	}
-
 	.team-logo {
 		width: 40px;
 		height: 40px;
@@ -423,20 +479,53 @@ body {
 
 <body>
 
-	<header class="header">
+	<div class="header">
 
-		<div class="logo">YA900</div>
+		<div class="logo" onclick="location.href='/'">YA900</div>
+
 
 		<nav class="main-menu">
-			<a href="#">야구</a> <a href="#">축구</a> <a href="#">미니게임</a>
+
+
+			<div class="menu-item">
+				<a href="#">야구</a>
+
+				<div class="sub-menu">
+				    <a href="#">예매</a>
+				    <a href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a> 
+				    <a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a> 
+				    <a href="${pageContext.request.contextPath}/schedule/rankdetail?tab=pitcher">선수순위</a> 
+				    <a href="${pageContext.request.contextPath}/board/board?cpage=1">게시판</a>
+				</div>
+			</div>
+
+
+			<div class="menu-item">
+				<a href="#">축구</a>
+
+				<div class="sub-menu">
+					<a href="#">예매</a> <a href="#">경기일정</a> <a href="#">팀순위</a> <a
+						href="#">선수순위</a> <a href="#">게시판</a>
+				</div>
+			</div>
+
+
+			<div class="menu-item">
+				<a href="#">미니게임</a>
+
+				<div class="sub-menu">
+					<a href="#">상식 퀴즈</a> <a href="#">OX 퀴즈</a> <a href="#">승부예측</a> <a
+						href="#">게임 랭킹</a>
+				</div>
+			</div>
 		</nav>
 
-		<div class="user-menu">
-			<button class="login-btn"
-				onclick="location.href='/member/login'">로그인</button>
-			<button class="sign-btn"
-				onclick="location.href='member/signup'">회원가입</button>
+		<div class="member-menu">
+			<button class="login-btn" onclick="location.href='login'">로그인</button>
+			<button class="sign-btn" onclick="location.href='signup'">회원가입</button>
 		</div>
+
+	</div>
 
 	</header>
 
@@ -446,12 +535,10 @@ body {
 
 			<nav class="kbo-navigation">
 
-				<a href="${pageContext.request.contextPath}/schedule/schedule"class="active"> 
-					일정 
-					</a> 
-					<a href="${pageContext.request.contextPath}/schedule/rankdetail">
-					랭킹 및 기록 
-					</a>
+				<a href="${pageContext.request.contextPath}/schedule/schedule"
+					class="active"> 일정 </a> <a
+					href="${pageContext.request.contextPath}/schedule/rankdetail">
+					랭킹 및 기록 </a>
 
 			</nav>
 
@@ -516,8 +603,7 @@ body {
 										pattern="yyyy년 MM월 dd일" />
 								</div>
 
-								<a
-									href="${pageContext.request.contextPath}/schedule/scheduledetail?game_id=${dto.game_id}"
+								<a href="${pageContext.request.contextPath}/schedule/scheduledetail?game_id=${dto.game_id}"
 									class="game-link">
 									<div class="game-card">
 										<div class="game-header">
@@ -571,14 +657,26 @@ body {
 										<div class="stadium">${dto.location}</div>
 
 									</div>
+								</a>
 							</div>
-							</a>
 						</c:forEach>
 					</c:otherwise>
 				</c:choose>
 			</div>
 		</section>
 	</main>
+	<script>
+	window.onload = function() {
+        const tab = "${tab}";
 
+        if (tab === "pitcher") {
+            showTab("pitcher", document.querySelector(".record-tabs button:nth-child(3)"));
+        } else if (tab === "hitter") {
+            showTab("hitter", document.querySelector(".record-tabs button:nth-child(4)"));
+        } else if (tab === "teamRecord") {
+            showTab("teamRecord", document.querySelector(".record-tabs button:nth-child(2)"));
+        }
+    };
+	</script>
 </body>
 </html>

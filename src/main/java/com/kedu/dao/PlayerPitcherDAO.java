@@ -161,7 +161,7 @@ public class PlayerPitcherDAO {
                 + "LEFT JOIN team t ON pp.player_team = t.team_name "
                 + "WHERE p.player_image IS NOT NULL "
                 + "AND TRIM(p.player_image) IS NOT NULL "
-                + "ORDER BY pp.war DESC"
+                + "ORDER BY pp.era ASC"
                 + ") "
                 + "WHERE ROWNUM <= 50";
 
