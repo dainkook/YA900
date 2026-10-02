@@ -94,4 +94,26 @@ public class BoardDAO {
 	    String sql = "select * from (select board.*, row_number() over(order by board_seq desc) rn from board) where rn between 1 and 8";
 	    return jdbc.query(sql, new BeanPropertyRowMapper<>(BoardDTO.class));
 	}
+	
+	public int updateDetail(int seq, String title, String contents) {
+		String sql = "update board set title = ?, contents = ? where board_seq = ?";
+		return jdbc.update(sql, title, contents, seq);
+	}
+	
+	public int deleteDetail(int seq) {
+		String sql = "delete from board where board_seq = ?";
+		return jdbc.update(sql, seq);
+	}
+	
+	public int viewCount(int seq) {
+		String sql = "update board set view_count = view_count + 1 where board_seq = ?";
+		return jdbc.update(sql, seq);
+	}
+	
+	public int getNextval() {
+		String sql = "select board_seq.nextval from dual";
+		int seq= jdbc.queryForObject(sql, Integer.class);
+		System.out.println(seq);
+		return seq;
+	}
 }

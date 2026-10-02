@@ -472,9 +472,10 @@ body {
    아래 3개 영역
 ========================= */
 .bottom-content {
-	width: 100%;
+	width: 1200px;
 	display: flex;
 	gap: 30px;
+	marign:auto;
 }
 
 /* =========================
