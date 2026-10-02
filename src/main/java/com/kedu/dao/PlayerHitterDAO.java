@@ -117,7 +117,7 @@ public class PlayerHitterDAO {
 			    + "LEFT JOIN player p ON ph.player_id = p.player_id "
 			    + "LEFT JOIN team t ON ph.player_team = t.team_name "
 			    + "WHERE p.player_image IS NOT NULL "
-			    + "ORDER BY ph.war DESC";
+			    + "ORDER BY ph.batting_avg DESC";
 
 		return jdbc.query(sql, (rs, rowNum) -> {
 

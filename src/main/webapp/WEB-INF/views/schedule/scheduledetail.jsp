@@ -22,21 +22,22 @@ body {
 }
 
 .header {
-	position: fixed;
-	top: 0;
-	left: 0;
 	width: 100%;
-	height: 80px;
+	height: 100px;
 	background: linear-gradient(135deg, #0b1026, #171f46);
 	color: white;
 	display: flex;
 	align-items: center;
 	padding: 0 50px;
+	position: sticky;
+	top: 0;
 	z-index: 1000;
 	border-bottom: 1px solid #303b70;
 	box-shadow: 0 3px 15px rgba(11, 16, 38, 0.18);
 }
-
+.header>.logo:hover {
+	cursor:pointer;
+}
 .logo {
 	font-size: 30px;
 	font-weight: bold;
@@ -52,19 +53,88 @@ body {
 	gap: 40px;
 }
 
-.main-menu a {
-	text-decoration: none;
-	color: #f7f8ff;
-	font-size: 16px;
-	font-weight: bold;
-	padding: 10px 5px;
-	transition: 0.2s ease;
+.menu-item {
+	position: relative;
+	height: 100%;
+	display: flex;
+	align-items: center;
 }
 
-.main-menu a:hover {
+.menu-item>a {
+	font-size: 18px;
+	font-weight: bold;
+	text-decoration: none;
+	color: #f7f8ff;
+	padding: 10px 5px;
+	transition: color 0.2s ease;
+}
+
+.menu-item>a:hover {
 	color: #aebee7;
 }
 
+/* =========================
+   서브 메뉴
+========================= */
+.sub-menu {
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-10px);
+	width: 130px;
+	background: #171f46;
+	border: 1px solid #394575;
+	display: flex;
+	flex-direction: column;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.2s ease, transform 0.2s ease;
+	box-shadow: 0 10px 25px rgba(8, 12, 30, 0.25);
+}
+
+.menu-item:hover .sub-menu {
+	opacity: 1;
+	visibility: visible;
+	transform: translateX(-50%) translateY(0);
+}
+
+.sub-menu a {
+	padding: 13px 15px;
+	text-decoration: none;
+	color: #f5f7ff;
+	font-size: 14px;
+	border-bottom: 1px solid #35406b;
+}
+
+.sub-menu a:last-child {
+	border-bottom: none;
+}
+
+.sub-menu a:hover {
+	background: #252f67;
+}
+
+/* =========================
+   로그인 / 회원가입
+========================= */
+.member-menu {
+	font-size: 14px;
+	margin-left: auto;
+}
+
+.login-btn, .sign-btn {
+	border: 1px solid #7180b1;
+	background: transparent;
+	color: white;
+	border-radius: 5px;
+	transition: 0.2s ease;
+}
+
+.login-btn:hover, .sign-btn:hover {
+	background: #476aaa;
+	border-color: #476aaa;
+	color: white;
+}
 .user-menu {
 	margin-left: auto;
 	display: flex;
@@ -91,7 +161,7 @@ body {
 	margin: 0 auto;
 	background: #f5f6f8;
 	min-height: 100vh;
-	padding-top: 80px;
+	padding-top: 30px;
 	box-shadow: 0 0 30px rgba(17, 25, 54, 0.08);
 }
 
@@ -508,15 +578,15 @@ body {
 }
 
 .open-talk {
-	width: 350px;
-	height: 620px;
-	flex-shrink: 0;
-	display: flex;
-	flex-direction: column;
-	background: white;
-	position: sticky;
-	top: 80px;
-	border-left: 1px solid #d6dceb;
+    width: 350px;
+    height: 620px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    position: sticky;
+    top: 100px;
+    border-left: 1px solid #d6dceb;
 }
 
 .open-talk-header {
@@ -728,22 +798,58 @@ body {
 		font-size: 25px;
 	}
 }
+
 </style>
 </head>
 <body>
 
-	<header class="header">
-		<div class="logo">YA900</div>
+	<div class="header">
+
+		<div class="logo" onclick="location.href='/'">YA900</div>
+
+		
 		<nav class="main-menu">
-			<a href="#">야구</a> <a href="#">축구</a> <a href="#">미니게임</a>
+
+			
+			<div class="menu-item">
+				<a href="#">야구</a>
+
+				<div class="sub-menu">
+				    <a href="#">예매</a>
+				    <a href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a> 
+				    <a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a> 
+				    <a href="${pageContext.request.contextPath}/schedule/rankdetail?tab=pitcher">선수순위</a> 
+				    <a href="${pageContext.request.contextPath}/board/board?cpage=1">게시판</a>
+				</div>
+			</div>
+
+			
+			<div class="menu-item">
+				<a href="#">축구</a>
+
+				<div class="sub-menu">
+					<a href="#">예매</a> <a href="#">경기일정</a> <a href="#">팀순위</a> <a
+						href="#">선수순위</a> <a href="#">게시판</a>
+				</div>
+			</div>
+
+			
+			<div class="menu-item">
+				<a href="#">미니게임</a>
+
+				<div class="sub-menu">
+					<a href="#">상식 퀴즈</a> <a href="#">OX 퀴즈</a> <a href="#">승부예측</a> <a
+						href="#">게임 랭킹</a>
+				</div>
+			</div>
 		</nav>
-		<div class="user-menu">
-			<button
-				onclick="location.href='${pageContext.request.contextPath}/login'">로그인</button>
-			<button
-				onclick="location.href='${pageContext.request.contextPath}/signup'">회원가입</button>
+
+		<div class="member-menu">
+			<button class="login-btn" onclick="location.href='member/login'">로그인</button>
+			<button class="sign-btn" onclick="location.href='member/signup'">회원가입</button>
 		</div>
-	</header>
+
+	</div>
 
 	<main class="container">
 		<section class="title-area">
@@ -1317,47 +1423,58 @@ body {
 	</main>
 
 	<script>
-function showTab(tabId,button){
-	const tabs=button.closest(".game-detail").querySelectorAll(".tab-content");
-	const buttons=button.closest(".detail-navigation").querySelectorAll(".tab-button");
-	tabs.forEach(function(tab){
-		tab.classList.remove("active");
-	});
-	buttons.forEach(function(btn){
-		btn.classList.remove("active");
-	});
-	document.getElementById(tabId).classList.add("active");
-	button.classList.add("active");
-}
-
-function sendChat(gameId){
-	const input=document.getElementById("chatInput_"+gameId);
-	const message=input.value.trim();
-
-	if(message===""){
-		return;
-	}
-
-	const chatList=document.getElementById("chatList_"+gameId);
-	const chatItem=document.createElement("div");
-
-	chatItem.className="chat-item my-chat";
-	chatItem.innerHTML='<div class="chat-user">나</div><div class="chat-message">'+message+'</div>';
-
-	chatList.appendChild(chatItem);
-
-	input.value="";
-	chatList.scrollTop=chatList.scrollHeight;
-}
-
-document.querySelectorAll("[id^='chatInput_']").forEach(function(input){
-	input.addEventListener("keydown",function(event){
-		if(event.key==="Enter"){
-			const gameId=this.id.replace("chatInput_","");
-			sendChat(gameId);
+		function showTab(tabId,button){
+			const tabs=button.closest(".game-detail").querySelectorAll(".tab-content");
+			const buttons=button.closest(".detail-navigation").querySelectorAll(".tab-button");
+			tabs.forEach(function(tab){
+				tab.classList.remove("active");
+			});
+			buttons.forEach(function(btn){
+				btn.classList.remove("active");
+			});
+			document.getElementById(tabId).classList.add("active");
+			button.classList.add("active");
 		}
-	});
-});
+		
+		function sendChat(gameId){
+			const input=document.getElementById("chatInput_"+gameId);
+			const message=input.value.trim();
+		
+			if(message===""){
+				return;
+			}
+		
+			const chatList=document.getElementById("chatList_"+gameId);
+			const chatItem=document.createElement("div");
+		
+			chatItem.className="chat-item my-chat";
+			chatItem.innerHTML='<div class="chat-user">나</div><div class="chat-message">'+message+'</div>';
+		
+			chatList.appendChild(chatItem);
+		
+			input.value="";
+			chatList.scrollTop=chatList.scrollHeight;
+		}
+		
+		document.querySelectorAll("[id^='chatInput_']").forEach(function(input){
+			input.addEventListener("keydown",function(event){
+				if(event.key==="Enter"){
+					const gameId=this.id.replace("chatInput_","");
+					sendChat(gameId);
+				}
+			});
+		});
+		window.onload = function() {
+		    const tab = "${tab}";
+		
+		    if (tab === "pitcher") {
+		        showTab("pitcher", document.querySelector(".record-tabs button:nth-child(3)"));
+		    } else if (tab === "hitter") {
+		        showTab("hitter", document.querySelector(".record-tabs button:nth-child(4)"));
+		    } else if (tab === "teamRecord") {
+		        showTab("teamRecord", document.querySelector(".record-tabs button:nth-child(2)"));
+		    }
+		};
 </script>
 
 </body>
