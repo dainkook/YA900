@@ -8,7 +8,7 @@ public class LiveChatDTO {
 	String contents;
 	String writer;
 	String teamLogo;
-	int report_seq;
+	Integer report_seq;
 	String reporter;
 	int game_id;
 	Timestamp regdate;
@@ -37,10 +37,10 @@ public class LiveChatDTO {
 	public void setTeamLogo(String teamLogo) {
 		this.teamLogo = teamLogo;
 	}
-	public int getReport_seq() {
+	public Integer getReport_seq() {
 		return report_seq;
 	}
-	public void setReport_seq(int report_seq) {
+	public void setReport_seq(Integer report_seq) {
 		this.report_seq = report_seq;
 	}
 	public String getReporter() {
@@ -69,7 +69,7 @@ public class LiveChatDTO {
 	}
 	
 	public LiveChatDTO() {}
-	public LiveChatDTO(int liveChat_seq, String contents, String writer, String teamLogo, int report_seq,
+	public LiveChatDTO(int liveChat_seq, String contents, String writer, String teamLogo, Integer report_seq,
 			String reporter, int game_id, Timestamp regdate, String team) {
 		this.liveChat_seq = liveChat_seq;
 		this.contents = contents;

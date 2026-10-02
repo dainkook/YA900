@@ -2,7 +2,6 @@ package com.kedu.dao;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -10,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kedu.dto.BoardDTO;
+import com.kedu.dto.LiveChatDTO;
 
 @Repository
 public class BoardDAO {
@@ -51,9 +51,9 @@ public class BoardDAO {
 	    return jdbc.queryForObject(sql, String.class, id);
 	}
 	
-		public int write(String title, String contents, String id, String team) {
-			String sql = "insert into board values(board_seq.nextval, ?, ?, ?, 0, sysdate, ?, null, 0, null)";
-			return jdbc.update(sql, title, contents, id, team);
+		public int write(BoardDTO dto) {
+			String sql = "insert into board values(?, ?, ?, ?, 0, sysdate, ?, null, 0, null)";
+			return jdbc.update(sql, dto.getBoard_seq(), dto.getTitle(), dto.getContents(), dto.getWriter(), dto.getTeam());
 		}
 	
 	public List<BoardDTO> searchBoard(String option, String search, int first, int last) {
@@ -93,5 +93,37 @@ public class BoardDAO {
 	public List<BoardDTO> getRecentBoards() {
 	    String sql = "select * from (select board.*, row_number() over(order by board_seq desc) rn from board) where rn between 1 and 8";
 	    return jdbc.query(sql, new BeanPropertyRowMapper<>(BoardDTO.class));
+	}
+	
+	public int updateDetail(int seq, String title, String contents) {
+		String sql = "update board set title = ?, contents = ? where board_seq = ?";
+		return jdbc.update(sql, title, contents, seq);
+	}
+	
+	public int deleteDetail(int seq) {
+		String sql = "delete from board where board_seq = ?";
+		return jdbc.update(sql, seq);
+	}
+	
+	public int viewCount(int seq) {
+		String sql = "update board set view_count = view_count + 1 where board_seq = ?";
+		return jdbc.update(sql, seq);
+	}
+	
+	public int getNextval() {
+		String sql = "select board_seq.nextval from dual";
+		int seq= jdbc.queryForObject(sql, Integer.class);
+		System.out.println(seq);
+		return seq;
+	}
+	
+	public int addChat(LiveChatDTO dto) {
+		String sql = "insert into livechat(liveChat_seq, contents, writer, game_id, regdate, team) values(liveChat_seq.nextval, ?, ?, ?, sysdate, ?)";
+		return jdbc.update(sql, dto.getContents(), dto.getWriter(), dto.getGame_id(), dto.getTeam());
+	}
+	
+	public List<LiveChatDTO> getChatList(int game_id) {
+		String sql = "select * from livechat where game_id = ? order by liveChat_seq desc";
+		return jdbc.query(sql, new BeanPropertyRowMapper<>(LiveChatDTO.class), game_id);
 	}
 }

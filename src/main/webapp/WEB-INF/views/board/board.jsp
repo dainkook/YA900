@@ -21,9 +21,11 @@
 
 body {
 	margin: 0;
-	background-color: #f5f6f8;
+	background: linear-gradient(to bottom, #111936 0%, #111936 15%, #0b1026 25%, #171f46
+		35%, #252f67 48%, #71809f 65%, #aeb7ca 76%, #d5dae5 86%, #eef1f8 94%,
+		#eef1f8 100%);
+	color: #18213f;
 	font-family: Arial, sans-serif;
-	color: #222;
 }
 
 .header {
