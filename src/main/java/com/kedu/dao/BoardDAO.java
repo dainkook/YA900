@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kedu.dto.BoardDTO;
 import com.kedu.dto.LiveChatDTO;
+import com.kedu.dto.ReplyDTO;
 
 @Repository
 public class BoardDAO {
@@ -125,5 +126,10 @@ public class BoardDAO {
 	public List<LiveChatDTO> getChatList(int game_id) {
 		String sql = "select * from livechat where game_id = ? order by liveChat_seq desc";
 		return jdbc.query(sql, new BeanPropertyRowMapper<>(LiveChatDTO.class), game_id);
+	}
+	
+	public List<ReplyDTO> getReplyList(int parent_seq) {
+		String sql = "select * from reply where parent_seq=? order by reply_seq desc";
+		return jdbc.query(sql, new BeanPropertyRowMapper<>(ReplyDTO.class),parent_seq);
 	}
 }

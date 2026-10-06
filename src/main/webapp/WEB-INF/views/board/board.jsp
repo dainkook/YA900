@@ -19,6 +19,10 @@
 	box-sizing: border-box;
 }
 
+html {
+	scroll-behavior: smooth;
+}
+
 body {
 	margin: 0;
 	background: linear-gradient(to bottom, #111936 0%, #111936 15%, #0b1026 25%, #171f46
@@ -28,6 +32,9 @@ body {
 	font-family: Arial, sans-serif;
 }
 
+/* =========================
+   HEADER
+========================= */
 .header {
 	width: 100%;
 	height: 100px;
@@ -127,7 +134,8 @@ body {
 	margin-left: auto;
 }
 
-.login-btn, .sign-btn {
+.login-btn,
+.sign-btn {
 	border: 1px solid #7180b1;
 	background: transparent;
 	color: white;
@@ -135,49 +143,77 @@ body {
 	transition: 0.2s ease;
 }
 
-.login-btn:hover, .sign-btn:hover {
+.login-btn:hover,
+.sign-btn:hover {
 	background: #476aaa;
 	border-color: #476aaa;
 	color: white;
 }
+
+/* =========================
+   게시판 전체
+========================= */
 .container {
 	width: 1200px;
 	margin: 50px auto 80px;
 }
-.board-header {
+
+/*
+ * 기존에는
+ * board-header / body / footer
+ * 각각 별도의 박스로 되어 있었음.
+ *
+ * 이제 container 안에서 하나의 카드처럼 보이게 함.
+ */
+.board-header,
+.body,
+.footer {
 	width: 100%;
-	background-color: white;
-	border: 1px solid #ddd;
-	border-radius: 8px;
-	box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+	background: #ffffff;
+	border: none;
+	border-radius: 0;
+	box-shadow: none;
+	margin: 0;
+}
+
+/* 게시판 전체의 첫 번째 영역 */
+.board-header {
+	border-radius: 12px 12px 0 0;
 	overflow: hidden;
 }
 
-/* 제목 */
+/* =========================
+   게시판 제목
+========================= */
 .title {
 	width: 100%;
-	height: 120px;
+	height: 110px;
 	display: flex;
 	align-items: center;
-	padding: 0 35px;
-	border-bottom: 1px solid #eee;
+	padding: 0 30px;
+	background: #ffffff;
+	border-bottom: 1px solid #d6dceb;
 }
 
 .title h1 {
 	margin: 0;
-	font-size: 30px;
-	color: #222;
+	font-size: 26px;
+	font-weight: 700;
+	color: #111936;
 }
 
-/* 검색 */
+/* =========================
+   검색
+========================= */
 .search {
 	width: 100%;
-	height: 80px;
+	height: 75px;
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
-	padding: 0 35px;
-	background-color: #fafbfc;
+	padding: 0 30px;
+	background: #ffffff;
+	border-bottom: 1px solid #d6dceb;
 }
 
 .search form {
@@ -187,24 +223,25 @@ body {
 }
 
 .search select {
-	width: 110px;
-	height: 40px;
+	width: 100px;
+	height: 38px;
 	padding: 0 10px;
-	border: 1px solid #d5d8df;
+	border: 1px solid #d6dceb;
 	border-radius: 5px;
-	background-color: white;
+	background: #ffffff;
 	font-size: 14px;
-	color: #444;
+	color: #36405d;
 }
 
 .search input[type="text"] {
-	width: 420px;
-	height: 40px;
-	padding: 0 15px;
-	border: 1px solid #d5d8df;
+	width: 400px;
+	height: 38px;
+	padding: 0 14px;
+	border: 1px solid #d6dceb;
 	border-radius: 5px;
-	background-color: white;
+	background: #ffffff;
 	font-size: 14px;
+	color: #36405d;
 }
 
 .search input[type="text"]:focus {
@@ -214,10 +251,10 @@ body {
 
 .search button {
 	width: 75px;
-	height: 40px;
+	height: 38px;
 	border: none;
 	border-radius: 5px;
-	background-color: #171f46;
+	background: #111936;
 	color: white;
 	font-size: 14px;
 	cursor: pointer;
@@ -225,19 +262,13 @@ body {
 }
 
 .search button:hover {
-	background-color: #252f67;
+	background: #476aaa;
 }
 
 /* =========================
-   BOARD
+   게시판
 ========================= */
 .body {
-	width: 100%;
-	margin-top: 25px;
-	background-color: white;
-	border: 1px solid #ddd;
-	border-radius: 8px;
-	box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
 	overflow: hidden;
 }
 
@@ -247,12 +278,13 @@ body {
 	table-layout: fixed;
 }
 
-/* 테이블 제목 */
+/* 테이블 헤더 */
 .body table tr:first-child {
-	height: 58px;
-	background-color: #171f46;
-	color: white;
+	height: 55px;
+	background: #f5f7fc;
+	color: #36405d;
 	font-weight: bold;
+	border-bottom: 1px solid #d6dceb;
 }
 
 .body table tr:first-child td {
@@ -262,13 +294,13 @@ body {
 /* 게시글 */
 .body table tr:not(:first-child) {
 	height: 62px;
-	border-bottom: 1px solid #eee;
-	background-color: white;
+	border-bottom: 1px solid #edf0f5;
+	background: #ffffff;
 	transition: background-color 0.15s ease;
 }
 
 .body table tr:not(:first-child):hover {
-	background-color: #f8f9fc;
+	background: #f8f9fc;
 }
 
 /* 테이블 */
@@ -276,6 +308,7 @@ body {
 	padding: 0 18px;
 	text-align: center;
 	font-size: 14px;
+	color: #68718a;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
@@ -305,35 +338,33 @@ body {
 
 /* 제목 링크 */
 .body table a {
-	color: #222;
+	color: #36405d;
 	text-decoration: none;
 	font-weight: 500;
 }
 
 .body table a:hover {
 	color: #476aaa;
-	text-decoration: underline;
+	text-decoration: none;
 }
 
 /* 게시글 없음 */
 .body table tr:last-child td[colspan] {
 	height: 250px;
-	color: #888;
+	color: #8b93a8;
 	text-align: center;
 }
 
 /* =========================
-   FOOTER
+   하단
 ========================= */
 .footer {
-	width: 100%;
 	height: 80px;
-	margin-top: 15px;
 	display: flex;
-	background-color: white;
-	border: 1px solid #ddd;
-	border-radius: 8px;
-	box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+	align-items: center;
+	background: #ffffff;
+	border-radius: 0 0 12px 12px;
+	border-top: 1px solid #d6dceb;
 }
 
 /* 페이지 */
@@ -352,15 +383,15 @@ body {
 	min-width: 30px;
 	height: 30px;
 	margin: 0 2px;
-	color: #666;
+	color: #68718a;
 	text-decoration: none;
 	font-size: 14px;
-	border-radius: 4px;
+	border-radius: 5px;
 	transition: 0.15s ease;
 }
 
 .navi a:hover {
-	background-color: #171f46;
+	background: #111936;
 	color: white;
 }
 
@@ -375,10 +406,10 @@ body {
 
 .write button {
 	width: 90px;
-	height: 40px;
+	height: 38px;
 	border: none;
 	border-radius: 5px;
-	background-color: #171f46;
+	background: #111936;
 	color: white;
 	font-size: 14px;
 	cursor: pointer;
@@ -386,18 +417,32 @@ body {
 }
 
 .write button:hover {
-	background-color: #252f67;
+	background: #476aaa;
 }
 
+/* =========================
+   기타
+========================= */
 .logo:hover {
-	cursor:pointer;
+	cursor: pointer;
 }
-.container>.footer>.navi a {
-	font-size:14pt;
-}
+
 .header>.logo:hover {
-	cursor:pointer;
+	cursor: pointer;
 }
+
+.container>.footer>.navi a {
+	font-size: 14pt;
+}
+
+/*
+ * 테스트 버튼
+ * 게시판 카드와 붙지 않도록 여백만 줌
+ */
+.container > button {
+	margin-top: 20px;
+}
+
 </style>
 </head>
 <body>
@@ -440,8 +485,8 @@ body {
 		</nav>
 
 		<div class="member-menu">
-			<button class="login-btn" onclick="location.href='login'">로그인</button>
-			<button class="sign-btn" onclick="location.href='signup'">회원가입</button>
+			<button class="login-btn" onclick="location.href='/login'">로그인</button>
+			<button class="sign-btn" onclick="location.href='/signup'">회원가입</button>
 		</div>
 
 	</div>
@@ -501,6 +546,7 @@ body {
 			</div>
 		</div>
 		<button onclick="location.href='/board/test'">테스트</button>
+		<button onclick="location.href='/board/testComplete'">테스트 종료</button>
 	</div>
 	<script>
 let recordTotalCount = ${recordTotalCount};
@@ -600,7 +646,7 @@ last.innerHTML = ">>";
 navi.append(last);
 
 $("#write").on("click", function() {
-	if ('${loginId}' == '') {
+	if ('${id}' == '') {
 		alert("로그인이 필요한 서비스입니다.");
 	} else {
 		location.href = "/board/write";

@@ -24,6 +24,7 @@ import com.kedu.dao.FilesDAO;
 import com.kedu.dto.BoardDTO;
 import com.kedu.dto.FilesDTO;
 import com.kedu.dto.LiveChatDTO;
+import com.kedu.dto.ReplyDTO;
 
 @Controller
 @RequestMapping("/board")
@@ -55,24 +56,27 @@ public class BoardController {
 		model.addAttribute("logo", logo);
 		}
 		model.addAttribute("files", files);
+		List<ReplyDTO> replyList = dao.getReplyList(seq);
+		model.addAttribute("replyList", replyList);
 		dao.viewCount(seq);
 		return "/board/detail";
 	}
 	
 	@RequestMapping("/write")
 	public String write(HttpSession session) throws Exception {
-		System.out.println(session.getAttribute("loginId"));
+		System.out.println(session.getAttribute("id"));
 		return "/board/write";
 	}
 	
 	@RequestMapping("/writeComplete")
 	public String writeComplete(BoardDTO dto, HttpSession session, MultipartFile[] files) throws Exception {
-		String id = (String)session.getAttribute("loginId");
+		String id = (String)session.getAttribute("id");
 		String team = dao.isUserTeam(id);
 		int seq = dao.getNextval();
 		dto.setBoard_seq(seq);
 		dto.setTeam(team);
 		dto.setWriter(id);
+		System.out.println(dto.getContents().length());
 		dao.write(dto);
 		String path = "d:/uploads/";
 		for(MultipartFile file : files) {
@@ -131,7 +135,13 @@ public class BoardController {
 	
 	@RequestMapping("/test")
 	public String test(HttpSession session) throws Exception {
-		session.setAttribute("loginId", "admin");
+		session.setAttribute("id", "admin");
+		return "redirect:/";
+	}
+	
+	@RequestMapping("/testComplete")
+	public String testComplete(HttpSession session) throws Exception {
+		session.removeAttribute("id");
 		return "redirect:/";
 	}
 	
@@ -167,7 +177,7 @@ public class BoardController {
 	@RequestMapping("/chat")
 	@ResponseBody
 	public String chat(LiveChatDTO dto, HttpSession session, Model model) throws Exception {
-	    String id = (String)session.getAttribute("loginId");
+	    String id = (String)session.getAttribute("id");
 	    String team = dao.isUserTeam(id);
 	    dto.setWriter(id);
 	    dto.setTeam(team);
