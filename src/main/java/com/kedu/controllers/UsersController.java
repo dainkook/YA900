@@ -161,8 +161,7 @@ public class UsersController {
 	    return "member/finduserid";
 	}
 	
-<<<<<<< HEAD
-=======
+
 	@RequestMapping("/myteam")
 	public String myTeam(Model model) {
 
@@ -173,7 +172,6 @@ public class UsersController {
 	    return "minigame/myteam";
 	}
 	
->>>>>>> test
 	@RequestMapping(value="/sendemail")
 	@ResponseBody
 	public String sendEmail(String email , HttpSession session) {
@@ -195,5 +193,34 @@ public class UsersController {
 		return "fail";
 	}
 	
+	@RequestMapping(value="/checkuser", method= RequestMethod.POST)
+	@ResponseBody
+	public String checkUser(String id, String name, String email, HttpSession session) {
+		
+		
+		Boolean verified = (Boolean) session.getAttribute("emailVerified");
+				if(verified== null || !verified) {
+					return "fail";
+				}
+				UsersDTO result = dao.findUserPw(name, id, email);
+				if(result != null) {
+					return "success";
+					}
+				return "fail";
+}
+	@RequestMapping("/updatepw")
+	@ResponseBody
+	public String updatePw(String id, String newPw) {
+		
+		String hashedPw= EncryptionUtils.encryptSHA512(newPw);
+		
+		int result = dao.updatePw(id, hashedPw);
+		
+		if(result == 1) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
 	
 }

@@ -80,4 +80,13 @@ public class UsersDAO {
 	        return null;
 	    }
 	}
+	public UsersDTO findUserPw(String name, String id, String email) {
+		String sql= "select * from users where id=? and name=? and email=?";
+		return  jdbc.queryForObject(sql, new BeanPropertyRowMapper<>(UsersDTO.class), id,name,email);
+	}
+	public int updatePw(String id, String newPw) {
+		String sql = "update users set pw=? where id=?";
+		return jdbc.update(sql, newPw, id);
+		
+	}
 }
