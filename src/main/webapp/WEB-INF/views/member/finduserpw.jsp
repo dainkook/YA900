@@ -1,171 +1,143 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-
-<title>비밀번호 찾기 - YA900</title>
+<title>비밀번호 찾기</title>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 <style>
-
 * {
-    box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 body {
-    margin: 0;
-    background-color: #f5f6f8;
-    font-family: Arial, sans-serif;
+	margin: 0;
+	font-family: Arial, sans-serif;
+	background: linear-gradient(135deg, #0f172a, #1e293b);
+	min-height: 100vh;
 }
 
-
-/* =========================
-   HEADER
-========================= */
-
-.header {
-    width: 100%;
-    height: 80px;
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid #ddd;
-    background: white;
+/* header */
+header {
+	height: 70px;
+	background: #111827;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 50px;
 }
 
 .logo {
-    margin-left: 40px;
-    font-size: 28px;
-    font-weight: bold;
-    letter-spacing: 2px;
+	color: white;
+	font-size: 28px;
+	font-weight: bold;
 }
 
-
-/* =========================
-   비밀번호 찾기
-========================= */
-
-.find-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    padding: 80px 0;
+.header-menu a {
+	color: white;
+	text-decoration: none;
+	margin-left: 20px;
 }
 
-.find-box {
-    width: 400px;
-    padding: 40px;
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+/* container */
+.container {
+	width: 500px;
+	margin: 70px auto;
+	background: white;
+	border-radius: 15px;
+	padding: 40px;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-.find-title {
-    margin: 0 0 35px;
-    text-align: center;
-    font-size: 24px;
+.container h1 {
+	text-align: center;
+	margin-bottom: 35px;
 }
 
-
-/* =========================
-   입력창
-========================= */
-
+/* input */
 .input-group {
-    margin-bottom: 10px;
+	margin-bottom: 20px;
 }
 
 .input-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 14px;
-    font-weight: bold;
+	display: block;
+	margin-bottom: 7px;
+	font-weight: bold;
 }
 
-.input {
-    width: 100%;
-    height: 45px;
-    padding: 0 12px;
-    border: 1px solid #aaa;
-    border-radius: 5px;
-    font-size: 14px;
-    outline: none;
+.input-group input {
+	width: 100%;
+	height: 45px;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	padding: 0 12px;
+	font-size: 15px;
 }
 
-.input:focus {
-    border-color: #000;
+.input-group input:focus {
+	outline: none;
+	border-color: #2563eb;
 }
 
-
-/* =========================
-   검증 메시지
-========================= */
-
-.check-message {
-    min-height: 20px;
-    margin-top: 5px;
-    font-size: 13px;
+/* message */
+.message {
+	margin-top: 7px;
+	font-size: 13px;
 }
 
-
-/* =========================
-   버튼
-========================= */
-
-.find-btn {
-    width: 100%;
-    height: 45px;
-    margin-top: 10px;
-    border: none;
-    border-radius: 5px;
-    background: black;
-    color: white;
-    cursor: pointer;
-    font-size: 15px;
+/* button */
+button {
+	width: 100%;
+	height: 45px;
+	border: none;
+	border-radius: 6px;
+	background: #2563eb;
+	color: white;
+	font-size: 15px;
+	cursor: pointer;
 }
 
-.find-btn:hover {
-    background: #666;
+button:hover {
+	background: #1d4ed8;
 }
 
-
-/* =========================
-   새 비밀번호 영역
-========================= */
-
-.password-area {
-    margin-top: 30px;
-    padding-top: 25px;
-    border-top: 1px solid #ddd;
+/* email */
+#email-area {
+	display: none;
 }
 
-.password-title {
-    margin: 0 0 20px;
-    text-align: center;
-    font-size: 18px;
+#password-area {
+	display: none;
 }
 
-
-/* =========================
-   FOOTER
-========================= */
-
-.footer {
-    width: 100%;
-    height: 150px;
-    border-top: 1px solid #999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #777;
-    font-size: 13px;
+/* bottom */
+.bottom-menu {
+	text-align: center;
+	margin-top: 25px;
 }
 
+.bottom-menu a {
+	color: #555;
+	text-decoration: none;
+	margin: 0 8px;
+	font-size: 14px;
+}
+
+.bottom-menu a:hover {
+	text-decoration: underline;
+}
+
+/* footer */
+footer {
+	text-align: center;
+	color: #aaa;
+	font-size: 13px;
+	padding-bottom: 30px;
+}
 </style>
 
 </head>
@@ -173,303 +145,566 @@ body {
 <body>
 
 
-<!-- =========================
-     HEADER
-========================= -->
+	<header>
 
-<header class="header">
+		<div class="logo">YA900</div>
 
-    <div class="logo">
-        YA900
-    </div>
+		<div class="header-menu">
 
-</header>
+			<a href="${pageContext.request.contextPath}/login"> 로그인 </a> <a
+				href="${pageContext.request.contextPath}/signup"> 회원가입 </a>
 
+		</div>
 
-<!-- =========================
-     비밀번호 찾기
-========================= -->
+	</header>
 
-<main class="find-container">
 
-    <div class="find-box">
 
-        <h2 class="find-title">
-            비밀번호 찾기
-        </h2>
+	<div class="container">
 
+		<h1>비밀번호 찾기</h1>
 
-        <!-- =========================
-             회원 정보 확인
-        ========================= -->
 
-        <form id="finduserpw">
+		<!-- 이름 -->
 
+		<div class="input-group">
 
-            <!-- 이름 -->
+			<label>이름</label> <input type="text" id="name"
+				placeholder="이름을 입력하세요">
 
-            <div class="input-group">
+			<div id="namemessage" class="message"></div>
 
-                <label>
-                    이름
-                </label>
+		</div>
 
-                <input type="text"
-                       class="input"
-                       name="name"
-                       id="name"
-                       placeholder="이름을 입력하세요"
-                       required>
 
-            </div>
 
-            <div id="namecheck-message"
-                 class="check-message">
-            </div>
+		<!-- 아이디 -->
 
+		<div class="input-group">
 
-            <!-- 아이디 -->
+			<label>아이디</label> <input type="text" id="id"
+				placeholder="아이디를 입력하세요">
 
-            <div class="input-group">
+			<div id="idmessage" class="message"></div>
 
-                <label>
-                    아이디
-                </label>
+		</div>
 
-                <input type="text"
-                       class="input"
-                       name="id"
-                       id="id"
-                       placeholder="아이디를 입력하세요"
-                       required>
 
-            </div>
 
-            <div id="idcheck-message"
-                 class="check-message">
-            </div>
+		<!-- 이메일 -->
 
+		<div class="input-group">
 
-            <!-- 이메일 -->
+			<label>이메일</label> <input type="text" id="email"
+				placeholder="이메일을 입력하세요">
 
-            <div class="input-group">
+			<div id="emailmessage" class="message"></div>
 
-                <label>
-                    이메일
-                </label>
+			<button type="button" id="send-email">인증번호 받기</button>
 
-                <input type="email"
-                       class="input"
-                       name="email"
-                       id="email"
-                       placeholder="이메일을 입력하세요"
-                       required>
+		</div>
 
-            </div>
 
-            <div id="emailcheck-message"
-                 class="check-message">
-            </div>
 
+		<!-- 이메일 인증 -->
 
-            <!-- 인증번호 받기 -->
+		<div id="email-area">
 
-            <button type="button"
-                    id="sendEmail"
-                    class="find-btn"
-                    style="display: none;">
+			<div class="input-group">
 
-                인증번호 받기
+				<label>인증번호</label> <input type="text" id="email-code"
+					placeholder="인증번호를 입력하세요">
 
-            </button>
+				<div id="codemessage" class="message"></div>
 
+				<button type="button" id="verify-email">인증번호 확인</button>
 
-            <!-- 이메일 인증 -->
+			</div>
 
-            <div id="verify-area"
-                 style="display: none;">
+		</div>
 
-                <input type="text"
-                       id="email-code"
-                       class="input"
-                       placeholder="인증번호를 입력하세요">
 
-                <button type="button"
-                        id="verifyemail"
-                        class="find-btn">
 
-                    인증확인
+		<!-- 비밀번호 변경 -->
 
-                </button>
+		<div id="password-area">
 
-            </div>
+			<div class="input-group">
 
+				<label>새 비밀번호</label> <input type="password" id="newPw"
+					placeholder="새 비밀번호를 입력하세요">
 
-            <!-- 비밀번호 재발급 -->
+				<div id="pwcheckmessage" class="message"></div>
 
-            <button type="submit"
-                    class="find-btn">
+			</div>
 
-                비밀번호 재발급
 
-            </button>
 
+			<div class="input-group">
 
-        </form>
+				<label>새 비밀번호 확인</label> <input type="password" id="newpwCheck"
+					placeholder="새 비밀번호를 다시 입력하세요">
 
+				<div id="pwcheck2-message" class="message"></div>
 
-        <!-- =========================
-             새 비밀번호 입력
-        ========================= -->
+			</div>
 
-        <div id="password-area"
-             class="password-area"
-             style="display: none;">
 
-            <h3 class="password-title">
 
-                새로운 비밀번호를 입력하세요
+			<button type="button" id="changePw">비밀번호 변경</button>
 
-            </h3>
+		</div>
 
 
-            <!-- 새 비밀번호 -->
 
-            <div class="input-group">
+		<!-- 하단 메뉴 -->
 
-                <label>
-                    새 비밀번호
-                </label>
+		<div class="bottom-menu">
 
-                <input type="password"
-                       class="input"
-                       name="newPw"
-                       id="newPw"
-                       placeholder="새 비밀번호를 입력하세요">
+			<a href="${pageContext.request.contextPath}/login"> 로그인 </a> | <a
+				href="${pageContext.request.contextPath}/finduserid"> 아이디 찾기 </a> |
 
-            </div>
+			<a href="${pageContext.request.contextPath}/signup"> 회원가입 </a>
 
-            <div id="pwcheck-message"
-                 class="check-message">
-            </div>
+		</div>
 
+	</div>
 
-            <!-- 비밀번호 확인 -->
 
-            <div class="input-group">
 
-                <label>
-                    비밀번호 확인
-                </label>
+	<footer> YA900 © 2026 </footer>
 
-                <input type="password"
-                       class="input"
-                       name="newPwCheck"
-                       id="newPwCheck"
-                       placeholder="비밀번호를 다시 입력하세요">
 
-            </div>
 
-            <div id="pwcheck2-message"
-                 class="check-message">
-            </div>
+	<script>
 
+$(function() {
 
-            <!-- 비밀번호 변경 버튼 -->
 
-            <button type="button"
-                    class="find-btn"
-                    id="changePw">
+    let name = document.getElementById("name");
 
-                비밀번호 변경
+    let id = document.getElementById("id");
 
-            </button>
+    let email = document.getElementById("email");
 
-        </div>
+    let emailCode = document.getElementById("email-code");
 
-    </div>
+    let newPw = document.getElementById("newPw");
 
-</main>
+    let newpwCheck = document.getElementById("newpwCheck");
 
 
-<!-- =========================
-     FOOTER
-========================= -->
+    let namemessage =
+        document.getElementById("namemessage");
 
-<footer class="footer">
+    let idmessage =
+        document.getElementById("idmessage");
 
-    개인정보처리방침　|　전체 서비스　|　문제 신고　|　고객센터
+    let emailmessage =
+        document.getElementById("emailmessage");
 
-</footer>
+    let codemessage =
+        document.getElementById("codemessage");
 
-<script>
-    let idRegex= /^[가-힣A-Za-z0-9]{6,12}$/;
-    let emailRegex= /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-    let nameRegex =/^[가-힣]{2,5}$/;
+    let pwcheckmessage =
+        document.getElementById("pwcheckmessage");
 
-    let name= document.getElementById("name");
-    let id=document.getElementById("id");
-    let email= document.getElementById("email");
-    let sendEmail= document.getElementById("sendEmail");
+    let pwcheck2message =
+        document.getElementById("pwcheck2-message");
 
-    function checkinput(){
-        if (nameRegex.test(name.value)&&
-        idRegex.test(id.value)&&
-        emailRegex.test(email.value)
-    ){
-        sendEmail.style.display ="block";
-    }else{
-        sendEmail.style.display ="none";
-    }
-    }
-    name.addEventListener("input", checkinput);
-    id.addEventListener("input", checkinput);
-    email.addEventListener("input", checkinput);
 
+    let sendEmail =
+        document.getElementById("send-email");
 
-    sendEmail.addEventListener("click", function(){
-        let emailvalue = email.value;
+    let verifyEmail =
+        document.getElementById("verify-email");
+
+    let changePw =
+        document.getElementById("changePw");
+
+
+    let nameRegex =
+        /^[가-힣]{2,5}$/;
+
+
+    let idRegex =
+        /^[A-Za-z0-9]{6,12}$/;
+
+
+    let emailRegex =
+        /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+
+
+    let pwRegex =
+        /^(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/;
+
+
+    name.addEventListener("input", function() {
+
+        if (name.value == "") {
+
+            namemessage.textContent = "";
+
+        } else if (nameRegex.test(name.value)) {
+
+            namemessage.textContent =
+                "사용 가능한 이름입니다.";
+
+        } else {
+
+            namemessage.textContent =
+                "이름은 한글 2~5자리로 입력하세요.";
+
+        }
+
+    });
+
+    id.addEventListener("input", function() {
+
+        if (id.value == "") {
+
+            idmessage.textContent = "";
+
+        } else if (idRegex.test(id.value)) {
+
+            idmessage.textContent =
+                "아이디 형식이 올바릅니다.";
+
+        } else {
+
+            idmessage.textContent =
+                "아이디는 영문과 숫자를 포함한 6~12자리로 입력하세요.";
+
+        }
+
+    });
+
+    email.addEventListener("input", function() {
+
+        if (email.value == "") {
+
+            emailmessage.textContent = "";
+
+        } else if (emailRegex.test(email.value)) {
+
+            emailmessage.textContent =
+                "이메일 형식이 올바릅니다.";
+
+        } else {
+
+            emailmessage.textContent =
+                "올바른 이메일 형식으로 입력하세요.";
+
+        }
+
+    });
+
+    sendEmail.addEventListener("click", function() {
+
+
+        if (!nameRegex.test(name.value)) {
+
+            alert("이름을 올바르게 입력하세요.");
+
+            name.focus();
+
+            return;
+
+        }
+
+
+        if (!idRegex.test(id.value)) {
+
+            alert("아이디를 올바르게 입력하세요.");
+
+            id.focus();
+
+            return;
+
+        }
+
+
+        if (!emailRegex.test(email.value)) {
+
+            alert("이메일을 올바르게 입력하세요.");
+
+            email.focus();
+
+            return;
+
+        }
+
 
         $.ajax({
-            url:"${pageContext.request.contextPath}/sendemail",
+
+            url:
+                "${pageContext.request.contextPath}/sendemail",
+
             type: "post",
-            data:{
-                email: emailvalue
+
+            data: {
+
+                email: email.value
+
             },
-            success:function(result){
 
-                if(result == "success"){
-                alert("인증번호가 전송되었습니다.");
-                document.getElementById("verify-area").style.display = "block";
-            }
-        }
-        });
-    });
+            success: function(result) {
 
-    let verifyemail= document.getElementById("verifyemail");
-    
+                if (result == "success") {
 
+                    alert("인증번호가 이메일로 전송되었습니다.");
 
-    verifyemail.addEventListener("click", function(){
-        let emailCode= document.getElementById("email-code");
-         let code = emailCode.value;
+                    $("#email-area").show();
 
-         $.ajax({
-            url: "${pageContext.request.contextPath}/verifyemail",
-            type: "post",
-            data:{
-                code: code
-            },
-            success:function(result){
-                if(result == "success"){
-                    alert("이메일 인증이 완료되었습니다.");
+                } else {
 
-                }else{
-                    alert("인증번호가 일치하지 않습니다.");
+                    alert("인증번호 전송에 실패했습니다.");
+
                 }
+
+            },
+
+            error: function() {
+
+                alert("이메일 전송 중 오류가 발생했습니다.");
+
             }
-         });
+
+        });
+
     });
+
+    verifyEmail.addEventListener("click", function() {
+
+
+        if (emailCode.value == "") {
+
+            codemessage.textContent =
+                "인증번호를 입력하세요.";
+
+            emailCode.focus();
+
+            return;
+
+        }
+
+
+        $.ajax({
+
+            url:
+                "${pageContext.request.contextPath}/verifyemail",
+
+            type: "post",
+
+            data: {
+
+                code: emailCode.value
+
+            },
+
+            success: function(result) {
+
+
+                if (result == "success") {
+
+                    codemessage.textContent =
+                        "이메일 인증이 완료되었습니다.";
+
+                    $.ajax({
+
+                        url:
+                            "${pageContext.request.contextPath}/checkuser",
+
+                        type: "post",
+
+                        data: {
+
+                            id: id.value,
+
+                            name: name.value,
+
+                            email: email.value
+
+                        },
+
+                        success: function(result) {
+
+
+                            if (result == "success") {
+
+                                alert("회원정보가 확인되었습니다.");
+
+                                $("#password-area").show();
+
+                            } else {
+
+                                alert("입력하신 회원정보를 찾을 수 없습니다.");
+
+                            }
+
+                        },
+
+                        error: function() {
+
+                            alert("회원정보 확인 중 오류가 발생했습니다.");
+
+                        }
+
+                    });
+
+
+                } else {
+
+                    codemessage.textContent =
+                        "인증번호가 일치하지 않습니다.";
+
+                }
+
+            },
+
+            error: function() {
+
+                alert("인증번호 확인 중 오류가 발생했습니다.");
+
+            }
+
+        });
+
+    });
+
+    newPw.addEventListener("input", function() {
+
+
+        if (newPw.value == "") {
+
+            pwcheckmessage.textContent = "";
+
+        } else if (pwRegex.test(newPw.value)) {
+
+            pwcheckmessage.textContent =
+                "비밀번호 형식이 올바릅니다.";
+
+        } else {
+
+            pwcheckmessage.textContent =
+                "특수문자를 포함한 8자리 이상으로 입력하세요.";
+
+        }
+
+    });
+
+    newpwCheck.addEventListener("input", function() {
+
+
+        if (newpwCheck.value == "") {
+
+            pwcheck2message.textContent = "";
+
+        } else if (newPw.value == newpwCheck.value) {
+
+            pwcheck2message.textContent =
+                "비밀번호가 일치합니다.";
+
+        } else {
+
+            pwcheck2message.textContent =
+                "비밀번호가 일치하지 않습니다.";
+
+        }
+
+    });
+
+    changePw.addEventListener("click", function() {
+
+        if (newPw.value == "") {
+
+            pwcheckmessage.textContent =
+                "새 비밀번호를 입력하세요.";
+
+            newPw.focus();
+
+            return;
+
+        }
+
+        if (!pwRegex.test(newPw.value)) {
+
+            pwcheckmessage.textContent =
+                "특수문자를 포함한 8자리 이상으로 입력하세요.";
+
+            newPw.focus();
+
+            return;
+
+        }
+
+        if (newpwCheck.value == "") {
+
+            pwcheck2message.textContent =
+                "비밀번호 확인을 입력하세요.";
+
+            newpwCheck.focus();
+
+            return;
+
+        }
+
+        if (newPw.value != newpwCheck.value) {
+
+            pwcheck2message.textContent =
+                "비밀번호가 일치하지 않습니다.";
+
+            newpwCheck.focus();
+
+            return;
+
+        }
+
+        $.ajax({
+
+            url:
+                "${pageContext.request.contextPath}/updatepw",
+
+            type: "post",
+
+            data: {
+
+                id: id.value,
+
+                newPw: newPw.value
+
+            },
+
+            success: function(result) {
+
+                if (result == "success") {
+
+                    alert("비밀번호가 변경되었습니다.");
+
+                    location.href =
+                        "${pageContext.request.contextPath}/login";
+
+                } else {
+
+                    alert("비밀번호 변경에 실패했습니다.");
+
+                }
+
+            },
+
+            error: function() {
+
+                alert("비밀번호 변경 중 오류가 발생했습니다.");
+
+            }
+
+        });
+
+    });
+
+});
+
 </script>
+
 </body>
 </html>

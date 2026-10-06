@@ -30,10 +30,10 @@ public class UsersController {
 
 	@Autowired
 	private UsersDAO dao;
-	
+
 	@Autowired
 	private PlayerDAO playerDAO;
-	
+
 	@Autowired
 	private EmailService emailService;
 	
@@ -42,10 +42,10 @@ public class UsersController {
 	public String signup() {
 		return "member/signup";
 	}
-	
+
 	@RequestMapping("/login")
 	public String login() {
-	    return "member/login";
+		return "member/login";
 	}
 
 	@RequestMapping("/finduserid")
@@ -61,8 +61,8 @@ public class UsersController {
 	public String myPage() {
 		return "member/mypage";
 	}
-	
-	
+
+
 	@RequestMapping(value="/signup", method=RequestMethod.POST)
 	public String signup(
 			UsersDTO dto,
@@ -102,9 +102,9 @@ public class UsersController {
 	public String loginCheck(
 			UsersDTO dto,
 			HttpSession session) {
-		
+
 		String hashedpw = EncryptionUtils.encryptSHA512(dto.getPw());
-		
+
 		UsersDTO result = dao.login(dto.getId(), hashedpw);
 		if (result == null) {
 			return "redirect:/login";
@@ -113,7 +113,7 @@ public class UsersController {
 
 		return "redirect:/";
 	}
-	
+
 	@RequestMapping(value="/idcheck", method=RequestMethod.POST)
 	@ResponseBody
 	public int idcheck(String id) {
@@ -136,29 +136,29 @@ public class UsersController {
 
 	@RequestMapping(value="/finduserid", method=RequestMethod.POST)
 	public String findUserId(
-	        String name,
-	        String email,
-	        Model model,
-	        HttpSession session) {
+			String name,
+			String email,
+			Model model,
+			HttpSession session) {
 
-	    Boolean verified =
-	            (Boolean) session.getAttribute("emailVerified");
+		Boolean verified =
+				(Boolean) session.getAttribute("emailVerified");
 
-	    if (verified == null || !verified) {
-	        return "member/finduserid";
-	    }
+		if (verified == null || !verified) {
+			return "member/finduserid";
+		}
 
-	    String id = dao.findUserId(name, email);
+		String id = dao.findUserId(name, email);
 
-	    System.out.println("√£¿∫ æ∆¿Ãµ : " + id);
+		System.out.println("Ï∞æÏùÄ ÏïÑÏù¥Îîî : " + id);
 
-	    model.addAttribute("id", id);
+		model.addAttribute("id", id);
 
-	   
-	    
-	    session.removeAttribute("emailVerified");
-	    session.removeAttribute("emailcode");
-	    return "member/finduserid";
+
+
+		session.removeAttribute("emailVerified");
+		session.removeAttribute("emailcode");
+		return "member/finduserid";
 	}
 	
 	@RequestMapping("/myteam")
@@ -168,10 +168,11 @@ public class UsersController {
 		
 	    List<PlayerDTO> playerList = playerDAO.selectAll();
 
-	    model.addAttribute("playerList", playerList);
+		model.addAttribute("playerList", playerList);
 
-	    return "minigame/myteam";
+		return "minigame/myteam";
 	}
+
 	
 	@RequestMapping(value="/myteamresult", method=RequestMethod.GET)
 	public String myTeamResult(HttpSession session, Model model) {
@@ -200,7 +201,7 @@ public class UsersController {
 	public String sendEmail(String email , HttpSession session) {
 		String code = String.valueOf((int)(Math.random() * 900000)+ 100000);
 		session.setAttribute("emailcode", code);
-		emailService.sendEmail(email,"¿Ã∏ﬁ¿œ ¿Œ¡ıπ¯»£", "¿Œ¡ıπ¯»£¥¬ " + code + " ¿‘¥œ¥Ÿ.");
+		emailService.sendEmail(email,"Ïù¥Î©îÏùº Ïù∏Ï¶ùÎ≤àÌò∏", "Ïù∏Ï¶ùÎ≤àÌò∏Îäî " + code + " ÏûÖÎãàÎã§.");
 		return "success";
 	}
 	@RequestMapping(value="/verifyemail")
@@ -208,13 +209,42 @@ public class UsersController {
 	public String verifyEmail(String code, HttpSession session) {
 		String savedCode=(String) session.getAttribute("emailcode");
 		if(savedCode != null && savedCode.equals(code)) {
-			
+
 			session.setAttribute("emailVerified", true);
 			return "success";
-			
+
 		}
 		return "fail";
 	}
-	
-	
+
+	@RequestMapping(value="/checkuser", method= RequestMethod.POST)
+	@ResponseBody
+	public String checkUser(String id, String name, String email, HttpSession session) {
+
+
+		Boolean verified = (Boolean) session.getAttribute("emailVerified");
+		if(verified== null || !verified) {
+			return "fail";
+		}
+		UsersDTO result = dao.findUserPw(name, id, email);
+		if(result != null) {
+			return "success";
+		}
+		return "fail";
+	}
+	@RequestMapping("/updatepw")
+	@ResponseBody
+	public String updatePw(String id, String newPw) {
+
+		String hashedPw= EncryptionUtils.encryptSHA512(newPw);
+
+		int result = dao.updatePw(id, hashedPw);
+
+		if(result == 1) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
+
 }
