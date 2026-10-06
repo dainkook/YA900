@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html>
@@ -10,151 +10,134 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 <style>
-
 * {
-    box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #0f172a, #1e293b);
-    min-height: 100vh;
+	margin: 0;
+	font-family: Arial, sans-serif;
+	background: linear-gradient(135deg, #0f172a, #1e293b);
+	min-height: 100vh;
 }
 
 /* header */
-
 header {
-    height: 70px;
-    background: #111827;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 50px;
+	height: 70px;
+	background: #111827;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 50px;
 }
 
 .logo {
-    color: white;
-    font-size: 28px;
-    font-weight: bold;
+	color: white;
+	font-size: 28px;
+	font-weight: bold;
 }
 
 .header-menu a {
-    color: white;
-    text-decoration: none;
-    margin-left: 20px;
+	color: white;
+	text-decoration: none;
+	margin-left: 20px;
 }
 
-
 /* container */
-
 .container {
-    width: 500px;
-    margin: 70px auto;
-    background: white;
-    border-radius: 15px;
-    padding: 40px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+	width: 500px;
+	margin: 70px auto;
+	background: white;
+	border-radius: 15px;
+	padding: 40px;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .container h1 {
-    text-align: center;
-    margin-bottom: 35px;
+	text-align: center;
+	margin-bottom: 35px;
 }
 
-
 /* input */
-
 .input-group {
-    margin-bottom: 20px;
+	margin-bottom: 20px;
 }
 
 .input-group label {
-    display: block;
-    margin-bottom: 7px;
-    font-weight: bold;
+	display: block;
+	margin-bottom: 7px;
+	font-weight: bold;
 }
 
 .input-group input {
-    width: 100%;
-    height: 45px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    padding: 0 12px;
-    font-size: 15px;
+	width: 100%;
+	height: 45px;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	padding: 0 12px;
+	font-size: 15px;
 }
 
 .input-group input:focus {
-    outline: none;
-    border-color: #2563eb;
+	outline: none;
+	border-color: #2563eb;
 }
-
 
 /* message */
-
 .message {
-    margin-top: 7px;
-    font-size: 13px;
+	margin-top: 7px;
+	font-size: 13px;
 }
 
-
 /* button */
-
 button {
-    width: 100%;
-    height: 45px;
-    border: none;
-    border-radius: 6px;
-    background: #2563eb;
-    color: white;
-    font-size: 15px;
-    cursor: pointer;
+	width: 100%;
+	height: 45px;
+	border: none;
+	border-radius: 6px;
+	background: #2563eb;
+	color: white;
+	font-size: 15px;
+	cursor: pointer;
 }
 
 button:hover {
-    background: #1d4ed8;
+	background: #1d4ed8;
 }
 
-
 /* email */
-
 #email-area {
-    display: none;
+	display: none;
 }
 
 #password-area {
-    display: none;
+	display: none;
 }
 
-
 /* bottom */
-
 .bottom-menu {
-    text-align: center;
-    margin-top: 25px;
+	text-align: center;
+	margin-top: 25px;
 }
 
 .bottom-menu a {
-    color: #555;
-    text-decoration: none;
-    margin: 0 8px;
-    font-size: 14px;
+	color: #555;
+	text-decoration: none;
+	margin: 0 8px;
+	font-size: 14px;
 }
 
 .bottom-menu a:hover {
-    text-decoration: underline;
+	text-decoration: underline;
 }
-
 
 /* footer */
-
 footer {
-    text-align: center;
-    color: #aaa;
-    font-size: 13px;
-    padding-bottom: 30px;
+	text-align: center;
+	color: #aaa;
+	font-size: 13px;
+	padding-bottom: 30px;
 }
-
 </style>
 
 </head>
@@ -162,194 +145,141 @@ footer {
 <body>
 
 
-<header>
+	<header>
 
-    <div class="logo">
-        YA900
-    </div>
+		<div class="logo">YA900</div>
 
-    <div class="header-menu">
+		<div class="header-menu">
 
-        <a href="${pageContext.request.contextPath}/login">
-            로그인
-        </a>
+			<a href="${pageContext.request.contextPath}/login"> 로그인 </a> <a
+				href="${pageContext.request.contextPath}/signup"> 회원가입 </a>
 
-        <a href="${pageContext.request.contextPath}/signup">
-            회원가입
-        </a>
+		</div>
 
-    </div>
+	</header>
 
-</header>
 
 
+	<div class="container">
 
-<div class="container">
+		<h1>비밀번호 찾기</h1>
 
-    <h1>비밀번호 찾기</h1>
 
+		<!-- 이름 -->
 
-    <!-- 이름 -->
+		<div class="input-group">
 
-    <div class="input-group">
+			<label>이름</label> <input type="text" id="name"
+				placeholder="이름을 입력하세요">
 
-        <label>이름</label>
+			<div id="namemessage" class="message"></div>
 
-        <input type="text"
-               id="name"
-               placeholder="이름을 입력하세요">
+		</div>
 
-        <div id="namemessage" class="message"></div>
 
-    </div>
 
+		<!-- 아이디 -->
 
+		<div class="input-group">
 
-    <!-- 아이디 -->
+			<label>아이디</label> <input type="text" id="id"
+				placeholder="아이디를 입력하세요">
 
-    <div class="input-group">
+			<div id="idmessage" class="message"></div>
 
-        <label>아이디</label>
+		</div>
 
-        <input type="text"
-               id="id"
-               placeholder="아이디를 입력하세요">
 
-        <div id="idmessage" class="message"></div>
 
-    </div>
+		<!-- 이메일 -->
 
+		<div class="input-group">
 
+			<label>이메일</label> <input type="text" id="email"
+				placeholder="이메일을 입력하세요">
 
-    <!-- 이메일 -->
+			<div id="emailmessage" class="message"></div>
 
-    <div class="input-group">
+			<button type="button" id="send-email">인증번호 받기</button>
 
-        <label>이메일</label>
+		</div>
 
-        <input type="text"
-               id="email"
-               placeholder="이메일을 입력하세요">
 
-        <div id="emailmessage" class="message"></div>
 
-        <button type="button"
-                id="send-email">
-            인증번호 받기
-        </button>
+		<!-- 이메일 인증 -->
 
-    </div>
+		<div id="email-area">
 
+			<div class="input-group">
 
+				<label>인증번호</label> <input type="text" id="email-code"
+					placeholder="인증번호를 입력하세요">
 
-    <!-- 이메일 인증 -->
+				<div id="codemessage" class="message"></div>
 
-    <div id="email-area">
+				<button type="button" id="verify-email">인증번호 확인</button>
 
-        <div class="input-group">
+			</div>
 
-            <label>인증번호</label>
+		</div>
 
-            <input type="text"
-                   id="email-code"
-                   placeholder="인증번호를 입력하세요">
 
-            <div id="codemessage" class="message"></div>
 
-            <button type="button"
-                    id="verify-email">
-                인증번호 확인
-            </button>
+		<!-- 비밀번호 변경 -->
 
-        </div>
+		<div id="password-area">
 
-    </div>
+			<div class="input-group">
 
+				<label>새 비밀번호</label> <input type="password" id="newPw"
+					placeholder="새 비밀번호를 입력하세요">
 
+				<div id="pwcheckmessage" class="message"></div>
 
-    <!-- 비밀번호 변경 -->
+			</div>
 
-    <div id="password-area">
 
-        <div class="input-group">
 
-            <label>새 비밀번호</label>
+			<div class="input-group">
 
-            <input type="password"
-                   id="newPw"
-                   placeholder="새 비밀번호를 입력하세요">
+				<label>새 비밀번호 확인</label> <input type="password" id="newpwCheck"
+					placeholder="새 비밀번호를 다시 입력하세요">
 
-            <div id="pwcheckmessage" class="message"></div>
+				<div id="pwcheck2-message" class="message"></div>
 
-        </div>
+			</div>
 
 
 
-        <div class="input-group">
+			<button type="button" id="changePw">비밀번호 변경</button>
 
-            <label>새 비밀번호 확인</label>
+		</div>
 
-            <input type="password"
-                   id="newpwCheck"
-                   placeholder="새 비밀번호를 다시 입력하세요">
 
-            <div id="pwcheck2-message" class="message"></div>
 
-        </div>
+		<!-- 하단 메뉴 -->
 
+		<div class="bottom-menu">
 
+			<a href="${pageContext.request.contextPath}/login"> 로그인 </a> | <a
+				href="${pageContext.request.contextPath}/finduserid"> 아이디 찾기 </a> |
 
-        <button type="button"
-                id="changePw">
-            비밀번호 변경
-        </button>
+			<a href="${pageContext.request.contextPath}/signup"> 회원가입 </a>
 
-    </div>
+		</div>
 
+	</div>
 
 
-    <!-- 하단 메뉴 -->
 
-    <div class="bottom-menu">
+	<footer> YA900 © 2026 </footer>
 
-        <a href="${pageContext.request.contextPath}/login">
-            로그인
-        </a>
 
-        |
 
-        <a href="${pageContext.request.contextPath}/finduserid">
-            아이디 찾기
-        </a>
-
-        |
-
-        <a href="${pageContext.request.contextPath}/signup">
-            회원가입
-        </a>
-
-    </div>
-
-</div>
-
-
-
-<footer>
-
-    YA900 © 2026
-
-</footer>
-
-
-
-<script>
+	<script>
 
 $(function() {
 
-
-    // ========================================
-    // 객체
-    // ========================================
 
     let name = document.getElementById("name");
 
@@ -393,11 +323,6 @@ $(function() {
         document.getElementById("changePw");
 
 
-
-    // ========================================
-    // 정규식
-    // ========================================
-
     let nameRegex =
         /^[가-힣]{2,5}$/;
 
@@ -410,18 +335,9 @@ $(function() {
         /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
 
-    // 비밀번호
-    // 특수문자 1개 이상
-    // 8자리 이상
-
     let pwRegex =
         /^(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/;
 
-
-
-    // ========================================
-    // 이름 확인
-    // ========================================
 
     name.addEventListener("input", function() {
 
@@ -443,12 +359,6 @@ $(function() {
 
     });
 
-
-
-    // ========================================
-    // 아이디 확인
-    // ========================================
-
     id.addEventListener("input", function() {
 
         if (id.value == "") {
@@ -469,12 +379,6 @@ $(function() {
 
     });
 
-
-
-    // ========================================
-    // 이메일 확인
-    // ========================================
-
     email.addEventListener("input", function() {
 
         if (email.value == "") {
@@ -494,12 +398,6 @@ $(function() {
         }
 
     });
-
-
-
-    // ========================================
-    // 인증번호 받기
-    // ========================================
 
     sendEmail.addEventListener("click", function() {
 
@@ -576,12 +474,6 @@ $(function() {
 
     });
 
-
-
-    // ========================================
-    // 인증번호 확인
-    // ========================================
-
     verifyEmail.addEventListener("click", function() {
 
 
@@ -617,9 +509,6 @@ $(function() {
 
                     codemessage.textContent =
                         "이메일 인증이 완료되었습니다.";
-
-
-                    // 회원정보 확인
 
                     $.ajax({
 
@@ -683,12 +572,6 @@ $(function() {
 
     });
 
-
-
-    // ========================================
-    // 새 비밀번호 확인
-    // ========================================
-
     newPw.addEventListener("input", function() {
 
 
@@ -709,12 +592,6 @@ $(function() {
         }
 
     });
-
-
-
-    // ========================================
-    // 비밀번호 확인
-    // ========================================
 
     newpwCheck.addEventListener("input", function() {
 
@@ -737,16 +614,7 @@ $(function() {
 
     });
 
-
-
-    // ========================================
-    // 비밀번호 변경
-    // ========================================
-
     changePw.addEventListener("click", function() {
-
-
-        // 비밀번호가 비어있는 경우
 
         if (newPw.value == "") {
 
@@ -759,9 +627,6 @@ $(function() {
 
         }
 
-
-        // 비밀번호 형식 검사
-
         if (!pwRegex.test(newPw.value)) {
 
             pwcheckmessage.textContent =
@@ -772,9 +637,6 @@ $(function() {
             return;
 
         }
-
-
-        // 비밀번호 확인이 비어있는 경우
 
         if (newpwCheck.value == "") {
 
@@ -787,9 +649,6 @@ $(function() {
 
         }
 
-
-        // 비밀번호가 서로 다른 경우
-
         if (newPw.value != newpwCheck.value) {
 
             pwcheck2message.textContent =
@@ -800,11 +659,6 @@ $(function() {
             return;
 
         }
-
-
-        // ========================================
-        // 비밀번호 변경 AJAX
-        // ========================================
 
         $.ajax({
 

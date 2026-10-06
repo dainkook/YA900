@@ -12,7 +12,6 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 <style>
-
 * {
 	box-sizing: border-box;
 }
@@ -23,19 +22,9 @@ html {
 
 body {
 	margin: 0;
-	background: linear-gradient(
-		to bottom,
-		#111936 0%,
-		#111936 15%,
-		#0b1026 25%,
-		#171f46 35%,
-		#252f67 48%,
-		#71809f 65%,
-		#aeb7ca 76%,
-		#d5dae5 86%,
-		#eef1f8 94%,
-		#eef1f8 100%
-	);
+	background: linear-gradient(to bottom, #111936 0%, #111936 15%, #0b1026 25%, #171f46
+		35%, #252f67 48%, #71809f 65%, #aeb7ca 76%, #d5dae5 86%, #eef1f8 94%,
+		#eef1f8 100%);
 	color: #18213f;
 	font-family: Arial, sans-serif;
 	min-height: 100vh;
@@ -167,98 +156,58 @@ body {
 	font-size: 13px;
 	border: none;
 }
-
 </style>
 </head>
 
 <body>
 
-<header class="header">
-	<div class="logo">YA900</div>
-</header>
+	<header class="header">
+		<div class="logo">YA900</div>
+	</header>
 
 
-<main class="login-container">
+	<main class="login-container">
 
-	<div class="login-box">
+		<div class="login-box">
 
-		<h2 class="login-title">
-			로그인
-		</h2>
+			<h2 class="login-title">로그인</h2>
 
 
-		<form action="${pageContext.request.contextPath}/login"
-			method="post">
+			<form action="${pageContext.request.contextPath}/login" method="post">
 
-			<input
-				type="text"
-				class="login-input"
-				id="id"
-				name="id"
-				placeholder="아이디"
-				required>
+				<input type="text" class="login-input" id="id" name="id"
+					placeholder="아이디" required> <input type="password"
+					class="login-input" id="pw" name="pw" placeholder="비밀번호" required>
 
 
-			<input
-				type="password"
-				class="login-input"
-				id="pw"
-				name="pw"
-				placeholder="비밀번호"
-				required>
+				<div class="login-option">
+
+					<label> <input type="checkbox"> 로그인 상태 유지
+					</label>
+
+				</div>
 
 
-			<div class="login-option">
+				<button type="submit" class="login-btn">로그인</button>
 
-				<label>
-					<input type="checkbox">
-					로그인 상태 유지
-				</label>
+			</form>
+
+
+			<div class="login-links">
+
+				<a href="${pageContext.request.contextPath}/finduserid"> 아이디 찾기
+				</a> | <a href="${pageContext.request.contextPath}/finduserpw"> 비밀번호
+					찾기 </a> | <a href="${pageContext.request.contextPath}/signup"> 회원가입
+				</a>
 
 			</div>
 
-
-			<button
-				type="submit"
-				class="login-btn">
-
-				로그인
-
-			</button>
-
-		</form>
-
-
-		<div class="login-links">
-
-			<a href="${pageContext.request.contextPath}/finduserid">
-				아이디 찾기
-			</a>
-
-			|
-
-			<a href="${pageContext.request.contextPath}/finduserpw">
-				비밀번호 찾기
-			</a>
-
-			|
-
-			<a href="${pageContext.request.contextPath}/signup">
-				회원가입
-			</a>
-
 		</div>
 
-	</div>
-
-</main>
+	</main>
 
 
-<footer class="footer">
-
-	개인정보처리방침　|　전체 서비스　|　문제 신고　|　고객센터
-
-</footer>
+	<footer class="footer"> 개인정보처리방침 | 전체 서비스 | 문제 신고 | 고객센터 </footer>
 
 </body>
 </html>

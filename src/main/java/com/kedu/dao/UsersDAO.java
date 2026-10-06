@@ -40,21 +40,21 @@ public class UsersDAO {
 				dto.getTeam()
 				);
 	}
-  
+
 	public UsersDTO login(String id, String pw) {
 
-	    String sql = "SELECT * FROM users WHERE id = ? AND pw = ?";
+		String sql = "SELECT * FROM users WHERE id = ? AND pw = ?";
 
-	    try {
-	        return jdbc.queryForObject(
-	            sql,
-	            new BeanPropertyRowMapper<UsersDTO>(UsersDTO.class),
-	            id,
-	            pw
-	        );
-	    } catch (Exception e) {
-	        return null;
-	    }
+		try {
+			return jdbc.queryForObject(
+					sql,
+					new BeanPropertyRowMapper<UsersDTO>(UsersDTO.class),
+					id,
+					pw
+					);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 	public int idCheck(String id) {
 		String sql= "select count(*) from users where id = ?";
@@ -67,18 +67,18 @@ public class UsersDAO {
 
 	public String findUserId(String name, String email) {
 
-	    String sql = "SELECT id FROM users WHERE name = ? AND email = ?";
+		String sql = "SELECT id FROM users WHERE name = ? AND email = ?";
 
-	    try {
-	        return jdbc.queryForObject(
-	            sql,
-	            String.class,
-	            name,
-	            email
-	        );
-	    } catch (Exception e) {
-	        return null;
-	    }
+		try {
+			return jdbc.queryForObject(
+					sql,
+					String.class,
+					name,
+					email
+					);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 	public UsersDTO findUserPw(String name, String id, String email) {
 		String sql= "select * from users where id=? and name=? and email=?";
@@ -87,6 +87,6 @@ public class UsersDAO {
 	public int updatePw(String id, String newPw) {
 		String sql = "update users set pw=? where id=?";
 		return jdbc.update(sql, newPw, id);
-		
+
 	}
 }

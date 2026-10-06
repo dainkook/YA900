@@ -11,7 +11,6 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 <style>
-
 * {
 	box-sizing: border-box;
 }
@@ -22,19 +21,9 @@ html {
 
 body {
 	margin: 0;
-	background: linear-gradient(
-		to bottom,
-		#111936 0%,
-		#111936 15%,
-		#0b1026 25%,
-		#171f46 35%,
-		#252f67 48%,
-		#71809f 65%,
-		#aeb7ca 76%,
-		#d5dae5 86%,
-		#eef1f8 94%,
-		#eef1f8 100%
-	);
+	background: linear-gradient(to bottom, #111936 0%, #111936 15%, #0b1026 25%, #171f46
+		35%, #252f67 48%, #71809f 65%, #aeb7ca 76%, #d5dae5 86%, #eef1f8 94%,
+		#eef1f8 100%);
 	color: #18213f;
 	font-family: Arial, sans-serif;
 	min-height: 100vh;
@@ -171,8 +160,7 @@ body {
 	margin-top: 25px;
 }
 
-.find-btn,
-.login-btn {
+.find-btn, .login-btn {
 	flex: 1;
 	height: 45px;
 	border: 1px solid #111936;
@@ -184,8 +172,7 @@ body {
 	transition: 0.2s ease;
 }
 
-.find-btn:hover,
-.login-btn:hover {
+.find-btn:hover, .login-btn:hover {
 	background: #476aaa;
 	border-color: #476aaa;
 }
@@ -222,133 +209,94 @@ body {
 	margin-top: 5px;
 	font-size: 13px;
 }
-
 </style>
 </head>
 
 <body>
 
-<header class="header">
-	<div class="logo">YA900</div>
-</header>
+	<header class="header">
+		<div class="logo">YA900</div>
+	</header>
 
 
-<main class="find-container">
+	<main class="find-container">
 
-	<div class="find-box">
+		<div class="find-box">
 
-		<h2 class="find-title">아이디 찾기</h2>
+			<h2 class="find-title">아이디 찾기</h2>
 
-		<form action="${pageContext.request.contextPath}/finduserid"
-			method="post"
-			id="findUserId">
+			<form action="${pageContext.request.contextPath}/finduserid"
+				method="post" id="findUserId">
 
-			<div class="input-group">
+				<div class="input-group">
 
-				<label>이름</label>
+					<label>이름</label> <input type="text" class="input" name="name"
+						id="name" placeholder="이름을 입력하세요" required>
 
-				<input type="text"
-					class="input"
-					name="name"
-					id="name"
-					placeholder="이름을 입력하세요"
-					required>
+				</div>
 
-			</div>
-
-			<div id="namecheck-message"
-				class="message"></div>
+				<div id="namecheck-message" class="message"></div>
 
 
-			<div class="input-group">
+				<div class="input-group">
 
-				<label>이메일</label>
+					<label>이메일</label> <input type="email" class="input" name="email"
+						id="email" placeholder="이메일을 입력하세요" required>
 
-				<input type="email"
-					class="input"
-					name="email"
-					id="email"
-					placeholder="이메일을 입력하세요"
-					required>
+				</div>
 
-			</div>
-
-			<div id="emailcheck-message"
-				class="message"></div>
+				<div id="emailcheck-message" class="message"></div>
 
 
-			<button class="sendEmail"
-				type="button"
-				id="sendEmail"
-				style="display:none">
-
-				인증번호 받기
-
-			</button>
+				<button class="sendEmail" type="button" id="sendEmail"
+					style="display: none">인증번호 받기</button>
 
 
-			<div id="vertify"
-				class="verify-area"
-				style="display:none;">
+				<div id="vertify" class="verify-area" style="display: none;">
 
-				<input type="text"
-					class="input"
-					id="email-code"
-					placeholder="인증번호를 입력하세요">
+					<input type="text" class="input" id="email-code"
+						placeholder="인증번호를 입력하세요">
 
-				<button type="button"
-					class="verify-btn"
-					id="verifyemail">
+					<button type="button" class="verify-btn" id="verifyemail">
 
-					인증하기
+						인증하기</button>
 
-				</button>
+					<div id="verify-message" class="message"></div>
 
-				<div id="verify-message"
-					class="message"></div>
-
-			</div>
+				</div>
 
 
-			<div class="button-group">
+				<div class="button-group">
 
-				<button type="submit"
-					class="find-btn"
-					id="find-btn">
+					<button type="submit" class="find-btn" id="find-btn">아이디
+						찾기</button>
 
-					아이디 찾기
+					<button type="button" class="login-btn"
+						onclick="location.href='${pageContext.request.contextPath}/login'">
 
-				</button>
+						로그인</button>
 
-				<button type="button"
-					class="login-btn"
-					onclick="location.href='${pageContext.request.contextPath}/login'">
-
-					로그인
-
-				</button>
-
-			</div>
+				</div>
 
 
-			<c:if test="${not empty id}">
+				<c:if test="${not empty id}">
 
-				<script>
+					<script>
 
 					alert("회원님의 아이디는 ${id}입니다.");
 
 				</script>
 
-			</c:if>
+				</c:if>
 
-		</form>
+			</form>
 
-	</div>
+		</div>
 
-</main>
+	</main>
 
 
-<script>
+	<script>
 
 let findUserId = document.getElementById("findUserId");
 
@@ -549,11 +497,7 @@ findUserId.addEventListener("submit", function(event) {
 </script>
 
 
-<footer class="footer">
-
-	개인정보처리방침 | 전체 서비스 | 문제 신고 | 고객센터
-
-</footer>
+	<footer class="footer"> 개인정보처리방침 | 전체 서비스 | 문제 신고 | 고객센터 </footer>
 
 
 </body>
