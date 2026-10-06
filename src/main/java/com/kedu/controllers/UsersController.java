@@ -20,6 +20,7 @@ import com.kedu.commons.EmailService;
 import com.kedu.commons.EncryptionUtils;
 import com.kedu.dao.PlayerDAO;
 import com.kedu.dao.UsersDAO;
+import com.kedu.dto.MyTeamDTO;
 import com.kedu.dto.PlayerDTO;
 import com.kedu.dto.UsersDTO;
 
@@ -35,8 +36,7 @@ public class UsersController {
 	
 	@Autowired
 	private EmailService emailService;
-
-
+	
 
 	@RequestMapping("/signup")
 	public String signup() {
@@ -161,11 +161,11 @@ public class UsersController {
 	    return "member/finduserid";
 	}
 	
-<<<<<<< HEAD
-=======
 	@RequestMapping("/myteam")
-	public String myTeam(Model model) {
-
+	public String myTeam(Model model,HttpSession session) {
+		
+		String id = (String)session.getAttribute("id");
+		
 	    List<PlayerDTO> playerList = playerDAO.selectAll();
 
 	    model.addAttribute("playerList", playerList);
@@ -173,7 +173,28 @@ public class UsersController {
 	    return "minigame/myteam";
 	}
 	
->>>>>>> test
+	@RequestMapping(value="/myteamresult", method=RequestMethod.GET)
+	public String myTeamResult(HttpSession session, Model model) {
+
+	    String id = (String)session.getAttribute("id");
+
+	    List<PlayerDTO> myPlayerList = playerDAO.selectMyTeamPlayers(id);
+
+	    model.addAttribute("myPlayerList", myPlayerList);
+
+	    return "minigame/myteamresult";
+	}
+	
+	@RequestMapping(value="/myteamresult", method=RequestMethod.POST)
+	public String myTeamResultPost(MyTeamDTO dto, HttpSession session) {
+
+	    String id = (String)session.getAttribute("id");
+
+	    playerDAO.addMyTeam(dto, id);
+
+	    return "redirect:/myteamresult";
+	}
+	
 	@RequestMapping(value="/sendemail")
 	@ResponseBody
 	public String sendEmail(String email , HttpSession session) {

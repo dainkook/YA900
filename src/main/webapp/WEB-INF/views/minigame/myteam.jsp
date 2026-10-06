@@ -15,77 +15,155 @@
 <style>
 * {
 	box-sizing: border-box;
-}
 
 body {
 	margin: 0;
-	padding: 0;
-	background: #f5f6f8;
+	background: linear-gradient(to bottom, #111936 0%, #111936 12%, #171f46 22%, #252f67
+		32%, #71809f 43%, #aeb7ca 55%, #d5dae5 70%, #eef1f8 85%, #eef1f8 100%);
 	font-family: Arial, "Malgun Gothic", sans-serif;
-	color: #222;
+	color: #18213f;
+	min-height: 100vh;
 }
 
-/* =========================
-   HEADER
-========================= */
 .header {
-	position: fixed;
-	top: 0;
-	left: 0;
 	width: 100%;
-	height: 80px;
-	background: white;
-	border-bottom: 1px solid #e2e5e9;
+	height: 100px;
+	background: linear-gradient(135deg, #0b1026, #171f46);
+	color: white;
 	display: flex;
 	align-items: center;
 	padding: 0 50px;
+	position: sticky;
+	top: 0;
 	z-index: 1000;
+	border-bottom: 1px solid #303b70;
+	box-shadow: 0 3px 15px rgba(11, 16, 38, 0.18);
 }
 
 .logo {
 	font-size: 30px;
 	font-weight: bold;
-	margin-right: 70px;
+	margin-right: 60px;
+	color: white;
+	letter-spacing: 1px;
 }
-
+.header>.logo:hover {
+	cursor:pointer;
+}
 .main-menu {
+	height: 100%;
 	display: flex;
-	gap: 45px;
+	align-items: center;
+	gap: 40px;
 }
 
-.main-menu a {
+.menu-item {
+	position: relative;
+	height: 100%;
+	display: flex;
+	align-items: center;
+}
+
+.menu-item>a {
+	font-size: 18px;
+	font-weight: bold;
 	text-decoration: none;
-	color: #222;
-	font-size: 17px;
+	color: #f7f8ff;
+	padding: 10px 5px;
+	transition: color 0.2s ease;
 }
 
-.main-menu a:hover {
-	color: #476aaa;
+.menu-item>a:hover {
+	color: #aebee7;
+}
+
+/* =========================
+   서브 메뉴
+========================= */
+.sub-menu {
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-10px);
+	width: 130px;
+	background: #171f46;
+	border: 1px solid #394575;
+	display: flex;
+	flex-direction: column;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.2s ease, transform 0.2s ease;
+	box-shadow: 0 10px 25px rgba(8, 12, 30, 0.25);
+}
+
+.menu-item:hover .sub-menu {
+	opacity: 1;
+	visibility: visible;
+	transform: translateX(-50%) translateY(0);
+}
+
+.sub-menu a {
+	padding: 13px 15px;
+	text-decoration: none;
+	color: #f5f7ff;
+	font-size: 14px;
+	border-bottom: 1px solid #35406b;
+}
+
+.sub-menu a:last-child {
+	border-bottom: none;
+}
+
+.sub-menu a:hover {
+	background: #252f67;
+}
+
+/* =========================
+   로그인 / 회원가입
+========================= */
+.member-menu {
+	font-size: 14px;
+	margin-left: auto;
+}
+
+.login-btn, .sign-btn {
+	border: 1px solid #7180b1;
+	background: transparent;
+	color: white;
+	border-radius: 5px;
+	transition: 0.2s ease;
+}
+
+.login-btn:hover, .sign-btn:hover {
+	background: #476aaa;
+	border-color: #476aaa;
+	color: white;
 }
 
 .user-menu {
 	margin-left: auto;
 	display: flex;
-	gap: 10px;
+	gap: 8px;
 }
 
 .user-menu button {
-	background: white;
-	border: 1px solid #cfd3d8;
+	background: transparent;
+	border: 1px solid #7180b1;
 	border-radius: 5px;
-	padding: 9px 18px;
-	font-size: 14px;
+	padding: 8px 15px;
+	color: white;
 	cursor: pointer;
+	transition: 0.2s ease;
 }
 
 .user-menu button:hover {
+	background: #476aaa;
 	border-color: #476aaa;
-	color: #476aaa;
 }
-
 /* =========================
    CONTAINER
 ========================= */
+
 .container {
 	width: 1310px;
 	max-width: calc(100% - 40px);
@@ -95,6 +173,7 @@ body {
 /* =========================
    PAGE TITLE
 ========================= */
+
 .title {
 	height: 70px;
 	background: white;
@@ -112,22 +191,24 @@ body {
 /* =========================
    MAIN AREA
 ========================= */
+
 .main-area {
 	display: flex;
 	gap: 20px;
 }
 
-.team-area, .player-area {
+.team-area,
+.player-area {
 	background: white;
 	border: 1px solid #e1e4e8;
 	border-radius: 10px;
-	height: 710px;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .team-area {
 	width: 625px;
 	padding: 25px;
+	min-height: 710px;
 }
 
 .player-area {
@@ -135,11 +216,16 @@ body {
 	padding: 25px;
 	display: flex;
 	flex-direction: column;
+	height: 710px;
+	align-self: flex-start;
+	position: sticky;
+	top: 100px;
 }
 
 /* =========================
    AREA TITLE
 ========================= */
+
 .area-title {
 	text-align: center;
 	font-size: 21px;
@@ -151,6 +237,7 @@ body {
 /* =========================
    BASEBALL FIELD
 ========================= */
+
 .field {
 	position: relative;
 	height: 440px;
@@ -162,6 +249,7 @@ body {
 /* =========================
    POSITION BUTTON
 ========================= */
+
 .position {
 	position: absolute;
 	width: 112px;
@@ -173,6 +261,32 @@ body {
 	font-size: 15px;
 	cursor: pointer;
 	transition: all 0.15s ease;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 4px;
+}
+
+.position-name {
+	font-size: 13px;
+	color: #777;
+}
+
+.selected-player {
+	font-size: 15px;
+	font-weight: bold;
+	color: #222;
+}
+
+.position.selected {
+	background: #476aaa;
+	border-color: #476aaa;
+}
+
+.position.selected .position-name,
+.position.selected .selected-player {
+	color: white;
 }
 
 .position:hover {
@@ -183,6 +297,7 @@ body {
 }
 
 /* Position */
+
 .p-left {
 	left: 69px;
 	top: 44px;
@@ -231,28 +346,53 @@ body {
 /* =========================
    TEAM INFO
 ========================= */
+
 .team-info {
 	border-top: 1px solid #e4e6e9;
 	margin-top: 22px;
 	padding-top: 20px;
-	display: flex;
-	justify-content: space-around;
-	text-align: center;
-	font-size: 14px;
-	color: #777;
 }
 
-.team-info strong {
-	display: block;
-	margin-top: 8px;
-	font-size: 17px;
+.team-info-header,
+.selected-player-row {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	align-items: center;
+	text-align: center;
+}
+
+.team-info-header {
+	padding: 10px 0;
+	border-bottom: 1px solid #ddd;
+	font-size: 13px;
+	color: #888;
+	font-weight: bold;
+}
+
+.selected-player-row {
+	padding: 10px 0;
+	border-bottom: 1px solid #eee;
+	font-size: 14px;
+}
+
+.selected-player-row .player-name {
+	font-weight: bold;
 	color: #222;
-	min-height: 25px;
+}
+
+.selected-player-row .player-position {
+	color: #666;
+}
+
+.selected-player-row .player-team {
+	color: #476aaa;
+	font-weight: bold;
 }
 
 /* =========================
    SEARCH
 ========================= */
+
 .search {
 	display: flex;
 	height: 45px;
@@ -290,6 +430,7 @@ body {
 /* =========================
    POSITION FILTER
 ========================= */
+
 .position-filter {
 	display: flex;
 	gap: 5px;
@@ -324,6 +465,7 @@ body {
 /* =========================
    PLAYER LIST
 ========================= */
+
 .player-list {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
@@ -338,6 +480,7 @@ body {
 /* =========================
    PLAYER CARD
 ========================= */
+
 .player-card {
 	height: 185px;
 	background: white;
@@ -358,6 +501,7 @@ body {
 /* =========================
    PLAYER IMAGE
 ========================= */
+
 .player-image {
 	height: 105px;
 	background: #f7f8fa;
@@ -379,6 +523,7 @@ body {
 /* =========================
    PLAYER INFO
 ========================= */
+
 .player-name {
 	font-size: 14px;
 	font-weight: bold;
@@ -402,6 +547,7 @@ body {
 /* =========================
    SAVE
 ========================= */
+
 .save-area {
 	text-align: center;
 	margin-top: 20px;
@@ -428,6 +574,7 @@ body {
 /* =========================
    SCROLLBAR
 ========================= */
+
 .player-list::-webkit-scrollbar {
 	width: 6px;
 }
@@ -450,182 +597,327 @@ body {
 
 <body>
 
-	<header class="header">
+	<div class="header">
 
-		<div class="logo">YA900</div>
+		<div class="logo" onclick="location.href='/'">YA900</div>
 
 		<nav class="main-menu">
-			<a href="#">야구</a> <a href="#">축구</a> <a href="#">미니게임</a>
+
+			<div class="menu-item">
+				<a href="#">야구</a>
+
+				<div class="sub-menu">
+					<a href="#">예매</a>
+					<a href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a>
+					<a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a>
+					<a href="${pageContext.request.contextPath}/schedule/rankdetail?tab=pitcher">선수순위</a>
+					<a href="${pageContext.request.contextPath}/board/board?cpage=1">게시판</a>
+				</div>
+			</div>
+
+			<div class="menu-item">
+				<a href="#">축구</a>
+
+				<div class="sub-menu">
+					<a href="#">예매</a>
+					<a href="#">경기일정</a>
+					<a href="#">팀순위</a>
+					<a href="#">선수순위</a>
+					<a href="#">게시판</a>
+				</div>
+			</div>
+
+			<div class="menu-item">
+				<a href="#">미니게임</a>
+
+				<div class="sub-menu">
+					<a href="#">상식 퀴즈</a>
+					<a href="#">OX 퀴즈</a>
+					<a href="#">승부예측</a>
+					<a href="#">게임 랭킹</a>
+				</div>
+			</div>
+
 		</nav>
 
-		<div class="user-menu">
-			<button>로그인</button>
-			<button>회원가입</button>
+		<div class="member-menu">
+			<button class="login-btn" onclick="location.href='login'">로그인</button>
+			<button class="sign-btn" onclick="location.href='signup'">회원가입</button>
 		</div>
 
-	</header>
-
+	</div>
 
 	<div class="container">
 
 		<div class="title">나만의 팀</div>
 
+		<form action="${pageContext.request.contextPath}/myteamresult" method="POST">
 
-		<div class="main-area">
+			<div class="main-area">
 
-			<!-- =========================
-			     나의 팀
-			========================= -->
+				<section class="team-area">
 
-			<section class="team-area">
+					<div class="area-title">나의 팀</div>
 
-				<div class="area-title">나의 팀</div>
+					<div class="field">
 
-				<div class="field">
+						<button type="button" class="position p-left"
+							data-position="좌익수">
+							<span class="position-name">좌익수</span>
+							<span class="selected-player"></span>
+						</button>
 
-					<button class="position p-left">좌익수</button>
+						<button type="button" class="position p-center"
+							data-position="중견수">
+							<span class="position-name">중견수</span>
+							<span class="selected-player"></span>
+						</button>
 
-					<button class="position p-center">중견수</button>
+						<button type="button" class="position p-right"
+							data-position="우익수">
+							<span class="position-name">우익수</span>
+							<span class="selected-player"></span>
+						</button>
 
-					<button class="position p-right">우익수</button>
+						<button type="button" class="position p-second"
+							data-position="2루수">
+							<span class="position-name">2루수</span>
+							<span class="selected-player"></span>
+						</button>
 
-					<button class="position p-second">2루수</button>
+						<button type="button" class="position p-short"
+							data-position="유격수">
+							<span class="position-name">유격수</span>
+							<span class="selected-player"></span>
+						</button>
 
-					<button class="position p-short">유격수</button>
+						<button type="button" class="position p-pitcher"
+							data-position="선발투수">
+							<span class="position-name">선발투수</span>
+							<span class="selected-player"></span>
+						</button>
 
-					<button class="position p-pitcher">선발투수</button>
+						<button type="button" class="position p-third"
+							data-position="3루수">
+							<span class="position-name">3루수</span>
+							<span class="selected-player"></span>
+						</button>
 
-					<button class="position p-third">3루수</button>
+						<button type="button" class="position p-first"
+							data-position="1루수">
+							<span class="position-name">1루수</span>
+							<span class="selected-player"></span>
+						</button>
 
-					<button class="position p-first">1루수</button>
+						<button type="button" class="position p-catcher"
+							data-position="포수">
+							<span class="position-name">포수</span>
+							<span class="selected-player"></span>
+						</button>
 
-					<button class="position p-catcher">포수</button>
+						<input type="hidden" id="좌익수" name="player_LF" value="">
+						<input type="hidden" id="우익수" name="player_RF" value="">
+						<input type="hidden" id="중견수" name="player_CF" value="">
+						<input type="hidden" id="1루수" name="player_1B" value="">
+						<input type="hidden" id="2루수" name="player_2B" value="">
+						<input type="hidden" id="3루수" name="player_3B" value="">
+						<input type="hidden" id="유격수" name="player_SS" value="">
+						<input type="hidden" id="포수" name="player_C" value="">
+						<input type="hidden" id="선발투수" name="player_SP" value="">
 
-				</div>
-
-
-				<div class="team-info">
-
-					<div>
-						선수 <strong></strong>
 					</div>
 
-					<div>
-						포지션 <strong></strong>
+					<div class="team-info">
+
+						<div class="team-info-header">
+							<span>선수</span>
+							<span>포지션</span>
+							<span>팀</span>
+						</div>
+
+						<div class="selected-player-list"></div>
+
 					</div>
 
-					<div>
-						팀 이름 <strong></strong>
+				</section>
+
+				<!-- =========================
+				     선수 선택
+				========================= -->
+
+				<section class="player-area">
+
+					<div class="area-title">선수 선택</div>
+
+					<div class="search">
+						<input type="text" placeholder="선수 검색">
+						<button type="button">검색</button>
 					</div>
 
-				</div>
+					<div class="position-filter">
 
-			</section>
+						<button type="button" class="active" data-position="전체">전체</button>
+						<button type="button" data-position="1루수">1루수</button>
+						<button type="button" data-position="2루수">2루수</button>
+						<button type="button" data-position="3루수">3루수</button>
+						<button type="button" data-position="선발투수">선발투수</button>
+						<button type="button" data-position="유격수">유격수</button>
+						<button type="button" data-position="좌익수">좌익수</button>
+						<button type="button" data-position="중견수">중견수</button>
+						<button type="button" data-position="우익수">우익수</button>
 
+					</div>
 
-			<!-- =========================
-			     선수 선택
-			========================= -->
+					<div class="player-list">
 
-			<section class="player-area">
+						<c:forEach var="player" items="${playerList}">
 
-				<div class="area-title">선수 선택</div>
+							<div class="player-card" data-player-id="${player.player_id}">
 
+								<div class="player-image">
+									<img src="${player.player_image}"
+										alt="${player.player_name}">
+								</div>
 
-				<div class="search">
-
-					<input type="text" placeholder="선수 검색">
-
-					<button>검색</button>
-
-				</div>
-
-
-				<div class="position-filter">
-
-					<button class="active" data-position="전체">전체</button>
-					<button data-position="1루수">1루수</button>
-					<button data-position="2루수">2루수</button>
-					<button data-position="3루수">3루수</button>
-					<button data-position="선발투수">선발투수</button>
-					<button data-position="유격수">유격수</button>
-					<button data-position="좌익수">좌익수</button>
-					<button data-position="중견수">중견수</button>
-					<button data-position="우익수">우익수</button>
-
-				</div>
-
-
-				<div class="player-list">
-
-					<c:forEach var="player" items="${playerList}">
-
-						<div class="player-card">
-
-							<div class="player-image">
-
-								<img src="${player.player_image}" alt="${player.player_name}">
+								<div class="player-name">${player.player_name}</div>
+								<div class="player-position">${player.player_position}</div>
+								<div class="player-team">${player.player_team}</div>
 
 							</div>
 
-							<div class="player-name">${player.player_name}</div>
+						</c:forEach>
 
-							<div class="player-position">${player.player_position}</div>
+					</div>
 
-							<div class="player-team">${player.player_team}</div>
+				</section>
 
-						</div>
+			</div>
 
-					</c:forEach>
+			<div class="save-area">
+				<button type="submit" class="save-btn">팀 저장</button>
+			</div>
 
-				</div>
-
-			</section>
-
-		</div>
-
-
-		<div class="save-area">
-
-			<button class="save-btn">팀 저장</button>
-
-		</div>
+		</form>
 
 	</div>
+
 	<script>
-		$(document).ready(function() {
 
-			$(".position-filter button").click(function() {
+	$(function() {
 
-				// 선택된 버튼 활성화
-				$(".position-filter button").removeClass("active");
-				$(this).addClass("active");
+		$(".position-filter button").click(function() {
 
-				// 선택한 포지션
-				let position = $(this).data("position");
+			$(".position-filter button").removeClass("active");
+			$(this).addClass("active");
 
-				// 전체
-				if (position === "전체") {
-					$(".player-card").show();
-					return;
+			let position = $(this).text().trim();
+
+			if (position === "전체") {
+				$(".player-card").show();
+				return;
+			}
+
+			$(".player-card").each(function() {
+
+				let playerPosition = $(this)
+					.find(".player-position")
+					.text()
+					.trim();
+
+				if (playerPosition === position) {
+					$(this).show();
+				} else {
+					$(this).hide();
 				}
-
-				// 포지션 필터링
-				$(".player-card").each(function() {
-
-					let playerPosition = $(this).data("position");
-
-					if (playerPosition === position) {
-						$(this).show();
-					} else {
-						$(this).hide();
-					}
-
-				});
 
 			});
 
 		});
+
+	});
+
+	$(function() {
+
+		let selectedPosition = null;
+
+		// 포지션 선택
+		$(".position").click(function() {
+
+			selectedPosition = $(this).data("position");
+
+			// 왼쪽 포지션 활성화
+			$(".position").removeClass("selected");
+			$(this).addClass("selected");
+
+			// 오른쪽 선수 목록도 해당 포지션만 표시
+			$(".player-card").each(function() {
+
+				let playerPosition = $(this)
+					.find(".player-position")
+					.text()
+					.trim();
+
+				if (playerPosition === selectedPosition) {
+					$(this).show();
+				} else {
+					$(this).hide();
+				}
+
+			});
+
+		});
+
+		// 선수 선택
+		$(".player-card").click(function() {
+
+			if (selectedPosition === null) {
+				alert("먼저 포지션을 선택해주세요.");
+				return;
+			}
+
+			let playerName = $(this)
+				.find(".player-name")
+				.text()
+				.trim();
+
+			let playerPosition = $(this)
+				.find(".player-position")
+				.text()
+				.trim();
+
+			let playerTeam = $(this)
+				.find(".player-team")
+				.text()
+				.trim();
+
+			// 선택한 포지션 버튼
+			let positionButton = $(".position[data-position='" + selectedPosition + "']");
+
+			// 선수 이름 넣기
+			positionButton.find(".selected-player").text(playerName);
+			$("#" + selectedPosition).val(playerName);
+
+			// 선택 상태 유지
+			positionButton.addClass("selected");
+
+			console.log("선택한 포지션 : [" + selectedPosition + "]");
+			console.log("선수 이름 : [" + playerName + "]");
+			console.log("hidden input : ", $("#" + selectedPosition));
+			console.log("hidden 값 : ", $("#" + selectedPosition).val());
+
+			// 아래 팀 정보에도 표시
+			$(".selected-player-list").append(
+				"<div class='selected-player-row'>" +
+					"<span class='player-name'>" + playerName + "</span>" +
+					"<span class='player-position'>" + playerPosition + "</span>" +
+					"<span class='player-team'>" + playerTeam + "</span>" +
+				"</div>"
+			);
+
+		});
+
+	});
 	</script>
+
 </body>
 </html>
