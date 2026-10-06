@@ -13,116 +13,160 @@ import com.kedu.dto.UsersDTO;
 @Repository
 public class MemberDAO {
 
-	@Autowired
-	private JdbcTemplate jdbc;
+    @Autowired
+    private JdbcTemplate jdbc;
 
-	public List<UsersDTO> selectAll(PageDTO page) {
+    public List<UsersDTO> selectAll(PageDTO page) {
 
-		String sql = "SELECT * " + "FROM ( " + " SELECT " + " ROW_NUMBER() OVER( " + " ORDER BY regdate DESC, id DESC "
-				+ " ) AS rn, " + " users.* " + " FROM users " + ") " + "WHERE rn BETWEEN ? AND ?";
+        String sql = "SELECT * "
+                   + "FROM ( "
+                   + "SELECT "
+                   + "ROW_NUMBER() OVER( "
+                   + "ORDER BY member_seq DESC "
+                   + ") AS rn, "
+                   + "users.* "
+                   + "FROM users "
+                   + ") "
+                   + "WHERE rn BETWEEN ? AND ?";
 
-		return jdbc.query(sql, new BeanPropertyRowMapper<>(UsersDTO.class), page.getStartIndex(), page.getEndIndex());
-	}
+        return jdbc.query(
+                sql,
+                new BeanPropertyRowMapper<>(UsersDTO.class),
+                page.getStartIndex(),
+                page.getEndIndex());
+    }
 
-	public int getCount() {
-		String sql = "select count(*) from users";
-		return jdbc.queryForObject(sql, Integer.class);
-	}
+    public int getCount() {
+        String sql = "select count(*) from users";
+        return jdbc.queryForObject(sql, Integer.class);
+    }
 
-	public List<UsersDTO> search(String searchType, String keyword, PageDTO page) {
+    public List<UsersDTO> search(String searchType, String keyword, PageDTO page) {
 
-		String sql = "SELECT * " + "FROM (" + "    SELECT ROW_NUMBER() OVER(" + "        ORDER BY regdate DESC, id DESC"
-				+ "    ) AS rn, users.* " + "    FROM users ";
+        String sql = "SELECT * "
+                   + "FROM ("
+                   + "SELECT ROW_NUMBER() OVER("
+                   + "ORDER BY member_seq DESC"
+                   + ") AS rn, users.* "
+                   + "FROM users ";
 
-		// 검색 조건 만들기
-		if (searchType.equals("name")) {
+        if (searchType.equals("name")) {
+            sql += "WHERE name LIKE ? ";
+        } else if (searchType.equals("id")) {
+            sql += "WHERE id LIKE ? ";
+        } else if (searchType.equals("phone")) {
+            sql += "WHERE phone LIKE ? ";
+        } else if (searchType.equals("all")) {
+            sql += "WHERE id LIKE ? "
+                + "OR name LIKE ? "
+                + "OR phone LIKE ? ";
+        }
 
-			sql += "WHERE name LIKE ? ";
+        sql += ") "
+             + "WHERE rn BETWEEN ? AND ?";
 
-		} else if (searchType.equals("id")) {
+        if (searchType.equals("all")) {
+            String keywordValue = "%" + keyword + "%";
 
-			sql += "WHERE id LIKE ? ";
+            return jdbc.query(
+                    sql,
+                    new BeanPropertyRowMapper<>(UsersDTO.class),
+                    keywordValue,
+                    keywordValue,
+                    keywordValue,
+                    page.getStartIndex(),
+                    page.getEndIndex());
 
-		} else if (searchType.equals("phone")) {
+        } else {
+            return jdbc.query(
+                    sql,
+                    new BeanPropertyRowMapper<>(UsersDTO.class),
+                    "%" + keyword + "%",
+                    page.getStartIndex(),
+                    page.getEndIndex());
+        }
+    }
 
-			sql += "WHERE phone LIKE ? ";
+    public int getSearchCount(String searchType, String keyword) {
 
-		} else if (searchType.equals("all")) {
+        String sql = "";
 
-			sql += "WHERE id LIKE ? " + "OR name LIKE ? " + "OR phone LIKE ? ";
-		}
+        if (searchType.equals("id")) {
+            sql = "SELECT COUNT(*) "
+                + "FROM users "
+                + "WHERE id LIKE ?";
 
-		sql += ") " + "WHERE rn BETWEEN ? AND ?";
+            return jdbc.queryForObject(
+                    sql,
+                    Integer.class,
+                    "%" + keyword + "%");
 
-		// 검색 조건에 따라 전달할 값 만들기
-		if (searchType.equals("all")) {
+        } else if (searchType.equals("name")) {
+            sql = "SELECT COUNT(*) "
+                + "FROM users "
+                + "WHERE name LIKE ?";
 
-			String keywordValue = "%" + keyword + "%";
+            return jdbc.queryForObject(
+                    sql,
+                    Integer.class,
+                    "%" + keyword + "%");
 
-			return jdbc.query(sql, new BeanPropertyRowMapper<>(UsersDTO.class), keywordValue, keywordValue,
-					keywordValue, page.getStartIndex(), page.getEndIndex());
+        } else if (searchType.equals("phone")) {
+            sql = "SELECT COUNT(*) "
+                + "FROM users "
+                + "WHERE phone LIKE ?";
 
-		} else {
+            return jdbc.queryForObject(
+                    sql,
+                    Integer.class,
+                    "%" + keyword + "%");
 
-			return jdbc.query(sql, new BeanPropertyRowMapper<>(UsersDTO.class), "%" + keyword + "%",
-					page.getStartIndex(), page.getEndIndex());
-		}
-	}
+        } else if (searchType.equals("all")) {
+            sql = "SELECT COUNT(*) "
+                + "FROM users "
+                + "WHERE id LIKE ? "
+                + "OR name LIKE ? "
+                + "OR phone LIKE ?";
 
-	public int getSearchCount(String searchType, String keyword) {
+            String keywordValue = "%" + keyword + "%";
 
-		String sql = "";
+            return jdbc.queryForObject(
+                    sql,
+                    Integer.class,
+                    keywordValue,
+                    keywordValue,
+                    keywordValue);
+        }
 
-		if (searchType.equals("id")) {
+        return 0;
+    }
 
-			sql = "SELECT COUNT(*) " + "FROM users " + "WHERE id LIKE ?";
+    public UsersDTO selectBySeq(int member_seq) {
+        String sql = "select * from users where member_seq = ?";
 
-			return jdbc.queryForObject(sql, Integer.class, "%" + keyword + "%");
+        return jdbc.queryForObject(
+                sql,
+                new BeanPropertyRowMapper<>(UsersDTO.class),
+                member_seq);
+    }
 
-		} else if (searchType.equals("name")) {
+    public void updateBlacklist(int member_seq) {
 
-			sql = "SELECT COUNT(*) " + "FROM users " + "WHERE name LIKE ?";
+        String sql = "SELECT blacklist FROM users WHERE member_seq = ?";
 
-			return jdbc.queryForObject(sql, Integer.class, "%" + keyword + "%");
+        int blacklist = jdbc.queryForObject(
+                sql,
+                Integer.class,
+                member_seq);
 
-		} else if (searchType.equals("phone")) {
+        if (blacklist == 0) {
+            blacklist = 1;
+        } else {
+            blacklist = 0;
+        }
 
-			sql = "SELECT COUNT(*) " + "FROM users " + "WHERE phone LIKE ?";
+        sql = "UPDATE users SET blacklist = ? WHERE member_seq = ?";
 
-			return jdbc.queryForObject(sql, Integer.class, "%" + keyword + "%");
-
-		} else if (searchType.equals("all")) {
-
-			sql = "SELECT COUNT(*) " + "FROM users " + "WHERE id LIKE ? " + "OR name LIKE ? " + "OR phone LIKE ?";
-
-			String keywordValue = "%" + keyword + "%";
-
-			return jdbc.queryForObject(sql, Integer.class, keywordValue, keywordValue, keywordValue);
-		}
-
-		return 0;
-	}
-
-	public UsersDTO selectBySeq(int member_seq) {
-		String sql = "select * from users where member_seq = ?";
-
-		return jdbc.queryForObject(sql, new BeanPropertyRowMapper<>(UsersDTO.class), member_seq);
-	}
-
-	public void updateBlacklist(int member_seq) {
-
-		String sql = "SELECT blacklist FROM users WHERE member_seq = ?";
-
-		int blacklist = jdbc.queryForObject(sql, Integer.class, member_seq);
-
-		if (blacklist == 0) {
-			blacklist = 1;
-		} else {
-			blacklist = 0;
-		}
-
-		sql = "UPDATE users SET blacklist = ? WHERE member_seq = ?";
-
-		jdbc.update(sql, blacklist, member_seq);
-	}
+        jdbc.update(sql, blacklist, member_seq);
+    }
 }
