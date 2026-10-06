@@ -636,9 +636,9 @@ body {
 
 			</div>
 
-			<div class="footer">YA900 ADMIN</div>
-
 		</div>
+
+		<div class="footer">YA900 ADMIN</div>
 
 	</div>
 
