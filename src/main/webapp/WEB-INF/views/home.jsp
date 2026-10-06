@@ -129,22 +129,44 @@ body {
    로그인 / 회원가입
 ========================= */
 .member-menu {
-	font-size: 14px;
-	margin-left: auto;
+    font-size: 14px;
+    margin-left: auto;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    white-space: nowrap;
 }
 
-.login-btn, .sign-btn {
-	border: 1px solid #7180b1;
-	background: transparent;
-	color: white;
-	border-radius: 5px;
-	transition: 0.2s ease;
+.member-menu form {
+    display: flex;
+    margin: 0;
 }
 
-.login-btn:hover, .sign-btn:hover {
-	background: #476aaa;
-	border-color: #476aaa;
-	color: white;
+.member-menu span {
+    color: white;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.login-btn,
+.sign-btn {
+    border: 1px solid #7180b1;
+    background: transparent;
+    color: white;
+    border-radius: 5px;
+    padding: 6px 10px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: 0.2s ease;
+}
+
+.login-btn:hover,
+.sign-btn:hover {
+    background: #476aaa;
+    border-color: #476aaa;
+    color: white;
 }
 
 /* =========================
@@ -1352,8 +1374,40 @@ body {
 		</nav>
 
 		<div class="member-menu">
-			<button class="login-btn" onclick="location.href='login'">로그인</button>
-			<button class="sign-btn" onclick="location.href='signup'">회원가입</button>
+
+    <c:choose>
+
+        <c:when test="${not empty sessionScope.id}">
+            <span>${sessionScope.id}님</span>
+
+            <button class="login-btn"
+                    onclick="location.href='${pageContext.request.contextPath}/mypage'">
+                마이페이지
+            </button>
+
+            <form action="${pageContext.request.contextPath}/logout"
+                  method="post">
+                <button type="submit" class="sign-btn">
+                    로그아웃
+                </button>
+            </form>
+        </c:when>
+
+        <c:otherwise>
+            <button class="login-btn"
+                    onclick="location.href='${pageContext.request.contextPath}/login'">
+                로그인
+            </button>
+
+            <button class="sign-btn"
+                    onclick="location.href='${pageContext.request.contextPath}/signup'">
+                회원가입
+            </button>
+        </c:otherwise>
+
+    </c:choose>
+			
+			
 		</div>
 
 	</div>

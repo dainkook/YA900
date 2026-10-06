@@ -61,7 +61,7 @@ public class UsersDAO {
 		return jdbc.queryForObject(sql, Integer.class, id);
 	}
 	public int emailCheck(String email) {
-		String sql = "select count(*) from users where id =?";
+		String sql = "select count(*) from users where email =?";
 		return jdbc.queryForObject(sql, Integer.class, email);
 	}
 

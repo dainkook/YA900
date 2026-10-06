@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+
+<title>비밀번호 찾기 - YA900</title>
+
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 <style>
@@ -29,17 +31,14 @@ body {
 .header {
     width: 100%;
     height: 80px;
-
     display: flex;
     align-items: center;
-
     border-bottom: 1px solid #ddd;
     background: white;
 }
 
 .logo {
     margin-left: 40px;
-
     font-size: 28px;
     font-weight: bold;
     letter-spacing: 2px;
@@ -52,31 +51,23 @@ body {
 
 .find-container {
     width: 100%;
-
     display: flex;
     justify-content: center;
-
     padding: 80px 0;
 }
 
 .find-box {
     width: 400px;
-
     padding: 40px;
-
     background: white;
-
     border: 1px solid #ddd;
     border-radius: 8px;
-
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .find-title {
     margin: 0 0 35px;
-
     text-align: center;
-
     font-size: 24px;
 }
 
@@ -91,9 +82,7 @@ body {
 
 .input-group label {
     display: block;
-
     margin-bottom: 8px;
-
     font-size: 14px;
     font-weight: bold;
 }
@@ -101,14 +90,10 @@ body {
 .input {
     width: 100%;
     height: 45px;
-
     padding: 0 12px;
-
     border: 1px solid #aaa;
     border-radius: 5px;
-
     font-size: 14px;
-
     outline: none;
 }
 
@@ -123,9 +108,7 @@ body {
 
 .check-message {
     min-height: 20px;
-
     margin-top: 5px;
-
     font-size: 13px;
 }
 
@@ -137,17 +120,12 @@ body {
 .find-btn {
     width: 100%;
     height: 45px;
-
     margin-top: 10px;
-
     border: none;
     border-radius: 5px;
-
     background: black;
     color: white;
-
     cursor: pointer;
-
     font-size: 15px;
 }
 
@@ -161,20 +139,14 @@ body {
 ========================= */
 
 .password-area {
-    display: none;
-
     margin-top: 30px;
-
     padding-top: 25px;
-
     border-top: 1px solid #ddd;
 }
 
 .password-title {
     margin: 0 0 20px;
-
     text-align: center;
-
     font-size: 18px;
 }
 
@@ -186,15 +158,11 @@ body {
 .footer {
     width: 100%;
     height: 150px;
-
     border-top: 1px solid #999;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
     color: #777;
-
     font-size: 13px;
 }
 
@@ -235,7 +203,7 @@ body {
              회원 정보 확인
         ========================= -->
 
-        <form id="findPassword">
+        <form id="finduserpw">
 
 
             <!-- 이름 -->
@@ -304,14 +272,48 @@ body {
             </div>
 
 
-            <!-- 회원 확인 버튼 -->
+            <!-- 인증번호 받기 -->
+
+            <button type="button"
+                    id="sendEmail"
+                    class="find-btn"
+                    style="display: none;">
+
+                인증번호 받기
+
+            </button>
+
+
+            <!-- 이메일 인증 -->
+
+            <div id="verify-area"
+                 style="display: none;">
+
+                <input type="text"
+                       id="email-code"
+                       class="input"
+                       placeholder="인증번호를 입력하세요">
+
+                <button type="button"
+                        id="verifyemail"
+                        class="find-btn">
+
+                    인증확인
+
+                </button>
+
+            </div>
+
+
+            <!-- 비밀번호 재발급 -->
 
             <button type="submit"
                     class="find-btn">
 
-                비밀번호 찾기
+                비밀번호 재발급
 
             </button>
+
 
         </form>
 
@@ -321,10 +323,13 @@ body {
         ========================= -->
 
         <div id="password-area"
-             class="password-area">
+             class="password-area"
+             style="display: none;">
 
             <h3 class="password-title">
+
                 새로운 비밀번호를 입력하세요
+
             </h3>
 
 
@@ -387,129 +392,6 @@ body {
 </main>
 
 
-<script>
-
-
-let findPassword = document.getElementById("findPassword");
-
-let name = document.getElementById("name");
-let id = document.getElementById("id");
-let email = document.getElementById("email");
-
-let namecheck_message =
-    document.getElementById("namecheck-message");
-
-let idcheck_message =
-    document.getElementById("idcheck-message");
-
-let emailcheck_message =
-    document.getElementById("emailcheck-message");
-
-let passwordArea =
-    document.getElementById("password-area");
-
-let newPw =
-    document.getElementById("newPw");
-
-let newPwCheck =
-    document.getElementById("newPwCheck");
-
-let pwcheck_message =
-    document.getElementById("pwcheck-message");
-
-let pwcheck2_message =
-    document.getElementById("pwcheck2-message");
-let nameRegex = /^[가-힣]{2,5}$/;
-let idRegex = /^[가-힣A-Za-z0-9!@#$%^&*]{2,8}$/;
-let emailRegex =
-    /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-let pwRegex =
-    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
-
-findPassword.addEventListener("submit", function(event) {
-    if (!nameRegex.test(name.value)) {
-        namecheck_message.innerHTML =
-            "이름 형식이 올바르지 않습니다.";
-        name.focus();
-        event.preventDefault();
-        return;
-    }
-
-    if (!idRegex.test(id.value)) {
-        idcheck_message.innerHTML =
-            "아이디 형식이 올바르지 않습니다.";
-        id.focus();
-        event.preventDefault();
-        return;
-    }
-
-    if (!emailRegex.test(email.value)) {
-        emailcheck_message.innerHTML =
-            "이메일 형식이 올바르지 않습니다.";
-        email.focus();
-        event.preventDefault();
-        return;
-    }
-    event.preventDefault();
-    alert("회원 정보가 확인되었습니다.");
-    passwordArea.style.display = "block";
-});
-name.addEventListener("input", function() {
-    if (nameRegex.test(name.value)) {
-        namecheck_message.innerHTML = "";
-    }
-});
-
-id.addEventListener("input", function() {
-    if (idRegex.test(id.value)) {
-        idcheck_message.innerHTML = "";
-    }
-});
-
-email.addEventListener("input", function() {
-    if (emailRegex.test(email.value)) {
-        emailcheck_message.innerHTML = "";
-    }
-});
-
-newPw.addEventListener("input", function() {
-    if (pwRegex.test(newPw.value)) {
-        pwcheck_message.innerHTML = "";
-    } else {
-        pwcheck_message.innerHTML =
-            "비밀번호는 영문, 숫자, 특수문자를 포함한 8~20자로 입력하세요.";
-    }
-});
-
-newPwCheck.addEventListener("input", function() {
-    if (newPw.value === newPwCheck.value) {
-        pwcheck2_message.innerHTML = "";
-    } else {
-        pwcheck2_message.innerHTML =
-            "비밀번호가 일치하지 않습니다.";
-    }
-});
-
-document.getElementById("changePw")
-    .addEventListener("click", function() {
-        if (!pwRegex.test(newPw.value)) {
-            pwcheck_message.innerHTML =
-                "비밀번호 형식이 올바르지 않습니다.";
-            newPw.focus();
-            return;
-        }
-        if (newPw.value !== newPwCheck.value) {
-            pwcheck2_message.innerHTML =
-                "비밀번호가 일치하지 않습니다.";
-            newPwCheck.focus();
-            return;
-        }
-        alert("새로운 비밀번호가 확인되었습니다.");
-    });
-
-</script>
-
-
 <!-- =========================
      FOOTER
 ========================= -->
@@ -520,6 +402,74 @@ document.getElementById("changePw")
 
 </footer>
 
+<script>
+    let idRegex= /^[가-힣A-Za-z0-9]{6,12}$/;
+    let emailRegex= /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+    let nameRegex =/^[가-힣]{2,5}$/;
 
+    let name= document.getElementById("name");
+    let id=document.getElementById("id");
+    let email= document.getElementById("email");
+    let sendEmail= document.getElementById("sendEmail");
+
+    function checkinput(){
+        if (nameRegex.test(name.value)&&
+        idRegex.test(id.value)&&
+        emailRegex.test(email.value)
+    ){
+        sendEmail.style.display ="block";
+    }else{
+        sendEmail.style.display ="none";
+    }
+    }
+    name.addEventListener("input", checkinput);
+    id.addEventListener("input", checkinput);
+    email.addEventListener("input", checkinput);
+
+
+    sendEmail.addEventListener("click", function(){
+        let emailvalue = email.value;
+
+        $.ajax({
+            url:"${pageContext.request.contextPath}/sendemail",
+            type: "post",
+            data:{
+                email: emailvalue
+            },
+            success:function(result){
+
+                if(result == "success"){
+                alert("인증번호가 전송되었습니다.");
+                document.getElementById("verify-area").style.display = "block";
+            }
+        }
+        });
+    });
+
+    let verifyemail= document.getElementById("verifyemail");
+    
+
+
+    verifyemail.addEventListener("click", function(){
+        let emailCode= document.getElementById("email-code");
+         let code = emailCode.value;
+
+         $.ajax({
+            url: "${pageContext.request.contextPath}/verifyemail",
+            type: "post",
+            data:{
+                code: code
+            },
+            success:function(result){
+                if(result == "success"){
+                    alert("이메일 인증이 완료되었습니다.");
+
+                }else{
+                    alert("인증번호가 일치하지 않습니다.");
+                }
+            }
+         });
+    });
+</script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 package com.kedu.commons;
 
-import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.Properties;
 
 import org.springframework.mail.SimpleMailMessage;
@@ -17,11 +17,11 @@ public class EmailService {
             // mail.properties 읽기
             Properties props = new Properties();
 
-            FileInputStream fis =
-                    new FileInputStream("mail.properties");
+            InputStream input =
+                    getClass().getClassLoader().getResourceAsStream("mail.properties");
 
-            props.load(fis);
-            fis.close();
+            props.load(input);
+            
 
             // 이메일과 비밀번호 가져오기
             String username =
