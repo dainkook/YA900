@@ -42,12 +42,12 @@ public class UsersController {
 	    return "member/login";
 	}
 
-	@RequestMapping("finduserid")
+	@RequestMapping("/finduserid")
 	public String finduserid() {
 		return "member/finduserid";
 	}
 
-	@RequestMapping("finduserpw")
+	@RequestMapping("/finduserpw")
 	public String finduserpw() {
 		return "member/finduserpw";
 	}
@@ -58,7 +58,7 @@ public class UsersController {
 	
 	
 	@RequestMapping(value="/signup", method=RequestMethod.POST)
-	public String singup(
+	public String signup(
 			UsersDTO dto,
 			String phone1,
 			String phone2,
@@ -129,17 +129,38 @@ public class UsersController {
 	}
 
 	@RequestMapping(value="/finduserid", method=RequestMethod.POST)
-	public String findUserId(String name, String email, Model model) {
-		String id= dao.findUserId(name, email);
-		model.addAttribute("id",id);
-		return "member/finduserid";
+	public String findUserId(
+	        String name,
+	        String email,
+	        Model model,
+	        HttpSession session) {
+
+	    Boolean verified =
+	            (Boolean) session.getAttribute("emailVerified");
+
+	    if (verified == null || !verified) {
+	        return "member/finduserid";
+	    }
+
+	    String id = dao.findUserId(name, email);
+
+	    System.out.println("찾은 아이디 : " + id);
+
+	    model.addAttribute("id", id);
+
+	   
+	    
+	    session.removeAttribute("emailVerified");
+	    session.removeAttribute("emailcode");
+	    return "member/finduserid";
 	}
+	
 	@RequestMapping(value="/sendemail")
 	@ResponseBody
 	public String sendEmail(String email , HttpSession session) {
 		String code = String.valueOf((int)(Math.random() * 900000)+ 100000);
 		session.setAttribute("emailcode", code);
-		emailService.sendEmail(email,"이메일 인증번호", "인증번호는 " + code + "입니다.");
+		emailService.sendEmail(email,"이메일 인증번호", "인증번호는 " + code + " 입니다.");
 		return "success";
 	}
 	@RequestMapping(value="/verifyemail")
@@ -147,6 +168,8 @@ public class UsersController {
 	public String verifyEmail(String code, HttpSession session) {
 		String savedCode=(String) session.getAttribute("emailcode");
 		if(savedCode != null && savedCode.equals(code)) {
+			
+			session.setAttribute("emailVerified", true);
 			return "success";
 			
 		}

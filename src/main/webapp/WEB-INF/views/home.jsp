@@ -1344,8 +1344,12 @@ body {
 		</nav>
 
 		<div class="member-menu">
+		<c:if test= "${empty sessionScope.id }">
 			<button class="login-btn" onclick="location.href='login'">로그인</button>
 			<button class="sign-btn" onclick="location.href='signup'">회원가입</button>
+		</c:if>
+			
+			
 		</div>
 
 	</div>
