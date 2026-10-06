@@ -20,6 +20,7 @@ import com.kedu.commons.EmailService;
 import com.kedu.commons.EncryptionUtils;
 import com.kedu.dao.PlayerDAO;
 import com.kedu.dao.UsersDAO;
+import com.kedu.dto.MyTeamDTO;
 import com.kedu.dto.PlayerDTO;
 import com.kedu.dto.UsersDTO;
 
@@ -35,8 +36,7 @@ public class UsersController {
 
 	@Autowired
 	private EmailService emailService;
-
-
+	
 
 	@RequestMapping("/signup")
 	public String signup() {
@@ -150,7 +150,7 @@ public class UsersController {
 
 		String id = dao.findUserId(name, email);
 
-		System.out.println("Ã£Àº ¾ÆÀÌµğ : " + id);
+		System.out.println("ì°¾ì€ ì•„ì´ë”” : " + id);
 
 		model.addAttribute("id", id);
 
@@ -160,24 +160,48 @@ public class UsersController {
 		session.removeAttribute("emailcode");
 		return "member/finduserid";
 	}
-
-
+	
 	@RequestMapping("/myteam")
-	public String myTeam(Model model) {
-
-		List<PlayerDTO> playerList = playerDAO.selectAll();
+	public String myTeam(Model model,HttpSession session) {
+		
+		String id = (String)session.getAttribute("id");
+		
+	    List<PlayerDTO> playerList = playerDAO.selectAll();
 
 		model.addAttribute("playerList", playerList);
 
 		return "minigame/myteam";
 	}
 
+	
+	@RequestMapping(value="/myteamresult", method=RequestMethod.GET)
+	public String myTeamResult(HttpSession session, Model model) {
+
+	    String id = (String)session.getAttribute("id");
+
+	    List<PlayerDTO> myPlayerList = playerDAO.selectMyTeamPlayers(id);
+
+	    model.addAttribute("myPlayerList", myPlayerList);
+
+	    return "minigame/myteamresult";
+	}
+	
+	@RequestMapping(value="/myteamresult", method=RequestMethod.POST)
+	public String myTeamResultPost(MyTeamDTO dto, HttpSession session) {
+
+	    String id = (String)session.getAttribute("id");
+
+	    playerDAO.addMyTeam(dto, id);
+
+	    return "redirect:/myteamresult";
+	}
+	
 	@RequestMapping(value="/sendemail")
 	@ResponseBody
 	public String sendEmail(String email , HttpSession session) {
 		String code = String.valueOf((int)(Math.random() * 900000)+ 100000);
 		session.setAttribute("emailcode", code);
-		emailService.sendEmail(email,"ÀÌ¸ŞÀÏ ÀÎÁõ¹øÈ£", "ÀÎÁõ¹øÈ£´Â " + code + " ÀÔ´Ï´Ù.");
+		emailService.sendEmail(email,"ì´ë©”ì¼ ì¸ì¦ë²ˆí˜¸", "ì¸ì¦ë²ˆí˜¸ëŠ” " + code + " ì…ë‹ˆë‹¤.");
 		return "success";
 	}
 	@RequestMapping(value="/verifyemail")

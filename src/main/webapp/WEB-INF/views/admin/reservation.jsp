@@ -417,7 +417,9 @@ body {
 
 				예매 관리
 
-				<div class="page-subtitle">회원들의 예매 정보를 관리할 수 있습니다.</div>
+				<div class="page-subtitle">
+					회원들의 예매 정보를 관리할 수 있습니다.
+				</div>
 
 			</div>
 
@@ -429,19 +431,29 @@ body {
 
 						<option value="all"
 							${searchType == 'all' || empty searchType ? 'selected' : ''}>
-							전체</option>
+							전체
+						</option>
 
 						<option value="reservation_id"
 							${searchType == 'reservation_id' ? 'selected' : ''}>
-							예매번호</option>
+							예매번호
+						</option>
 
 						<option value="member_id"
-							${searchType == 'member_id' ? 'selected' : ''}>회원아이디</option>
+							${searchType == 'member_id' ? 'selected' : ''}>
+							회원아이디
+						</option>
 
-						<option value="title" ${searchType == 'title' ? 'selected' : ''}>
-							경기</option>
+						<option value="title"
+							${searchType == 'title' ? 'selected' : ''}>
+							경기
+						</option>
 
-					</select> <input type="text" name="keyword" value="${keyword}"
+					</select>
+
+					<input type="text"
+						name="keyword"
+						value="${keyword}"
 						placeholder="검색어를 입력하세요.">
 
 					<button type="submit">검색</button>
@@ -488,17 +500,25 @@ body {
 
 							<div class="reservation-row">
 
-								<div class="reservation-no">${reservation.reservation_id}
+								<div class="reservation-no">
+									${reservation.reservation_id}
 								</div>
 
-								<div class="reservation-member">${reservation.member_id}</div>
+								<div class="reservation-member">
+									${reservation.member_id}
+								</div>
 
-								<div class="reservation-game">${reservation.title}</div>
+								<div class="reservation-game">
+									${reservation.title}
+								</div>
 
-								<div class="reservation-seat">${reservation.seat_id}</div>
+								<div class="reservation-seat">
+									${reservation.seat_id}
+								</div>
 
 								<div class="reservation-date">
-									<fmt:formatDate value="${reservation.reservation_date}"
+									<fmt:formatDate
+										value="${reservation.reservation_date}"
 										pattern="yyyy-MM-dd HH:mm" />
 								</div>
 
@@ -508,19 +528,25 @@ body {
 
 										<c:when test="${reservation.status == '예매완료'}">
 
-											<span class="status complete"> ${reservation.status} </span>
+											<span class="status complete">
+												${reservation.status}
+											</span>
 
 										</c:when>
 
 										<c:when test="${reservation.status == '취소'}">
 
-											<span class="status cancel"> ${reservation.status} </span>
+											<span class="status cancel">
+												${reservation.status}
+											</span>
 
 										</c:when>
 
 										<c:otherwise>
 
-											<span class="status"> ${reservation.status} </span>
+											<span class="status">
+												${reservation.status}
+											</span>
 
 										</c:otherwise>
 
@@ -532,7 +558,8 @@ body {
 
 									<a class="detail-btn"
 										href="/admin/reservation/detail?reservation_id=${reservation.reservation_id}">
-										상세 </a>
+										상세
+									</a>
 
 								</div>
 
@@ -544,7 +571,9 @@ body {
 
 					<c:otherwise>
 
-						<div class="empty">등록된 예매 정보가 없습니다.</div>
+						<div class="empty">
+							등록된 예매 정보가 없습니다.
+						</div>
 
 					</c:otherwise>
 
@@ -560,15 +589,17 @@ body {
 
 						<c:when test="${not empty searchType}">
 
-							<a
-								href="/admin/reservation/search?searchType=${searchType}&keyword=${keyword}&cpage=${page.startPage - 1}">
-								◀ </a>
+							<a href="/admin/reservation/search?searchType=${searchType}&keyword=${keyword}&cpage=${page.startPage - 1}">
+								◀
+							</a>
 
 						</c:when>
 
 						<c:otherwise>
 
-							<a href="/admin/reservation?cpage=${page.startPage - 1}"> ◀ </a>
+							<a href="/admin/reservation?cpage=${page.startPage - 1}">
+								◀
+							</a>
 
 						</c:otherwise>
 
@@ -576,22 +607,27 @@ body {
 
 				</c:if>
 
-				<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+				<c:forEach var="i"
+					begin="${page.startPage}"
+					end="${page.endPage}">
 
 					<c:choose>
 
 						<c:when test="${not empty searchType}">
 
-							<a
-								href="/admin/reservation/search?searchType=${searchType}&keyword=${keyword}&cpage=${i}"
-								class="${i == page.currentPage ? 'active' : ''}"> ${i} </a>
+							<a href="/admin/reservation/search?searchType=${searchType}&keyword=${keyword}&cpage=${i}"
+								class="${i == page.currentPage ? 'active' : ''}">
+								${i}
+							</a>
 
 						</c:when>
 
 						<c:otherwise>
 
 							<a href="/admin/reservation?cpage=${i}"
-								class="${i == page.currentPage ? 'active' : ''}"> ${i} </a>
+								class="${i == page.currentPage ? 'active' : ''}">
+								${i}
+							</a>
 
 						</c:otherwise>
 
@@ -605,15 +641,17 @@ body {
 
 						<c:when test="${not empty searchType}">
 
-							<a
-								href="/admin/reservation/search?searchType=${searchType}&keyword=${keyword}&cpage=${page.endPage + 1}">
-								▶ </a>
+							<a href="/admin/reservation/search?searchType=${searchType}&keyword=${keyword}&cpage=${page.endPage + 1}">
+								▶
+							</a>
 
 						</c:when>
 
 						<c:otherwise>
 
-							<a href="/admin/reservation?cpage=${page.endPage + 1}"> ▶ </a>
+							<a href="/admin/reservation?cpage=${page.endPage + 1}">
+								▶
+							</a>
 
 						</c:otherwise>
 
@@ -625,7 +663,9 @@ body {
 
 		</div>
 
-		<div class="footer">YA900 ADMIN</div>
+		<div class="footer">
+			YA900 ADMIN
+		</div>
 
 	</div>
 

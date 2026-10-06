@@ -132,4 +132,14 @@ public class BoardDAO {
 		String sql = "select * from reply where parent_seq=? order by reply_seq desc";
 		return jdbc.query(sql, new BeanPropertyRowMapper<>(ReplyDTO.class),parent_seq);
 	}
+	
+	public int addReply(ReplyDTO dto) {
+		String sql = "insert into reply(reply_seq, contents, writer, view_count, write_date, parent_seq) values(reply_seq.nextval, ?, ?, 0, sysdate, ?)";
+		return jdbc.update(sql, dto.getContents(), dto.getWriter(), dto.getParent_seq());
+	}
+	
+	public int updateReply(ReplyDTO dto) {
+		String sql = "update reply set contents=?, write_date=sysdate where reply_seq=?";
+		return jdbc.update(sql, dto.getContents(), dto.getReply_seq());
+	}
 }

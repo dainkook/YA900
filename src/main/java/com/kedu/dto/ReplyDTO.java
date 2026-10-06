@@ -10,8 +10,9 @@ public class ReplyDTO {
 	private int view_count;
 	private Timestamp write_date;
 	private int parent_seq;
-	private int report_seq;
+	private Integer report_seq;
 	private String reporter;
+	
 	public int getReply_seq() {
 		return reply_seq;
 	}
@@ -48,10 +49,10 @@ public class ReplyDTO {
 	public void setParent_seq(int parent_seq) {
 		this.parent_seq = parent_seq;
 	}
-	public int getReport_seq() {
+	public Integer getReport_seq() {
 		return report_seq;
 	}
-	public void setReport_seq(int report_seq) {
+	public void setReport_seq(Integer report_seq) {
 		this.report_seq = report_seq;
 	}
 	public String getReporter() {
@@ -63,7 +64,7 @@ public class ReplyDTO {
 	
 	public ReplyDTO() {}
 	public ReplyDTO(int reply_seq, String contents, String writer, int view_count, Timestamp write_date, int parent_seq,
-			int report_seq, String reporter) {
+			Integer report_seq, String reporter) {
 		this.reply_seq = reply_seq;
 		this.contents = contents;
 		this.writer = writer;
