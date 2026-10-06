@@ -141,4 +141,29 @@ public class ReservationDAO {
 
 		return 0;
 	}
+	
+	public ReservationDTO selectById(int reservation_id) {
+		String sql = "SELECT "
+	               + "r.reservation_id, "
+	               + "r.member_id, "
+	               + "r.ticket_id, "
+	               + "r.reservation_date, "
+	               + "r.status, "
+	               + "t.game_id, "
+	               + "t.seat_id, "
+	               + "t.price, "
+	               + "s.title "
+	               + "FROM reservation r "
+	               + "JOIN ticket t ON r.ticket_id = t.ticket_id "
+	               + "JOIN schedule s ON t.game_id = s.game_id "
+	               + "WHERE r.reservation_id = ?";
+		return jdbc.queryForObject(sql, 
+				new BeanPropertyRowMapper<>(ReservationDTO.class),
+				reservation_id);
+	}
+	
+	public int cancel(int reservation_id) {
+		String sql = "update reservation set status = '√Îº“' where reservation_id = ?";
+		return jdbc.update(sql, reservation_id);
+	}
 }

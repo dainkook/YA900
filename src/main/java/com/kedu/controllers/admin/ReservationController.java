@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -55,6 +56,23 @@ public class ReservationController {
 		model.addAttribute("keyword", keyword);
 		
 		return "admin/reservation";
+	}
+	
+	@RequestMapping("/detail")
+	public String detail(int reservation_id, Model model) {
+		ReservationDTO reservation = reservationDAO.selectById(reservation_id);
+		
+		model.addAttribute("reservation", reservation);
+		
+		return "admin/reservationDetail";
+	}
+	
+	@PostMapping("/cancel")
+	public String cancel(int reservation_id) {
+
+	    reservationDAO.cancel(reservation_id);
+
+	    return "redirect:/admin/reservation/detail?reservation_id=" + reservation_id;
 	}
 
 }
