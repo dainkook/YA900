@@ -1,5 +1,7 @@
 package com.kedu.dao;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -39,4 +41,25 @@ public class PlayerDAO {
             dto.getPlayer_position()
         );
     }
+    public List<PlayerDTO> selectAll() {
+
+        String sql = 
+            "SELECT player_id, player_name, player_team, player_image, player_position " +
+            "FROM player " +
+            "ORDER BY player_name";
+
+        return jdbc.query(sql, (rs, rowNum) -> {
+
+            PlayerDTO dto = new PlayerDTO();
+
+            dto.setPlayer_id(rs.getInt("player_id"));
+            dto.setPlayer_name(rs.getString("player_name"));
+            dto.setPlayer_team(rs.getString("player_team"));
+            dto.setPlayer_image(rs.getString("player_image"));
+            dto.setPlayer_position(rs.getString("player_position"));
+
+            return dto;
+        });
+    }
+    
 }
