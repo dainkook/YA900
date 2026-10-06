@@ -1712,6 +1712,7 @@ body {
 		    <div onclick="location.href='${pageContext.request.contextPath}/'">홈</div>
 		    <div onclick="location.href='${pageContext.request.contextPath}/#reservation'">예매</div>
 		    <div>승부예측</div>
+		    <div onclick="location.href='${pageContext.request.contextPath}/myteam'">나만의 팀</div>
 		    <div>야구 상식퀴즈</div>
 		    <div>마이페이지</div>
 		</div>

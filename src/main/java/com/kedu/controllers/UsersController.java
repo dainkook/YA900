@@ -2,6 +2,7 @@ package com.kedu.controllers;
 
 import java.io.File;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -17,7 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kedu.commons.EmailService;
 import com.kedu.commons.EncryptionUtils;
+import com.kedu.dao.PlayerDAO;
 import com.kedu.dao.UsersDAO;
+import com.kedu.dto.PlayerDTO;
 import com.kedu.dto.UsersDTO;
 
 @Controller
@@ -26,6 +29,9 @@ public class UsersController {
 
 	@Autowired
 	private UsersDAO dao;
+	
+	@Autowired
+	private PlayerDAO playerDAO;
 	
 	@Autowired
 	private EmailService emailService;
@@ -155,6 +161,19 @@ public class UsersController {
 	    return "member/finduserid";
 	}
 	
+<<<<<<< HEAD
+=======
+	@RequestMapping("/myteam")
+	public String myTeam(Model model) {
+
+	    List<PlayerDTO> playerList = playerDAO.selectAll();
+
+	    model.addAttribute("playerList", playerList);
+
+	    return "minigame/myteam";
+	}
+	
+>>>>>>> test
 	@RequestMapping(value="/sendemail")
 	@ResponseBody
 	public String sendEmail(String email , HttpSession session) {
