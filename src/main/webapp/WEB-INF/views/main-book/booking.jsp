@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>YA900 예매</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
 </head>
 <style>
 
@@ -1398,22 +1399,155 @@ function selectPayment(button) {
    결제 완료
 ========================= */
 
-function completePayment() {
+async function completePayment() {
 
+    // 선택한 결제수단 확인
     const selectedPayment =
         document.querySelector(".payment-method button.active");
 
-
     if (!selectedPayment) {
-
         alert("결제 수단을 선택해주세요.");
+        return;
+    }
 
+
+    // 선택된 좌석 확인
+    const selectedSeats =
+        document.querySelectorAll(".seat.selected");
+
+    if (selectedSeats.length === 0) {
+        alert("좌석을 선택해주세요.");
+        return;
+    }
+
+
+    // =========================
+    // PortOne 설정
+    // =========================
+
+    const storeId = "store-ee2a97f4-5684-42c9-adc1-a3796dd3cba4";
+    const channelKey = "channel-key-d03fb022-9b51-4be7-b70b-f04255a9cf1f";
+
+
+    // =========================
+    // 결제수단 설정
+    // =========================
+
+    let payMethod;
+    let easyPay = undefined;
+
+    const paymentName =
+        selectedPayment.innerText.trim();
+
+
+    if (paymentName === "신용카드") {
+
+        payMethod = "CARD";
+
+    }
+    else if (paymentName === "카카오페이") {
+
+        payMethod = "EASY_PAY";
+
+        easyPay = {
+            easyPayProvider: "KAKAOPAY"
+        };
+
+    }
+    else if (paymentName === "네이버페이") {
+
+        payMethod = "EASY_PAY";
+
+        easyPay = {
+            easyPayProvider: "NAVERPAY"
+        };
+
+    }
+    else {
+
+        alert("올바른 결제수단을 선택해주세요.");
         return;
 
     }
 
 
-    alert("결제가 완료되었습니다!");
+    // =========================
+    // 결제 금액
+    // =========================
+
+    const amount =
+        selectedSeats.length * seatPrice;
+
+
+    // =========================
+    // 주문번호
+    // =========================
+
+    const paymentId =
+        "YA900-" +
+        "${game.game_id}-" +
+        Date.now();
+
+
+    // =========================
+    // PortOne 결제 요청
+    // =========================
+
+    try {
+
+        const response =
+            await PortOne.requestPayment({
+
+                storeId: storeId,
+
+                channelKey: channelKey,
+
+                paymentId: paymentId,
+
+                orderName:
+                    "${game.away_team} VS ${game.home_team} 예매",
+
+                totalAmount: amount,
+
+                currency: "KRW",
+
+                payMethod: payMethod,
+
+                easyPay: easyPay
+
+            });
+
+
+        // 결제 요청 실패
+        if (response.code) {
+
+            alert(
+                "결제에 실패했습니다.\n" +
+                response.message
+            );
+
+            return;
+        }
+
+
+        // 결제 요청 성공
+        alert("결제가 완료되었습니다!");
+
+
+        console.log("결제 성공:", response);
+
+
+    }
+    catch (error) {
+
+        console.error("결제 오류:", error);
+
+        alert(
+            "결제 중 오류가 발생했습니다.\n" +
+            error.message
+        );
+
+    }
 
 }
 
