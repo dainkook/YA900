@@ -1317,8 +1317,11 @@ body {
 				<a href="#">야구</a>
 
 				<div class="sub-menu">
-					<a href="#">예매</a> <a href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a> <a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a> <a
-						href="#">선수순위</a> <a href="${pageContext.request.contextPath}/board/board?cpage=1">게시판</a>
+					<a href="#">예매</a> 
+					<a href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a> 
+					<a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a> 
+					<a href="#">선수순위</a> 
+					<a href="${pageContext.request.contextPath}/board/board?cpage=1">게시판</a>
 				</div>
 			</div>
 
@@ -1327,8 +1330,11 @@ body {
 				<a href="#">축구</a>
 
 				<div class="sub-menu">
-					<a href="#">예매</a> <a href="#">경기일정</a> <a href="#">팀순위</a> <a
-						href="#">선수순위</a> <a href="#">게시판</a>
+					<a href="#">예매</a> 
+					<a href="#">경기일정</a> 
+					<a href="#">팀순위</a> 
+					<a href="#">선수순위</a> 
+					<a href="#">게시판</a>
 				</div>
 			</div>
 
@@ -1337,8 +1343,10 @@ body {
 				<a href="#">미니게임</a>
 
 				<div class="sub-menu">
-					<a href="#">상식 퀴즈</a> <a href="#">OX 퀴즈</a> <a href="#">승부예측</a> <a
-						href="#">게임 랭킹</a>
+					<a href="#">상식 퀴즈</a> 
+					<a href="#">OX 퀴즈</a> 
+					<a href="#">승부예측</a> 
+					<a href="#">게임 랭킹</a>
 				</div>
 			</div>
 		</nav>

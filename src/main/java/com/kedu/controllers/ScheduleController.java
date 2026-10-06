@@ -95,6 +95,7 @@ public class ScheduleController {
 		model.addAttribute("hitterList", hitterList);
 		model.addAttribute("lineupList", lineupList);
 		model.addAttribute("now", now);
+		
 		return "schedule/scheduledetail";
 	}
 

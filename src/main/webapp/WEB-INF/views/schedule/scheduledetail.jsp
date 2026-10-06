@@ -37,9 +37,11 @@ body {
 	border-bottom: 1px solid #303b70;
 	box-shadow: 0 3px 15px rgba(11, 16, 38, 0.18);
 }
+
 .header>.logo:hover {
-	cursor:pointer;
+	cursor: pointer;
 }
+
 .logo {
 	font-size: 30px;
 	font-weight: bold;
@@ -137,6 +139,7 @@ body {
 	border-color: #476aaa;
 	color: white;
 }
+
 .user-menu {
 	margin-left: auto;
 	display: flex;
@@ -261,6 +264,36 @@ body {
 	font-size: 13px;
 	color: #68718a;
 	margin-top: 15px;
+}
+
+/* 예매 버튼 */
+.reservation-btn {
+	display: block;
+	margin: 0 auto 10px;
+	padding: 10px 24px;
+	background: #476aaa;
+	color: white;
+	border: none;
+	border-radius: 7px;
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.reservation-btn:hover {
+	background: #38598f;
+	transform: translateY(-1px);
+	box-shadow: 0 4px 10px rgba(71, 106, 170, 0.25);
+} /* 경기 예정 */
+.status-upcoming {
+	display: inline-block;
+	padding: 6px 13px;
+	background: #f1f3f8;
+	color: #68718a;
+	border-radius: 20px;
+	font-size: 12px;
+	font-weight: 600;
 }
 
 .main-layout {
@@ -569,26 +602,27 @@ body {
 .lineup-empty {
 	color: #b0b6c5;
 }
+
 .lineup-notice {
-    padding: 70px 20px;
-    text-align: center;
-    color: #68718a;
-    background: #fbfcff;
-    border: 1px solid #d6dceb;
-    border-radius: 8px;
-    font-size: 14px;
+	padding: 70px 20px;
+	text-align: center;
+	color: #68718a;
+	background: #fbfcff;
+	border: 1px solid #d6dceb;
+	border-radius: 8px;
+	font-size: 14px;
 }
 
 .open-talk {
-    width: 350px;
-    height: 620px;
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    background: white;
-    position: sticky;
-    top: 100px;
-    border-left: 1px solid #d6dceb;
+	width: 350px;
+	height: 620px;
+	flex-shrink: 0;
+	display: flex;
+	flex-direction: column;
+	background: white;
+	position: sticky;
+	top: 100px;
+	border-left: 1px solid #d6dceb;
 }
 
 .open-talk-header {
@@ -800,7 +834,6 @@ body {
 		font-size: 25px;
 	}
 }
-
 </style>
 </head>
 <body>
@@ -851,8 +884,15 @@ body {
 		</nav>
 
 		<div class="member-menu">
-			<button class="login-btn" onclick="location.href='member/login'">로그인</button>
-			<button class="sign-btn" onclick="location.href='member/signup'">회원가입</button>
+		    <button class="login-btn"
+		            onclick="location.href='${pageContext.request.contextPath}/login'">
+		        로그인
+		    </button>
+		
+		    <button class="sign-btn"
+		            onclick="location.href='${pageContext.request.contextPath}/signup'">
+		        회원가입
+		    </button>
 		</div>
 
 	</div>
@@ -889,6 +929,10 @@ body {
 				<c:choose>
 
 					<c:when test="${now lt schedule.start_date}">
+						<button type="button" class="reservation-btn"
+						        onclick="openBooking(event, '${pageContext.request.contextPath}/booking/${schedule.game_id}')">
+						    예매하기
+						</button>
 						<span>경기예정</span>
 					</c:when>
 
@@ -1516,6 +1560,25 @@ body {
       }
     });
   }); */
+  function openBooking(event, url) {
+    event.stopPropagation();
+
+    const width = 1000;
+    const height = 650;
+
+    const left = (screen.width - width) / 2;
+    const top = (screen.height - height) / 2;
+
+    window.open(
+        url,
+        "_blank",
+        "width=" + width +
+        ",height=" + height +
+        ",left=" + left +
+        ",top=" + top +
+        ",resizable=yes,scrollbars=yes"
+    );
+}
 </script>
 
 </body>
