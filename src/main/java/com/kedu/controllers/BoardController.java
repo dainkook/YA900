@@ -190,4 +190,16 @@ public class BoardController {
 	public List<LiveChatDTO> chatList(int game_id) throws Exception {
 		return dao.getChatList(game_id);
 	}
+	
+	@RequestMapping("/replyWrite")
+	public String replyWrite(ReplyDTO dto) throws Exception {
+		dao.addReply(dto);
+		return "redirect:/board/detail?seq=" + dto.getParent_seq();
+	}
+	
+	@RequestMapping("/replyUpdate")
+	public String replyUpdate(ReplyDTO dto) throws Exception {
+		dao.updateReply(dto);
+		return "redirect:/board/detail?seq=" + dto.getParent_seq();
+	}
 }
