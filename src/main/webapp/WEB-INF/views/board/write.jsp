@@ -6,9 +6,13 @@
 <html>
 <head>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/lang/summernote-ko-KR.min.js"></script>
+<link
+	href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css"
+	rel="stylesheet">
+<script
+	src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/lang/summernote-ko-KR.min.js"></script>
 <meta charset="UTF-8">
 <title>게시글 작성 | YA900</title>
 
@@ -65,7 +69,7 @@ body {
 	align-items: center;
 }
 
-.menu-item > a {
+.menu-item>a {
 	font-size: 18px;
 	font-weight: bold;
 	text-decoration: none;
@@ -74,7 +78,7 @@ body {
 	transition: color 0.2s ease;
 }
 
-.menu-item > a:hover {
+.menu-item>a:hover {
 	color: #aebee7;
 }
 
@@ -185,7 +189,7 @@ body {
 }
 
 /* 작성 카드 */
-.container > form > .body {
+.container>form>.body {
 	width: 100%;
 	min-height: 610px;
 	background-color: white;
@@ -196,7 +200,7 @@ body {
 }
 
 /* 제목 영역 */
-.container > form > .body > .title {
+.container>form>.body>.title {
 	width: 100%;
 	min-height: 95px;
 	display: flex;
@@ -205,7 +209,7 @@ body {
 	position: relative;
 }
 
-.container > form > .body > .title:focus-within {
+.container>form>.body>.title:focus-within {
 	border-bottom: 2px solid #263b76;
 }
 
@@ -239,10 +243,13 @@ body {
 	color: #555;
 }
 
-.attachments input[type="file"] { max-width: 100%; font-size: 13px; }
+.attachments input[type="file"] {
+	max-width: 100%;
+	font-size: 13px;
+}
 
 /* 본문 영역 */
-.container > form > .body > .contents {
+.container>form>.body>.contents {
 	width: 100%;
 	min-height: 515px;
 	padding: 0 5px;
@@ -269,8 +276,18 @@ body {
 	color: #b7bbc5;
 }
 
-.note-editor.note-frame { width: 100%; border-color: #e2e5eb; border-radius: 5px; box-shadow: none; }
-.note-editable { font-family: Arial, sans-serif; font-size: 16px; line-height: 1.9; }
+.note-editor.note-frame {
+	width: 100%;
+	border-color: #e2e5eb;
+	border-radius: 5px;
+	box-shadow: none;
+}
+
+.note-editable {
+	font-family: Arial, sans-serif;
+	font-size: 16px;
+	line-height: 1.9;
+}
 
 /* 편집 영역 포커스 */
 #title:focus, #contents:focus {
@@ -280,7 +297,7 @@ body {
 /* =========================
    하단 버튼
 ========================= */
-.container > form > .body > .footer {
+.container>form>.body>.footer {
 	width: 100%;
 	min-height: 85px;
 	margin-top: 0;
@@ -294,12 +311,12 @@ body {
 	box-shadow: none;
 }
 
-.container > form > .body > .footer > .buttons {
+.container>form>.body>.footer>.buttons {
 	display: flex;
 	gap: 10px;
 }
 
-.container > form > .body > .footer > .buttons button {
+.container>form>.body>.footer>.buttons button {
 	width: 95px;
 	height: 43px;
 	border: 1px solid #d5d8df;
@@ -312,7 +329,7 @@ body {
 	transition: 0.2s ease;
 }
 
-.container > form > .body > .footer > .buttons button:hover {
+.container>form>.body>.footer>.buttons button:hover {
 	background-color: #f3f4f7;
 	border-color: #aeb4c1;
 }
@@ -330,43 +347,36 @@ body {
 }
 
 /* 반응형 */
-@media (max-width: 1240px) {
+@media ( max-width : 1240px) {
 	.container {
 		width: calc(100% - 40px);
 	}
 }
 
-@media (max-width: 768px) {
+@media ( max-width : 768px) {
 	.header {
 		padding: 0 20px;
 	}
-
 	.logo {
 		margin-right: 25px;
 		font-size: 25px;
 	}
-
 	.main-menu {
 		gap: 15px;
 	}
-
-	.menu-item > a {
+	.menu-item>a {
 		font-size: 14px;
 	}
-
 	.member-menu {
 		display: none;
 	}
-
 	.container {
 		width: calc(100% - 24px);
 		margin-top: 25px;
 	}
-
-	.container > form > .body {
+	.container>form>.body {
 		padding: 0 18px;
 	}
-
 	.page-heading h2 {
 		font-size: 23px;
 	}
@@ -385,40 +395,32 @@ body {
 			<div class="menu-item">
 				<a href="#">야구</a>
 				<div class="sub-menu">
-					<a href="#">예매</a>
-					<a href="#">경기일정</a>
-					<a href="#">팀순위</a>
-					<a href="#">선수순위</a>
-					<a href="#">게시판</a>
+					<a href="#">예매</a> <a href="#">경기일정</a> <a href="#">팀순위</a> <a
+						href="#">선수순위</a> <a href="#">게시판</a>
 				</div>
 			</div>
 
 			<div class="menu-item">
 				<a href="#">축구</a>
 				<div class="sub-menu">
-					<a href="#">예매</a>
-					<a href="#">경기일정</a>
-					<a href="#">팀순위</a>
-					<a href="#">선수순위</a>
-					<a href="#">게시판</a>
+					<a href="#">예매</a> <a href="#">경기일정</a> <a href="#">팀순위</a> <a
+						href="#">선수순위</a> <a href="#">게시판</a>
 				</div>
 			</div>
 
 			<div class="menu-item">
 				<a href="#">미니게임</a>
 				<div class="sub-menu">
-					<a href="#">상식 퀴즈</a>
-					<a href="#">OX 퀴즈</a>
-					<a href="#">승부예측</a>
-					<a href="#">게임 랭킹</a>
+					<a href="#">상식 퀴즈</a> <a href="#">OX 퀴즈</a> <a href="#">승부예측</a> <a
+						href="#">게임 랭킹</a>
 				</div>
 			</div>
 
 		</nav>
 
 		<div class="member-menu">
-			<button class="login-btn" onclick="location.href='login'">로그인</button>
-			<button class="sign-btn" onclick="location.href='signup'">회원가입</button>
+			<button class="login-btn" onclick="location.href='/login'">로그인</button>
+			<button class="sign-btn" onclick="location.href='/signup'">회원가입</button>
 		</div>
 
 	</div>
@@ -433,7 +435,8 @@ body {
 			<div class="category">COMMUNITY / WRITE</div>
 		</div>
 
-		<form action="/board/writeComplete" enctype="multipart/form-data" method="post">
+		<form action="/board/writeComplete" enctype="multipart/form-data"
+			method="post">
 
 			<div class="body">
 
@@ -441,11 +444,10 @@ body {
 					<div id="title" contenteditable="true"></div>
 					<input id="titleSubmit" type="hidden" name="title" value="">
 				</div>
-				
+
 				<div class="attachments">
-					<input type="file" name="files">
-					<input type="file" name="files">
-					<input type="file" name="files">
+					<input type="file" name="files"> <input type="file"
+						name="files"> <input type="file" name="files">
 				</div>
 
 				<div class="contents">
@@ -466,21 +468,46 @@ body {
 	</div>
 
 	<script>
-		$(document).ready(function() {
-			$("#contents").summernote({
-				height: 400,
-				lang: "ko-KR",
-				placeholder: "게시글 내용을 입력하세요.",
-				toolbar: [
-					["font", ["fontname", "fontsize"]],
-					["style", ["bold", "italic", "underline", "strikethrough"]],
-					["color", ["color"]],
-					["para", ["ul", "ol", "paragraph"]],
-					["insert", ["link", "picture"]],
-					["view", ["fullscreen", "codeview"]]
-				]
-			});
-		});
+	$("#contents").summernote({
+	    height: 400,
+	    lang: "ko-KR",
+	    placeholder: "게시글 내용을 입력하세요.",
+	    toolbar: [
+	        ["font", ["fontname", "fontsize"]],
+	        ["style", ["bold", "italic", "underline", "strikethrough"]],
+	        ["color", ["color"]],
+	        ["para", ["ul", "ol", "paragraph"]],
+	        ["insert", ["link", "picture"]],
+	        ["view", ["fullscreen", "codeview"]]
+	    ],
+	    callbacks: {
+	        onImageUpload: function(files) {
+	            uploadImage(files[0]);
+	        }
+	    }
+	});
+	
+	function uploadImage(file) {
+
+	    let formData = new FormData();
+	    formData.append("file", file);
+
+	    $.ajax({
+	        url: "/board/uploadImage",
+	        type: "POST",
+	        data: formData,
+	        processData: false,
+	        contentType: false,
+	        success: function(result) {
+
+	            if(result.url) {
+	                $("#contents").summernote("insertImage", result.url);
+	            } else {
+	                alert(result.error);
+	            }
+	        }
+	    });
+	}
 
 		$("#cancel").on("click", function() {
 			location.href = "/board/board?cpage=1";

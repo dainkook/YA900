@@ -465,8 +465,8 @@ body {
 		</nav>
 
 		<div class="member-menu">
-			<button class="login-btn" onclick="location.href='login'">로그인</button>
-			<button class="sign-btn" onclick="location.href='signup'">회원가입</button>
+			<button class="login-btn" onclick="location.href='/login'">로그인</button>
+			<button class="sign-btn" onclick="location.href='/signup'">회원가입</button>
 		</div>
 
 	</div>
@@ -520,14 +520,36 @@ body {
 			<div class="list">
 				<button id="list" type="button">목록</button>
 			</div>
-
 			<div class="buttons"></div>
 		</div>
-
 	</div>
-
 	</div>
-
+	<div class="replyContainer">
+		<c:if test="${not empty id}">
+			<div class="replyWrite">
+				<input type="text" placeholder="댓글을 입력해주세요...">
+				<button type="submit" onclick="location.href='/board/replyWrite'">작성하기</button>
+			</div>
+		</c:if>
+		<div class="reply">
+		<c:choose>
+			<c:when test="${not empty replyList}">
+				<c:forEach var="reply" items="${replyList}">
+					<tr>
+						<td>${reply.contents}</td>
+						<td>${reply.writer}</td>
+						<td>${reply.write_date}</td>
+					</tr>
+				</c:forEach>
+			</c:when>
+			<c:otherwise>
+				<tr>
+					<td colspan="3">작성된 댓글이 없습니다.</td>
+				</tr>
+			</c:otherwise>
+			</c:choose>
+		</div>
+	</div>
 	<form id="updateForm" action="/board/updateDetail" method="get"
 		style="display: none;">
 		<input type="hidden" name="seq" value="${board.board_seq}">
@@ -536,17 +558,14 @@ body {
 	</form>
 
 	<script>
-		// 원래 게시글 내용 저장
 		let originalTitle = $("#title").html();
 		let originalContents = $("#contents").html();
 
-		// 목록 이동
 		$("#list").on("click", function() {
 			location.href = "/board/board?cpage=1";
 		});
 
-		// 작성자 본인에게만 수정 / 삭제 버튼 표시
-		if ("${loginId}" == "${board.writer}") {
+		if ("${id}" == "${board.writer}") {
 			let update = $("<button>");
 			let del = $("<button>");
 
@@ -559,7 +578,6 @@ body {
 			$(".buttons").append(update, del);
 		}
 
-		// 수정 및 수정완료
 		$(".buttons").on("click", "#update", function() {
 
 			if ($(this).text() == "수정") {
@@ -601,7 +619,6 @@ body {
 			}
 		});
 
-		// 삭제 및 수정 취소
 		$(".buttons").on("click", "#delete", function() {
 
 			if ($(this).text() == "삭제") {
@@ -623,6 +640,8 @@ body {
 				$(this).text("삭제");
 			}
 		});
+		
+		$()
 	</script>
 
 </body>
