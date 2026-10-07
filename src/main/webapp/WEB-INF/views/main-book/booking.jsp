@@ -1201,7 +1201,12 @@ body {
 
 <script>
 
-const isLogin = ${sessionScope.id != null ? "true" : "false"};
+let isLogin = false;
+if("${id}"=="") {
+	isLogin = false;
+} else {
+	isLogin = true;
+}
 
 
 /* =========================

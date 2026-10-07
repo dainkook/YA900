@@ -36,15 +36,13 @@ public class BookingController {
     @RequestMapping("/{game_id}")
     public String booking(
             @PathVariable int game_id,
-            Model model) {
+            Model model,
+            HttpSession session) {
 
-        // 경기 정보
         ScheduleDTO game = scheduleDAO.selectByGameId(game_id);
-
-        // 해당 경기의 전체 좌석(티켓)
+        String id = (String)session.getAttribute("id");
         List<TicketDTO> ticketList = ticketDAO.selectByGameId(game_id);
-
-        // 이미 예매된 좌석
+        model.addAttribute("id", id);
         List<Integer> reservedSeatIds =
                 reservationDAO.selectReservedSeatIds(game_id);
 
@@ -90,7 +88,6 @@ public class BookingController {
 
         try {
 
-            // 1. 예약 정보에서 paymentId 가져오기
             String paymentId =
                     reservationDAO.selectPaymentId(reservation_id);
 
@@ -98,7 +95,6 @@ public class BookingController {
                 return "PAYMENT_ID_NOT_FOUND";
             }
 
-            // 2. PortOne V2 API 호출
             String apiSecret = "wuPgUUj5c2hmcEKsc8D5VzPLy5DidIJN3bQ51vbQKLpIW8NDn6xMhoHioohmH2LCPhXz9S8k2KotOL0Q";
 
             java.net.URL url = new java.net.URL(
@@ -121,8 +117,7 @@ public class BookingController {
             );
             conn.setDoOutput(true);
 
-            String body =
-                    "{\"reason\":\"고객 요청\"}";
+            String body = "{\"reason\":\"고객 요청\"}";
 
             java.io.OutputStream os =
                     conn.getOutputStream();
@@ -134,7 +129,6 @@ public class BookingController {
             int responseCode =
                     conn.getResponseCode();
 
-            // 3. 환불 성공
             if (responseCode >= 200 && responseCode < 300) {
 
             	 reservationDAO.cancelReservationsByPaymentId(paymentId);

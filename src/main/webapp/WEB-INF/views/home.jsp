@@ -1386,8 +1386,8 @@ body {
 
     <c:choose>
 
-        <c:when test="${not empty sessionScope.loginUser}">
-            <span>${sessionScope.loginUser.id}님</span>
+        <c:when test="${not empty sessionScope.id}">
+            <span>${sessionScope.id}님</span>
 
             <button class="login-btn"
                     onclick="location.href='${pageContext.request.contextPath}/mypage'">
@@ -1714,14 +1714,13 @@ body {
 			</div>
 		</div>
 		</div>
-		<!-- 오른쪽 퀵메뉴 -->
 	<!-- 오른쪽 퀵메뉴 -->
 		<div class="quick-menu">
 		    <div class="menu">QUICK MENU</div>
 		    <div onclick="location.href='${pageContext.request.contextPath}/'">홈</div>
 		    <div onclick="location.href='${pageContext.request.contextPath}/#reservation'">예매</div>
 		    <div onclick="location.href='${pageContext.request.contextPath}/board/board?cpage=1'">게시판</div>
-		    <div>마이페이지</div>
+		    <div onclick="location.href='${pageContext.request.contextPath}/mypage'">마이페이지</div>
 		</div>
 		<div class="bottom-menu">
 
