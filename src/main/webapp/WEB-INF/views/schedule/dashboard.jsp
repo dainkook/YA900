@@ -20,7 +20,6 @@ body {
 	color: #18213f;
 	min-height: 100vh;
 }
-
 .header {
 	width: 100%;
 	height: 100px;
@@ -36,6 +35,10 @@ body {
 	box-shadow: 0 3px 15px rgba(11, 16, 38, 0.18);
 }
 
+.header>.logo:hover {
+	cursor: pointer;
+}
+
 .logo {
 	font-size: 30px;
 	font-weight: bold;
@@ -43,9 +46,7 @@ body {
 	color: white;
 	letter-spacing: 1px;
 }
-.header>.logo:hover {
-	cursor:pointer;
-}
+
 .main-menu {
 	height: 100%;
 	display: flex;
@@ -483,10 +484,10 @@ body {
 
 		<div class="logo" onclick="location.href='/'">YA900</div>
 
-
+		
 		<nav class="main-menu">
 
-
+			
 			<div class="menu-item">
 				<a href="#">야구</a>
 
@@ -499,7 +500,7 @@ body {
 				</div>
 			</div>
 
-
+			
 			<div class="menu-item">
 				<a href="#">축구</a>
 
@@ -507,32 +508,36 @@ body {
 					<a href="#">예매</a> 
 					<a href="#">경기일정</a> 
 					<a href="#">팀순위</a> 
-					<a href="#">선수순위</a> 
-					<a href="#">게시판</a>
+					<a href="#">선수순위</a> <a href="#">게시판</a>
 				</div>
 			</div>
 
-
+			
 			<div class="menu-item">
 				<a href="#">미니게임</a>
 
 				<div class="sub-menu">
-					<a href="#">상식 퀴즈</a> 
-					<a href="#">OX 퀴즈</a> 
-					<a href="#">승부예측</a> 
+					<a href="${pageContext.request.contextPath}/quiz">상식 퀴즈</a> 
+					<a href="${pageContext.request.contextPath}/myteam">나만의 팀</a> 
+					<a href="${pageContext.request.contextPath}/prediction">승부예측</a> 
 					<a href="#">게임 랭킹</a>
 				</div>
 			</div>
 		</nav>
 
 		<div class="member-menu">
-			<button class="login-btn" onclick="location.href='login'">로그인</button>
-			<button class="sign-btn" onclick="location.href='signup'">회원가입</button>
+		    <button class="login-btn"
+		            onclick="location.href='${pageContext.request.contextPath}/login'">
+		        로그인
+		    </button>
+		
+		    <button class="sign-btn"
+		            onclick="location.href='${pageContext.request.contextPath}/signup'">
+		        회원가입
+		    </button>
 		</div>
 
 	</div>
-
-	</header>
 
 	<main class="container">
 
