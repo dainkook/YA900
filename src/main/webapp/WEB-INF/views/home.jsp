@@ -1377,8 +1377,8 @@ body {
 
     <c:choose>
 
-        <c:when test="${not empty sessionScope.id}">
-            <span>${sessionScope.id}님</span>
+        <c:when test="${not empty sessionScope.loginUser}">
+            <span>${sessionScope.loginUser.id}님</span>
 
             <button class="login-btn"
                     onclick="location.href='${pageContext.request.contextPath}/mypage'">
