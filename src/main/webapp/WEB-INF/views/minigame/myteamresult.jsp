@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>YA900 나의 스쿼드</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
 	integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
 	crossorigin="anonymous"></script>
@@ -450,9 +450,9 @@ body {
 				<a href="#">미니게임</a>
 
 				<div class="sub-menu">
-					<a href="#">상식 퀴즈</a> 
-					<a href="#">OX 퀴즈</a> 
-					<a href="#">승부예측</a> 
+					<a href="${pageContext.request.contextPath}/quiz">상식 퀴즈</a> 
+					<a href="${pageContext.request.contextPath}/myteam">나만의 팀</a> 
+					<a href="${pageContext.request.contextPath}/prediction">승부예측</a> 
 					<a href="#">게임 랭킹</a>
 				</div>
 			</div>
@@ -660,8 +660,9 @@ body {
 
 
 		<div class="action-area">
-			<button type="button" class="btn btn-line">목록으로</button>
-			<button type="button" class="btn btn-primary">팀 수정</button>
+			<button type="button" class="btn btn-line" onclick="location.href='${pageContext.request.contextPath}/'">홈으로</button>
+			<button type="button" class="btn btn-primary"
+			onclick="location.href='${pageContext.request.contextPath}/myteam?edit=true'">팀 수정</button>
 		</div>
 
 	</div>
