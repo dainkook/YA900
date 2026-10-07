@@ -18,6 +18,9 @@ public class ScheduleDTO {
 	private String naver_game_id;
 	private String home_team;
 	private String away_team;
+	private Integer home_score;
+	private Integer away_score;
+	private String game_status;
 	private String home_logo;
 	private String away_logo;
 
@@ -138,6 +141,21 @@ public class ScheduleDTO {
 
 	public void setNaver_game_id(String naver_game_id) {
 		this.naver_game_id = naver_game_id;
+	
+	public Integer getHome_score() {
+	    return home_score;
+	}
+
+	public void setHome_score(Integer home_score) {
+	    this.home_score = home_score;
+	}
+
+	public Integer getAway_score() {
+	    return away_score;
+	}
+
+	public void setAway_score(Integer away_score) {
+	    this.away_score = away_score;
 	}
 
 	public String getHome_team() {

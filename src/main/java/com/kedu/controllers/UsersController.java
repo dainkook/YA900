@@ -99,9 +99,7 @@ public class UsersController {
 	}
 
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public String loginCheck(
-			UsersDTO dto,
-			HttpSession session) {
+	public String loginCheck(UsersDTO dto, HttpSession session) {
 
 		String hashedpw = EncryptionUtils.encryptSHA512(dto.getPw());
 
@@ -135,11 +133,7 @@ public class UsersController {
 	}
 
 	@RequestMapping(value="/finduserid", method=RequestMethod.POST)
-	public String findUserId(
-			String name,
-			String email,
-			Model model,
-			HttpSession session) {
+	public String findUserId(String name,String email,Model model,HttpSession session) {
 
 		Boolean verified =
 				(Boolean) session.getAttribute("emailVerified");
@@ -150,7 +144,7 @@ public class UsersController {
 
 		String id = dao.findUserId(name, email);
 
-		System.out.println("찾은 아이디 : " + id);
+		System.out.println("李얠� �븘�씠�뵒 : " + id);
 
 		model.addAttribute("id", id);
 
@@ -162,38 +156,66 @@ public class UsersController {
 	}
 	
 	@RequestMapping("/myteam")
-	public String myTeam(Model model,HttpSession session) {
-		
-		String id = (String)session.getAttribute("id");
-		
+	public String myTeam(Model model,HttpSession session,@RequestParam(value="edit", required=false) String edit) {
+
+	    String id = (String) session.getAttribute("id");
+
+	    int count = playerDAO.countMyTeam(id);
+
+	    if (count > 0 && !"true".equals(edit)) {
+	        return "redirect:/myteamresult";
+	    }
+
 	    List<PlayerDTO> playerList = playerDAO.selectAll();
+	    List<PlayerDTO> myPlayerList = playerDAO.selectMyTeamPlayers(id);
 
-		model.addAttribute("playerList", playerList);
+	    model.addAttribute("playerList", playerList);
+	    model.addAttribute("myPlayerList", myPlayerList);
 
-		return "minigame/myteam";
+	    return "minigame/myteam";
 	}
 
 	
 	@RequestMapping(value="/myteamresult", method=RequestMethod.GET)
 	public String myTeamResult(HttpSession session, Model model) {
-
 	    String id = (String)session.getAttribute("id");
-
+	    
+	    int result = playerDAO.countMyTeam(id);
 	    List<PlayerDTO> myPlayerList = playerDAO.selectMyTeamPlayers(id);
 
 	    model.addAttribute("myPlayerList", myPlayerList);
-
-	    return "minigame/myteamresult";
+	    if(result > 0) {
+	    	return "minigame/myteamresult";
+	    } else {
+	    	return "minigame/myteam";
+	    }
+	   
 	}
 	
 	@RequestMapping(value="/myteamresult", method=RequestMethod.POST)
-	public String myTeamResultPost(MyTeamDTO dto, HttpSession session) {
+	public String myTeamResultPost( MyTeamDTO dto,HttpSession session,Model model) {
 
-	    String id = (String)session.getAttribute("id");
+	    String id = (String) session.getAttribute("id");
 
-	    playerDAO.addMyTeam(dto, id);
+	    int count = playerDAO.countMyTeam(id);
 
+	    if (count > 0) {
+	        playerDAO.updateMyTeam(dto, id);
+	    } else {
+	        playerDAO.addMyTeam(dto, id);
+	    }
 	    return "redirect:/myteamresult";
+	}
+	
+	@RequestMapping("/prediction")
+	public String prediction() {
+		
+		return "minigame/prediction";
+	}
+	
+	@RequestMapping("/quiz")
+	public String quiz() {
+		return "minigame/quiz";
 	}
 	
 	@RequestMapping(value="/sendemail")
@@ -201,7 +223,7 @@ public class UsersController {
 	public String sendEmail(String email , HttpSession session) {
 		String code = String.valueOf((int)(Math.random() * 900000)+ 100000);
 		session.setAttribute("emailcode", code);
-		emailService.sendEmail(email,"이메일 인증번호", "인증번호는 " + code + " 입니다.");
+		emailService.sendEmail(email,"�씠硫붿씪 �씤利앸쾲�샇", "�씤利앸쾲�샇�뒗 " + code + " �엯�땲�떎.");
 		return "success";
 	}
 	@RequestMapping(value="/verifyemail")
