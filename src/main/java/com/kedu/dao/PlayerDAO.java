@@ -103,6 +103,30 @@ public class PlayerDAO {
 
 	    }, id);
 	}
+	
+	public int countMyTeam(String id) {
+	    String sql = "SELECT COUNT(*) FROM MYTEAM WHERE ID = ?";
+	    return jdbc.queryForObject(sql, Integer.class, id);
+	}
+	
+	public int updateMyTeam(MyTeamDTO dto, String id) {
+		
+		 String sql =
+			        "UPDATE myteam SET " +
+			        "player_1B = ?, " +
+			        "player_2B = ?, " +
+			        "player_3B = ?, " +
+			        "player_SP = ?, " +
+			        "player_C = ?, " +
+			        "player_RF = ?, " +
+			        "player_LF = ?, " +
+			        "player_CF = ?, " +
+			        "player_SS = ? " +
+			        "WHERE id = ?";
+		 
+		 return jdbc.update(sql, dto.getPlayer_1B(),dto.getPlayer_2B(),dto.getPlayer_3B(),dto.getPlayer_SP(),dto.getPlayer_C(),dto.getPlayer_RF(),dto.getPlayer_LF(),dto.getPlayer_CF(),dto.getPlayer_SS(), id);
+		
+	}
 
 
 

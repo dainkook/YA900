@@ -63,49 +63,143 @@ h2 {
 }
 
 /* 사이트 헤더 */
+
 .header {
-	position: fixed;
-	top: 0;
-	left: 0;
 	width: 100%;
-	height: 80px;
-	background-color: white;
-	border-bottom: 1px solid #ddd;
+	height: 100px;
+	min-height: 100px;
+	flex-shrink: 0;
+	background: linear-gradient(135deg, #0b1026, #171f46);
+	color: white;
 	display: flex;
 	align-items: center;
 	padding: 0 50px;
+	position: sticky;
+	top: 0;
 	z-index: 1000;
+	border-bottom: 1px solid #303b70;
+	box-shadow: 0 3px 15px rgba(11, 16, 38, 0.18);
 }
 
 .logo {
 	font-size: 30px;
 	font-weight: bold;
-	margin-right: 70px;
+	margin-right: 60px;
+	color: white;
+	letter-spacing: 1px;
 }
-
+.header>.logo:hover {
+	cursor:pointer;
+}
 .main-menu {
+	height: 100%;
 	display: flex;
-	gap: 45px;
+	align-items: center;
+	gap: 40px;
 }
 
-.main-menu a {
+.menu-item {
+	position: relative;
+	height: 100%;
+	display: flex;
+	align-items: center;
+}
+
+.menu-item>a {
+	font-size: 18px;
+	font-weight: bold;
 	text-decoration: none;
-	color: #222;
-	font-size: 17px;
+	color: #f7f8ff;
+	padding: 10px 5px;
+	transition: color 0.2s ease;
+}
+
+.menu-item>a:hover {
+	color: #aebee7;
+}
+
+/* =========================
+   서브 메뉴
+========================= */
+.sub-menu {
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-10px);
+	width: 130px;
+	background: #171f46;
+	border: 1px solid #394575;
+	display: flex;
+	flex-direction: column;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.2s ease, transform 0.2s ease;
+	box-shadow: 0 10px 25px rgba(8, 12, 30, 0.25);
+}
+
+.menu-item:hover .sub-menu {
+	opacity: 1;
+	visibility: visible;
+	transform: translateX(-50%) translateY(0);
+}
+
+.sub-menu a {
+	padding: 13px 15px;
+	text-decoration: none;
+	color: #f5f7ff;
+	font-size: 14px;
+	border-bottom: 1px solid #35406b;
+}
+
+.sub-menu a:last-child {
+	border-bottom: none;
+}
+
+.sub-menu a:hover {
+	background: #252f67;
+}
+
+/* =========================
+   로그인 / 회원가입
+========================= */
+.member-menu {
+	font-size: 14px;
+	margin-left: auto;
+}
+
+.login-btn, .sign-btn {
+	border: 1px solid #7180b1;
+	background: transparent;
+	color: white;
+	border-radius: 5px;
+	transition: 0.2s ease;
+}
+
+.login-btn:hover, .sign-btn:hover {
+	background: #476aaa;
+	border-color: #476aaa;
+	color: white;
 }
 
 .user-menu {
 	margin-left: auto;
 	display: flex;
-	gap: 10px;
+	gap: 8px;
 }
 
 .user-menu button {
-	background-color: white;
-	border: 1px solid #aaa;
-	padding: 9px 18px;
-	font-size: 14px;
+	background: transparent;
+	border: 1px solid #7180b1;
+	border-radius: 5px;
+	padding: 8px 15px;
+	color: white;
 	cursor: pointer;
+	transition: 0.2s ease;
+}
+
+.user-menu button:hover {
+	background: #476aaa;
+	border-color: #476aaa;
 }
 
 /* 본문 */
@@ -223,25 +317,65 @@ td {
 
 <body>
 
-	<header class="header">
+	<div class="header">
 
-		<div class="logo">YA900</div>
+		<div class="logo" onclick="location.href='/'">YA900</div>
+
 
 		<nav class="main-menu">
 
-			<a href="#"> 야구 </a> <a href="#"> 축구 </a> <a href="#"> 미니게임 </a>
 
+			<div class="menu-item">
+				<a href="#">야구</a>
+
+				<div class="sub-menu">
+				    <a href="#">예매</a>
+				    <a href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a> 
+				    <a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a> 
+				    <a href="${pageContext.request.contextPath}/schedule/rankdetail?tab=pitcher">선수순위</a> 
+				    <a href="${pageContext.request.contextPath}/board/board?cpage=1">게시판</a>
+				</div>
+			</div>
+
+
+			<div class="menu-item">
+				<a href="#">축구</a>
+
+				<div class="sub-menu">
+					<a href="#">예매</a> 
+					<a href="#">경기일정</a> 
+					<a href="#">팀순위</a> 
+					<a href="#">선수순위</a> 
+					<a href="#">게시판</a>
+				</div>
+			</div>
+
+
+			<div class="menu-item">
+				<a href="#">미니게임</a>
+
+				<div class="sub-menu">
+					<a href="${pageContext.request.contextPath}/quiz">상식 퀴즈</a> 
+					<a href="${pageContext.request.contextPath}/myteam">나만의 팀</a> 
+					<a href="${pageContext.request.contextPath}/prediction">승부예측</a> 
+					<a href="#">게임 랭킹</a>
+				</div>
+			</div>
 		</nav>
 
-		<div class="user-menu">
-
-			<button>로그인</button>
-
-			<button>회원가입</button>
-
+		<div class="member-menu">
+		    <button class="login-btn"
+		            onclick="location.href='${pageContext.request.contextPath}/login'">
+		        로그인
+		    </button>
+		
+		    <button class="sign-btn"
+		            onclick="location.href='${pageContext.request.contextPath}/signup'">
+		        회원가입
+		    </button>
 		</div>
 
-	</header>
+	</div>
 
 	<main class="wrap">
 

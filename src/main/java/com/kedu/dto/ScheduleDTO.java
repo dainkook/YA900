@@ -9,13 +9,13 @@ public class ScheduleDTO {
 	private String location;
 	private Timestamp start_date;
 	private Timestamp end_date;
-	private int winner_id;
+	private Integer winner_id;
 	private int home_id;
 	private int away_id;
 	private String home_team;
 	private String away_team;
-	private int home_score;
-	private int away_score;
+	private Integer home_score;
+	private Integer away_score;
 	private String game_status;
 	private String home_logo;
 	private String away_logo;
@@ -77,11 +77,11 @@ public class ScheduleDTO {
 		this.end_date = end_date;
 	}
 
-	public int getWinner_id() {
+	public Integer getWinner_id() {
 		return winner_id;
 	}
 
-	public void setWinner_id(int winner_id) {
+	public void setWinner_id(Integer winner_id) {
 		this.winner_id = winner_id;
 	}
 
@@ -117,19 +117,19 @@ public class ScheduleDTO {
 		this.away_team = away_team;
 	}
 	
-	public int getHome_score() {
+	public Integer getHome_score() {
 	    return home_score;
 	}
 
-	public void setHome_score(int home_score) {
+	public void setHome_score(Integer home_score) {
 	    this.home_score = home_score;
 	}
 
-	public int getAway_score() {
+	public Integer getAway_score() {
 	    return away_score;
 	}
 
-	public void setAway_score(int away_score) {
+	public void setAway_score(Integer away_score) {
 	    this.away_score = away_score;
 	}
 
