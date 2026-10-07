@@ -25,6 +25,7 @@ import com.kedu.dto.PlayerDTO;
 import com.kedu.dto.UsersDTO;
 
 @Controller
+
 public class UsersController {
 
 
@@ -58,7 +59,9 @@ public class UsersController {
 		return "member/finduserpw";
 	}
 	@RequestMapping("/mypage")
-	public String myPage() {
+	public String myPage(HttpSession session, Model model) {
+		UsersDTO loginUser=(UsersDTO) session.getAttribute("loginUser");
+		model.addAttribute("user", loginUser);
 		return "member/mypage";
 	}
 
@@ -109,7 +112,7 @@ public class UsersController {
 		if (result == null) {
 			return "redirect:/login";
 		}
-		session.setAttribute("id", result.getId());
+		session.setAttribute("loginUser", result);
 
 		return "redirect:/";
 	}
@@ -150,7 +153,7 @@ public class UsersController {
 
 		String id = dao.findUserId(name, email);
 
-		System.out.println("찾은 아이디 : " + id);
+		System.out.println("李얠� �븘�씠�뵒 : " + id);
 
 		model.addAttribute("id", id);
 
@@ -201,7 +204,7 @@ public class UsersController {
 	public String sendEmail(String email , HttpSession session) {
 		String code = String.valueOf((int)(Math.random() * 900000)+ 100000);
 		session.setAttribute("emailcode", code);
-		emailService.sendEmail(email,"이메일 인증번호", "인증번호는 " + code + " 입니다.");
+		emailService.sendEmail(email,"�씠硫붿씪 �씤利앸쾲�샇", "�씤利앸쾲�샇�뒗 " + code + " �엯�땲�떎.");
 		return "success";
 	}
 	@RequestMapping(value="/verifyemail")
@@ -232,6 +235,7 @@ public class UsersController {
 		}
 		return "fail";
 	}
+	
 	@RequestMapping("/updatepw")
 	@ResponseBody
 	public String updatePw(String id, String newPw) {
@@ -247,4 +251,110 @@ public class UsersController {
 		}
 	}
 
+	@RequestMapping(value="/mypage/update", method=RequestMethod.POST)
+	@ResponseBody
+	public String updateUser(
+	        String phone,
+	        String email,
+	        String zipcode,
+	        String address1,
+	        String address2,
+	        String team,
+	        @RequestParam(value="profileFile", required=false) MultipartFile profileFile,
+	        HttpSession session) throws Exception {
+
+
+	    UsersDTO loginUser =
+	            (UsersDTO) session.getAttribute("loginUser");
+
+
+	    if (loginUser == null) {
+
+	        return "login";
+
+	    }
+
+
+	    String id =
+	            loginUser.getId();
+
+	    String profileImg =
+	            loginUser.getProfile_img();
+
+
+	    if (profileFile != null && !profileFile.isEmpty()) {
+
+	        String uploadPath =
+	                "C:/upload/";
+
+	        String originalName =
+	                profileFile.getOriginalFilename();
+
+	        String extension =
+	                originalName.substring(
+	                        originalName.lastIndexOf(".")
+	                );
+
+	        String fileName =
+	                UUID.randomUUID().toString()
+	                + extension;
+
+	        File saveFile =
+	                new File(uploadPath + fileName);
+
+	        profileFile.transferTo(saveFile);
+
+
+	        profileImg =
+	                fileName;
+
+	    }
+
+
+
+	    int result =
+	            dao.updateUser(
+	                    id,
+	                    phone,
+	                    email,
+	                    zipcode,
+	                    address1,
+	                    address2,
+	                    team,
+	                    profileImg
+	            );
+
+
+
+	    if (result > 0) {
+
+
+
+	        loginUser.setPhone(phone);
+
+	        loginUser.setEmail(email);
+
+	        loginUser.setZipcode(zipcode);
+
+	        loginUser.setAddress1(address1);
+
+	        loginUser.setAddress2(address2);
+
+	        loginUser.setTeam(team);
+
+	        loginUser.setProfile_img(profileImg);
+
+
+	        session.setAttribute(
+	                "loginUser",
+	                loginUser
+	        );
+
+
+	        return "success";
+
+	    }
+	    return "fail";
+
+	}
 }
