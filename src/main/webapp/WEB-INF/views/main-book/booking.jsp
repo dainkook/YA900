@@ -831,190 +831,190 @@ body {
                 <!-- 1열 -->
 
                 <div class="seat-row">
-                    <button class="seat">01</button>
-                    <button class="seat">02</button>
-                    <button class="seat">03</button>
-                    <button class="seat">04</button>
-                    <button class="seat">05</button>
-
-                    <div class="aisle"></div>
-
-                    <button class="seat">06</button>
-                    <button class="seat">07</button>
-                    <button class="seat">08</button>
-                    <button class="seat">09</button>
-                    <button class="seat">10</button>
+                    <button class="seat" data-seat-id="1">01</button>
+					<button class="seat" data-seat-id="2">02</button>
+					<button class="seat" data-seat-id="3">03</button>
+					<button class="seat" data-seat-id="4">04</button>
+					<button class="seat" data-seat-id="5">05</button>
+					
+					<div class="aisle"></div>
+					
+					<button class="seat" data-seat-id="6">06</button>
+					<button class="seat" data-seat-id="7">07</button>
+					<button class="seat" data-seat-id="8">08</button>
+					<button class="seat" data-seat-id="9">09</button>
+					<button class="seat" data-seat-id="10">10</button>
                 </div>
 
 
                 <!-- 2열 -->
 
                 <div class="seat-row">
-                    <button class="seat">11</button>
-                    <button class="seat">12</button>
-                    <button class="seat">13</button>
-                    <button class="seat">14</button>
-                    <button class="seat">15</button>
-
-                    <div class="aisle"></div>
-
-                    <button class="seat">16</button>
-                    <button class="seat">17</button>
-                    <button class="seat">18</button>
-                    <button class="seat">19</button>
-                    <button class="seat">20</button>
+                    <button class="seat" data-seat-id="11">11</button>
+					<button class="seat" data-seat-id="12">12</button>
+					<button class="seat" data-seat-id="13">13</button>
+					<button class="seat" data-seat-id="14">14</button>
+					<button class="seat" data-seat-id="15">15</button>
+					
+					<div class="aisle"></div>
+					
+					<button class="seat" data-seat-id="16">16</button>
+					<button class="seat" data-seat-id="17">17</button>
+					<button class="seat" data-seat-id="18">18</button>
+					<button class="seat" data-seat-id="19">19</button>
+					<button class="seat" data-seat-id="20">20</button>
                 </div>
 
 
                 <!-- 3열 -->
 
                 <div class="seat-row">
-                    <button class="seat">21</button>
-                    <button class="seat">22</button>
-                    <button class="seat">23</button>
-                    <button class="seat">24</button>
-                    <button class="seat">25</button>
-
-                    <div class="aisle"></div>
-
-                    <button class="seat">26</button>
-                    <button class="seat">27</button>
-                    <button class="seat">28</button>
-                    <button class="seat">29</button>
-                    <button class="seat">30</button>
+                    <button class="seat" data-seat-id="21">21</button>
+					<button class="seat" data-seat-id="22">22</button>
+					<button class="seat" data-seat-id="23">23</button>
+					<button class="seat" data-seat-id="24">24</button>
+					<button class="seat" data-seat-id="25">25</button>
+					
+					<div class="aisle"></div>
+					
+					<button class="seat" data-seat-id="26">26</button>
+					<button class="seat" data-seat-id="27">27</button>
+					<button class="seat" data-seat-id="28">28</button>
+					<button class="seat" data-seat-id="29">29</button>
+					<button class="seat" data-seat-id="30">30</button>
                 </div>
 
 
                 <!-- 4열 -->
 
                 <div class="seat-row">
-                    <button class="seat">31</button>
-                    <button class="seat">32</button>
-                    <button class="seat">33</button>
-                    <button class="seat">34</button>
-                    <button class="seat">35</button>
+                    <button class="seat" data-seat-id="31">31</button>
+                    <button class="seat" data-seat-id="32">32</button>
+                    <button class="seat" data-seat-id="33">33</button>
+                    <button class="seat" data-seat-id="34">34</button>
+                    <button class="seat" data-seat-id="35">35</button>
 
                     <div class="aisle"></div>
 
-                    <button class="seat">36</button>
-                    <button class="seat">37</button>
-                    <button class="seat">38</button>
-                    <button class="seat">39</button>
-                    <button class="seat">40</button>
+                    <button class="seat" data-seat-id="36">36</button>
+                    <button class="seat" data-seat-id="37">37</button>
+                    <button class="seat" data-seat-id="38">38</button>
+                    <button class="seat" data-seat-id="39">39</button>
+                    <button class="seat" data-seat-id="40">40</button>
                 </div>
 
 
                 <!-- 5열 -->
 
                 <div class="seat-row">
-                    <button class="seat">41</button>
-                    <button class="seat">42</button>
-                    <button class="seat">43</button>
-                    <button class="seat">44</button>
-                    <button class="seat">45</button>
+                    <button class="seat" data-seat-id="41">41</button>
+                    <button class="seat" data-seat-id="42">42</button>
+                    <button class="seat" data-seat-id="43">43</button>
+                    <button class="seat" data-seat-id="44">44</button>
+                    <button class="seat" data-seat-id="45">45</button>
 
                     <div class="aisle"></div>
 
-                    <button class="seat">46</button>
-                    <button class="seat">47</button>
-                    <button class="seat">48</button>
-                    <button class="seat">49</button>
-                    <button class="seat">50</button>
+                    <button class="seat" data-seat-id="46">46</button>
+                    <button class="seat" data-seat-id="47">47</button>
+                    <button class="seat" data-seat-id="48">48</button>
+                    <button class="seat" data-seat-id="49">49</button>
+                    <button class="seat" data-seat-id="50">50</button>
                 </div>
 
 
                 <!-- 6열 -->
 
                 <div class="seat-row">
-                    <button class="seat">51</button>
-                    <button class="seat">52</button>
-                    <button class="seat">53</button>
-                    <button class="seat">54</button>
-                    <button class="seat">55</button>
+                    <button class="seat" data-seat-id="51">51</button>
+                    <button class="seat" data-seat-id="52">52</button>
+                    <button class="seat" data-seat-id="53">53</button>
+                    <button class="seat" data-seat-id="54">54</button>
+                    <button class="seat" data-seat-id="55">55</button>
 
                     <div class="aisle"></div>
 
-                    <button class="seat">56</button>
-                    <button class="seat">57</button>
-                    <button class="seat">58</button>
-                    <button class="seat">59</button>
-                    <button class="seat">60</button>
+                    <button class="seat" data-seat-id="56">56</button>
+                    <button class="seat" data-seat-id="57">57</button>
+                    <button class="seat" data-seat-id="58">58</button>
+                    <button class="seat" data-seat-id="59">59</button>
+                    <button class="seat" data-seat-id="60">60</button>
                 </div>
 
 
                 <!-- 7열 -->
 
                 <div class="seat-row">
-                    <button class="seat">61</button>
-                    <button class="seat">62</button>
-                    <button class="seat">63</button>
-                    <button class="seat">64</button>
-                    <button class="seat">65</button>
+                    <button class="seat" data-seat-id="61">61</button>
+                    <button class="seat" data-seat-id="62">62</button>
+                    <button class="seat" data-seat-id="63">63</button>
+                    <button class="seat" data-seat-id="64">64</button>
+                    <button class="seat" data-seat-id="65">65</button>
 
                     <div class="aisle"></div>
 
-                    <button class="seat">66</button>
-                    <button class="seat">67</button>
-                    <button class="seat">68</button>
-                    <button class="seat">69</button>
-                    <button class="seat">70</button>
+                    <button class="seat" data-seat-id="66">66</button>
+                    <button class="seat" data-seat-id="67">67</button>
+                    <button class="seat" data-seat-id="68">68</button>
+                    <button class="seat" data-seat-id="69">69</button>
+                    <button class="seat" data-seat-id="70">70</button>
                 </div>
 
 
                 <!-- 8열 -->
 
                 <div class="seat-row">
-                    <button class="seat">71</button>
-                    <button class="seat">72</button>
-                    <button class="seat">73</button>
-                    <button class="seat">74</button>
-                    <button class="seat">75</button>
+                    <button class="seat" data-seat-id="71">71</button>
+                    <button class="seat" data-seat-id="72">72</button>
+                    <button class="seat" data-seat-id="73">73</button>
+                    <button class="seat" data-seat-id="74">74</button>
+                    <button class="seat" data-seat-id="75">75</button>
 
                     <div class="aisle"></div>
 
-                    <button class="seat">76</button>
-                    <button class="seat">77</button>
-                    <button class="seat">78</button>
-                    <button class="seat">79</button>
-                    <button class="seat">80</button>
+                    <button class="seat" data-seat-id="76">76</button>
+                    <button class="seat" data-seat-id="77">77</button>
+                    <button class="seat" data-seat-id="78">78</button>
+                    <button class="seat" data-seat-id="79">79</button>
+                    <button class="seat" data-seat-id="80">80</button>
                 </div>
 
 
                 <!-- 9열 -->
 
                 <div class="seat-row">
-                    <button class="seat">81</button>
-                    <button class="seat">82</button>
-                    <button class="seat">83</button>
-                    <button class="seat">84</button>
-                    <button class="seat">85</button>
+                    <button class="seat" data-seat-id="81">81</button>
+                    <button class="seat" data-seat-id="82">82</button>
+                    <button class="seat" data-seat-id="83">83</button>
+                    <button class="seat" data-seat-id="84">84</button>
+                    <button class="seat" data-seat-id="85">85</button>
 
                     <div class="aisle"></div>
 
-                    <button class="seat">86</button>
-                    <button class="seat">87</button>
-                    <button class="seat">88</button>
-                    <button class="seat">89</button>
-                    <button class="seat">90</button>
+                    <button class="seat" data-seat-id="86">86</button>
+                    <button class="seat" data-seat-id="87">87</button>
+                    <button class="seat" data-seat-id="88">88</button>
+                    <button class="seat" data-seat-id="89">89</button>
+                    <button class="seat" data-seat-id="90">90</button>
                 </div>
 
 
                 <!-- 10열 -->
 
                 <div class="seat-row">
-                    <button class="seat">91</button>
-                    <button class="seat">92</button>
-                    <button class="seat">93</button>
-                    <button class="seat">94</button>
-                    <button class="seat">95</button>
+                    <button class="seat" data-seat-id="91">91</button>
+                    <button class="seat" data-seat-id="92">92</button>
+                    <button class="seat" data-seat-id="93">93</button>
+                    <button class="seat" data-seat-id="94">94</button>
+                    <button class="seat" data-seat-id="95">95</button>
 
                     <div class="aisle"></div>
 
-                    <button class="seat">96</button>
-                    <button class="seat">97</button>
-                    <button class="seat">98</button>
-                    <button class="seat">99</button>
-                    <button class="seat">100</button>
+                    <button class="seat" data-seat-id="96">96</button>
+                    <button class="seat" data-seat-id="97">97</button>
+                    <button class="seat" data-seat-id="98">98</button>
+                    <button class="seat" data-seat-id="99">99</button>
+                    <button class="seat" data-seat-id="100">100</button>
                 </div>
 
             </div>
@@ -1203,6 +1203,18 @@ body {
 
 const isLogin = ${sessionScope.id != null ? "true" : "false"};
 
+
+/* =========================
+   예매된 좌석
+========================= */
+
+const reservedSeatIds = [
+    <c:forEach var="seatId" items="${reservedSeatIds}" varStatus="status">
+        ${seatId}<c:if test="${!status.last}">,</c:if>
+    </c:forEach>
+];
+
+
 /* =========================
    기본 설정
 ========================= */
@@ -1212,11 +1224,31 @@ let totalPrice = 0;
 let selectedCount = 0;
 
 
+const seats = document.querySelectorAll(".seat");
+
+
+/* =========================
+   이미 예매된 좌석 표시
+========================= */
+
+seats.forEach(function(seat) {
+
+    const seatId = Number(seat.dataset.seatId);
+
+    if (reservedSeatIds.includes(seatId)) {
+
+        seat.classList.add("sold");
+
+        seat.disabled = true;
+
+    }
+
+});
+
+
 /* =========================
    좌석 선택
 ========================= */
-
-const seats = document.querySelectorAll(".seat");
 
 seats.forEach(function(seat) {
 
@@ -1226,7 +1258,6 @@ seats.forEach(function(seat) {
         if (seat.classList.contains("sold")) {
             return;
         }
-
 
         // 선택 해제
         if (seat.classList.contains("selected")) {
@@ -1238,7 +1269,6 @@ seats.forEach(function(seat) {
 
         }
 
-
         // 좌석 선택
         else {
 
@@ -1249,13 +1279,11 @@ seats.forEach(function(seat) {
 
         }
 
-
         updateBookingInfo();
 
     });
 
 });
-
 
 /* =========================
    예매 정보 업데이트
@@ -1439,7 +1467,6 @@ async function completePayment() {
     const paymentName =
         selectedPayment.innerText.trim();
 
-
     if (paymentName === "신용카드") {
 
         payMethod = "CARD";
@@ -1530,12 +1557,55 @@ async function completePayment() {
         }
 
 
-        // 결제 요청 성공
-        alert("결제가 완료되었습니다!");
+     // 결제 요청 성공
+        console.log("PortOne response:", response);
 
+        const seatIds = [];
 
-        console.log("결제 성공:", response);
+        selectedSeats.forEach(function(seat) { 
+            seatIds.push(Number(seat.dataset.seatId)); 
+        });
+                 
+        $.ajax({ 
+            url: "${pageContext.request.contextPath}/booking/reserve",
+            type: "POST",
+            traditional: true,
+            data: {
+                game_id: ${game.game_id},
+                seat_ids: seatIds,
+                paymentId: paymentId
+            },
 
+            success: function(result) {
+
+                console.log("예매 저장 결과:", result);
+
+                if (result === "SUCCESS") {
+
+                    alert("결제 및 예매가 완료되었습니다!");
+
+                    location.reload();
+
+                } else if (result === "LOGIN_REQUIRED") {
+
+                    alert("로그인이 필요합니다.");
+                    location.href =
+                        "${pageContext.request.contextPath}/login";
+
+                } else {
+
+                    alert("예매 저장에 실패했습니다.");
+
+                }
+            },
+
+            error: function(xhr) {
+
+                console.error("예매 저장 오류:", xhr);
+
+                alert("예매 저장 중 오류가 발생했습니다.");
+            }
+        });
 
     }
     catch (error) {

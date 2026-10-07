@@ -303,6 +303,74 @@ body {
     font-size: 13px;
 }
 
+/* =========================
+   예매 내역
+========================= */
+
+.reservation-item {
+    border: 1px solid #d6dceb;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+    background: #f8f9fc;
+}
+
+.reservation-item:last-child {
+    margin-bottom: 0;
+}
+
+.reservation-row {
+    display: flex;
+    align-items: center;
+    min-height: 45px;
+    border-bottom: 1px solid #e3e6ef;
+}
+
+.reservation-row:last-child {
+    border-bottom: none;
+}
+
+.reservation-label {
+    width: 120px;
+    color: #68718a;
+    font-weight: bold;
+}
+
+.reservation-value {
+    color: #18213f;
+}
+
+.reservation-status {
+    color: #476aaa;
+    font-weight: bold;
+}
+
+.no-reservation {
+    padding: 30px;
+    text-align: center;
+    color: #8b93a8;
+}
+
+.reservation-section {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.cancel-btn {
+    margin-top: 15px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    background: #476aaa;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.cancel-btn:hover {
+    opacity: 0.85;
+}
+
 </style>
 </head>
 
@@ -441,6 +509,92 @@ body {
         </div>
 
     </div>
+    
+    <!-- =========================
+     예매 내역
+	========================= -->
+	
+	<div class="mypage-card info-card reservation-section">
+	    <h2 class="card-title">예매 내역</h2>
+	
+	    <c:choose>
+	
+	        <c:when test="${empty reservationList}">
+	            <div class="no-reservation">
+	                예매한 내역이 없습니다.
+	            </div>
+	        </c:when>
+	
+	        <c:otherwise>
+	
+	            <c:forEach var="reservation" items="${reservationList}">
+				    <div class="reservation-item">
+				
+				        <!-- 경기 정보 -->
+				        <div class="reservation-row">
+				            <div class="reservation-label">경기</div>
+				            <div class="reservation-value">
+				                ${reservation.away_team} vs ${reservation.home_team}
+				            </div>
+				        </div>
+				
+				        <!-- 경기 날짜 -->
+				        <div class="reservation-row">
+				            <div class="reservation-label">경기일</div>
+				            <div class="reservation-value">
+				                <fmt:formatDate
+				                    value="${reservation.start_date}"
+				                    pattern="yyyy-MM-dd"/>
+				            </div>
+				        </div>
+				
+				        <!-- 경기장 -->
+				        <div class="reservation-row">
+				            <div class="reservation-label">경기장</div>
+				            <div class="reservation-value">
+				                ${reservation.location}
+				            </div>
+				        </div>
+				
+				        <!-- 좌석 -->
+				        <div class="reservation-row">
+				            <div class="reservation-label">좌석</div>
+				            <div class="reservation-value">
+				                ${reservation.seat_ids}번
+				            </div>
+				        </div>
+				
+				        <!-- 가격 -->
+				        <div class="reservation-row">
+				            <div class="reservation-label">가격</div>
+				            <div class="reservation-value">
+				                <fmt:formatNumber
+				                    value="${reservation.total_price}"
+				                    pattern="#,###"/>원
+				            </div>
+				        </div>
+				
+				        <!-- 예매 상태 -->
+				        <div class="reservation-row">
+				            <div class="reservation-label">예매상태</div>
+				            <div class="reservation-value reservation-status">
+				                ${reservation.status}
+				            </div>
+				        </div>
+				
+				        <!-- 예매 취소 -->
+				        <c:if test="${reservation.status eq '예매완료'}">
+				            <button type="button"
+				                    class="cancel-btn"
+				                    onclick="cancelReservation(${reservation.reservation_id})">
+				                예매 취소
+				            </button>
+				        </c:if>
+				    </div>
+				</c:forEach>
+	        </c:otherwise>
+	    </c:choose>
+	</div>
 
 
     <!-- =========================
@@ -476,5 +630,44 @@ body {
 
 </div>
 
+<script>
+function cancelReservation(reservationId) {
+
+    if (!confirm("정말 예매를 취소하시겠습니까?")) {
+        return;
+    }
+
+    $.ajax({
+        url: "${pageContext.request.contextPath}/booking/cancel",
+        type: "POST",
+        data: {
+            reservation_id: reservationId
+        },
+
+        success: function(result) {
+
+            if (result === "SUCCESS") {
+
+                alert("예매가 취소되었습니다.");
+
+                location.reload();
+
+            } else if (result === "PAYMENT_ID_NOT_FOUND") {
+
+                alert("결제 정보를 찾을 수 없습니다.");
+
+            } else {
+
+                alert("환불 처리에 실패했습니다.");
+            }
+        },
+
+        error: function(xhr) {
+
+            alert("환불 처리 중 오류가 발생했습니다.");
+        }
+    });
+}
+</script>
 </body>
 </html>
