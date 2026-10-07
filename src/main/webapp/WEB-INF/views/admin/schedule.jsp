@@ -372,13 +372,13 @@ body {
 }
 
 .status.live {
-	background-color: #fff4e5;
-	color: #d88a00;
+	background-color: #e8f5e9;
+	color: #2e7d32;
 }
 
 .status.complete {
-	background-color: #eeeeee;
-	color: #777;
+	background-color: #fceaea;
+	color: #c94a4a;
 }
 
 /* =========================
@@ -679,35 +679,35 @@ body {
 
 								<div class="schedule-status">
 
-									<c:choose>
+    <c:choose>
 
-										<c:when test="${schedule.game_status == '진행중'}">
+        <c:when test="${schedule.game_status eq '진행중'}">
+            <span class="status live">
+                진행중
+            </span>
+        </c:when>
 
-											<span class="status live">
-												진행중
-											</span>
+        <c:when test="${schedule.game_status eq '종료'}">
+            <span class="status complete">
+                종료
+            </span>
+        </c:when>
 
-										</c:when>
+        <c:when test="${schedule.game_status eq '경기예정'}">
+            <span class="status before">
+                경기예정
+            </span>
+        </c:when>
 
-										<c:when test="${schedule.game_status == '종료'}">
+        <c:otherwise>
+            <span class="status before">
+                ${schedule.game_status}
+            </span>
+        </c:otherwise>
 
-											<span class="status complete">
-												종료
-											</span>
+    </c:choose>
 
-										</c:when>
-
-										<c:otherwise>
-
-											<span class="status before">
-												예정
-											</span>
-
-										</c:otherwise>
-
-									</c:choose>
-
-								</div>
+</div>
 
 								<div class="schedule-manage">
 
