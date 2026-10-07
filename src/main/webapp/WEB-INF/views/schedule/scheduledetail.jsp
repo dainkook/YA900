@@ -1480,7 +1480,7 @@ body {
   $("#chatBtn").on("click", function() {
       let chat = $("#chat").val();
 
-      if("${loginId}" == "") {
+      if("${id}" == "") {
           alert("로그인이 필요한 서비스입니다.");
           return;
       }
