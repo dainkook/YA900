@@ -126,7 +126,7 @@ body {
 ========================================================= */
 
 .mypage-box {
-    width: 700px;
+    width: 900px;
 
     background: #ffffff;
 
@@ -317,8 +317,15 @@ body {
     opacity: 0.85;
 }
 
-</style>
-</head>
+.reservation-section {
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 1px solid #d6dceb;
+}
+
+.reservation-section .section-title {
+    margin-bottom: 20px;
+}
 
 /* =========================================================
    프로필 사진 변경 영역
@@ -902,7 +909,6 @@ body {
 }
 
 </style>
-
 </head>
 
 
@@ -1327,94 +1333,92 @@ body {
 
 
         </div>
-       </div>
     
     <!-- =========================
      예매 내역
-	========================= -->
-	
-	<div class="mypage-card info-card reservation-section">
-	    <h2 class="card-title">예매 내역</h2>
-	
-	    <c:choose>
-	
-	        <c:when test="${empty reservationList}">
-	            <div class="no-reservation">
-	                예매한 내역이 없습니다.
-	            </div>
-	        </c:when>
-	
-	        <c:otherwise>
-	
-	            <c:forEach var="reservation" items="${reservationList}">
-				    <div class="reservation-item">
-				
-				        <!-- 경기 정보 -->
-				        <div class="reservation-row">
-				            <div class="reservation-label">경기</div>
-				            <div class="reservation-value">
-				                ${reservation.away_team} vs ${reservation.home_team}
-				            </div>
-				        </div>
-				
-				        <!-- 경기 날짜 -->
-				        <div class="reservation-row">
-				            <div class="reservation-label">경기일</div>
-				            <div class="reservation-value">
-				                <fmt:formatDate
-				                    value="${reservation.start_date}"
-				                    pattern="yyyy-MM-dd"/>
-				            </div>
-				        </div>
-				
-				        <!-- 경기장 -->
-				        <div class="reservation-row">
-				            <div class="reservation-label">경기장</div>
-				            <div class="reservation-value">
-				                ${reservation.location}
-				            </div>
-				        </div>
-				
-				        <!-- 좌석 -->
-				        <div class="reservation-row">
-				            <div class="reservation-label">좌석</div>
-				            <div class="reservation-value">
-				                ${reservation.seat_ids}번
-				            </div>
-				        </div>
-				
-				        <!-- 가격 -->
-				        <div class="reservation-row">
-				            <div class="reservation-label">가격</div>
-				            <div class="reservation-value">
-				                <fmt:formatNumber
-				                    value="${reservation.total_price}"
-				                    pattern="#,###"/>원
-				            </div>
-				        </div>
-				
-				        <!-- 예매 상태 -->
-				        <div class="reservation-row">
-				            <div class="reservation-label">예매상태</div>
-				            <div class="reservation-value reservation-status">
-				                ${reservation.status}
-				            </div>
-				        </div>
-				
-				        <!-- 예매 취소 -->
-				        <c:if test="${reservation.status eq '예매완료'}">
-				            <button type="button"
-				                    class="cancel-btn"
-				                    onclick="cancelReservation(${reservation.reservation_id})">
-				                예매 취소
-				            </button>
-				        </c:if>
-				    </div>
-				</c:forEach>
-	        </c:otherwise>
-	    </c:choose>
-	</div>
-
+   ========================= -->
+   
+   <div class="mypage-card info-card reservation-section">
+       <h2 class="card-title">예매 내역</h2>
+   
+       <c:choose>
+   
+           <c:when test="${empty reservationList}">
+               <div class="no-reservation">
+                   예매한 내역이 없습니다.
+               </div>
+           </c:when>
+   
+           <c:otherwise>
+   
+               <c:forEach var="reservation" items="${reservationList}">
+                <div class="reservation-item">
+            
+                    <!-- 경기 정보 -->
+                    <div class="reservation-row">
+                        <div class="reservation-label">경기</div>
+                        <div class="reservation-value">
+                            ${reservation.away_team} vs ${reservation.home_team}
+                        </div>
+                    </div>
+            
+                    <!-- 경기 날짜 -->
+                    <div class="reservation-row">
+                        <div class="reservation-label">경기일</div>
+                        <div class="reservation-value">
+                            <fmt:formatDate
+                                value="${reservation.start_date}"
+                                pattern="yyyy-MM-dd"/>
+                        </div>
+                    </div>
+            
+                    <!-- 경기장 -->
+                    <div class="reservation-row">
+                        <div class="reservation-label">경기장</div>
+                        <div class="reservation-value">
+                            ${reservation.location}
+                        </div>
+                    </div>
+            
+                    <!-- 좌석 -->
+                    <div class="reservation-row">
+                        <div class="reservation-label">좌석</div>
+                        <div class="reservation-value">
+                            ${reservation.seat_ids}번
+                        </div>
+                    </div>
+            
+                    <!-- 가격 -->
+                    <div class="reservation-row">
+                        <div class="reservation-label">가격</div>
+                        <div class="reservation-value">
+                            <fmt:formatNumber
+                                value="${reservation.total_price}"
+                                pattern="#,###"/>원
+                        </div>
+                    </div>
+            
+                    <!-- 예매 상태 -->
+                    <div class="reservation-row">
+                        <div class="reservation-label">예매상태</div>
+                        <div class="reservation-value reservation-status">
+                            ${reservation.status}
+                        </div>
+                    </div>
+            
+                    <!-- 예매 취소 -->
+                    <c:if test="${reservation.status eq '예매완료'}">
+                        <button type="button"
+                                class="cancel-btn"
+                                onclick="cancelReservation(${reservation.reservation_id})">
+                            예매 취소
+                        </button>
+                    </c:if>
+                </div>
+            </c:forEach>
+           </c:otherwise>
+       </c:choose>
+   </div>
 
 
         <!-- =================================================
@@ -1720,7 +1724,7 @@ function updateUser() {
     }
 
 
-    if (!phoneRegex.test(phone)) {
+    if (!phoneRegex.test(콜)) {
 
         alert(
             "전화번호를 올바르게 입력해주세요."

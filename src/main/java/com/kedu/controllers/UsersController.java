@@ -63,6 +63,7 @@ public class UsersController {
 	public String finduserpw() {
 		return "member/finduserpw";
 	}
+	
 	@RequestMapping("/mypage")
 	public String myPage(HttpSession session, Model model) {
 
@@ -73,10 +74,10 @@ public class UsersController {
 
 	    model.addAttribute("reservationList", reservationList);
 
+	    UsersDTO loginUser = (UsersDTO) session.getAttribute("loginUser");
+	    model.addAttribute("user", loginUser);
+
 	    return "member/mypage";
-		UsersDTO loginUser=(UsersDTO) session.getAttribute("loginUser");
-		model.addAttribute("user", loginUser);
-		return "member/mypage";
 	}
 
 
