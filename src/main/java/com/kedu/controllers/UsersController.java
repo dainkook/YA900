@@ -3,6 +3,7 @@ package com.kedu.controllers;
 import java.io.File;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -20,6 +21,7 @@ import com.kedu.commons.EmailService;
 import com.kedu.commons.EncryptionUtils;
 import com.kedu.dao.PlayerDAO;
 import com.kedu.dao.UsersDAO;
+import com.kedu.dao.admin.ReservationDAO;
 import com.kedu.dto.MyTeamDTO;
 import com.kedu.dto.PlayerDTO;
 import com.kedu.dto.UsersDTO;
@@ -37,6 +39,9 @@ public class UsersController {
 
 	@Autowired
 	private EmailService emailService;
+	
+	@Autowired
+	private ReservationDAO reservationDAO;
 	
 
 	@RequestMapping("/signup")
@@ -60,6 +65,15 @@ public class UsersController {
 	}
 	@RequestMapping("/mypage")
 	public String myPage(HttpSession session, Model model) {
+
+	    String id = (String) session.getAttribute("id");
+
+	    List<Map<String, Object>> reservationList =
+	            reservationDAO.selectMyReservations(id);
+
+	    model.addAttribute("reservationList", reservationList);
+
+	    return "member/mypage";
 		UsersDTO loginUser=(UsersDTO) session.getAttribute("loginUser");
 		model.addAttribute("user", loginUser);
 		return "member/mypage";
