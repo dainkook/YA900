@@ -522,9 +522,7 @@ body {
 
 				경기 관리
 
-				<div class="page-subtitle">
-					등록된 경기 일정을 관리할 수 있습니다.
-				</div>
+				<div class="page-subtitle">등록된 경기 일정을 관리할 수 있습니다.</div>
 
 			</div>
 
@@ -536,24 +534,15 @@ body {
 
 						<option value="all"
 							${searchType == 'all' || empty searchType ? 'selected' : ''}>
-							전체
-						</option>
+							전체</option>
 
-						<option value="team"
-							${searchType == 'team' ? 'selected' : ''}>
-							팀
-						</option>
+						<option value="team" ${searchType == 'team' ? 'selected' : ''}>
+							팀</option>
 
 						<option value="location"
-							${searchType == 'location' ? 'selected' : ''}>
-							구장
-						</option>
+							${searchType == 'location' ? 'selected' : ''}>구장</option>
 
-					</select>
-
-					<input type="text"
-						name="keyword"
-						value="${keyword}"
+					</select> <input type="text" name="keyword" value="${keyword}"
 						placeholder="검색어를 입력하세요.">
 
 					<button type="submit">검색</button>
@@ -570,14 +559,10 @@ body {
 
 					<div>
 
-						<span class="schedule-count">
-							총 <strong>${page.recordCount}</strong> 건
-						</span>
-
-						<a class="write-btn"
-							href="/admin/schedule/write">
-							+ 경기 등록
-						</a>
+						<span class="schedule-count"> 총 <strong>${page.recordCount}</strong>
+							건
+						</span> <a href="${pageContext.request.contextPath}/admin/schedule/write"
+							class="write-btn"> 경기 등록 </a>
 
 					</div>
 
@@ -607,23 +592,18 @@ body {
 
 							<div class="schedule-row">
 
-								<div class="schedule-no">
-									${schedule.game_id}
-								</div>
+								<div class="schedule-no">${schedule.game_id}</div>
 
 								<div class="schedule-date">
 
 									<div class="game-date">
 
-										<fmt:formatDate
-											value="${schedule.start_date}"
+										<fmt:formatDate value="${schedule.start_date}"
 											pattern="yyyy-MM-dd" />
 
 										<br>
 
-										<fmt:formatDate
-											value="${schedule.start_date}"
-											pattern="HH:mm" />
+										<fmt:formatDate value="${schedule.start_date}" pattern="HH:mm" />
 
 									</div>
 
@@ -643,15 +623,11 @@ body {
 
 											</c:if>
 
-											<span>
-												${schedule.home_team}
-											</span>
+											<span> ${schedule.home_team} </span>
 
 										</div>
 
-										<div class="vs">
-											VS
-										</div>
+										<div class="vs">VS</div>
 
 										<div class="team">
 
@@ -663,9 +639,7 @@ body {
 
 											</c:if>
 
-											<span>
-												${schedule.away_team}
-											</span>
+											<span> ${schedule.away_team} </span>
 
 										</div>
 
@@ -673,49 +647,37 @@ body {
 
 								</div>
 
-								<div class="schedule-location">
-									${schedule.location}
-								</div>
+								<div class="schedule-location">${schedule.location}</div>
 
 								<div class="schedule-status">
 
-    <c:choose>
+									<c:choose>
 
-        <c:when test="${schedule.game_status eq '진행중'}">
-            <span class="status live">
-                진행중
-            </span>
-        </c:when>
+										<c:when test="${schedule.game_status eq '진행중'}">
+											<span class="status live"> 진행중 </span>
+										</c:when>
 
-        <c:when test="${schedule.game_status eq '종료'}">
-            <span class="status complete">
-                종료
-            </span>
-        </c:when>
+										<c:when test="${schedule.game_status eq '종료'}">
+											<span class="status complete"> 종료 </span>
+										</c:when>
 
-        <c:when test="${schedule.game_status eq '경기예정'}">
-            <span class="status before">
-                경기예정
-            </span>
-        </c:when>
+										<c:when test="${schedule.game_status eq '경기예정'}">
+											<span class="status before"> 경기예정 </span>
+										</c:when>
 
-        <c:otherwise>
-            <span class="status before">
-                ${schedule.game_status}
-            </span>
-        </c:otherwise>
+										<c:otherwise>
+											<span class="status before"> ${schedule.game_status} </span>
+										</c:otherwise>
 
-    </c:choose>
+									</c:choose>
 
-</div>
+								</div>
 
 								<div class="schedule-manage">
 
-									<a
-										class="detail-btn"
+									<a class="detail-btn"
 										href="/admin/schedule/detail?game_id=${schedule.game_id}">
-										상세
-									</a>
+										상세 </a>
 
 								</div>
 
@@ -727,9 +689,7 @@ body {
 
 					<c:otherwise>
 
-						<div class="empty">
-							등록된 경기 정보가 없습니다.
-						</div>
+						<div class="empty">등록된 경기 정보가 없습니다.</div>
 
 					</c:otherwise>
 
@@ -751,16 +711,13 @@ body {
 
 							<a
 								href="/admin/schedule/search?searchType=${searchType}&keyword=${keyword}&cpage=${page.startPage - 1}">
-								◀
-							</a>
+								◀ </a>
 
 						</c:when>
 
 						<c:otherwise>
 
-							<a href="/admin/schedule?cpage=${page.startPage - 1}">
-								◀
-							</a>
+							<a href="/admin/schedule?cpage=${page.startPage - 1}"> ◀ </a>
 
 						</c:otherwise>
 
@@ -768,10 +725,7 @@ body {
 
 				</c:if>
 
-				<c:forEach
-					var="i"
-					begin="${page.startPage}"
-					end="${page.endPage}">
+				<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
 
 					<c:choose>
 
@@ -779,19 +733,14 @@ body {
 
 							<a
 								href="/admin/schedule/search?searchType=${searchType}&keyword=${keyword}&cpage=${i}"
-								class="${i == page.currentPage ? 'active' : ''}">
-								${i}
-							</a>
+								class="${i == page.currentPage ? 'active' : ''}"> ${i} </a>
 
 						</c:when>
 
 						<c:otherwise>
 
-							<a
-								href="/admin/schedule?cpage=${i}"
-								class="${i == page.currentPage ? 'active' : ''}">
-								${i}
-							</a>
+							<a href="/admin/schedule?cpage=${i}"
+								class="${i == page.currentPage ? 'active' : ''}"> ${i} </a>
 
 						</c:otherwise>
 
@@ -807,17 +756,13 @@ body {
 
 							<a
 								href="/admin/schedule/search?searchType=${searchType}&keyword=${keyword}&cpage=${page.endPage + 1}">
-								▶
-							</a>
+								▶ </a>
 
 						</c:when>
 
 						<c:otherwise>
 
-							<a
-								href="/admin/schedule?cpage=${page.endPage + 1}">
-								▶
-							</a>
+							<a href="/admin/schedule?cpage=${page.endPage + 1}"> ▶ </a>
 
 						</c:otherwise>
 
@@ -829,9 +774,7 @@ body {
 
 		</div>
 
-		<div class="footer">
-			YA900 ADMIN
-		</div>
+		<div class="footer">YA900 ADMIN</div>
 
 	</div>
 
