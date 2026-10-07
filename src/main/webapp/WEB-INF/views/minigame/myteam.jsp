@@ -15,7 +15,7 @@
 <style>
 * {
 	box-sizing: border-box;
-
+}
 body {
 	margin: 0;
 	background: linear-gradient(to bottom, #111936 0%, #111936 12%, #171f46 22%, #252f67
@@ -24,7 +24,6 @@ body {
 	color: #18213f;
 	min-height: 100vh;
 }
-
 .header {
 	width: 100%;
 	height: 100px;
@@ -47,9 +46,7 @@ body {
 	color: white;
 	letter-spacing: 1px;
 }
-.header>.logo:hover {
-	cursor:pointer;
-}
+
 .main-menu {
 	height: 100%;
 	display: flex;
@@ -122,43 +119,44 @@ body {
    로그인 / 회원가입
 ========================= */
 .member-menu {
-	font-size: 14px;
-	margin-left: auto;
+    font-size: 14px;
+    margin-left: auto;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    white-space: nowrap;
 }
 
-.login-btn, .sign-btn {
-	border: 1px solid #7180b1;
-	background: transparent;
-	color: white;
-	border-radius: 5px;
-	transition: 0.2s ease;
+.member-menu form {
+    display: flex;
+    margin: 0;
 }
 
-.login-btn:hover, .sign-btn:hover {
-	background: #476aaa;
-	border-color: #476aaa;
-	color: white;
+.member-menu span {
+    color: white;
+    font-weight: bold;
+    white-space: nowrap;
 }
 
-.user-menu {
-	margin-left: auto;
-	display: flex;
-	gap: 8px;
+.login-btn,
+.sign-btn {
+    border: 1px solid #7180b1;
+    background: transparent;
+    color: white;
+    border-radius: 5px;
+    padding: 6px 10px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: 0.2s ease;
 }
 
-.user-menu button {
-	background: transparent;
-	border: 1px solid #7180b1;
-	border-radius: 5px;
-	padding: 8px 15px;
-	color: white;
-	cursor: pointer;
-	transition: 0.2s ease;
-}
-
-.user-menu button:hover {
-	background: #476aaa;
-	border-color: #476aaa;
+.login-btn:hover,
+.sign-btn:hover {
+    background: #476aaa;
+    border-color: #476aaa;
+    color: white;
 }
 /* =========================
    CONTAINER
@@ -169,7 +167,46 @@ body {
 	max-width: calc(100% - 40px);
 	margin: 110px auto 40px;
 }
+.quick-menu {
+	width: 280px;
+	position: fixed;
+	left: -250px;
+	top: 50%;
+	transform: translateY(-50%);
+	border: 1px solid #3b4778;
+	transition: left 0.5s ease;
+	z-index: 1000;
+	background: #111936;
+	color: white;
+	box-shadow: 5px 8px 25px rgba(10, 15, 35, 0.18);
+}
 
+.quick-menu:hover {
+	left: 0;
+}
+
+.quick-menu div {
+	width: 100%;
+	height: 55px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	border-bottom: 1px solid #303b68;
+}
+
+.quick-menu div:last-child {
+	border-bottom: none;
+}
+
+.quick-menu div:hover {
+	background: #252f67;
+}
+
+.quick-menu .menu, .quick-menu .menu:hover {
+	background: #476aaa;
+	color: white;
+}
 /* =========================
    PAGE TITLE
 ========================= */
@@ -570,6 +607,42 @@ body {
 	background: #3d5e97;
 	box-shadow: 0 3px 8px rgba(71, 106, 170, 0.2);
 }
+.reset-btn {
+    width: 150px;
+    height: 48px;
+    margin-left: 8px;
+    border: 1px solid #d1d5db;
+    border-radius: 7px;
+    background: white;
+    color: #555;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.reset-btn:hover {
+    background: #f1f3f6;
+    border-color: #aeb4bd;
+}
+.home-btn {
+    width: 150px;
+    height: 48px;
+    margin-left: 8px;
+    border: 1px solid #d1d5db;
+    border-radius: 7px;
+    background: white;
+    color: #555;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.home-btn:hover {
+    background: #f1f3f6;
+    border-color: #aeb4bd;
+}
 
 /* =========================
    SCROLLBAR
@@ -596,57 +669,97 @@ body {
 </head>
 
 <body>
-
 	<div class="header">
 
 		<div class="logo" onclick="location.href='/'">YA900</div>
 
+		<!-- 메인 메뉴 -->
 		<nav class="main-menu">
 
+			<!-- 야구 -->
 			<div class="menu-item">
 				<a href="#">야구</a>
 
 				<div class="sub-menu">
-					<a href="#">예매</a>
-					<a href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a>
-					<a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a>
-					<a href="${pageContext.request.contextPath}/schedule/rankdetail?tab=pitcher">선수순위</a>
+					<a href="#">예매</a> 
+					<a href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a> 
+					<a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a> 
+					<a href="${pageContext.request.contextPath}/schedule/rankdetail?tab=pitcher">선수순위</a> 
 					<a href="${pageContext.request.contextPath}/board/board?cpage=1">게시판</a>
 				</div>
 			</div>
 
+			<!-- 축구 -->
 			<div class="menu-item">
 				<a href="#">축구</a>
 
 				<div class="sub-menu">
-					<a href="#">예매</a>
-					<a href="#">경기일정</a>
-					<a href="#">팀순위</a>
-					<a href="#">선수순위</a>
+					<a href="#">예매</a> 
+					<a href="#">경기일정</a> 
+					<a href="#">팀순위</a> 
+					<a href="#">선수순위</a> 
 					<a href="#">게시판</a>
 				</div>
 			</div>
 
+			<!-- 미니게임 -->
 			<div class="menu-item">
 				<a href="#">미니게임</a>
 
 				<div class="sub-menu">
-					<a href="#">상식 퀴즈</a>
-					<a href="#">OX 퀴즈</a>
-					<a href="#">승부예측</a>
+					<a href="${pageContext.request.contextPath}/quiz">상식 퀴즈</a> 
+					<a href="${pageContext.request.contextPath}/myteam">나만의 팀</a> 
+					<a href="${pageContext.request.contextPath}/prediction">승부예측</a> 
 					<a href="#">게임 랭킹</a>
 				</div>
 			</div>
-
 		</nav>
 
 		<div class="member-menu">
-			<button class="login-btn" onclick="location.href='login'">로그인</button>
-			<button class="sign-btn" onclick="location.href='signup'">회원가입</button>
+
+    <c:choose>
+
+        <c:when test="${not empty sessionScope.id}">
+            <span>${sessionScope.id}님</span>
+
+            <button class="login-btn"
+                    onclick="location.href='${pageContext.request.contextPath}/mypage'">
+                마이페이지
+            </button>
+
+            <form action="${pageContext.request.contextPath}/logout"
+                  method="post">
+                <button type="submit" class="sign-btn">
+                    로그아웃
+                </button>
+            </form>
+        </c:when>
+
+        <c:otherwise>
+            <button class="login-btn"
+                    onclick="location.href='${pageContext.request.contextPath}/login'">
+                로그인
+            </button>
+
+            <button class="sign-btn"
+                    onclick="location.href='${pageContext.request.contextPath}/signup'">
+                회원가입
+            </button>
+        </c:otherwise>
+
+    </c:choose>
+			
+			
 		</div>
 
 	</div>
-
+	<div class="quick-menu">
+		    <div class="menu">QUICK MENU</div>
+		    <div onclick="location.href='${pageContext.request.contextPath}/'">홈</div>
+		    <div onclick="location.href='${pageContext.request.contextPath}/#reservation'">예매</div>
+		    <div onclick="location.href='${pageContext.request.contextPath}/board/board?cpage=1'">게시판</div>
+		    <div onclick="location.href='${pageContext.request.contextPath}/mypage'">마이페이지</div>
+		</div>
 	<div class="container">
 
 		<div class="title">나만의 팀</div>
@@ -765,6 +878,7 @@ body {
 						<button type="button" data-position="좌익수">좌익수</button>
 						<button type="button" data-position="중견수">중견수</button>
 						<button type="button" data-position="우익수">우익수</button>
+						<button type="button" data-position="포수">포수</button>
 
 					</div>
 
@@ -794,7 +908,9 @@ body {
 			</div>
 
 			<div class="save-area">
-				<button type="submit" class="save-btn">팀 저장</button>
+			    <button type="submit" class="save-btn">팀 저장</button>
+			    <button type="button" class="reset-btn" id="resetBtn">초기화</button>
+			    <button type="button" class="home-btn" onclick="location.href='${pageContext.request.contextPath}/'">홈으로</button>
 			</div>
 
 		</form>
@@ -802,121 +918,198 @@ body {
 	</div>
 
 	<script>
+		let savedPlayers = [];
 
-	$(function() {
+		<c:forEach var="player" items="${myPlayerList}">
+		savedPlayers.push({
+			name : "${player.player_name}",
+			position : "${player.player_position}",
+			team : "${player.player_team}"
+		});
+		</c:forEach>
+	</script>
 
-		$(".position-filter button").click(function() {
+	<script>
+		
+		$(function() {
 
-			$(".position-filter button").removeClass("active");
-			$(this).addClass("active");
+			savedPlayers.forEach(function(player) {
 
-			let position = $(this).text().trim();
+				let positionButton = $(".position[data-position='"
+						+ player.position + "']");
 
-			if (position === "전체") {
-				$(".player-card").show();
-				return;
-			}
+				positionButton.find(".selected-player").text(player.name);
 
-			$(".player-card").each(function() {
+				$("#" + player.position).val(player.name);
 
-				let playerPosition = $(this)
-					.find(".player-position")
-					.text()
-					.trim();
-
-				if (playerPosition === position) {
-					$(this).show();
-				} else {
-					$(this).hide();
-				}
-
+				$(".selected-player-list").append(
+						"<div class='selected-player-row' data-position='" + player.position + "'>"
+								+ "<span class='player-name'>" + player.name
+								+ "</span>" + "<span class='player-position'>"
+								+ player.position + "</span>"
+								+ "<span class='player-team'>" + player.team
+								+ "</span>" + "</div>");
 			});
 
+			$(".position-filter button").click(
+					function() {
+
+						$(".position-filter button").removeClass("active");
+						$(this).addClass("active");
+
+						let position = $(this).text().trim();
+
+						if (position === "전체") {
+							$(".player-card").show();
+							return;
+						}
+
+						$(".player-card").each(
+								function() {
+
+									let playerPosition = $(this).find(
+											".player-position").text().trim();
+
+									if (playerPosition === position) {
+										$(this).show();
+									} else {
+										$(this).hide();
+									}
+								});
+					});
+
+			let selectedPosition = null;
+
+			$(".position").click(
+					function() {
+
+						selectedPosition = $(this).data("position");
+
+						$(".position").removeClass("selected");
+						$(this).addClass("selected");
+
+						$(".position-filter button").removeClass("active");
+						$(
+								".position-filter button[data-position='"
+										+ selectedPosition + "']").addClass(
+								"active");
+
+						$(".player-card").each(
+								function() {
+
+									let playerPosition = $(this).find(
+											".player-position").text().trim();
+
+									if (playerPosition === selectedPosition) {
+										$(this).show();
+									} else {
+										$(this).hide();
+									}
+								});
+					});
+
+			$(".player-card")
+					.click(
+							function() {
+
+								if (selectedPosition === null) {
+									alert("먼저 포지션을 선택해주세요.");
+									return;
+								}
+
+								let playerName = $(this).find(".player-name")
+										.text().trim();
+
+								let playerPosition = $(this).find(
+										".player-position").text().trim();
+
+								let playerTeam = $(this).find(".player-team")
+										.text().trim();
+
+								let positionButton = $(".position[data-position='"
+										+ selectedPosition + "']");
+
+								positionButton.find(".selected-player").text(
+										playerName);
+
+								$("#" + selectedPosition).val(playerName);
+
+								$(".position").removeClass("selected");
+								positionButton.addClass("selected");
+
+								let selectedRow = $(".selected-player-row[data-position='"
+										+ selectedPosition + "']");
+
+								if (selectedRow.length > 0) {
+
+									selectedRow.find(".player-name").text(
+											playerName);
+									selectedRow.find(".player-position").text(
+											playerPosition);
+									selectedRow.find(".player-team").text(
+											playerTeam);
+
+								} else {
+
+									$(".selected-player-list")
+											.append(
+													"<div class='selected-player-row' data-position='" + selectedPosition + "'>"
+															+ "<span class='player-name'>"
+															+ playerName
+															+ "</span>"
+															+ "<span class='player-position'>"
+															+ playerPosition
+															+ "</span>"
+															+ "<span class='player-team'>"
+															+ playerTeam
+															+ "</span>"
+															+ "</div>");
+								}
+							});
+
 		});
+		
+		$("#resetBtn").click(function() {
 
-	});
+		    if (!confirm("선택한 팀을 모두 초기화하시겠습니까?")) {
+		        return;
+		    }
 
-	$(function() {
+		    $(".position .selected-player").text("");
+		    $(".field input[type='hidden']").val("");
+		    
+		    $(".position").removeClass("selected");
+		    
+		    $(".selected-player-list").empty();
+		    
+		    selectedPosition = null;
+		    
+		    $(".position-filter button").removeClass("active");
+		    $(".position-filter button[data-position='전체']").addClass("active");
 
-		let selectedPosition = null;
-
-		// 포지션 선택
-		$(".position").click(function() {
-
-			selectedPosition = $(this).data("position");
-
-			// 왼쪽 포지션 활성화
-			$(".position").removeClass("selected");
-			$(this).addClass("selected");
-
-			// 오른쪽 선수 목록도 해당 포지션만 표시
-			$(".player-card").each(function() {
-
-				let playerPosition = $(this)
-					.find(".player-position")
-					.text()
-					.trim();
-
-				if (playerPosition === selectedPosition) {
-					$(this).show();
-				} else {
-					$(this).hide();
-				}
-
-			});
-
+		    $(".player-card").show();
 		});
+		
+		$("form").submit(function(e) {
 
-		// 선수 선택
-		$(".player-card").click(function() {
+		    let incomplete = false;
 
-			if (selectedPosition === null) {
-				alert("먼저 포지션을 선택해주세요.");
-				return;
-			}
+		    $(".position").each(function() {
 
-			let playerName = $(this)
-				.find(".player-name")
-				.text()
-				.trim();
+		        let player = $(this).find(".selected-player").text().trim();
 
-			let playerPosition = $(this)
-				.find(".player-position")
-				.text()
-				.trim();
+		        if (player === "") {
+		            incomplete = true;
+		            return false;
+		        }
+		    });
 
-			let playerTeam = $(this)
-				.find(".player-team")
-				.text()
-				.trim();
-
-			// 선택한 포지션 버튼
-			let positionButton = $(".position[data-position='" + selectedPosition + "']");
-
-			// 선수 이름 넣기
-			positionButton.find(".selected-player").text(playerName);
-			$("#" + selectedPosition).val(playerName);
-
-			// 선택 상태 유지
-			positionButton.addClass("selected");
-
-			console.log("선택한 포지션 : [" + selectedPosition + "]");
-			console.log("선수 이름 : [" + playerName + "]");
-			console.log("hidden input : ", $("#" + selectedPosition));
-			console.log("hidden 값 : ", $("#" + selectedPosition).val());
-
-			// 아래 팀 정보에도 표시
-			$(".selected-player-list").append(
-				"<div class='selected-player-row'>" +
-					"<span class='player-name'>" + playerName + "</span>" +
-					"<span class='player-position'>" + playerPosition + "</span>" +
-					"<span class='player-team'>" + playerTeam + "</span>" +
-				"</div>"
-			);
-
+		    if (incomplete) {
+		        e.preventDefault();
+		        alert("팀 선택이 완료되지 않았습니다.");
+		        return false;
+		    }
 		});
-
-	});
 	</script>
 
 </body>

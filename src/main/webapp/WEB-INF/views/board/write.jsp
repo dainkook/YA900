@@ -21,11 +21,16 @@
 	box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
 	margin: 0;
-	background-color: #f5f6f8;
-	font-family: Arial, sans-serif;
-	color: #222;
+	background: linear-gradient(to bottom, #111936 0%, #111936 15%, #0b1026 25%, #171f46
+		35%, #252f67 48%, #71809f 65%, #aeb7ca 76%, #d5dae5 86%, #eef1f8 94%,
+		#eef1f8 100%);
+	color: #18213f;
 }
 
 /* =========================
@@ -346,85 +351,144 @@ body {
 	border-color: #354d91 !important;
 }
 
-/* 반응형 */
-@media ( max-width : 1240px) {
-	.container {
-		width: calc(100% - 40px);
-	}
+/* =========================
+   퀵 메뉴
+========================= */
+.quick-menu {
+	width: 280px;
+	position: fixed;
+	left: -250px;
+	top: 50%;
+	transform: translateY(-50%);
+	border: 1px solid #3b4778;
+	transition: left 0.5s ease;
+	z-index: 1000;
+	background: #111936;
+	color: white;
+	box-shadow: 5px 8px 25px rgba(10, 15, 35, 0.18);
 }
 
-@media ( max-width : 768px) {
-	.header {
-		padding: 0 20px;
-	}
-	.logo {
-		margin-right: 25px;
-		font-size: 25px;
-	}
-	.main-menu {
-		gap: 15px;
-	}
-	.menu-item>a {
-		font-size: 14px;
-	}
-	.member-menu {
-		display: none;
-	}
-	.container {
-		width: calc(100% - 24px);
-		margin-top: 25px;
-	}
-	.container>form>.body {
-		padding: 0 18px;
-	}
-	.page-heading h2 {
-		font-size: 23px;
-	}
+.quick-menu:hover {
+	left: 0;
+}
+
+.quick-menu div {
+	width: 100%;
+	height: 55px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	border-bottom: 1px solid #303b68;
+}
+
+.quick-menu div:last-child {
+	border-bottom: none;
+}
+
+.quick-menu div:hover {
+	background: #252f67;
+}
+
+.quick-menu .menu, .quick-menu .menu:hover {
+	background: #476aaa;
+	color: white;
+}
+.header>.logo:hover {
+	cursor: pointer;
 }
 </style>
 </head>
-
 <body>
-
+	<!-- HEADER -->
 	<div class="header">
 
 		<div class="logo" onclick="location.href='/'">YA900</div>
 
+		<!-- 메인 메뉴 -->
 		<nav class="main-menu">
 
+			<!-- 야구 -->
 			<div class="menu-item">
 				<a href="#">야구</a>
+
 				<div class="sub-menu">
-					<a href="#">예매</a> <a href="#">경기일정</a> <a href="#">팀순위</a> <a
-						href="#">선수순위</a> <a href="#">게시판</a>
+					<a href="#">예매</a> 
+					<a href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a> 
+					<a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a> 
+					<a href="#">선수순위</a> 
+					<a href="${pageContext.request.contextPath}/board/board?cpage=1">게시판</a>
 				</div>
 			</div>
 
+			<!-- 축구 -->
 			<div class="menu-item">
 				<a href="#">축구</a>
+
 				<div class="sub-menu">
-					<a href="#">예매</a> <a href="#">경기일정</a> <a href="#">팀순위</a> <a
-						href="#">선수순위</a> <a href="#">게시판</a>
+					<a href="#">예매</a> 
+					<a href="#">경기일정</a> 
+					<a href="#">팀순위</a> 
+					<a href="#">선수순위</a> 
+					<a href="#">게시판</a>
 				</div>
 			</div>
 
+			<!-- 미니게임 -->
 			<div class="menu-item">
 				<a href="#">미니게임</a>
+
 				<div class="sub-menu">
-					<a href="#">상식 퀴즈</a> <a href="#">OX 퀴즈</a> <a href="#">승부예측</a> <a
-						href="#">게임 랭킹</a>
+					<a href="#">상식 퀴즈</a> 
+					<a href="#">OX 퀴즈</a> 
+					<a href="#">승부예측</a> 
+					<a href="#">게임 랭킹</a>
 				</div>
 			</div>
-
 		</nav>
 
 		<div class="member-menu">
-			<button class="login-btn" onclick="location.href='/login'">로그인</button>
-			<button class="sign-btn" onclick="location.href='/signup'">회원가입</button>
+
+    <c:choose>
+
+        <c:when test="${not empty sessionScope.id}">
+            <span>${sessionScope.id}님</span>
+
+            <button class="login-btn"
+                    onclick="location.href='${pageContext.request.contextPath}/mypage'">
+                마이페이지
+            </button>
+
+            <form action="${pageContext.request.contextPath}/logout"
+                  method="post">
+                <button type="submit" class="sign-btn">
+                    로그아웃
+                </button>
+            </form>
+        </c:when>
+
+        <c:otherwise>
+            <button class="login-btn"
+                    onclick="location.href='${pageContext.request.contextPath}/login'">
+                로그인
+            </button>
+
+            <button class="sign-btn"
+                    onclick="location.href='${pageContext.request.contextPath}/signup'">
+                회원가입
+            </button>
+        </c:otherwise>
+    </c:choose>
 		</div>
-
 	</div>
-
+	<!-- 오른쪽 퀵메뉴 -->
+	<div class="quick-menu">
+		   <div class="menu">QUICK MENU</div>
+		   <div onclick="location.href='${pageContext.request.contextPath}/'">홈</div>
+		   <div onclick="location.href='${pageContext.request.contextPath}/#reservation'">예매</div>
+		   <div onclick="location.href='${pageContext.request.contextPath}/board/board?cpage=1'">게시판</div>
+		   <div>마이페이지</div>
+	</div>
 	<div class="container">
 
 		<div class="page-heading">

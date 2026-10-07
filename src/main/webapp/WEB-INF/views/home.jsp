@@ -559,6 +559,11 @@ body {
 	color: #36405d;
 }
 
+.board-item a {
+	text-decoration: none;
+	color: inherit;
+}
+
 /* =========================
    랭킹
 ========================= */
@@ -1323,13 +1328,17 @@ body {
 ::-webkit-scrollbar-thumb:hover {
 	background: #7189c2;
 }
+
+.header>.logo:hover {
+	cursor: pointer;
+}
 </style>
 <body>
 
 	<!-- HEADER -->
 	<div class="header">
 
-		<div class="logo">YA900</div>
+		<div class="logo" onclick="location.href='/'">YA900</div>
 
 		<!-- 메인 메뉴 -->
 		<nav class="main-menu">
@@ -1342,7 +1351,7 @@ body {
 					<a href="#">예매</a> 
 					<a href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a> 
 					<a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a> 
-					<a href="#">선수순위</a> 
+					<a href="${pageContext.request.contextPath}/schedule/rankdetail?tab=pitcher">선수순위</a> 
 					<a href="${pageContext.request.contextPath}/board/board?cpage=1">게시판</a>
 				</div>
 			</div>
@@ -1365,9 +1374,9 @@ body {
 				<a href="#">미니게임</a>
 
 				<div class="sub-menu">
-					<a href="#">상식 퀴즈</a> 
-					<a href="#">OX 퀴즈</a> 
-					<a href="#">승부예측</a> 
+					<a href="${pageContext.request.contextPath}/quiz">상식 퀴즈</a> 
+					<a href="${pageContext.request.contextPath}/myteam">나만의 팀</a> 
+					<a href="${pageContext.request.contextPath}/prediction">승부예측</a> 
 					<a href="#">게임 랭킹</a>
 				</div>
 			</div>
@@ -1557,7 +1566,7 @@ body {
 				
 				<c:forEach var="board" items="${recentBoards}">
 				    <div class="board-item">
-				        ${board.title}
+				        <a href="/board/detail?seq=${board.board_seq}">${board.title}</a>
 				    </div>
 				</c:forEach>
 			</div>
@@ -1704,17 +1713,14 @@ body {
 				<button type="button" class="more-btn">더보기</button>
 			</div>
 		</div>
-
-		<!-- 오른쪽 퀵메뉴 -->
+		</div>
 	<!-- 오른쪽 퀵메뉴 -->
 		<div class="quick-menu">
 		    <div class="menu">QUICK MENU</div>
 		    <div onclick="location.href='${pageContext.request.contextPath}/'">홈</div>
 		    <div onclick="location.href='${pageContext.request.contextPath}/#reservation'">예매</div>
-		    <div>승부예측</div>
-		    <div onclick="location.href='${pageContext.request.contextPath}/myteam'">나만의 팀</div>
-		    <div>야구 상식퀴즈</div>
-		    <div>마이페이지</div>
+		    <div onclick="location.href='${pageContext.request.contextPath}/board/board?cpage=1'">게시판</div>
+		    <div onclick="location.href='${pageContext.request.contextPath}/mypage'">마이페이지</div>
 		</div>
 		<div class="bottom-menu">
 

@@ -25,6 +25,7 @@ import com.kedu.dto.BoardDTO;
 import com.kedu.dto.FilesDTO;
 import com.kedu.dto.LiveChatDTO;
 import com.kedu.dto.ReplyDTO;
+import com.kedu.dto.ReportDTO;
 
 @Controller
 @RequestMapping("/board")
@@ -201,5 +202,27 @@ public class BoardController {
 	public String replyUpdate(ReplyDTO dto) throws Exception {
 		dao.updateReply(dto);
 		return "redirect:/board/detail?seq=" + dto.getParent_seq();
+	}
+	
+	@RequestMapping("/replyDelete")
+	public String replyDelete(int reply_seq, int parent_seq) throws Exception {
+		dao.deleteReply(reply_seq);
+		return "redirect:/board/detail?seq=" + parent_seq;
+	}
+	
+	@RequestMapping("/report")
+	public String report() throws Exception {
+		return "/board/report";
+	}
+	
+	@RequestMapping("/reportComplete")
+	public String reportComplete(ReportDTO dto) throws Exception {
+		dao.addReport(dto);
+		if(dto.getTarget_type().equals("°Ô½ÃÆÇ")) {
+		return "redirect:/board/detail?seq=" + dto.getTarget_seq();
+		} else {
+			int seq = dao.whereReply(dto.getTarget_seq());
+			return "redirect:/board/detail?seq=" + seq;
+		}
 	}
 }

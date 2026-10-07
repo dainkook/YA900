@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.kedu.dto.BoardDTO;
 import com.kedu.dto.LiveChatDTO;
 import com.kedu.dto.ReplyDTO;
+import com.kedu.dto.ReportDTO;
 
 @Repository
 public class BoardDAO {
@@ -141,5 +142,20 @@ public class BoardDAO {
 	public int updateReply(ReplyDTO dto) {
 		String sql = "update reply set contents=?, write_date=sysdate where reply_seq=?";
 		return jdbc.update(sql, dto.getContents(), dto.getReply_seq());
+	}
+	
+	public int deleteReply(int reply_seq) {
+		String sql = "delete from reply where reply_seq = ?";
+		return jdbc.update(sql, reply_seq);
+	}
+	
+	public int addReport(ReportDTO dto) {
+		String sql = "insert into report values(report_seq.nextval, ?, ?, ?, ?, ?, ?, ?, 'πÃ»Æ¿Œ', sysdate)";
+		return jdbc.update(sql, dto.getTarget_contents(), dto.getTarget_type(), dto.getTarget_seq(), dto.getParent_seq(), dto.getTarget_id(), dto.getReporter(), dto.getReport_type());
+	}
+	
+	public int whereReply(int reply_seq) {
+		String sql = "select parent_seq from reply where reply_seq = ?";
+		return jdbc.queryForObject(sql, Integer.class, reply_seq);
 	}
 }
