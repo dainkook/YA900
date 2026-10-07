@@ -53,7 +53,7 @@ public class ScheduleController {
 
 	@RequestMapping("/schedule")
 	public String schedule(@RequestParam(value = "month", required = false) Integer month, Model model) {
-
+		
 		Calendar calendar = Calendar.getInstance();
 
 		if (month == null) {

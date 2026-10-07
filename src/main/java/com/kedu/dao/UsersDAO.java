@@ -89,4 +89,10 @@ public class UsersDAO {
 		return jdbc.update(sql, newPw, id);
 
 	}
+	
+	public int updateUser(String id, String phone, String email, String zipcode, String address1, String address2, String team, String profile_img) {
+		String sql = "update users set phone=?, email=?, zipcode=?, address1=?, address2=?, team=?, profile_img=? where id=?";
+		return jdbc.update(sql, phone, email, zipcode, address1, address2, team, profile_img, id);
+		
+	}
 }

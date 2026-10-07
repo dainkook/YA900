@@ -1342,7 +1342,7 @@ body {
 					<a href="#">예매</a> 
 					<a href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a> 
 					<a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a> 
-					<a href="#">선수순위</a> 
+					<a href="${pageContext.request.contextPath}/schedule/rankdetail?tab=pitcher">선수순위</a> 
 					<a href="${pageContext.request.contextPath}/board/board?cpage=1">게시판</a>
 				</div>
 			</div>
@@ -1365,9 +1365,9 @@ body {
 				<a href="#">미니게임</a>
 
 				<div class="sub-menu">
-					<a href="#">상식 퀴즈</a> 
-					<a href="#">OX 퀴즈</a> 
-					<a href="#">승부예측</a> 
+					<a href="${pageContext.request.contextPath}/quiz">상식 퀴즈</a> 
+					<a href="${pageContext.request.contextPath}/myteam">나만의 팀</a> 
+					<a href="${pageContext.request.contextPath}/prediction">승부예측</a> 
 					<a href="#">게임 랭킹</a>
 				</div>
 			</div>
@@ -1377,8 +1377,8 @@ body {
 
     <c:choose>
 
-        <c:when test="${not empty sessionScope.id}">
-            <span>${sessionScope.id}님</span>
+        <c:when test="${not empty sessionScope.loginUser}">
+            <span>${sessionScope.loginUser.id}님</span>
 
             <button class="login-btn"
                     onclick="location.href='${pageContext.request.contextPath}/mypage'">
@@ -1711,9 +1711,9 @@ body {
 		    <div class="menu">QUICK MENU</div>
 		    <div onclick="location.href='${pageContext.request.contextPath}/'">홈</div>
 		    <div onclick="location.href='${pageContext.request.contextPath}/#reservation'">예매</div>
-		    <div>승부예측</div>
+		    <div onclick="location.href='${pageContext.request.contextPath}/prediction'">승부예측</div>
 		    <div onclick="location.href='${pageContext.request.contextPath}/myteam'">나만의 팀</div>
-		    <div>야구 상식퀴즈</div>
+		    <div onclick="location.href='${pageContext.request.contextPath}/quiz'">야구 상식퀴즈</div>
 		    <div>마이페이지</div>
 		</div>
 		<div class="bottom-menu">

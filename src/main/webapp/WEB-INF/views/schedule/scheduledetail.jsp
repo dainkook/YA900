@@ -875,9 +875,9 @@ body {
 				<a href="#">미니게임</a>
 
 				<div class="sub-menu">
-					<a href="#">상식 퀴즈</a> 
-					<a href="#">OX 퀴즈</a>
-					<a href="#">승부예측</a> 
+					<a href="${pageContext.request.contextPath}/quiz">상식 퀴즈</a> 
+					<a href="${pageContext.request.contextPath}/myteam">나만의 팀</a> 
+					<a href="${pageContext.request.contextPath}/prediction">승부예측</a> 
 					<a href="#">게임 랭킹</a>
 				</div>
 			</div>

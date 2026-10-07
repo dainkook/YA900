@@ -27,6 +27,7 @@ import com.kedu.dto.PlayerDTO;
 import com.kedu.dto.UsersDTO;
 
 @Controller
+
 public class UsersController {
 
 
@@ -73,6 +74,9 @@ public class UsersController {
 	    model.addAttribute("reservationList", reservationList);
 
 	    return "member/mypage";
+		UsersDTO loginUser=(UsersDTO) session.getAttribute("loginUser");
+		model.addAttribute("user", loginUser);
+		return "member/mypage";
 	}
 
 
@@ -112,9 +116,7 @@ public class UsersController {
 	}
 
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public String loginCheck(
-			UsersDTO dto,
-			HttpSession session) {
+	public String loginCheck(UsersDTO dto, HttpSession session) {
 
 		String hashedpw = EncryptionUtils.encryptSHA512(dto.getPw());
 
@@ -122,7 +124,7 @@ public class UsersController {
 		if (result == null) {
 			return "redirect:/login";
 		}
-		session.setAttribute("id", result.getId());
+		session.setAttribute("loginUser", result);
 
 		return "redirect:/";
 	}
@@ -148,11 +150,7 @@ public class UsersController {
 	}
 
 	@RequestMapping(value="/finduserid", method=RequestMethod.POST)
-	public String findUserId(
-			String name,
-			String email,
-			Model model,
-			HttpSession session) {
+	public String findUserId(String name,String email,Model model,HttpSession session) {
 
 		Boolean verified =
 				(Boolean) session.getAttribute("emailVerified");
@@ -163,7 +161,7 @@ public class UsersController {
 
 		String id = dao.findUserId(name, email);
 
-		System.out.println("찾은 아이디 : " + id);
+		System.out.println("李얠� �븘�씠�뵒 : " + id);
 
 		model.addAttribute("id", id);
 
@@ -175,38 +173,66 @@ public class UsersController {
 	}
 	
 	@RequestMapping("/myteam")
-	public String myTeam(Model model,HttpSession session) {
-		
-		String id = (String)session.getAttribute("id");
-		
+	public String myTeam(Model model,HttpSession session,@RequestParam(value="edit", required=false) String edit) {
+
+	    String id = (String) session.getAttribute("id");
+
+	    int count = playerDAO.countMyTeam(id);
+
+	    if (count > 0 && !"true".equals(edit)) {
+	        return "redirect:/myteamresult";
+	    }
+
 	    List<PlayerDTO> playerList = playerDAO.selectAll();
+	    List<PlayerDTO> myPlayerList = playerDAO.selectMyTeamPlayers(id);
 
-		model.addAttribute("playerList", playerList);
+	    model.addAttribute("playerList", playerList);
+	    model.addAttribute("myPlayerList", myPlayerList);
 
-		return "minigame/myteam";
+	    return "minigame/myteam";
 	}
 
 	
 	@RequestMapping(value="/myteamresult", method=RequestMethod.GET)
 	public String myTeamResult(HttpSession session, Model model) {
-
 	    String id = (String)session.getAttribute("id");
-
+	    
+	    int result = playerDAO.countMyTeam(id);
 	    List<PlayerDTO> myPlayerList = playerDAO.selectMyTeamPlayers(id);
 
 	    model.addAttribute("myPlayerList", myPlayerList);
-
-	    return "minigame/myteamresult";
+	    if(result > 0) {
+	    	return "minigame/myteamresult";
+	    } else {
+	    	return "minigame/myteam";
+	    }
+	   
 	}
 	
 	@RequestMapping(value="/myteamresult", method=RequestMethod.POST)
-	public String myTeamResultPost(MyTeamDTO dto, HttpSession session) {
+	public String myTeamResultPost( MyTeamDTO dto,HttpSession session,Model model) {
 
-	    String id = (String)session.getAttribute("id");
+	    String id = (String) session.getAttribute("id");
 
-	    playerDAO.addMyTeam(dto, id);
+	    int count = playerDAO.countMyTeam(id);
 
+	    if (count > 0) {
+	        playerDAO.updateMyTeam(dto, id);
+	    } else {
+	        playerDAO.addMyTeam(dto, id);
+	    }
 	    return "redirect:/myteamresult";
+	}
+	
+	@RequestMapping("/prediction")
+	public String prediction() {
+		
+		return "minigame/prediction";
+	}
+	
+	@RequestMapping("/quiz")
+	public String quiz() {
+		return "minigame/quiz";
 	}
 	
 	@RequestMapping(value="/sendemail")
@@ -214,7 +240,7 @@ public class UsersController {
 	public String sendEmail(String email , HttpSession session) {
 		String code = String.valueOf((int)(Math.random() * 900000)+ 100000);
 		session.setAttribute("emailcode", code);
-		emailService.sendEmail(email,"이메일 인증번호", "인증번호는 " + code + " 입니다.");
+		emailService.sendEmail(email,"�씠硫붿씪 �씤利앸쾲�샇", "�씤利앸쾲�샇�뒗 " + code + " �엯�땲�떎.");
 		return "success";
 	}
 	@RequestMapping(value="/verifyemail")
@@ -245,6 +271,7 @@ public class UsersController {
 		}
 		return "fail";
 	}
+	
 	@RequestMapping("/updatepw")
 	@ResponseBody
 	public String updatePw(String id, String newPw) {
@@ -260,4 +287,110 @@ public class UsersController {
 		}
 	}
 
+	@RequestMapping(value="/mypage/update", method=RequestMethod.POST)
+	@ResponseBody
+	public String updateUser(
+	        String phone,
+	        String email,
+	        String zipcode,
+	        String address1,
+	        String address2,
+	        String team,
+	        @RequestParam(value="profileFile", required=false) MultipartFile profileFile,
+	        HttpSession session) throws Exception {
+
+
+	    UsersDTO loginUser =
+	            (UsersDTO) session.getAttribute("loginUser");
+
+
+	    if (loginUser == null) {
+
+	        return "login";
+
+	    }
+
+
+	    String id =
+	            loginUser.getId();
+
+	    String profileImg =
+	            loginUser.getProfile_img();
+
+
+	    if (profileFile != null && !profileFile.isEmpty()) {
+
+	        String uploadPath =
+	                "C:/upload/";
+
+	        String originalName =
+	                profileFile.getOriginalFilename();
+
+	        String extension =
+	                originalName.substring(
+	                        originalName.lastIndexOf(".")
+	                );
+
+	        String fileName =
+	                UUID.randomUUID().toString()
+	                + extension;
+
+	        File saveFile =
+	                new File(uploadPath + fileName);
+
+	        profileFile.transferTo(saveFile);
+
+
+	        profileImg =
+	                fileName;
+
+	    }
+
+
+
+	    int result =
+	            dao.updateUser(
+	                    id,
+	                    phone,
+	                    email,
+	                    zipcode,
+	                    address1,
+	                    address2,
+	                    team,
+	                    profileImg
+	            );
+
+
+
+	    if (result > 0) {
+
+
+
+	        loginUser.setPhone(phone);
+
+	        loginUser.setEmail(email);
+
+	        loginUser.setZipcode(zipcode);
+
+	        loginUser.setAddress1(address1);
+
+	        loginUser.setAddress2(address2);
+
+	        loginUser.setTeam(team);
+
+	        loginUser.setProfile_img(profileImg);
+
+
+	        session.setAttribute(
+	                "loginUser",
+	                loginUser
+	        );
+
+
+	        return "success";
+
+	    }
+	    return "fail";
+
+	}
 }
