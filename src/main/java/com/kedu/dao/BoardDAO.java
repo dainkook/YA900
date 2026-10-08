@@ -53,6 +53,12 @@ public class BoardDAO {
 	    return jdbc.queryForObject(sql, String.class, id);
 	}
 	
+	public String isTeamLogo(String team) {
+		String sql = "select team_logo from team where team_name=?";
+		return jdbc.queryForObject(sql, String.class, team);
+	}
+	
+	
 		public int write(BoardDTO dto) {
 			String sql = "insert into board values(?, ?, ?, ?, 0, sysdate, ?, null, 0, null)";
 			return jdbc.update(sql, dto.getBoard_seq(), dto.getTitle(), dto.getContents(), dto.getWriter(), dto.getTeam());
@@ -120,8 +126,8 @@ public class BoardDAO {
 	}
 	
 	public int addChat(LiveChatDTO dto) {
-		String sql = "insert into livechat(liveChat_seq, contents, writer, game_id, regdate, team) values(liveChat_seq.nextval, ?, ?, ?, sysdate, ?)";
-		return jdbc.update(sql, dto.getContents(), dto.getWriter(), dto.getGame_id(), dto.getTeam());
+		String sql = "insert into livechat(liveChat_seq, contents, writer, teamlogo, game_id, regdate, team) values(liveChat_seq.nextval,?, ?, ?, ?, sysdate, ?)";
+		return jdbc.update(sql, dto.getContents(), dto.getWriter(), dto.getTeamLogo(), dto.getGame_id(), dto.getTeam());
 	}
 	
 	public List<LiveChatDTO> getChatList(int game_id) {
@@ -150,6 +156,15 @@ public class BoardDAO {
 	}
 	
 	public int addReport(ReportDTO dto) {
+		
+		 System.out.println("target_contents : " + dto.getTarget_contents());
+		    System.out.println("target_type : " + dto.getTarget_type());
+		    System.out.println("target_seq : " + dto.getTarget_seq());
+		    System.out.println("parent_seq : " + dto.getParent_seq());
+		    System.out.println("target_id : " + dto.getTarget_id());
+		    System.out.println("reporter : " + dto.getReporter());
+		    System.out.println("report_type : " + dto.getReport_type());
+		
 		String sql = "insert into report values(report_seq.nextval, ?, ?, ?, ?, ?, ?, ?, 'πÃ»Æ¿Œ', sysdate)";
 		return jdbc.update(sql, dto.getTarget_contents(), dto.getTarget_type(), dto.getTarget_seq(), dto.getParent_seq(), dto.getTarget_id(), dto.getReporter(), dto.getReport_type());
 	}

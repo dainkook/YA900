@@ -8,29 +8,35 @@
 </head>
 <body>
 신고 사유를 선택해주세요.<hr>
-<input type="radio" name="reason" value="광고">광고<br>
-<input type="radio" name="reason" value="욕설">욕설<br>
-<input type="radio" name="reason" value="혐오표현">혐오표현<br>
-<input type="radio" name="reason" value="음란물">음란물<br>
-<input type="radio" name="reason" value="기타">기타<br>
-<button type="button" id="reportBtn">확인</button>
+<form action="/board/reportComplete" method="post" id="reportForm">
+
+    <input type="hidden" name="target_contents" value="${param.target_contents}">
+    <input type="hidden" name="target_type" value="${param.target_type}">
+    <input type="hidden" name="target_seq" value="${param.target_seq}">
+    <input type="hidden" name="parent_seq" value="${param.parent_seq}">
+    <input type="hidden" name="target_id" value="${param.target_id}">
+    <input type="hidden" name="reporter" value="${param.reporter}">
+
+    <input type="radio" name="report_type" value="광고">광고<br>
+	<input type="radio" name="report_type" value="욕설">욕설<br>
+	<input type="radio" name="report_type" value="혐오표현">혐오표현<br>
+	<input type="radio" name="report_type" value="음란물">음란물<br>
+	<input type="radio" name="report_type" value="기타">기타<br>
+
+    <button type="button" id="reportBtn">확인</button>
+
+</form>
 <script>
-$("#reportBtn").on("click", function() {
-    if($("input[name='reason']:checked").length == 0) {
-        alert("신고 사유를 선택해주세요.");
-        return;
-    }
-    let reason = $("input[name='reason']:checked").val();
-    if(window.opener.reportForm != null) {
-        window.opener.reportForm.find(".report_type").val(reason);
-        window.opener.reportForm[0].submit();
-    } else {
-        window.opener.$("#report_type").val(reason);
-        window.opener.$("#boardReport")[0].submit();
-    }
-    alert("신고가 정상적으로 접수됐습니다.");
-    window.close();
-});
+	$("#reportBtn").on("click", function() {
+
+    	if($("input[name='report_type']:checked").length == 0) {
+        	alert("신고 사유를 선택해주세요.");
+        	return;
+    	}
+
+    	alert("신고가 정상적으로 접수됐습니다.");
+    	$("#reportForm").submit();
+	});
 </script>
 </body>
 </html>
