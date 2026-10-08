@@ -180,15 +180,17 @@ public class BoardController {
 	public String chat(LiveChatDTO dto, HttpSession session, Model model) throws Exception {
 	    String id = (String)session.getAttribute("id");
 	    String team = dao.isUserTeam(id);
+	    String teamLogo = dao.isTeamLogo(team);
 	    dto.setWriter(id);
 	    dto.setTeam(team);
+	    dto.setTeamLogo(teamLogo);
 	    dao.addChat(dto);
 	    return "success";
 	}
 	
 	@RequestMapping("/chatList")
 	@ResponseBody
-	public List<LiveChatDTO> chatList(int game_id) throws Exception {
+	public List<LiveChatDTO> chatList(int game_id, HttpSession session, Model model) throws Exception {
 		return dao.getChatList(game_id);
 	}
 	
@@ -216,13 +218,17 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/reportComplete")
-	public String reportComplete(ReportDTO dto) throws Exception {
-		dao.addReport(dto);
-		if(dto.getTarget_type().equals("°Ô½ÃÆÇ")) {
-		return "redirect:/board/detail?seq=" + dto.getTarget_seq();
-		} else {
-			int seq = dao.whereReply(dto.getTarget_seq());
-			return "redirect:/board/detail?seq=" + seq;
-		}
+	public String reportComplete(ReportDTO dto, Model model) throws Exception {
+	    dao.addReport(dto);
+	    int seq = dto.getParent_seq();
+	    model.addAttribute("seq", seq);
+	    return "board/reportComplete";
 	}
+	
+	@RequestMapping("/reportLive")
+	public String reportLive() throws Exception {
+		return "/board/report";
+	}
+	
+	
 }

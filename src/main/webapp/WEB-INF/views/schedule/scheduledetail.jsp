@@ -1586,7 +1586,7 @@ body {
   $("#chatBtn").on("click", function() {
       let chat = $("#chat").val();
 
-      if("${loginId}" == "") {
+      if("${id}" == "") {
           alert("로그인이 필요한 서비스입니다.");
           return;
       }
@@ -1611,6 +1611,25 @@ body {
           }
       });
   });
+  
+  function timeAgo(regdate) {
+	    let now = new Date();
+	    let date = new Date(regdate);
+	    let diff = Math.floor((now - date) / 1000);
+	    let minute = Math.floor(diff / 60);
+	    let hour = Math.floor(diff / 3600);
+	    let day = Math.floor(diff / 86400);
+
+	    if(diff < 60) {
+	        return "방금 전";
+	    } else if(minute < 60) {
+	        return minute + "분 전";
+	    } else if(hour < 24) {
+	        return hour + "시간 전";
+	    } else {
+	        return day + "일 전";
+	    }
+	}
 
   function loadChat() {
       $.ajax({
@@ -1625,18 +1644,46 @@ body {
           chatList.empty();
 
           for(let i = 0; i < resp.length; i++) {
-              let chat = $("<p>");
-              chat.text(resp[i].writer + " : " + resp[i].contents);
-              chatList.append(chat);
+        	  let chat = $("<div>");
+        	  let info = $("<div>");
+        	  let content = $("<div>");
+        	  let report = $("<button>");
+        	  let teamLogo = $("<img>");
+
+        	  teamLogo.attr("src", resp[i].teamLogo);
+        	  teamLogo.css({
+        	      "width": "15px",
+        	      "height": "15px"
+        	  });
+        	  
+        	  report.text("신고");
+        	  
+        	  info.append(resp[i].writer);
+        	  info.append(teamLogo);
+        	  info.append(" ");
+        	  info.append(timeAgo(resp[i].regdate));
+        	  info.append(report);
+
+        	  content.append(resp[i].contents);
+
+        	  chat.append(info);
+        	  chat.append(content);
+
+        	  chatList.append(chat);
+        	  
+        	  report.on("click", function() {
+        		  window.open("/board/report?target_contents=" + resp[i].contents + 
+        				  "&target_type=라이브&target_seq=" + resp[i].liveChat_seq 
+        				  + "&parent_seq=" + resp[i].game_id + "&target_id=" + resp[i].writer
+        				  + "&reporter=" + "${id}", "report", "width=500, height=500")
+        	  });
           }
       });
   }
 
   loadChat();
-
-  setInterval(function() {
-      loadChat();
-  }, 3000);
+  
+  setInterval(loadChat, 60000);
 
   /* function sendChat(gameId){
     const input=document.getElementById("chatInput_"+gameId);
