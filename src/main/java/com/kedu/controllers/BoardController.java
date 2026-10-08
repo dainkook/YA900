@@ -225,10 +225,4 @@ public class BoardController {
 	    return "board/reportComplete";
 	}
 	
-	@RequestMapping("/reportLive")
-	public String reportLive() throws Exception {
-		return "/board/report";
-	}
-	
-	
 }

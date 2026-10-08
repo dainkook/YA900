@@ -28,12 +28,10 @@
 </form>
 <script>
 	$("#reportBtn").on("click", function() {
-
     	if($("input[name='report_type']:checked").length == 0) {
         	alert("신고 사유를 선택해주세요.");
         	return;
     	}
-
     	alert("신고가 정상적으로 접수됐습니다.");
     	$("#reportForm").submit();
 	});
