@@ -3,6 +3,7 @@ package com.kedu.dao.admin;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -168,5 +169,22 @@ public class MemberDAO {
         sql = "UPDATE users SET blacklist = ? WHERE member_seq = ?";
 
         jdbc.update(sql, blacklist, member_seq);
+    }
+    
+    public UsersDTO selectById(String id) {
+
+        String sql = "select * from users where id = ?";
+
+        try {
+
+            return jdbc.queryForObject(
+                    sql,
+                    new BeanPropertyRowMapper<>(UsersDTO.class),
+                    id);
+
+        } catch (EmptyResultDataAccessException e) {
+
+            return null;
+        }
     }
 }
