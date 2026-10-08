@@ -8,6 +8,8 @@
 <meta charset="UTF-8">
 <title>경기 상세</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<link rel="stylesheet"
+	  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
 * {
@@ -694,9 +696,13 @@ body {
 }
 
 .chat-item {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
 	margin-bottom: 18px;
 }
 
+/* 작성자 */
 .chat-user {
 	font-size: 12px;
 	font-weight: bold;
@@ -704,21 +710,24 @@ body {
 	margin-bottom: 5px;
 }
 
+/* 채팅 말풍선 */
 .chat-message {
 	display: inline-block;
+	max-width: 80%;
+	padding: 9px 12px;
 	background: white;
 	border: 1px solid #d6dceb;
-	border-radius: 8px;
-	padding: 9px 11px;
+	border-radius: 4px 12px 12px 12px;
 	font-size: 13px;
 	line-height: 1.5;
-	max-width: 90%;
 	color: #36405d;
 	box-shadow: 0 2px 7px rgba(17, 25, 54, 0.04);
+	word-break: break-word;
 }
 
+/* 내가 보낸 채팅 */
 .chat-item.my-chat {
-	text-align: right;
+	align-items: flex-end;
 }
 
 .chat-item.my-chat .chat-user {
@@ -728,48 +737,126 @@ body {
 .chat-item.my-chat .chat-message {
 	background: #111936;
 	color: white;
-	border-color: #111936;
+	border: none;
+	border-radius: 12px 4px 12px 12px;
 	text-align: left;
 }
 
+/* 내가 보낸 채팅 */
+.chat-item.my-chat {
+	align-items: flex-end;
+}
+
+.chat-item.my-chat .chat-user {
+	justify-content: flex-end;
+	color: #476aaa;
+}
+
+.chat-item.my-chat .chat-message {
+	background: #111936;
+	color: white;
+	border: none;
+	border-radius: 12px 4px 12px 12px;
+	text-align: left;
+}
+
+/* 입력창 */
 .chat-input-area {
 	border-top: 1px solid #d6dceb;
 	padding: 12px;
 	background: white;
 }
 
-.chat-input {
-	display: flex;
-	gap: 7px;
+.chat-input-area {
+	padding: 10px 12px 12px;
+	background: #f5f6f8;
 }
 
+.chat-input {
+	display: flex;
+	align-items: center;
+	gap: 7px;
+	padding: 5px;
+	background: white;
+	border: 1px solid #d6dceb;
+	border-radius: 9px;
+	box-shadow: 0 2px 6px rgba(17, 25, 54, 0.04);
+}
+
+/* 메시지 입력 */
 .chat-input input {
 	flex: 1;
-	height: 38px;
-	border: 1px solid #c7cee0;
-	border-radius: 5px;
-	padding: 0 10px;
+	height: 34px;
+	padding: 0 9px;
+	border: none;
 	outline: none;
+	background: transparent;
 	color: #36405d;
+	font-size: 13px;
+}
+
+.chat-input input::placeholder {
+	color: #a0a7b8;
 }
 
 .chat-input input:focus {
-	border-color: #476aaa;
+	background: transparent;
 }
 
+/* 등록 버튼 */
 .chat-input button {
-	width: 55px;
-	border: 1px solid #111936;
+	width: 50px;
+	height: 32px;
+	border: none;
+	border-radius: 7px;
 	background: #111936;
 	color: white;
-	border-radius: 5px;
+	font-size: 12px;
+	font-weight: bold;
 	cursor: pointer;
 	transition: 0.2s ease;
 }
 
 .chat-input button:hover {
 	background: #476aaa;
+}
+.chat-input input {
+	flex: 1;
+	height: 38px;
+	border: 1px solid #c7cee0;
+	border-radius: 6px;
+	padding: 0 10px;
+	outline: none;
+	color: #36405d;
+	background: #fafbfe;
+}
+
+.chat-input input:focus {
 	border-color: #476aaa;
+	background: white;
+}
+
+/* 신고 버튼 */
+.report-btn {
+	width: 22px;
+	height: 22px;
+	margin-left: 4px;
+	padding: 0;
+	border: none;
+	background: transparent;
+	color: red;
+	font-size: 13px;
+	cursor: pointer;
+	transition: 0.2s ease;
+}
+
+.report-btn:hover {
+	color: #b00000;
+	transform: scale(1.15);
+}
+
+.report-btn:hover::after {
+	opacity: 1;
 }
 
 ::-webkit-scrollbar {
@@ -1615,6 +1702,14 @@ body {
         	  let chat = $("<div>");
         	  let info = $("<div>");
         	  let content = $("<div>");
+
+        	  chat.addClass("chat-item");
+        	  info.addClass("chat-user");
+        	  content.addClass("chat-message");
+
+        	  if(resp[i].writer == "${sessionScope.id}") {
+        	  	chat.addClass("my-chat");
+        	  }
         	  let report = $("<button>");
         	  let teamLogo = $("<img>");
 
@@ -1624,7 +1719,9 @@ body {
         	      "height": "15px"
         	  });
         	  
-        	  report.text("신고");
+        	  report.attr("title", "신고");
+        	  report.addClass("report-btn");
+        	  report.html('<i class="fa-solid fa-triangle-exclamation"></i>');
         	  
         	  info.append(resp[i].writer);
         	  info.append(teamLogo);
@@ -1640,11 +1737,22 @@ body {
         	  chatList.append(chat);
         	  
         	  report.on("click", function() {
-        		  window.open("/board/report?target_contents=" + resp[i].contents + 
-        				  "&target_type=라이브&target_seq=" + resp[i].liveChat_seq 
-        				  + "&parent_seq=" + resp[i].game_id + "&target_id=" + resp[i].writer
-        				  + "&reporter=" + "${id}", "report", "width=500, height=500")
-        	  });
+        		  	if("${id}"!="") {
+        		    let params = $.param({
+        		        target_contents: resp[i].contents,
+        		        target_type: "라이브",
+        		        target_seq: resp[i].liveChat_seq,
+        		        parent_seq: resp[i].game_id,
+        		        target_id: resp[i].writer,
+        		        reporter: "${id}"
+        		    });
+
+        		    window.open("/board/report?" + params,
+        		            "report", "width=500, height=500");
+        		  	} else {
+        		  		alert("로그인이 필요한 서비스입니다.");
+        		  	}
+        		});
           }
       });
   }

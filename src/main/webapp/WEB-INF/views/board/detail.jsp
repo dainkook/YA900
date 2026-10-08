@@ -953,7 +953,7 @@ body {
 		$("#replyForm").on("submit", function(e) {
 			if ("${id}" == "") {
 				e.preventDefault();
-				alert("로그인이 필요한 서비스입니다.");
+				alert("로그인 후 이용 가능한 서비스입니다.");
 				return;
 			}
 			if ($("#reply").val() == "") {
@@ -987,17 +987,29 @@ body {
 							+ "&parent_seq=${board.board_seq}";
 				});
 
-		var reportForm = null;
-
 		$(".boardReport").on("click", function() {
-			$("#target_contents").val($("#contents").text());
-			reportForm = null;
-			window.open("/board/report", "report", "width=500, height=500");
+			if("${id}"!="") {
+		    $("#target_contents").val($("#contents").text());
+
+		    let params = $("#boardReport").serialize();
+
+		    window.open("/board/report?" + params,
+		            "report", "width=500, height=500");
+			} else {
+				alert("로그인 후 이용 가능한 서비스입니다.");
+			}
 		});
 
 		$(".replyReport").on("click", function() {
-			reportForm = $(this).closest(".replyReportForm");
-			window.open("/board/report", "report", "width=500, height=500");
+			if("${id}"!="") {
+		    let reportForm = $(this).closest(".replyReportForm");
+		    let params = reportForm.serialize();
+
+		    window.open("/board/report?" + params,
+		            "report", "width=500, height=500");
+			} else {
+				alert("로그인 후 이용 가능한 서비스입니다.");
+			}
 		});
 	</script>
 </body>
