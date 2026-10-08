@@ -68,10 +68,15 @@ public class ScheduleController {
 		Timestamp today = new Timestamp(calendar.getTimeInMillis());
 
 		List<ScheduleDTO> list = scheduleDAO.selectByMonth(month);
+		
+		Timestamp now = new Timestamp(System.currentTimeMillis());
+		
+		Timestamp threeHoursAgo = new Timestamp(System.currentTimeMillis() - (3 * 60 * 60 * 1000));
 
 		model.addAttribute("list", list);
 		model.addAttribute("month", month);
-		model.addAttribute("now", today);
+		model.addAttribute("now", now);
+		model.addAttribute("threeHoursAgo", threeHoursAgo);
 
 		return "schedule/dashboard";
 	}
@@ -89,12 +94,17 @@ public class ScheduleController {
 		
 		Timestamp now = new Timestamp(System.currentTimeMillis());
 
+		Timestamp threeHoursAgo = new Timestamp(
+		    System.currentTimeMillis() - (3 * 60 * 60 * 1000)
+		);
+
 		model.addAttribute("schedule", schedule);
 		model.addAttribute("teamList", teamList);
 		model.addAttribute("pitcherList", pitcherList);
 		model.addAttribute("hitterList", hitterList);
 		model.addAttribute("lineupList", lineupList);
 		model.addAttribute("now", now);
+		model.addAttribute("threeHoursAgo", threeHoursAgo);
 		
 		return "schedule/scheduledetail";
 	}

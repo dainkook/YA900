@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>YA900 야구 상식 퀴즈</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
 	integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
 	crossorigin="anonymous"></script>
@@ -15,60 +15,25 @@
 }
 
 html, body {
-	height: 100%;
+	margin: 0;
+	min-height: 100%;
 }
 
 body {
-	margin: 0;
-	display: flex;
-	flex-direction: column;
-	background: #fff;
-	color: #222;
-	font-family: 'Noto Sans KR', system-ui, sans-serif;
-	font-size: 13px;
+	background: linear-gradient(to bottom, #111936 0%, #111936 12%, #171f46 22%, #252f67 32%,
+		#71809f 43%, #aeb7ca 55%, #d5dae5 70%, #eef1f8 85%, #eef1f8 100%);
+	font-family: Arial, "Malgun Gothic", sans-serif;
+	color: #18213f;
+	min-height: 100vh;
 }
 
-/* 공통 */
-.box {
-	border: 1px solid #cfcfcf;
-	padding: 24px 28px;
-	min-width: 0;
-}
-
-.row {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 16px;
-}
-
-h1 {
-	margin: 0;
-	font-size: 18px;
-}
-
-h2 {
-	margin: 0 0 20px;
-	font-size: 16px;
-	text-align: center;
-}
-
-.btn {
-	min-height: 44px;
-	padding: 0 40px;
-	border: 1px solid #777;
-	background: #fff;
-	color: #222;
-	font: inherit;
-	cursor: pointer;
-}
-
-/* 사이트 헤더 */
+/* =========================
+   HEADER
+========================= */
 
 .header {
 	width: 100%;
 	height: 100px;
-	min-height: 100px;
-	flex-shrink: 0;
 	background: linear-gradient(135deg, #0b1026, #171f46);
 	color: white;
 	display: flex;
@@ -87,10 +52,9 @@ h2 {
 	margin-right: 60px;
 	color: white;
 	letter-spacing: 1px;
+	cursor: pointer;
 }
-.header>.logo:hover {
-	cursor:pointer;
-}
+
 .main-menu {
 	height: 100%;
 	display: flex;
@@ -105,7 +69,7 @@ h2 {
 	align-items: center;
 }
 
-.menu-item>a {
+.menu-item > a {
 	font-size: 18px;
 	font-weight: bold;
 	text-decoration: none;
@@ -114,13 +78,14 @@ h2 {
 	transition: color 0.2s ease;
 }
 
-.menu-item>a:hover {
+.menu-item > a:hover {
 	color: #aebee7;
 }
 
 /* =========================
-   서브 메뉴
+   SUB MENU
 ========================= */
+
 .sub-menu {
 	position: absolute;
 	top: 100%;
@@ -160,125 +125,206 @@ h2 {
 }
 
 /* =========================
-   로그인 / 회원가입
+   LOGIN / SIGNUP
 ========================= */
+
 .member-menu {
 	font-size: 14px;
 	margin-left: auto;
-}
-
-.login-btn, .sign-btn {
-	border: 1px solid #7180b1;
-	background: transparent;
-	color: white;
-	border-radius: 5px;
-	transition: 0.2s ease;
-}
-
-.login-btn:hover, .sign-btn:hover {
-	background: #476aaa;
-	border-color: #476aaa;
-	color: white;
-}
-
-.user-menu {
-	margin-left: auto;
 	display: flex;
-	gap: 8px;
+	align-items: center;
+	gap: 10px;
+	white-space: nowrap;
 }
 
-.user-menu button {
-	background: transparent;
-	border: 1px solid #7180b1;
-	border-radius: 5px;
-	padding: 8px 15px;
+.member-menu form {
+	display: flex;
+	margin: 0;
+}
+
+.member-menu span {
 	color: white;
+	font-weight: bold;
+	white-space: nowrap;
+}
+
+.login-btn,
+.sign-btn {
+	border: 1px solid #7180b1;
+	background: transparent;
+	color: white;
+	border-radius: 5px;
+	padding: 6px 10px;
 	cursor: pointer;
+	white-space: nowrap;
 	transition: 0.2s ease;
 }
 
-.user-menu button:hover {
+.login-btn:hover,
+.sign-btn:hover {
 	background: #476aaa;
 	border-color: #476aaa;
+	color: white;
 }
 
-/* 본문 */
+/* =========================
+   CONTAINER
+========================= */
+
 .wrap {
-	flex: 1 0 auto;
-	width: 100%;
-	max-width: 992px;
-	margin: 0 auto;
-	padding: 108px 16px 40px;
-	display: flex;
-	flex-direction: column;
-	gap: 16px;
+	width: 1310px;
+	max-width: calc(100% - 40px);
+	margin: 110px auto 40px;
 }
+
+/* =========================
+   COMMON BOX
+========================= */
+
+.box {
+	background: white;
+	border: 1px solid #e1e4e8;
+	border-radius: 10px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+	padding: 25px;
+}
+
+/* =========================
+   TITLE
+========================= */
+
+.wrap > .box:first-child {
+	height: 70px;
+	display: flex;
+	align-items: center;
+	margin-bottom: 18px;
+}
+
+h1 {
+	margin: 0;
+	font-size: 24px;
+	font-weight: bold;
+}
+
+h2 {
+	margin: 0 0 20px;
+	font-size: 21px;
+	font-weight: bold;
+	text-align: center;
+	color: #222;
+}
+
+/* =========================
+   ROW
+========================= */
+
+.row {
+	display: flex;
+	gap: 20px;
+	margin-bottom: 20px;
+}
+
+/* =========================
+   QUIZ START
+========================= */
 
 .quiz-start {
-	flex: 7 1 480px;
+	flex: 2;
+	min-height: 300px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	gap: 12px;
 	text-align: center;
-	padding: 32px 24px;
-}
-
-.quiz-start h2 {
-	margin-bottom: 8px;
 }
 
 .quiz-start p {
-	margin: 0;
-	color: #555;
+	margin: 6px 0;
+	font-size: 14px;
+	color: #666;
 }
 
-.quiz-start .btn {
-	margin-top: 12px;
-}
+/* =========================
+   MY POINT
+========================= */
 
 .my-point {
-	flex: 3 1 240px;
+	flex: 1;
+	min-height: 300px;
 	display: flex;
 	flex-direction: column;
-	gap: 20px;
-	padding: 24px;
+	align-items: center;
+	justify-content: center;
 }
 
 .my-point h2 {
-	margin: 0;
+	margin-bottom: 25px;
 }
 
 .point-value {
-	height: 64px;
-	border: 1px solid #cfcfcf;
+	width: 80%;
+	height: 70px;
+	border: 1px solid #e0e3e7;
+	border-radius: 7px;
+	background: #f7f8fa;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	font-size: 16px;
-	font-weight: 700;
+	font-size: 20px;
+	font-weight: bold;
+	color: #476aaa;
+	margin-bottom: 20px;
 }
 
-.my-point .btn {
-	width: 100%;
-	padding: 0;
-	font-size: 12px;
+/* =========================
+   BUTTON
+========================= */
+
+.btn {
+	height: 45px;
+	min-width: 150px;
+	padding: 0 25px;
+	border: none;
+	border-radius: 7px;
+	background: #476aaa;
+	color: white;
+	font-size: 14px;
+	font-weight: bold;
+	cursor: pointer;
+	transition: all 0.15s ease;
 }
+
+.btn:hover {
+	background: #3d5e97;
+	box-shadow: 0 3px 8px rgba(71, 106, 170, 0.2);
+}
+
+/* =========================
+   INFO
+========================= */
 
 .info {
-	flex: 1 1 380px;
+	flex: 1;
+	min-height: 230px;
 }
 
 .info ul {
 	margin: 0;
-	padding: 0 0 0 18px;
-	list-style: disc;
+	padding-left: 20px;
 	display: flex;
 	flex-direction: column;
-	gap: 12px;
-	color: #333;
+	gap: 14px;
+	color: #555;
+	font-size: 14px;
 }
+
+.info li {
+	padding-left: 4px;
+}
+
+/* =========================
+   TABLE
+========================= */
 
 .table-scroll {
 	overflow-x: auto;
@@ -286,31 +332,178 @@ h2 {
 
 table {
 	width: 100%;
-	min-width: 480px;
 	border-collapse: collapse;
-	font-size: 12px;
+	font-size: 14px;
 	text-align: center;
 }
 
 th {
-	padding: 10px 8px;
-	border-top: 1px solid #cfcfcf;
-	border-bottom: 1px solid #777;
-	font-weight: 700;
+	height: 45px;
+	background: #f7f8fa;
+	border-top: 1px solid #e1e4e8;
+	border-bottom: 1px solid #d5d9df;
+	font-weight: bold;
+	color: #555;
 }
 
 td {
-	height: 44px;
-	border-bottom: 1px solid #e3e3e3;
+	height: 48px;
+	border-bottom: 1px solid #eee;
+	color: #444;
 }
 
-/* 사이트 푸터 */
+tbody tr:hover {
+	background: #f7f9fc;
+}
+
+/* =========================
+   BOTTOM BOX
+========================= */
+
+.wrap > section.box {
+	margin-bottom: 20px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
 .site-footer {
-	border-top: 1px solid #cfcfcf;
+	width: 100%;
+	border-top: 1px solid #d8dce3;
 	padding: 28px 16px;
 	text-align: center;
-	font-size: 10px;
+	font-size: 11px;
 	color: #777;
+	background: rgba(255, 255, 255, 0.5);
+	margin-top: 20px;
+}
+
+/* =========================
+   QUICK MENU
+========================= */
+
+.quick-menu {
+	width: 280px;
+	position: fixed;
+	left: -250px;
+	top: 50%;
+	transform: translateY(-50%);
+	border: 1px solid #3b4778;
+	transition: left 0.5s ease;
+	z-index: 1000;
+	background: #111936;
+	color: white;
+	box-shadow: 5px 8px 25px rgba(10, 15, 35, 0.18);
+}
+
+.quick-menu:hover {
+	left: 0;
+}
+
+.quick-menu div {
+	width: 100%;
+	height: 55px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	border-bottom: 1px solid #303b68;
+}
+
+.quick-menu div:last-child {
+	border-bottom: none;
+}
+
+.quick-menu div:hover {
+	background: #252f67;
+}
+
+.quick-menu .menu,
+.quick-menu .menu:hover {
+	background: #476aaa;
+	color: white;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+
+	.header {
+		padding: 0 25px;
+	}
+
+	.logo {
+		margin-right: 30px;
+	}
+
+	.main-menu {
+		gap: 20px;
+	}
+
+	.wrap {
+		width: 100%;
+		max-width: calc(100% - 30px);
+	}
+
+	.row {
+		flex-direction: column;
+	}
+
+	.quiz-start,
+	.my-point,
+	.info {
+		width: 100%;
+	}
+
+}
+
+@media (max-width: 600px) {
+
+	.header {
+		height: 80px;
+		padding: 0 15px;
+	}
+
+	.logo {
+		font-size: 24px;
+		margin-right: 20px;
+	}
+
+	.main-menu {
+		gap: 10px;
+	}
+
+	.menu-item > a {
+		font-size: 14px;
+	}
+
+	.member-menu {
+		display: none;
+	}
+
+	.wrap {
+		margin-top: 40px;
+		max-width: calc(100% - 20px);
+	}
+
+	.box {
+		padding: 20px;
+	}
+
+	h1 {
+		font-size: 20px;
+	}
+
+	h2 {
+		font-size: 18px;
+	}
+
+	.quick-menu {
+		display: none;
+	}
 }
 </style>
 </head>
@@ -321,23 +514,23 @@ td {
 
 		<div class="logo" onclick="location.href='/'">YA900</div>
 
-
+		<!-- 메인 메뉴 -->
 		<nav class="main-menu">
 
-
+			<!-- 야구 -->
 			<div class="menu-item">
 				<a href="#">야구</a>
 
 				<div class="sub-menu">
-				    <a href="#">예매</a>
-				    <a href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a> 
-				    <a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a> 
-				    <a href="${pageContext.request.contextPath}/schedule/rankdetail?tab=pitcher">선수순위</a> 
-				    <a href="${pageContext.request.contextPath}/board/board?cpage=1">게시판</a>
+					<a href="#">예매</a> 
+					<a href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a> 
+					<a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a> 
+					<a href="${pageContext.request.contextPath}/schedule/rankdetail?tab=pitcher">선수순위</a> 
+					<a href="${pageContext.request.contextPath}/board/board?cpage=1">게시판</a>
 				</div>
 			</div>
 
-
+			<!-- 축구 -->
 			<div class="menu-item">
 				<a href="#">축구</a>
 
@@ -350,7 +543,7 @@ td {
 				</div>
 			</div>
 
-
+			<!-- 미니게임 -->
 			<div class="menu-item">
 				<a href="#">미니게임</a>
 
@@ -364,15 +557,40 @@ td {
 		</nav>
 
 		<div class="member-menu">
-		    <button class="login-btn"
-		            onclick="location.href='${pageContext.request.contextPath}/login'">
-		        로그인
-		    </button>
-		
-		    <button class="sign-btn"
-		            onclick="location.href='${pageContext.request.contextPath}/signup'">
-		        회원가입
-		    </button>
+
+    <c:choose>
+
+        <c:when test="${not empty sessionScope.id}">
+            <span>${sessionScope.id}님</span>
+
+            <button class="login-btn"
+                    onclick="location.href='${pageContext.request.contextPath}/mypage'">
+                마이페이지
+            </button>
+
+            <form action="${pageContext.request.contextPath}/logout"
+                  method="post">
+                <button type="submit" class="sign-btn">
+                    로그아웃
+                </button>
+            </form>
+        </c:when>
+
+        <c:otherwise>
+            <button class="login-btn"
+                    onclick="location.href='${pageContext.request.contextPath}/login'">
+                로그인
+            </button>
+
+            <button class="sign-btn"
+                    onclick="location.href='${pageContext.request.contextPath}/signup'">
+                회원가입
+            </button>
+        </c:otherwise>
+
+    </c:choose>
+			
+			
 		</div>
 
 	</div>

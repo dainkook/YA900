@@ -23,6 +23,10 @@ body {
 	min-height: 100vh;
 }
 
+/* =========================
+   HEADER
+========================= */
+
 .header {
 	width: 100%;
 	height: 100px;
@@ -38,16 +42,13 @@ body {
 	box-shadow: 0 3px 15px rgba(11, 16, 38, 0.18);
 }
 
-.header>.logo:hover {
-	cursor: pointer;
-}
-
 .logo {
 	font-size: 30px;
 	font-weight: bold;
 	margin-right: 60px;
 	color: white;
 	letter-spacing: 1px;
+	cursor: pointer;
 }
 
 .main-menu {
@@ -64,7 +65,7 @@ body {
 	align-items: center;
 }
 
-.menu-item>a {
+.menu-item > a {
 	font-size: 18px;
 	font-weight: bold;
 	text-decoration: none;
@@ -73,13 +74,14 @@ body {
 	transition: color 0.2s ease;
 }
 
-.menu-item>a:hover {
+.menu-item > a:hover {
 	color: #aebee7;
 }
 
 /* =========================
-   서브 메뉴
+   SUB MENU
 ========================= */
+
 .sub-menu {
 	position: absolute;
 	top: 100%;
@@ -119,70 +121,47 @@ body {
 }
 
 /* =========================
-   로그인 / 회원가입
+   LOGIN / SIGNUP
 ========================= */
+
 .member-menu {
-    font-size: 14px;
-    margin-left: auto;
-
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    white-space: nowrap;
+	font-size: 14px;
+	margin-left: auto;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	white-space: nowrap;
 }
 
 .member-menu form {
-    display: flex;
-    margin: 0;
+	display: flex;
+	margin: 0;
 }
 
 .member-menu span {
-    color: white;
-    font-weight: bold;
-    white-space: nowrap;
+	color: white;
+	font-weight: bold;
+	white-space: nowrap;
 }
 
 .login-btn,
 .sign-btn {
-    border: 1px solid #7180b1;
-    background: transparent;
-    color: white;
-    border-radius: 5px;
-    padding: 6px 10px;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: 0.2s ease;
+	border: 1px solid #7180b1;
+	background: transparent;
+	color: white;
+	border-radius: 5px;
+	padding: 6px 10px;
+	cursor: pointer;
+	white-space: nowrap;
+	transition: 0.2s ease;
 }
 
 .login-btn:hover,
 .sign-btn:hover {
-    background: #476aaa;
-    border-color: #476aaa;
-    color: white;
-}
-
-.user-menu {
-	margin-left: auto;
-	display: flex;
-	gap: 8px;
-}
-
-.user-menu button {
-	background: transparent;
-	border: 1px solid #7180b1;
-	border-radius: 5px;
-	padding: 8px 15px;
-	color: white;
-	cursor: pointer;
-	transition: 0.2s ease;
-}
-
-.user-menu button:hover {
 	background: #476aaa;
 	border-color: #476aaa;
+	color: white;
 }
-
 .container {
 	width: 1050px;
 	margin: 0 auto;
@@ -330,7 +309,7 @@ body {
 /* 예매 버튼 */
 .reservation-btn {
 	display: block;
-	margin: 0 auto 10px;
+	margin: 20px auto 10px;
 	padding: 10px 24px;
 	background: #476aaa;
 	color: white;
@@ -983,19 +962,7 @@ body {
 		</div>
 
 	</div>
-		<div class="member-menu">
-		    <button class="login-btn"
-		            onclick="location.href='${pageContext.request.contextPath}/login'">
-		        로그인
-		    </button>
 		
-		    <button class="sign-btn"
-		            onclick="location.href='${pageContext.request.contextPath}/signup'">
-		        회원가입
-		    </button>
-		</div>
-
-	</div>
 	<div class="quick-menu">
 		    <div class="menu">QUICK MENU</div>
 		    <div onclick="location.href='${pageContext.request.contextPath}/'">홈</div>
@@ -1032,26 +999,27 @@ body {
 			</div>
 
 			<div class="game-status">
-				<c:choose>
+			    <c:choose>
+			        <c:when test="${schedule.start_date gt now}">
+			            <span>경기예정</span>
+			        </c:when>
+			
+			        <c:when test="${schedule.start_date ge threeHoursAgo}">
+			            <span>진행중</span>
+			        </c:when>
+			
+			        <c:otherwise>
+			            <span>경기종료</span>
+			        </c:otherwise>
+			    </c:choose>
+			</div>
 
-					<c:when test="${now lt schedule.start_date}">
-						<button type="button" class="reservation-btn"
+				<c:if test="${schedule.start_date gt now}">
+				   		<button type="button" class="reservation-btn"
 						        onclick="openBooking(event, '${pageContext.request.contextPath}/booking/${schedule.game_id}')">
 						    예매하기
 						</button>
-						<span>경기예정</span>
-					</c:when>
-
-					<c:when test="${now ge schedule.start_date and now lt schedule.end_date}">
-						<span>진행중</span>
-					</c:when>
-
-					<c:otherwise>
-						<span>경기종료</span>
-					</c:otherwise>
-
-				</c:choose>
-			</div>
+				</c:if>
 		</section>
 
 		<div class="main-layout">

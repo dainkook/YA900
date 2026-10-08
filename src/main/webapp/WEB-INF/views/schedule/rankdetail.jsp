@@ -19,6 +19,10 @@ body {
 	min-height: 100vh;
 }
 
+/* =========================
+   HEADER
+========================= */
+
 .header {
 	width: 100%;
 	height: 100px;
@@ -40,10 +44,9 @@ body {
 	margin-right: 60px;
 	color: white;
 	letter-spacing: 1px;
+	cursor: pointer;
 }
-.header>.logo:hover {
-	cursor:pointer;
-}
+
 .main-menu {
 	height: 100%;
 	display: flex;
@@ -71,9 +74,8 @@ body {
 	color: #aebee7;
 }
 
-
 /* =========================
-   서브 메뉴
+   SUB MENU
 ========================= */
 
 .sub-menu {
@@ -114,50 +116,47 @@ body {
 	background: #252f67;
 }
 
-
 /* =========================
-   로그인 / 회원가입
+   LOGIN / SIGNUP
 ========================= */
 
 .member-menu {
-    font-size: 14px;
-    margin-left: auto;
-
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    white-space: nowrap;
+	font-size: 14px;
+	margin-left: auto;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	white-space: nowrap;
 }
 
 .member-menu form {
-    display: flex;
-    margin: 0;
+	display: flex;
+	margin: 0;
 }
 
 .member-menu span {
-    color: white;
-    font-weight: bold;
-    white-space: nowrap;
+	color: white;
+	font-weight: bold;
+	white-space: nowrap;
 }
 
 .login-btn,
 .sign-btn {
-    border: 1px solid #7180b1;
-    background: transparent;
-    color: white;
-    border-radius: 5px;
-    padding: 6px 10px;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: 0.2s ease;
+	border: 1px solid #7180b1;
+	background: transparent;
+	color: white;
+	border-radius: 5px;
+	padding: 6px 10px;
+	cursor: pointer;
+	white-space: nowrap;
+	transition: 0.2s ease;
 }
 
 .login-btn:hover,
 .sign-btn:hover {
-    background: #476aaa;
-    border-color: #476aaa;
-    color: white;
+	background: #476aaa;
+	border-color: #476aaa;
+	color: white;
 }
 
 .container {

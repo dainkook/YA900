@@ -863,8 +863,8 @@ body {
 					<div class="area-title">선수 선택</div>
 
 					<div class="search">
-						<input type="text" placeholder="선수 검색">
-						<button type="button">검색</button>
+					    <input type="text" id="playerSearch" placeholder="선수 이름 검색">
+					    <button type="button" id="searchBtn">검색</button>
 					</div>
 
 					<div class="position-filter">
@@ -1109,6 +1109,24 @@ body {
 		        alert("팀 선택이 완료되지 않았습니다.");
 		        return false;
 		    }
+		});
+		
+		$("#playerSearch").on("input", function() {
+
+		    let search = $(this).val();
+
+		    $(".player-card").each(function() {
+
+		        let name = $(this).find(".player-name").text();
+
+		        if (name.includes(search)) {
+		            $(this).show();
+		        } else {
+		            $(this).hide();
+		        }
+
+		    });
+
 		});
 	</script>
 

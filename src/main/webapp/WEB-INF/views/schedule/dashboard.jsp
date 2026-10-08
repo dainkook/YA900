@@ -20,6 +20,10 @@ body {
 	color: #18213f;
 	min-height: 100vh;
 }
+/* =========================
+   HEADER
+========================= */
+
 .header {
 	width: 100%;
 	height: 100px;
@@ -35,16 +39,13 @@ body {
 	box-shadow: 0 3px 15px rgba(11, 16, 38, 0.18);
 }
 
-.header>.logo:hover {
-	cursor: pointer;
-}
-
 .logo {
 	font-size: 30px;
 	font-weight: bold;
 	margin-right: 60px;
 	color: white;
 	letter-spacing: 1px;
+	cursor: pointer;
 }
 
 .main-menu {
@@ -61,7 +62,7 @@ body {
 	align-items: center;
 }
 
-.menu-item>a {
+.menu-item > a {
 	font-size: 18px;
 	font-weight: bold;
 	text-decoration: none;
@@ -70,13 +71,14 @@ body {
 	transition: color 0.2s ease;
 }
 
-.menu-item>a:hover {
+.menu-item > a:hover {
 	color: #aebee7;
 }
 
 /* =========================
-   서브 메뉴
+   SUB MENU
 ========================= */
+
 .sub-menu {
 	position: absolute;
 	top: 100%;
@@ -116,47 +118,46 @@ body {
 }
 
 /* =========================
-   로그인 / 회원가입
+   LOGIN / SIGNUP
 ========================= */
+
 .member-menu {
-    font-size: 14px;
-    margin-left: auto;
-
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    white-space: nowrap;
+	font-size: 14px;
+	margin-left: auto;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	white-space: nowrap;
 }
 
 .member-menu form {
-    display: flex;
-    margin: 0;
+	display: flex;
+	margin: 0;
 }
 
 .member-menu span {
-    color: white;
-    font-weight: bold;
-    white-space: nowrap;
+	color: white;
+	font-weight: bold;
+	white-space: nowrap;
 }
 
 .login-btn,
 .sign-btn {
-    border: 1px solid #7180b1;
-    background: transparent;
-    color: white;
-    border-radius: 5px;
-    padding: 6px 10px;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: 0.2s ease;
+	border: 1px solid #7180b1;
+	background: transparent;
+	color: white;
+	border-radius: 5px;
+	padding: 6px 10px;
+	cursor: pointer;
+	white-space: nowrap;
+	transition: 0.2s ease;
 }
 
 .login-btn:hover,
 .sign-btn:hover {
-    background: #476aaa;
-    border-color: #476aaa;
-    color: white;
+	background: #476aaa;
+	border-color: #476aaa;
+	color: white;
 }
 
 .user-menu {
@@ -712,14 +713,17 @@ body {
 													pattern="HH:mm" />
 											</span>
 											<c:choose>
-												<c:when test="${dto.start_date lt now}">
-													<span>경기종료</span>
-												</c:when>
-
-												<c:otherwise>
-													<span>경기예정</span>
-												</c:otherwise>
-
+											    <c:when test="${dto.start_date gt now}">
+											        <span>경기예정</span>
+											    </c:when>
+											
+											    <c:when test="${dto.start_date ge threeHoursAgo}">
+											        <span>진행중</span>
+											    </c:when>
+											
+											    <c:otherwise>
+											        <span>경기종료</span>
+											    </c:otherwise>
 											</c:choose>
 
 										</div>
@@ -756,7 +760,6 @@ body {
 											</div>
 										</div>
 										<div class="stadium">${dto.location}</div>
-
 									</div>
 								</a>
 							</div>
