@@ -21,7 +21,7 @@ public class UsersDAO {
             + "point, team, regdate, blackList, admin"
             + ") VALUES ("
             + "USERS_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "
-            + "0, ?, SYSTIMESTAMP, 0, '일반'"
+            + "0, ?, SYSTIMESTAMP, 0, ' Ϲ '"
             + ")";
 
       return jdbc.update(sql,
