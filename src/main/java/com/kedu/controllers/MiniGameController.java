@@ -12,14 +12,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kedu.dao.PlayerDAO;
+import com.kedu.dao.PredictionDAO;
+import com.kedu.dao.PredictionResultDAO;
 import com.kedu.dto.MyTeamDTO;
 import com.kedu.dto.PlayerDTO;
+import com.kedu.dto.PredictionResultDTO;
+import com.kedu.dto.PredictionViewDTO;
 
 @Controller
 public class MiniGameController {
 	
 	@Autowired
 	private PlayerDAO playerDAO;
+	
+	@Autowired
+	private PredictionDAO predictionDAO;
+
+	@Autowired
+	private PredictionResultDAO predictionresultDAO;
 	
 	@RequestMapping("/myteam")
 	public String myTeam(Model model,HttpSession session,@RequestParam(value="edit", required=false) String edit) {
@@ -74,10 +84,48 @@ public class MiniGameController {
 	}
 	
 	@RequestMapping("/prediction")
-	public String prediction() {
+	public String prediction(Model model,HttpSession session) {
+		
+		List<PredictionViewDTO> predictionList = predictionDAO.selectAllPredictions();
+		String id = (String) session.getAttribute("id");
+		model.addAttribute("predictionList", predictionList);
+		if(id != null) {
+			model.addAttribute("myPredictionList", predictionresultDAO.selectMyPredictions(id));
+		}
 		
 		return "minigame/prediction";
 	}
+	
+	@RequestMapping(value = "/prediction/submit", method = RequestMethod.POST)
+	public String submitPrediction(@RequestParam("predictionIds") List<Integer> predictionIds, @RequestParam("choices") List<Integer> choices, HttpSession session) {
+
+	    String id = (String) session.getAttribute("id");
+
+	    for (int i = 0; i < predictionIds.size(); i++) {
+	        int predictionId = predictionIds.get(i);
+	        int choice = choices.get(i);
+
+	        Integer teamId = predictionDAO.selectTeamIdForChoice(predictionId, choice);
+	        
+	        if (teamId == null) {
+	            throw new IllegalArgumentException(
+	                "ÆÀ ID Á¶È¸ ½ÇÆÐ - predictionId: " + predictionId
+	                + ", choice: " + choice
+	            );
+	        }
+
+	        PredictionResultDTO dto = new PredictionResultDTO();
+	        dto.setPrediction_id(predictionId);
+	        dto.setMember_id(id);
+	        dto.setTeam_id(teamId);
+	        dto.setPredicted_result(choice);
+
+	        predictionresultDAO.insertPredictionResult(dto);
+	    }
+
+	    return "redirect:/prediction";
+	}
+	
 	
 	@RequestMapping("/quiz")
 	public String quiz() {

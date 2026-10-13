@@ -2,6 +2,7 @@ package com.kedu.controllers;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,15 +39,37 @@ public class BoardController {
 	private FilesDAO fdao;
 	
 	@RequestMapping("/board")
-	public String board(Model model, int cpage) throws Exception  {
-		List<BoardDTO> list = dao.listOfPage(cpage * 10 - 9, cpage * 10);
-		model.addAttribute("list", list);
-		model.addAttribute("recordTotalCount", dao.totalCount());
-		model.addAttribute("recordCountPerPage", 10);
-		model.addAttribute("naviCountPerPage", 10);
-		model.addAttribute("cpage", cpage);
-		model.addAttribute("isSearch", false);
-		return "/board/board";
+	public String board(
+	        Model model,
+	        @RequestParam(defaultValue = "1") int cpage,
+	        @RequestParam(required = false) String team
+	) throws Exception {
+
+	    List<BoardDTO> list;
+	    int totalCount;
+
+	    if (team != null && !team.trim().isEmpty()) {
+	        list = dao.listOfPageByTeam(
+	            team, cpage * 10 - 9, cpage * 10
+	        );
+	        totalCount = dao.totalCountByTeam(team);
+
+	        model.addAttribute("selectedTeam", team);
+	    } else {
+	        list = dao.listOfPage(
+	            cpage * 10 - 9, cpage * 10
+	        );
+	        totalCount = dao.totalCount();
+	    }
+
+	    model.addAttribute("list", list);
+	    model.addAttribute("recordTotalCount", totalCount);
+	    model.addAttribute("recordCountPerPage", 10);
+	    model.addAttribute("naviCountPerPage", 10);
+	    model.addAttribute("cpage", cpage);
+	    model.addAttribute("isSearch", false);
+
+	    return "/board/board";
 	}
 	
 	@RequestMapping("/detail")
@@ -67,33 +90,86 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/write")
-	public String write(HttpSession session) throws Exception {
-		System.out.println(session.getAttribute("id"));
-		return "/board/write";
+	public String write(HttpSession session, Model model) throws Exception {
+	
+	    String id = (String) session.getAttribute("id");
+	
+	    // 로그인 확인
+	    if (id == null) {
+	        return "redirect:/login";
+	    }
+	
+	    // 로그인 회원의 소속 구단 조회
+	    String myTeam = dao.isUserTeam(id);
+	
+	    // 소속 구단이 없는 경우 글쓰기 제한
+	    if (myTeam == null || myTeam.trim().isEmpty()) {
+	        return "redirect:/board/board?cpage=1";
+	    }
+	
+	    // 글쓰기 JSP에 본인 구단 전달
+	    model.addAttribute("selectedTeam", myTeam);
+	
+	    return "/board/write";
 	}
 	
+
 	@RequestMapping("/writeComplete")
-	public String writeComplete(BoardDTO dto, HttpSession session, MultipartFile[] files) throws Exception {
-		String id = (String)session.getAttribute("id");
-		String team = dao.isUserTeam(id);
-		int seq = dao.getNextval();
-		dto.setBoard_seq(seq);
-		dto.setTeam(team);
-		dto.setWriter(id);
-		System.out.println(dto.getContents().length());
-		dao.write(dto);
-		String path = "d:/uploads/";
-		for(MultipartFile file : files) {
-			if(file.isEmpty()) {
-				continue;
-			}
-			String oriName = file.getOriginalFilename();
-			String sysName = UUID.randomUUID() + "_" + oriName;
-			file.transferTo(new File(path + sysName));
-			
-			fdao.insertFile(new FilesDTO(0,oriName,sysName,null,seq));
-		}
-		return "redirect:/board/board?cpage=1";
+	public String writeComplete(
+	        BoardDTO dto,
+	        HttpSession session,
+	        MultipartFile[] files) throws Exception {
+
+	    // 1. 로그인 확인
+	    String id = (String) session.getAttribute("id");
+
+	    if (id == null) {
+	        return "redirect:/login";
+	    }
+
+	    // 2. 로그인한 회원의 소속 구단 조회
+	    String myTeam = dao.isUserTeam(id);
+
+	    // 소속 구단이 없는 회원은 글쓰기 제한
+	    if (myTeam == null || myTeam.trim().isEmpty()) {
+	        return "redirect:/board/board?cpage=1";
+	    }
+
+	    // 3. 게시판을 회원의 소속 구단으로 자동 지정
+	    dto.setTeam(myTeam);
+	    dto.setWriter(id);
+
+	    // 4. 게시글 번호 생성 및 게시글 저장
+	    int seq = dao.getNextval();
+	    dto.setBoard_seq(seq);
+
+	    dao.write(dto);
+
+	    // 5. 첨부파일 저장
+	    String path = "d:/uploads/";
+
+	    if (files != null) {
+	        for (MultipartFile file : files) {
+
+	            if (file == null || file.isEmpty()) {
+	                continue;
+	            }
+
+	            String oriName = file.getOriginalFilename();
+	            String sysName = UUID.randomUUID() + "_" + oriName;
+
+	            file.transferTo(new File(path + sysName));
+
+	            fdao.insertFile(
+	                new FilesDTO(0, oriName, sysName, null, seq)
+	            );
+	        }
+	    }
+
+	    // 6. 등록한 구단 게시판으로 이동
+	    return "redirect:/board/board?team="
+	            + URLEncoder.encode(myTeam, "UTF-8")
+	            + "&cpage=1";
 	}
 	
 	@RequestMapping("/search")
@@ -154,7 +230,7 @@ public class BoardController {
 	public Map<String, String> uploadImage(@RequestParam("file") MultipartFile file) throws Exception {
 		Map<String, String> result = new HashMap<>();
 		if(file.isEmpty()) {
-			result.put("error", "������ ����ֽ��ϴ�.");
+			result.put("error", "������ ����ֽ��ϴ�.");
 			return result;
 		}
 		
@@ -162,7 +238,7 @@ public class BoardController {
 		String extension = oriName.substring(oriName.lastIndexOf(".") + 1).toLowerCase();
 		
 		if(!extension.matches("jpg|jpeg|png|gif|webp")) {
-			result.put("error", "�������� �ʴ� ���� �����Դϴ�.");
+			result.put("error", "�������� �ʴ� ���� �����Դϴ�.");
 			return result;
 		}
 		
