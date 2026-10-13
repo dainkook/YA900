@@ -1,13 +1,8 @@
 
 package com.kedu.controllers;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -36,7 +31,8 @@ public class MiniGameController {
 
     @Autowired
     private PlayerDAO playerDAO;
-    
+
+  
     @Autowired
     private PredictionDAO predictionDAO;
     
@@ -87,7 +83,6 @@ public class MiniGameController {
         List<PlayerDTO> myPlayerList = playerDAO.selectMyTeamPlayers(id);
 
         model.addAttribute("myPlayerList", myPlayerList);
-
 
         if (result > 0) {
             return "minigame/myteamresult";
@@ -241,7 +236,9 @@ public class MiniGameController {
 
         if (memberId == null || memberId.trim().isEmpty()) {
             response.setStatus(401);
+
             return "login plz";
+
         }
 
         if (quizIds == null || userAnswers == null
@@ -251,6 +248,7 @@ public class MiniGameController {
 
             response.setStatus(400);
             return "no data quiz";
+
         }
 
      
@@ -266,13 +264,16 @@ public class MiniGameController {
 
                 response.setStatus(400);
                 return "id boom";
+
             }
 
             if (answer == null
                     || !("O".equals(answer) || "X".equals(answer))) {
 
                 response.setStatus(400);
+
                 return "O or X";
+
             }
         }
 
@@ -291,6 +292,7 @@ public class MiniGameController {
 
             response.setStatus(500);
             return "result quiz save X";
+
         }
     }
   

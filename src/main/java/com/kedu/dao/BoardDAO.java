@@ -18,188 +18,175 @@ import com.kedu.dto.ReportDTO;
 public class BoardDAO {
 	@Autowired
 	JdbcTemplate jdbc;
-	
+
 	public int totalCount() {
 		String sql = "select count(*) from board";
 		return jdbc.queryForObject(sql, Integer.class);
 	}
 
-	public int totalCountByTeam(String team) {
-	    String sql = "select count(*) from board where team = ?";
-	    return jdbc.queryForObject(sql, Integer.class, team);
-	}
-
-	
 	public List<BoardDTO> listOfPageByTeam(String team, int first, int last) {
-	    String sql =
-	        "select * from (" +
-	        " select board.*, row_number() over(order by board_seq desc) rn " +
-	        " from board where team = ?" +
-	        ") where rn between ? and ?";
+		String sql = "select * from (" + " select board.*, row_number() over(order by board_seq desc) rn "
+				+ " from board where team = ?" + ") where rn between ? and ?";
 
-	    return jdbc.query(
-	        sql,
-	        new BeanPropertyRowMapper<>(BoardDTO.class),
-	        team, first, last
-	    );
+		return jdbc.query(sql, new BeanPropertyRowMapper<>(BoardDTO.class), team, first, last);
 	}
-	
+
+	public int totalCountByTeam(String team) {
+		String sql = "select count(*) from board where team = ?";
+		return jdbc.queryForObject(sql, Integer.class, team);
+	}
+
 	public int searchCount(String option, String search) {
 		int result = 0;
-		if(option.equals("ï¿½ï¿½ï¿½ï¿½")) {
+		if (option.equals("Á¦¸ñ")) {
 			String sql = "select count(*) from board where title like '%' || ? || '%'";
 			result = jdbc.queryForObject(sql, Integer.class, search);
-		} else if(option.equals("ï¿½ï¿½ï¿½ï¿½")) {
+		} else if (option.equals("³»¿ë")) {
 			String sql = "select count(*) from board where contents like '%' || ? || '%'";
 			result = jdbc.queryForObject(sql, Integer.class, search);
-		} else if(option.equals("ï¿½Û¾ï¿½ï¿½ï¿½")) {
+		} else if (option.equals("±Û¾´ÀÌ")) {
 			String sql = "select count(*) from board where writer like '%' || ? || '%'";
-		result = jdbc.queryForObject(sql, Integer.class, search);
+			result = jdbc.queryForObject(sql, Integer.class, search);
 		}
 		return result;
 	}
-	
+
 	public List<BoardDTO> listOfPage(int first, int last) {
 		String sql = "select * from (select board.*, row_number() over(order by board_seq desc) rn from board) where rn between ? and ?";
 		return jdbc.query(sql, new BeanPropertyRowMapper<>(BoardDTO.class), first, last);
 	}
-	
+
 	public BoardDTO getDetail(int seq) {
 		String sql = "select * from board where board_seq = ?";
-		return jdbc.queryForObject(sql, new BeanPropertyRowMapper<>(BoardDTO.class) ,seq);
+		return jdbc.queryForObject(sql, new BeanPropertyRowMapper<>(BoardDTO.class), seq);
 	}
-	
+
 	public String isUserTeam(String id) {
-	    String sql = "select team from users where id = ?";
-	    return jdbc.queryForObject(sql, String.class, id);
+		String sql = "select team from users where id = ?";
+		return jdbc.queryForObject(sql, String.class, id);
 	}
-	
+
 	public String isTeamLogo(String team) {
 		String sql = "select team_logo from team where team_name=?";
 		return jdbc.queryForObject(sql, String.class, team);
 	}
-	
-	
-		public int write(BoardDTO dto) {
-			String sql = "insert into board values(?, ?, ?, ?, 0, sysdate, ?, null, 0, null)";
-			return jdbc.update(sql, dto.getBoard_seq(), dto.getTitle(), dto.getContents(), dto.getWriter(), dto.getTeam());
+
+	public int write(BoardDTO dto) {
+		String sql = "insert into board values(?, ?, ?, ?, 0, sysdate, ?, null, 0, null)";
+		return jdbc.update(sql, dto.getBoard_seq(), dto.getTitle(), dto.getContents(), dto.getWriter(), dto.getTeam());
+	}
+
+	public List<BoardDTO> searchBoard(String option, String search, int first, int last) {
+		if (option.equals("Á¦¸ñ")) {
+			String sql = "select * from " + "(select board.*, row_number() over(order by board_seq desc) rn "
+					+ "from board where title like '%' || ? || '%')" + "where rn between ? and ?";
+			return jdbc.query(sql, new BeanPropertyRowMapper<>(BoardDTO.class), search, first, last);
+		} else if (option.equals("³»¿ë")) {
+			String sql = "select * from " + "(select board.*, row_number() over(order by board_seq desc) rn "
+					+ "from board where contents like '%' || ? || '%')" + "where rn between ? and ?";
+			return jdbc.query(sql, new BeanPropertyRowMapper<>(BoardDTO.class), search, first, last);
+		} else if (option.equals("±Û¾´ÀÌ")) {
+			String sql = "select * from " + "(select board.*, row_number() over(order by board_seq desc) rn "
+					+ "from board where writer like '%' || ? || '%')" + "where rn between ? and ?";
+			return jdbc.query(sql, new BeanPropertyRowMapper<>(BoardDTO.class), search, first, last);
+		} else {
+			List<BoardDTO> fail = new ArrayList<>();
+			return fail;
 		}
-	
-		   public List<BoardDTO> searchBoard(String option, String search, int first, int last) {
-			      if(option.equals("Á¦¸ñ")) {
-			         String sql = "select * from "
-			                    + "(select board.*, row_number() over(order by board_seq desc) rn "
-			                    + "from board where title like '%' || ? || '%')"
-			                    + "where rn between ? and ?";
-			         return jdbc.query(sql, new BeanPropertyRowMapper<>(BoardDTO.class), search, first, last);
-			      } else if(option.equals("³»¿ë")) {
-			         String sql = "select * from "
-			                    + "(select board.*, row_number() over(order by board_seq desc) rn "
-			                    + "from board where contents like '%' || ? || '%')"
-			                    + "where rn between ? and ?";
-			         return jdbc.query(sql, new BeanPropertyRowMapper<>(BoardDTO.class), search, first, last);
-			      } else if(option.equals("±Û¾´ÀÌ")) {
-			         String sql = "select * from "
-			                    + "(select board.*, row_number() over(order by board_seq desc) rn "
-			                    + "from board where writer like '%' || ? || '%')"
-			                    + "where rn between ? and ?";
-			         return jdbc.query(sql, new BeanPropertyRowMapper<>(BoardDTO.class), search, first, last);
-			      } else {
-			         List<BoardDTO> fail = new ArrayList<>();
-			         return fail;
-			      }
-			   }
-	
+	}
+
 	public String teamLogoEditer(int seq) {
 		String sql = "select team from board where board_seq = ?";
 		String team = jdbc.queryForObject(sql, String.class, seq);
-		if(team!=null) {
-		String sql2 = "select team_logo from team where team_name = ?";
-		return jdbc.queryForObject(sql2, String.class, team);
-		} return null;
+		if (team != null) {
+			String sql2 = "select team_logo from team where team_name = ?";
+			return jdbc.queryForObject(sql2, String.class, team);
+		}
+		return null;
 	}
-	
+
 	public List<BoardDTO> getRecentBoards() {
-	    String sql = "select * from (select board.*, row_number() over(order by board_seq desc) rn from board) where rn between 1 and 8";
-	    return jdbc.query(sql, new BeanPropertyRowMapper<>(BoardDTO.class));
+		String sql = "select * from (select board.*, row_number() over(order by board_seq desc) rn from board) where rn between 1 and 8";
+		return jdbc.query(sql, new BeanPropertyRowMapper<>(BoardDTO.class));
 	}
-	
+
 	public int updateDetail(int seq, String title, String contents) {
 		String sql = "update board set title = ?, contents = ? where board_seq = ?";
 		return jdbc.update(sql, title, contents, seq);
 	}
-	
+
 	public int deleteDetail(int seq) {
 		String sql = "delete from board where board_seq = ?";
 		return jdbc.update(sql, seq);
 	}
-	
+
 	public int viewCount(int seq) {
 		String sql = "update board set view_count = view_count + 1 where board_seq = ?";
 		return jdbc.update(sql, seq);
 	}
-	
+
 	public int getNextval() {
 		String sql = "select board_seq.nextval from dual";
-		int seq= jdbc.queryForObject(sql, Integer.class);
+		int seq = jdbc.queryForObject(sql, Integer.class);
 		System.out.println(seq);
 		return seq;
 	}
-	
+
 	public int addChat(LiveChatDTO dto) {
 		String sql = "insert into livechat(liveChat_seq, contents, writer, teamlogo, game_id, regdate, team) values(liveChat_seq.nextval,?, ?, ?, ?, sysdate, ?)";
 		return jdbc.update(sql, dto.getContents(), dto.getWriter(), dto.getTeamLogo(), dto.getGame_id(), dto.getTeam());
 	}
-	
+
 	public List<LiveChatDTO> getChatList(int game_id) {
 		String sql = "select * from livechat where game_id = ? order by liveChat_seq desc";
 		return jdbc.query(sql, new BeanPropertyRowMapper<>(LiveChatDTO.class), game_id);
 	}
-	
+
 	public List<ReplyDTO> getReplyList(int parent_seq) {
 		String sql = "select * from reply where parent_seq=? order by reply_seq desc";
-		return jdbc.query(sql, new BeanPropertyRowMapper<>(ReplyDTO.class),parent_seq);
+		return jdbc.query(sql, new BeanPropertyRowMapper<>(ReplyDTO.class), parent_seq);
 	}
-	
+
 	public int addReply(ReplyDTO dto) {
 		String sql = "insert into reply(reply_seq, contents, writer, view_count, write_date, parent_seq) values(reply_seq.nextval, ?, ?, 0, sysdate, ?)";
 		return jdbc.update(sql, dto.getContents(), dto.getWriter(), dto.getParent_seq());
 	}
-	
+
 	public int updateReply(ReplyDTO dto) {
 		String sql = "update reply set contents=?, write_date=sysdate where reply_seq=?";
 		return jdbc.update(sql, dto.getContents(), dto.getReply_seq());
 	}
-	
+
 	public int deleteReply(int reply_seq) {
 		String sql = "delete from reply where reply_seq = ?";
 		return jdbc.update(sql, reply_seq);
 	}
-	
+
 	public int addReport(ReportDTO dto) {
-		
-		 System.out.println("target_contents : " + dto.getTarget_contents());
-		    System.out.println("target_type : " + dto.getTarget_type());
-		    System.out.println("target_seq : " + dto.getTarget_seq());
-		    System.out.println("parent_seq : " + dto.getParent_seq());
-		    System.out.println("target_id : " + dto.getTarget_id());
-		    System.out.println("reporter : " + dto.getReporter());
-		    System.out.println("report_type : " + dto.getReport_type());
-		
+
+		System.out.println("target_contents : " + dto.getTarget_contents());
+		System.out.println("target_type : " + dto.getTarget_type());
+		System.out.println("target_seq : " + dto.getTarget_seq());
+		System.out.println("parent_seq : " + dto.getParent_seq());
+		System.out.println("target_id : " + dto.getTarget_id());
+		System.out.println("reporter : " + dto.getReporter());
+		System.out.println("report_type : " + dto.getReport_type());
+
 		String sql = "insert into report values(report_seq.nextval, ?, ?, ?, ?, ?, ?, ?, 'ï¿½ï¿½È®ï¿½ï¿½', sysdate)";
-		return jdbc.update(sql, dto.getTarget_contents(), dto.getTarget_type(), dto.getTarget_seq(), dto.getParent_seq(), dto.getTarget_id(), dto.getReporter(), dto.getReport_type());
+		return jdbc.update(sql, dto.getTarget_contents(), dto.getTarget_type(), dto.getTarget_seq(),
+				dto.getParent_seq(), dto.getTarget_id(), dto.getReporter(), dto.getReport_type());
 	}
-	
+
 	public int whereReply(int reply_seq) {
 		String sql = "select parent_seq from reply where reply_seq = ?";
 		return jdbc.queryForObject(sql, Integer.class, reply_seq);
 	}
-	
+
 	public List<Re_ReplyDTO> getReReplyList(int boards_seq) {
 		String sql = "select * from re_reply where parent_seq = ?";
 		return jdbc.query(sql, new BeanPropertyRowMapper<>(Re_ReplyDTO.class), boards_seq);
 	}
-	
+
 	public int addReReply(Re_ReplyDTO dto) {
 		String sql = "insert into re_reply values(re_reply_seq.nextval, ?, ?, sysdate, ?, ?)";
 		return jdbc.update(sql, dto.getContents(), dto.getWriter(), dto.getParent_seq(), dto.getBoards_seq());

@@ -39,6 +39,7 @@ public class UsersDAO {
             dto.getProfile_img(),
             dto.getTeam(),
             dto.getAdmin()
+
             );
    }
 
