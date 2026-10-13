@@ -3,6 +3,43 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+
+<c:set var="teamTheme" value="default" />
+
+<c:choose>
+    <c:when test="${param.team eq '두산'}">
+        <c:set var="teamTheme" value="doosan" />
+    </c:when>
+    <c:when test="${param.team eq 'LG'}">
+        <c:set var="teamTheme" value="lg" />
+    </c:when>
+    <c:when test="${param.team eq 'KIA'}">
+        <c:set var="teamTheme" value="kia" />
+    </c:when>
+    <c:when test="${param.team eq '삼성'}">
+        <c:set var="teamTheme" value="samsung" />
+    </c:when>
+    <c:when test="${param.team eq 'SSG'}">
+        <c:set var="teamTheme" value="ssg" />
+    </c:when>
+    <c:when test="${param.team eq 'KT'}">
+        <c:set var="teamTheme" value="kt" />
+    </c:when>
+    <c:when test="${param.team eq '롯데'}">
+        <c:set var="teamTheme" value="lotte" />
+    </c:when>
+    <c:when test="${param.team eq '한화'}">
+        <c:set var="teamTheme" value="hanwha" />
+    </c:when>
+    <c:when test="${param.team eq 'NC'}">
+        <c:set var="teamTheme" value="nc" />
+    </c:when>
+    <c:when test="${param.team eq '키움'}">
+        <c:set var="teamTheme" value="kiwoom" />
+    </c:when>
+</c:choose>
+
+
 <!DOCTYPE html>
 <html>
 
@@ -198,8 +235,31 @@ body {
 
 /* 게시판 전체의 첫 번째 영역 */
 .board-header {
-	border-radius: 12px 12px 0 0;
-	overflow: hidden;
+    border-radius: 12px 12px 0 0;
+    overflow: visible;
+    position: relative;
+    z-index: 10;
+}
+
+.board-title-dropdown {
+    position: relative;
+    z-index: 20;
+}
+
+.board-dropdown-menu {
+    position: absolute;
+    top: 80px;
+    left: 30px;
+    width: 320px;
+    max-height: 360px;
+    overflow-y: auto;
+    background: #fff;
+    border: 1px solid #d6dceb;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(11, 16, 38, 0.15);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+    z-index: 1001;
 }
 
 /* =========================
@@ -503,9 +563,241 @@ body {
 	cursor: pointer;
 }
 
+/* 게시판 제목과 드롭다운 */
+.board-title-dropdown {
+    position: relative;
+    gap: 10px;
+}
+
+.board-dropdown-btn {
+    border: none;
+    background: transparent;
+    color: #c5cbd2;
+    font-size: 15px;
+    cursor: pointer;
+    padding: 8px;
+    transition: transform 0.2s ease;
+}
+
+.board-dropdown-btn:hover {
+    color: #476aaa;
+}
+
+.board-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 80px;
+    left: 30px;
+    width: 320px;
+    padding: 12px;
+    background: #fff;
+    border: 1px solid #d6dceb;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(11, 16, 38, 0.15);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+    z-index: 1001;
+}
+
+.board-dropdown-menu.show {
+    display: grid;
+}
+
+.team-item {
+    min-width: 0;
+    min-height: 90px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 2px;
+    border-radius: 8px;
+    color: #18213f;
+    text-decoration: none;
+    font-size: 12px;
+    cursor: default;
+}
+
+a.team-item {
+    cursor: pointer;
+}
+
+.team-item:hover {
+    background: #f2f5fb;
+}
+
+.team-item img {
+    width: 46px;
+    height: 46px;
+    object-fit: contain;
+}
+
+.team-item span {
+    white-space: nowrap;
+}
+
+
+/* ===== 팀별 바깥 배경 그라데이션 ===== */
+
+/* 전체 게시판: 기존 네이비 그라데이션 유지 */
+body.theme-default {
+    background: linear-gradient(
+        to bottom,
+        #111936 0%,
+        #111936 15%,
+        #0b1026 25%,
+        #171f46 35%,
+        #252f67 48%,
+        #71809f 65%,
+        #aeb7ca 76%,
+        #d5dae5 86%,
+        #eef1f8 100%
+    );
+}
+
+/* 두산 베어스: 네이비 → 블루 그레이 */
+body.theme-doosan {
+    background: linear-gradient(
+        to bottom,
+        #07152e 0%,
+        #10264b 25%,
+        #234574 45%,
+        #8298b8 68%,
+        #dce5f2 88%,
+        #f4f7fc 100%
+    );
+}
+
+/* LG 트윈스: 딥 레드 → 핑크 */
+body.theme-lg {
+    background: linear-gradient(
+        to bottom,
+        #350813 0%,
+        #8b1029 25%,
+        #c8102e 43%,
+        #e68a9a 65%,
+        #f8dce2 85%,
+        #fff5f6 100%
+    );
+}
+
+/* KIA 타이거즈: 다크 레드 → 크림 */
+body.theme-kia {
+    background: linear-gradient(
+        to bottom,
+        #30050b 0%,
+        #7c0c19 25%,
+        #c8102e 43%,
+        #df8790 65%,
+        #f5dfe0 85%,
+        #fff7f5 100%
+    );
+}
+
+/* 삼성 라이온즈: 딥 블루 → 스카이 블루 */
+body.theme-samsung {
+    background: linear-gradient(
+        to bottom,
+        #061a3b 0%,
+        #074ca1 28%,
+        #247bd0 45%,
+        #8bbce9 68%,
+        #dcecff 87%,
+        #f5f9ff 100%
+    );
+}
+
+/* SSG 랜더스: 블랙 → 실버 */
+body.theme-ssg {
+    background: linear-gradient(
+        to bottom,
+        #101010 0%,
+        #292929 25%,
+        #555b65 45%,
+        #a8afb9 68%,
+        #e1e4e9 87%,
+        #f8f9fb 100%
+    );
+}
+
+/* KT 위즈: 블랙 → 그레이 */
+body.theme-kt {
+    background: linear-gradient(
+        to bottom,
+        #090909 0%,
+        #202020 28%,
+        #454545 48%,
+        #999999 70%,
+        #dedede 88%,
+        #f7f7f7 100%
+    );
+}
+
+/* 롯데 자이언츠: 딥 네이비 → 레드 */
+body.theme-lotte {
+    background: linear-gradient(
+        to bottom,
+        #08162c 0%,
+        #172e50 25%,
+        #9e1830 45%,
+        #df7b88 67%,
+        #f3dce0 87%,
+        #fff7f7 100%
+    );
+}
+
+/* 한화 이글스: 다크 오렌지 → 크림 */
+body.theme-hanwha {
+    background: linear-gradient(
+        to bottom,
+        #35170c 0%,
+        #9d3c15 25%,
+        #f15a24 43%,
+        #f3a477 66%,
+        #fbe6d5 86%,
+        #fff9f3 100%
+    );
+}
+
+/* NC 다이노스: 딥 청록 → 민트 → 밝은 청록 */
+body.theme-nc {
+    background: linear-gradient(
+        to bottom,
+        #092b30 0%,
+        #07545b 25%,
+        #008c95 43%,
+        #65bfc1 65%,
+        #c5e7e5 85%,
+        #f2fbfa 100%
+    );
+}
+
+/* 키움 히어로즈: 버건디 → 라이트 핑크 */
+body.theme-kiwoom {
+    background: linear-gradient(
+        to bottom,
+        #24000c 0%,
+        #57001c 25%,
+        #820024 43%,
+        #bd718b 66%,
+        #ead4dd 87%,
+        #fcf5f8 100%
+    );
+}
+
+.team-logo {
+	display: inline-flex;
+	algin-itmes: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	font-size: 28px;
+}
+
 </style>
 </head>
-<body>
+<body class="theme-${teamTheme}">
 	<!-- HEADER -->
 	<div class="header">
 
@@ -601,9 +893,111 @@ body {
 	</div>
 	<div class="container">
 		<div class="board-header">
-			<div class="title">
-				<h1>자유게시판</h1>
-			</div>
+		<div class="title board-title-dropdown">
+		    <h1>
+			    <c:choose>
+			        <c:when test="${empty param.team}">
+			            전체 게시판
+			        </c:when>
+			        <c:otherwise>
+			            ${param.team} 게시판
+			        </c:otherwise>
+			    </c:choose>
+			</h1>
+		
+		    <button type="button" id="boardDropdownBtn"
+		            class="board-dropdown-btn"
+		            aria-label="팀 게시판 선택"
+		            aria-expanded="false">
+		        ▼
+		    </button>
+		
+		    <div id="boardDropdownMenu" class="board-dropdown-menu">
+		    
+				<a class="team-item"
+				   href="${pageContext.request.contextPath}/board/board?cpage=1">
+				    <span style="font-size: 32px;">⚾</span>
+				    <span>전체 게시판</span>
+				</a>
+		
+		        <a class="team-item"
+		           href="${pageContext.request.contextPath}/board/board?team=두산&cpage=1">
+		            <img src="${pageContext.request.contextPath}/resources/images/team/doosan.png"
+		                 alt="두산 베어스">
+		            <span>두산 베어스</span>
+		        </a>
+		
+		        <a class="team-item"
+		        	href="${pageContext.request.contextPath}/board/board?team=LG&cpage=1">
+		            <img src="${pageContext.request.contextPath}/resources/images/team/lg.png"
+		                 alt="LG 트윈스">
+		            <span>LG 트윈스</span>
+		        </a>
+		
+		        <a class="team-item"
+		        	href="${pageContext.request.contextPath}/board/board?team=KIA&cpage=1">
+		            <img src="${pageContext.request.contextPath}/resources/images/team/kia.png"
+		                 alt="KIA 타이거즈">
+		            <span>KIA 타이거즈</span>
+		        </a>
+		
+		        <a class="team-item"
+		        	href="${pageContext.request.contextPath}/board/board?team=삼성&cpage=1">
+		            <img src="${pageContext.request.contextPath}/resources/images/team/samsung.png"
+		                 alt="삼성 라이온즈">
+		            <span>삼성 라이온즈</span>
+		        </a>
+		
+		        <a class="team-item"
+		        	href="${pageContext.request.contextPath}/board/board?team=SSG&cpage=1">
+		            <img src="${pageContext.request.contextPath}/resources/images/team/ssg.png"
+		                 alt="SSG 랜더스">
+		            <span>SSG 랜더스</span>
+		        </a>
+		
+		        <a class="team-item"
+		        	href="${pageContext.request.contextPath}/board/board?team=KT&cpage=1">
+		            <img src="${pageContext.request.contextPath}/resources/images/team/kt.png"
+		                 alt="KT 위즈">
+		            <span>KT 위즈</span>
+		        </a>
+		
+		        <a class="team-item"
+		        	href="${pageContext.request.contextPath}/board/board?team=롯데&cpage=1">
+		            <img src="${pageContext.request.contextPath}/resources/images/team/lotte.png"
+		                 alt="롯데 자이언츠">
+		            <span>롯데 자이언츠</span>
+		        </a>
+		
+		        <a class="team-item"
+		        	href="${pageContext.request.contextPath}/board/board?team=한화&cpage=1">
+		            <img src="${pageContext.request.contextPath}/resources/images/team/hanhwa.png"
+		                 alt="한화 이글스">
+		            <span>한화 이글스</span>
+		        </a>
+		
+		        <a class="team-item"
+		        	href="${pageContext.request.contextPath}/board/board?team=NC&cpage=1">
+		            <img src="${pageContext.request.contextPath}/resources/images/team/nc.png"
+		                 alt="NC 다이노스">
+		            <span>NC 다이노스</span>
+		        </a>
+		
+		        <a class="team-item"
+		        	href="${pageContext.request.contextPath}/board/board?team=키움&cpage=1">
+		            <img src="${pageContext.request.contextPath}/resources/images/team/kiwoom.png"
+		                 alt="키움 히어로즈">
+		            <span>키움 히어로즈</span>
+		        </a>
+		        
+		         <a class="team-item"
+		        	href="${pageContext.request.contextPath}/board/board/">
+		            <span class="team-logo">🗨️</span>
+		            <span>문의 게시판</span>
+		        </a>
+		    </div>
+		</div>
+
 			<div class="search">
 				<form action="/board/search" method="post">
 					<select id="select">
@@ -764,6 +1158,27 @@ $("#option").val($("#select").val());
 
 $("#select").on("change", function() {
 	$("#option").val($("#select").val());
+});
+
+//팀 게시판 드롭다운
+$("#boardDropdownBtn").on("click", function (e) {
+ e.stopPropagation();
+
+ const menu = $("#boardDropdownMenu");
+ menu.toggleClass("show");
+
+ $(this).attr("aria-expanded", menu.hasClass("show"));
+});
+
+//메뉴 바깥을 클릭하면 닫기
+$(document).on("click", function () {
+ $("#boardDropdownMenu").removeClass("show");
+ $("#boardDropdownBtn").attr("aria-expanded", "false");
+});
+
+//메뉴 내부 클릭은 바깥 클릭으로 처리하지 않기
+$("#boardDropdownMenu").on("click", function (e) {
+ e.stopPropagation();
 });
 </script>
 </body>
