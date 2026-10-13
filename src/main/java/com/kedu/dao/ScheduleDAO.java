@@ -179,4 +179,36 @@ public class ScheduleDAO {
 
 		return jdbc.queryForObject(sql,new BeanPropertyRowMapper<>(ScheduleDTO.class),game_id);
 	}
+	
+	public ScheduleDTO selectByNaverGameId(String naverGameId) {
+
+	    String sql = "SELECT * "
+	            + "FROM schedule "
+	            + "WHERE naver_game_id = ?";
+
+	    List<ScheduleDTO> list = jdbc.query(sql,new BeanPropertyRowMapper<>(ScheduleDTO.class), naverGameId);
+
+	    if (list.isEmpty()) {
+	        return null;
+	    }
+
+	    return list.get(0);
+	}
+
+
+	public int updateScheduleResult(ScheduleDTO dto) {
+
+	    String sql = "UPDATE schedule "
+	            + "SET home_score = ?, "
+	            + "away_score = ?, "
+	            + "game_status = ?, "
+	            + "winner_id = ? "
+	            + "WHERE naver_game_id = ?";
+
+	    return jdbc.update(sql,dto.getHome_score(),dto.getAway_score(),
+	            dto.getGame_status(),
+	            dto.getWinner_id(),
+	            dto.getNaver_game_id()
+	    );
+	}
 }

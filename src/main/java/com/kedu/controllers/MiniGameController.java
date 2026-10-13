@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kedu.dao.PlayerDAO;
+
 import com.kedu.dao.QuizDAO;
 import com.kedu.dto.MyTeamDTO;
 import com.kedu.dto.PlayerDTO;
@@ -31,9 +32,6 @@ public class MiniGameController {
     @Autowired
     private QuizDAO quizDAO;
 
-    // =========================
-    // ³ª¸¸ÀÇ ÆÀ
-    // =========================
     @RequestMapping("/myteam")
     public String myTeam(
             Model model,
@@ -61,7 +59,7 @@ public class MiniGameController {
         return "minigame/myteam";
     }
 
-    // ³ª¸¸ÀÇ ÆÀ °á°ú ÆäÀÌÁö
+
     @RequestMapping(value = "/myteamresult", method = RequestMethod.GET)
     public String myTeamResult(HttpSession session, Model model) {
 
@@ -83,7 +81,6 @@ public class MiniGameController {
         }
     }
 
-    // ³ª¸¸ÀÇ ÆÀ ÀúÀå ¹× ¼öÁ¤
     @RequestMapping(value = "/myteamresult", method = RequestMethod.POST)
     public String myTeamResultPost(
             MyTeamDTO dto,
@@ -107,29 +104,57 @@ public class MiniGameController {
         return "redirect:/myteamresult";
     }
 
-    // =========================
-    // °æ±â ¿¹Ãø
-    // =========================
     @RequestMapping("/prediction")
-    public String prediction() {
-        return "minigame/prediction";
+    public String prediction(Model model,HttpSession session) {
+
+      List<PredictionViewDTO> predictionList = predictionDAO.selectAllPredictions();
+      String id = (String) session.getAttribute("id");
+      model.addAttribute("predictionList", predictionList);
+      if(id != null) {
+        model.addAttribute("myPredictionList", predictionresultDAO.selectMyPredictions(id));
+      }
+
+      return "minigame/prediction";
     }
 
+    @RequestMapping(value = "/prediction/submit", method = RequestMethod.POST)
+    public String submitPrediction(@RequestParam("predictionIds") List<Integer> predictionIds, @RequestParam("choices") List<Integer> choices, HttpSession session) {
+
+        String id = (String) session.getAttribute("id");
+
+        for (int i = 0; i < predictionIds.size(); i++) {
+            int predictionId = predictionIds.get(i);
+            int choice = choices.get(i);
+
+            Integer teamId = predictionDAO.selectTeamIdForChoice(predictionId, choice);
+          
+            PredictionResultDTO dto = new PredictionResultDTO();
+            dto.setPrediction_id(predictionId);
+            dto.setMember_id(id);
+            dto.setTeam_id(teamId);
+            dto.setPredicted_result(choice);
+
+            predictionresultDAO.insertPredictionResult(dto);
+        }
+
+	    return "redirect:/prediction";
+	}
+
    
-    // ÄûÁî ¸ŞÀÎ ÆäÀÌÁö
+
     @RequestMapping("/quiz")
     public String quiz(HttpSession session, Model model) {
 
-        // ÀüÃ¼ µî·ÏµÈ ÄûÁî ¼ö
+   
         int quizCount = quizDAO.selectQuizCount();
 
-        // ÇÑ ÆÇ ÃâÁ¦ ¹®Á¦ ¼ö
+   
         int playCount = quizDAO.selectQuizPlayCount();
 
-        // Á¤´ä ÇÑ ¹®Á¦´ç Æ÷ÀÎÆ®
+  
         int pointPerCorrect = quizDAO.selectPointPerCorrect();
 
-        // È¹µæ °¡´ÉÇÑ ÃÖ´ë Æ÷ÀÎÆ®
+
         int maxPoint = playCount * pointPerCorrect;
 
         model.addAttribute("quizCount", quizCount);
@@ -137,7 +162,7 @@ public class MiniGameController {
         model.addAttribute("pointPerCorrect", pointPerCorrect);
         model.addAttribute("maxPoint", maxPoint);
 
-        // ±âÁ¸ ·©Å· ¹× ·Î±×ÀÎ »ç¿ëÀÚ Á¤º¸ ·ÎÁ÷Àº ±×´ë·Î À¯Áö
+  
         model.addAttribute("rankingList", quizDAO.selectQuizRanking());
 
         String id = (String) session.getAttribute("id");
@@ -149,8 +174,7 @@ public class MiniGameController {
 
         return "minigame/quiz";
     }
-    
-    // ÄûÁî ½ÃÀÛ ÆäÀÌÁö
+
     @RequestMapping(value = "/quiz/start", method = RequestMethod.GET)
     public String quizStart(Model model, HttpSession session) {
 
@@ -160,23 +184,23 @@ public class MiniGameController {
             return "redirect:/login";
         }
 
-        // ·£´ı ÄûÁî 10°³ Á¶È¸
+  
         List<QuizDTO> list = quizDAO.selectQuiz();
 
-        // ÃâÁ¦ÇÒ ¹®Á¦°¡ ¾ø´Â °æ¿ì
+     
         if (list == null || list.isEmpty()) {
             model.addAttribute("list", list);
             return "minigame/quizPlay";
         }
 
-        // Á¶È¸ÇÑ ¹®Á¦ ¸ñ·ÏÀ» JSP·Î Àü´Ş
+      
         model.addAttribute("list", list);
 
         return "minigame/quizPlay";
     }
 
    
-    // ÄûÁî °á°ú ÀúÀå
+    
     @ResponseBody
     @RequestMapping(value = "/quiz/submit", method = RequestMethod.POST)
     public String submitQuiz(
@@ -189,25 +213,24 @@ public class MiniGameController {
             HttpSession session,
             javax.servlet.http.HttpServletResponse response) {
 
-        // ·Î±×ÀÎ ¿©ºÎ È®ÀÎ
+    
         String memberId = (String) session.getAttribute("id");
 
         if (memberId == null || memberId.trim().isEmpty()) {
             response.setStatus(401);
-            return "·Î±×ÀÎÀÌ ÇÊ¿äÇÕ´Ï´Ù.";
+            return "ë¡œê·¸ì¸ì´ í•„ìš”í•©ë‹ˆë‹¤.";
         }
 
-        // Àü¼Û µ¥ÀÌÅÍ È®ÀÎ
         if (quizIds == null || userAnswers == null
                 || quizIds.isEmpty()
                 || quizIds.size() != userAnswers.size()
                 || quizIds.size() > 10) {
 
             response.setStatus(400);
-            return "ÄûÁî Àü¼Û µ¥ÀÌÅÍ°¡ ¿Ã¹Ù¸£Áö ¾Ê½À´Ï´Ù.";
+            return "Ã„Ã»ÃÃ® Ã€Ã¼Â¼Ã› ÂµÂ¥Ã€ÃŒÃ…ÃÂ°Â¡ Â¿ÃƒÂ¹Ã™Â¸Â£ÃÃ¶ Â¾ÃŠÂ½Ã€Â´ÃÂ´Ã™.";
         }
 
-        // Áßº¹ ¹®Á¦ ID ¹× ´ä¾È È®ÀÎ
+     
         Set<Integer> uniqueQuizIds = new HashSet<Integer>();
 
         for (int i = 0; i < quizIds.size(); i++) {
@@ -219,77 +242,77 @@ public class MiniGameController {
                     || !uniqueQuizIds.add(quizId)) {
 
                 response.setStatus(400);
-                return "¹®Á¦ ID°¡ ¿Ã¹Ù¸£Áö ¾Ê½À´Ï´Ù.";
+                return "Â¹Â®ÃÂ¦ IDÂ°Â¡ Â¿ÃƒÂ¹Ã™Â¸Â£ÃÃ¶ Â¾ÃŠÂ½Ã€Â´ÃÂ´Ã™.";
             }
 
             if (answer == null
                     || !("O".equals(answer) || "X".equals(answer))) {
 
                 response.setStatus(400);
-                return "´ä¾ÈÀº O ¶Ç´Â X¸¸ °¡´ÉÇÕ´Ï´Ù.";
+                return "Â´Ã¤Â¾ÃˆÃ€Âº O Â¶Ã‡Â´Ã‚ XÂ¸Â¸ Â°Â¡Â´Ã‰Ã‡Ã•Â´ÃÂ´Ã™.";
             }
         }
 
         try {
 
-            // DAO¿¡¼­ Á¤´äÀ» ´Ù½Ã Á¶È¸ÇÏ°í Á¡¼ö ¹× °á°ú¸¦ ÀúÀå
+           
             quizDAO.saveQuizResult(memberId, quizIds, userAnswers);
 
-            // fetch()¿¡¼­ ¼º°øÀ¸·Î ÀÎ½ÄÇÒ ÀÀ´ä
+        
             return "OK";
 
         } catch (Exception e) {
 
-            // ½ÇÁ¦ ¿À·ù´Â ¼­¹ö ÄÜ¼Ö¿¡¼­ È®ÀÎ
+            
             e.printStackTrace();
 
             response.setStatus(500);
-            return "ÄûÁî °á°ú ÀúÀå¿¡ ½ÇÆĞÇß½À´Ï´Ù.";
+            return "Ã„Ã»ÃÃ® Â°Ã¡Â°Ãº Ã€ÃºÃ€Ã¥Â¿Â¡ Â½Ã‡Ã†ÃÃ‡ÃŸÂ½Ã€Â´ÃÂ´Ã™.";
         }
     }
-    // ÄûÁî ±â·Ï Á¶È¸
+  
     @RequestMapping(value = "/quiz/history", method = RequestMethod.GET)
     public String quizHistory(HttpSession session, Model model) {
 
-        // ·Î±×ÀÎÇÑ È¸¿øÀÇ ¾ÆÀÌµğ °¡Á®¿À±â
+        
         String id = (String) session.getAttribute("id");
 
-        // ·Î±×ÀÎÇÏÁö ¾ÊÀº °æ¿ì ·Î±×ÀÎ ÆäÀÌÁö·Î ÀÌµ¿
+        
         if (id == null) {
             return "redirect:/login";
         }
 
-        // ÇØ´ç È¸¿øÀÇ ÄûÁî ±â·Ï Á¶È¸
+        
         List<Map<String, Object>> historyList =
                 quizDAO.selectHistory(id);
 
-        // Á¶È¸ °á°ú¸¦ JSP·Î Àü´Ş
+  
         model.addAttribute("historyList", historyList);
 
-        // ±â·Ï Á¶È¸ È­¸éÀ¸·Î ÀÌµ¿
+    
         return "minigame/quizHistory";
     }
     
-    // ÄûÁî ±â·Ï »ó¼¼ ÆäÀÌÁö
+  
     @RequestMapping(value = "/quiz/history/detail", method = RequestMethod.GET)
     public String quizHistoryDetail(
             @RequestParam("resultId") int resultId,
             HttpSession session,
             Model model) {
 
-        // ·Î±×ÀÎÇÑ È¸¿ø ¾ÆÀÌµğ È®ÀÎ
+ 
         String id = (String) session.getAttribute("id");
 
-        // ·Î±×ÀÎÇÏÁö ¾Ê¾Ò´Ù¸é ·Î±×ÀÎ ÆäÀÌÁö·Î ÀÌµ¿
+   
         if (id == null) {
             return "redirect:/login";
         }
 
-        // ÇØ´ç È¸Â÷ÀÇ »ó¼¼ ±â·Ï Á¶È¸
+      
         List<Map<String, Object>> detailList =
                 quizDAO.selectHistoryDetail(resultId, id);
 
-        // ±â·ÏÀÌ ¾ø°Å³ª º»ÀÎÀÇ ±â·ÏÀÌ ¾Æ´Ï¶ó¸é ÀüÃ¼ ±â·ÏÀ¸·Î ÀÌµ¿
+     
         if (detailList.isEmpty()) {
             return "redirect:/quiz/history";
         }
