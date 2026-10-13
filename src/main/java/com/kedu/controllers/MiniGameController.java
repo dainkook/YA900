@@ -107,13 +107,6 @@ public class MiniGameController {
 
 	        Integer teamId = predictionDAO.selectTeamIdForChoice(predictionId, choice);
 	        
-	        if (teamId == null) {
-	            throw new IllegalArgumentException(
-	                "ÆÀ ID Á¶È¸ ½ÇÆÐ - predictionId: " + predictionId
-	                + ", choice: " + choice
-	            );
-	        }
-
 	        PredictionResultDTO dto = new PredictionResultDTO();
 	        dto.setPrediction_id(predictionId);
 	        dto.setMember_id(id);
