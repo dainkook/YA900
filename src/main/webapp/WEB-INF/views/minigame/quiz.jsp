@@ -759,8 +759,8 @@ tbody tr:hover {
 
 				<div class="point-value">
 					<c:choose>
-						<c:when test="${not empty myPoint}">
-							<fmt:formatNumber value="${myPoint}" pattern="#,##0" /> P
+						<c:when test="${not empty point}">
+							<fmt:formatNumber value="${point}" pattern="#,##0" /> P
                 </c:when>
 						<c:otherwise>
                     0 P
