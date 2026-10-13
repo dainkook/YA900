@@ -271,4 +271,75 @@ public class QuizDAO {
 
 	    return jdbc.queryForList(sql, resultId, memberId);
 	}
+	// 전체 퀴즈 문제 수 조회
+	public int selectQuizCount() {
+	    String sql = "SELECT COUNT(*) FROM quiz";
+	    return jdbc.queryForObject(sql, Integer.class);
+	}
+
+	// 퀴즈 한 판에 출제할 문제 수
+	public int selectQuizPlayCount() {
+	    return 10;
+	}
+
+	// 정답 한 문제당 지급 포인트
+	public int selectPointPerCorrect() {
+	    return 10;
+	}
+
+	// 회원의 퀴즈 기록 요약 조회
+	public Map<String, Object> selectQuizSummary(String memberId) {
+
+	    String sql =
+	        "SELECT " +
+	        "    COUNT(*) AS \"playCount\", " +
+	        "    NVL(MAX(correct_count), 0) AS \"bestScore\", " +
+	        "    NVL(SUM(correct_count), 0) AS \"sumCorrect\", " +
+	        "    NVL(SUM(total_count), 0) AS \"sumTotal\" " +
+	        "FROM quiz_result " +
+	        "WHERE member_id = ?";
+
+	    return jdbc.queryForMap(sql, memberId);
+	}
+	
+	// 가장 최근 퀴즈 결과 조회
+	public Map<String, Object> selectLatestQuizResult(String memberId) {
+
+	    String sql =
+	        "SELECT * FROM ( " +
+	        "    SELECT " +
+	        "        correct_count AS \"correctCount\", " +
+	        "        total_count AS \"totalCount\", " +
+	        "        play_date AS \"playDate\" " +
+	        "    FROM quiz_result " +
+	        "    WHERE member_id = ? " +
+	        "    ORDER BY play_date DESC, result_id DESC " +
+	        ") WHERE ROWNUM = 1";
+
+	    List<Map<String, Object>> list = jdbc.queryForList(sql, memberId);
+
+	    if (list.isEmpty()) {
+	        return null;
+	    }
+
+	    return list.get(0);
+	}
+	// 퀴즈 랭킹 상위 5명 조회 각 회원의 최고 정답 수를 기준으로 정렬
+	public List<Map<String, Object>> selectQuizRanking() {
+
+	    String sql =
+	        "SELECT * FROM ( " +
+	        "    SELECT " +
+	        "        member_id AS \"memberId\", " +
+	        "        MAX(correct_count) AS \"score\", " +
+	        "        ROW_NUMBER() OVER ( " +
+	        "            ORDER BY MAX(correct_count) DESC, MAX(play_date) DESC " +
+	        "        ) AS \"rankNo\" " +
+	        "    FROM quiz_result " +
+	        "    GROUP BY member_id " +
+	        ") WHERE ROWNUM <= 5 " +
+	        "ORDER BY \"rankNo\"";
+
+	    return jdbc.queryForList(sql);
+	}
 }

@@ -115,17 +115,42 @@ public class MiniGameController {
         return "minigame/prediction";
     }
 
-    // =========================
+   
     // 퀴즈 메인 페이지
-    // =========================
     @RequestMapping("/quiz")
-    public String quiz(Model model) {
+    public String quiz(HttpSession session, Model model) {
+
+        // 전체 등록된 퀴즈 수
+        int quizCount = quizDAO.selectQuizCount();
+
+        // 한 판 출제 문제 수
+        int playCount = quizDAO.selectQuizPlayCount();
+
+        // 정답 한 문제당 포인트
+        int pointPerCorrect = quizDAO.selectPointPerCorrect();
+
+        // 획득 가능한 최대 포인트
+        int maxPoint = playCount * pointPerCorrect;
+
+        model.addAttribute("quizCount", quizCount);
+        model.addAttribute("playCount", playCount);
+        model.addAttribute("pointPerCorrect", pointPerCorrect);
+        model.addAttribute("maxPoint", maxPoint);
+
+        // 기존 랭킹 및 로그인 사용자 정보 로직은 그대로 유지
+        model.addAttribute("rankingList", quizDAO.selectQuizRanking());
+
+        String id = (String) session.getAttribute("id");
+
+        if (id != null) {
+            model.addAttribute("summary", quizDAO.selectQuizSummary(id));
+            model.addAttribute("latest", quizDAO.selectLatestQuizResult(id));
+        }
+
         return "minigame/quiz";
     }
-
-    // =========================
+    
     // 퀴즈 시작 페이지
-    // =========================
     @RequestMapping(value = "/quiz/start", method = RequestMethod.GET)
     public String quizStart(Model model, HttpSession session) {
 
@@ -150,9 +175,8 @@ public class MiniGameController {
         return "minigame/quizPlay";
     }
 
-    // =========================
+   
     // 퀴즈 결과 저장
-    // =========================
     @ResponseBody
     @RequestMapping(value = "/quiz/submit", method = RequestMethod.POST)
     public String submitQuiz(

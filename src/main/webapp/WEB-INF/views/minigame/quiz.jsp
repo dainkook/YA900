@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,9 +23,28 @@ html, body {
 body {
 	background: linear-gradient(to bottom, #111936 0%, #111936 12%, #171f46 22%, #252f67
 		32%, #71809f 43%, #aeb7ca 55%, #d5dae5 70%, #eef1f8 85%, #eef1f8 100%);
-	font-family: Arial, "Malgun Gothic", sans-serif;
-	color: #18213f;
+	font-family: "Malgun Gothic", "Apple SD Gothic Neo", Arial, sans-serif;
+	color: #202945;
 	min-height: 100vh;
+	font-size: 15px;
+	line-height: 1.6;
+}
+
+h1 {
+	margin: 0;
+	font-size: 25px;
+	font-weight: 800;
+	letter-spacing: -0.7px;
+	color: #202945;
+}
+
+h2 {
+	margin: 0 0 22px;
+	font-size: 20px;
+	font-weight: 800;
+	letter-spacing: -0.5px;
+	text-align: center;
+	color: #202945;
 }
 
 /* =========================
@@ -47,10 +67,10 @@ body {
 
 .logo {
 	font-size: 30px;
-	font-weight: bold;
+	font-weight: 900;
 	margin-right: 60px;
 	color: white;
-	letter-spacing: 1px;
+	letter-spacing: 1.2px;
 	cursor: pointer;
 }
 
@@ -69,12 +89,13 @@ body {
 }
 
 .menu-item>a {
-	font-size: 18px;
-	font-weight: bold;
+	font-size: 16px;
+	font-weight: 700;
 	text-decoration: none;
 	color: #f7f8ff;
 	padding: 10px 5px;
 	transition: color 0.2s ease;
+	letter-spacing: -0.3px;
 }
 
 .menu-item>a:hover {
@@ -110,7 +131,9 @@ body {
 	padding: 13px 15px;
 	text-decoration: none;
 	color: #f5f7ff;
-	font-size: 14px;
+	font-size: 13px;
+	font-weight: 500;
+	letter-spacing: -0.2px;
 	border-bottom: 1px solid #35406b;
 }
 
@@ -141,7 +164,8 @@ body {
 
 .member-menu span {
 	color: white;
-	font-weight: bold;
+	font-size: 13px;
+	font-weight: 600;
 	white-space: nowrap;
 }
 
@@ -154,6 +178,9 @@ body {
 	cursor: pointer;
 	white-space: nowrap;
 	transition: 0.2s ease;
+	font-family: inherit;
+	font-size: 12px;
+	font-weight: 700;
 }
 
 .login-btn:hover, .sign-btn:hover {
@@ -174,12 +201,140 @@ body {
 /* =========================
    COMMON BOX
 ========================= */
+/* =========================
+   카드 디자인
+========================= */
 .box {
-	background: white;
-	border: 1px solid #e1e4e8;
+	background: #ffffff;
+	border: 1px solid #e1e7f2;
+	border-radius: 14px;
+	box-shadow: 0 5px 18px rgba(20, 35, 70, 0.06);
+	padding: 28px;
+	transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.box h2 {
+	position: relative;
+	padding-bottom: 13px;
+	border-bottom: 1px solid #edf0f7;
+}
+
+/* 퀴즈 시작 카드 설명 */
+.quiz-start p {
+	margin: 5px 0;
+	font-size: 14px;
+	font-weight: 500;
+	color: #68748c;
+	letter-spacing: -0.2px;
+}
+
+/* 퀴즈 시작 카드의 주요 수치 */
+.quiz-start p:first-of-type {
+	color: #344b78;
+	font-size: 16px;
+	font-weight: 700;
+}
+
+/* 내 포인트 */
+.point-value {
+	width: 80%;
+	min-height: 75px;
+	border: 1px solid #dfe7f5;
 	border-radius: 10px;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-	padding: 25px;
+	background: linear-gradient(135deg, #f7f9ff, #edf2ff);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 26px;
+	font-weight: 800;
+	color: #476aaa;
+	margin-bottom: 20px;
+	letter-spacing: -0.5px;
+}
+
+/* 안내 및 최근 기록 */
+.info ul {
+	margin: 0;
+	padding-left: 20px;
+	display: flex;
+	flex-direction: column;
+	gap: 13px;
+	color: #58647b;
+	font-size: 14px;
+	line-height: 1.7;
+}
+
+.info li {
+	padding-left: 4px;
+}
+
+.info li::marker {
+	color: #476aaa;
+}
+
+/* 공통 버튼 */
+.btn, .history-btn {
+	font-family: inherit;
+	font-size: 14px;
+	font-weight: 700;
+	letter-spacing: -0.2px;
+}
+
+.btn {
+	border-radius: 8px;
+	box-shadow: 0 3px 7px rgba(71, 106, 170, 0.13);
+}
+
+.history-btn {
+	border-radius: 8px;
+	box-shadow: 0 3px 7px rgba(71, 106, 170, 0.12);
+}
+
+/* 표 제목과 데이터 */
+table {
+	width: 100%;
+	border-collapse: collapse;
+	font-family: inherit;
+	font-size: 14px;
+	text-align: center;
+}
+
+th {
+	height: 48px;
+	background: #f4f6fb;
+	border-top: 1px solid #e1e7f2;
+	border-bottom: 1px solid #dce3ef;
+	font-size: 13px;
+	font-weight: 800;
+	letter-spacing: -0.2px;
+	color: #596780;
+}
+
+td {
+	height: 52px;
+	padding: 10px 8px;
+	border-bottom: 1px solid #edf0f6;
+	font-size: 14px;
+	font-weight: 500;
+	color: #36425b;
+}
+
+tbody tr:hover {
+	background: #f5f8ff;
+}
+
+/* 카드 제목과 표 사이의 간격 */
+.table-scroll {
+	border-radius: 8px;
+	overflow-x: auto;
+}
+
+/* 푸터 */
+.site-footer {
+	font-family: inherit;
+	font-size: 12px;
+	letter-spacing: 0.5px;
+	color: #7b8498;
 }
 
 /* =========================
@@ -467,33 +622,31 @@ tbody tr:hover {
 		display: none;
 	}
 }
+
 .history-btn-wrap {
-    margin-top: 22px;
-    text-align: center;
+	margin-top: 22px;
+	text-align: center;
 }
 
 .history-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 150px;
-    height: 42px;
-    padding: 0 20px;
-
-    background: #476aaa;
-    color: white;
-    border-radius: 7px;
-
-    font-size: 14px;
-    font-weight: bold;
-    text-decoration: none;
-
-    transition: all 0.2s ease;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 150px;
+	height: 42px;
+	padding: 0 20px;
+	background: #476aaa;
+	color: white;
+	border-radius: 7px;
+	font-size: 14px;
+	font-weight: bold;
+	text-decoration: none;
+	transition: all 0.2s ease;
 }
 
 .history-btn:hover {
-    background: #3d5e97;
-    box-shadow: 0 3px 8px rgba(71, 106, 170, 0.2);
+	background: #3d5e97;
+	box-shadow: 0 3px 8px rgba(71, 106, 170, 0.2);
 }
 </style>
 </head>
@@ -585,42 +738,108 @@ tbody tr:hover {
 		</div>
 
 		<div class="row">
+
+			<%-- 퀴즈 시작 영역 --%>
 			<section class="box quiz-start">
 				<h2>오늘의 야구 상식퀴즈</h2>
-				<p>문제 수</p>
-				<p>획득 가능 포인트</p>
+
+				<p>전체 등록 문제: ${quizCount}문제</p>
+				<p>이번 도전: ${playCount}문제 출제</p>
+				<p>정답 1문제당 ${pointPerCorrect}포인트</p>
+				<p>획득 가능 포인트: 최대 ${maxPoint}포인트</p>
+
 				<button type="button" class="btn"
 					onclick="location.href='${pageContext.request.contextPath}/quiz/start'">
 					퀴즈 시작</button>
 			</section>
 
+			<%-- 내 포인트 영역 --%>
 			<section class="box my-point">
 				<h2>내 포인트</h2>
-				<div class="point-value"></div>
-				<button type="button" class="btn">포인트 내역</button>
+
+				<div class="point-value">
+					<c:choose>
+						<c:when test="${not empty myPoint}">
+							<fmt:formatNumber value="${myPoint}" pattern="#,##0" /> P
+                </c:when>
+						<c:otherwise>
+                    0 P
+                </c:otherwise>
+					</c:choose>
+				</div>
+
+				<button type="button" class="btn"
+					onclick="location.href='${pageContext.request.contextPath}/quiz/pointHistory'">
+					포인트 내역</button>
 			</section>
+
 		</div>
 
 		<div class="row">
 			<section class="box info">
 				<h2>퀴즈 안내</h2>
+
 				<ul>
-					<li>문제 수</li>
-					<li>문제당 포인트</li>
-					<li>정답 확인</li>
-					<li>랭킹 반영</li>
+					<li>전체 등록 문제: ${quizCount}문제</li>
+					<li>한 회차 출제: 10문제</li>
+					<li>정답 확인: 제출 후 결과 확인</li>
+					<li>랭킹 반영: 회원별 최고 정답 수 기준</li>
 				</ul>
 			</section>
 
 			<section class="box info">
 				<h2>최근 기록</h2>
 
-				<ul>
-					<li>최근 점수</li>
-					<li>최고 점수</li>
-					<li>참여 횟수</li>
-					<li>정답률</li>
-				</ul>
+				<c:choose>
+					<%-- 로그인한 회원의 기록이 있는 경우 --%>
+					<c:when test="${not empty summary and summary.playCount > 0}">
+
+						<ul>
+							<li>최근 점수: <c:choose>
+									<c:when test="${not empty latest}">
+										<c:out value="${latest.correctCount}" />
+                            /
+                            <c:out value="${latest.totalCount}" />점
+                        </c:when>
+									<c:otherwise>-</c:otherwise>
+								</c:choose>
+							</li>
+
+							<li>최고 점수: <c:out value="${summary.bestScore}" />점
+							</li>
+
+							<li>참여 횟수: <c:out value="${summary.playCount}" />회
+							</li>
+
+							<li>정답률: <c:choose>
+									<c:when test="${summary.sumTotal > 0}">
+										<fmt:formatNumber
+											value="${summary.sumCorrect * 100 / summary.sumTotal}"
+											maxFractionDigits="1" />%
+                        </c:when>
+									<c:otherwise>0%</c:otherwise>
+								</c:choose>
+							</li>
+						</ul>
+
+					</c:when>
+
+					<%-- 로그인했지만 아직 퀴즈 기록이 없는 경우 --%>
+					<c:when test="${not empty sessionScope.id}">
+						<ul>
+							<li>최근 점수: -</li>
+							<li>최고 점수: 0점</li>
+							<li>참여 횟수: 0회</li>
+							<li>정답률: 0%</li>
+						</ul>
+					</c:when>
+
+					<%-- 비로그인 상태 --%>
+					<c:otherwise>
+						<p style="text-align: center; color: #666;">로그인하면 나의 퀴즈 기록을
+							확인할 수 있습니다.</p>
+					</c:otherwise>
+				</c:choose>
 
 				<div class="history-btn-wrap">
 					<a href="${pageContext.request.contextPath}/quiz/history"
@@ -641,31 +860,25 @@ tbody tr:hover {
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
+						<c:choose>
+							<c:when test="${not empty rankingList}">
+								<c:forEach var="rank" items="${rankingList}">
+									<tr>
+										<td><c:out value="${rank.rankNo}" />위</td>
+
+										<td><c:out value="${rank.memberId}" /></td>
+
+										<td><c:out value="${rank.score}" />점</td>
+									</tr>
+								</c:forEach>
+							</c:when>
+
+							<c:otherwise>
+								<tr>
+									<td colspan="3">아직 랭킹 데이터가 없습니다.</td>
+								</tr>
+							</c:otherwise>
+						</c:choose>
 					</tbody>
 				</table>
 			</div>
