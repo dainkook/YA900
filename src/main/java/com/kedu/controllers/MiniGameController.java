@@ -17,10 +17,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kedu.dao.PlayerDAO;
-
+import com.kedu.dao.PredictionDAO;
+import com.kedu.dao.PredictionResultDAO;
 import com.kedu.dao.QuizDAO;
 import com.kedu.dto.MyTeamDTO;
 import com.kedu.dto.PlayerDTO;
+import com.kedu.dto.PredictionResultDTO;
+import com.kedu.dto.PredictionViewDTO;
 import com.kedu.dto.QuizDTO;
 
 @Controller
@@ -31,6 +34,12 @@ public class MiniGameController {
 
     @Autowired
     private QuizDAO quizDAO;
+    
+    @Autowired
+    private PredictionDAO predictionDAO;
+    
+    @Autowired
+    private PredictionResultDAO predictionresultDAO;
 
     @RequestMapping("/myteam")
     public String myTeam(
