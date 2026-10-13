@@ -91,63 +91,35 @@ public class BoardController {
 	
 	@RequestMapping("/write")
 	public String write(HttpSession session, Model model) throws Exception {
-	
 	    String id = (String) session.getAttribute("id");
-	
-	    // 로그인 확인
 	    if (id == null) {
 	        return "redirect:/login";
 	    }
-	
-	    // 로그인 회원의 소속 구단 조회
 	    String myTeam = dao.isUserTeam(id);
-	
-	    // 소속 구단이 없는 경우 글쓰기 제한
 	    if (myTeam == null || myTeam.trim().isEmpty()) {
 	        return "redirect:/board/board?cpage=1";
 	    }
-	
-	    // 글쓰기 JSP에 본인 구단 전달
 	    model.addAttribute("selectedTeam", myTeam);
-	
 	    return "/board/write";
 	}
 	
 
 	@RequestMapping("/writeComplete")
-	public String writeComplete(
-	        BoardDTO dto,
-	        HttpSession session,
-	        MultipartFile[] files) throws Exception {
-
-	    // 1. 로그인 확인
+	public String writeComplete(BoardDTO dto, HttpSession session, MultipartFile[] files) throws Exception {
 	    String id = (String) session.getAttribute("id");
-
 	    if (id == null) {
 	        return "redirect:/login";
 	    }
-
-	    // 2. 로그인한 회원의 소속 구단 조회
 	    String myTeam = dao.isUserTeam(id);
-
-	    // 소속 구단이 없는 회원은 글쓰기 제한
 	    if (myTeam == null || myTeam.trim().isEmpty()) {
 	        return "redirect:/board/board?cpage=1";
 	    }
-
-	    // 3. 게시판을 회원의 소속 구단으로 자동 지정
 	    dto.setTeam(myTeam);
 	    dto.setWriter(id);
-
-	    // 4. 게시글 번호 생성 및 게시글 저장
 	    int seq = dao.getNextval();
 	    dto.setBoard_seq(seq);
-
 	    dao.write(dto);
-
-	    // 5. 첨부파일 저장
 	    String path = "d:/uploads/";
-
 	    if (files != null) {
 	        for (MultipartFile file : files) {
 
@@ -165,8 +137,6 @@ public class BoardController {
 	            );
 	        }
 	    }
-
-	    // 6. 등록한 구단 게시판으로 이동
 	    return "redirect:/board/board?team="
 	            + URLEncoder.encode(myTeam, "UTF-8")
 	            + "&cpage=1";
@@ -230,7 +200,7 @@ public class BoardController {
 	public Map<String, String> uploadImage(@RequestParam("file") MultipartFile file) throws Exception {
 		Map<String, String> result = new HashMap<>();
 		if(file.isEmpty()) {
-			result.put("error", "������ ����ֽ��ϴ�.");
+			result.put("error", "");
 			return result;
 		}
 		
@@ -238,7 +208,7 @@ public class BoardController {
 		String extension = oriName.substring(oriName.lastIndexOf(".") + 1).toLowerCase();
 		
 		if(!extension.matches("jpg|jpeg|png|gif|webp")) {
-			result.put("error", "�������� �ʴ� ���� �����Դϴ�.");
+			result.put("error", "");
 			return result;
 		}
 		

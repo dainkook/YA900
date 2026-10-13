@@ -515,7 +515,6 @@ body {
 			        margin-right: 15px;
 			        color: #171f46;
 			    ">작성 게시판</span>
-			
 			    <span style="
 			        display: inline-block;
 			        padding: 10px 15px;
@@ -533,7 +532,6 @@ body {
 			        font-size: 13px;
 			        color: #888;
 			    ">
-			        소속 구단 게시판에 등록됩니다.
 			    </span>
 			</div>
 			

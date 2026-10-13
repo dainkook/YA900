@@ -21,7 +21,7 @@
 }
 
 html {
-    scroll-behavior: smooth;
+	scroll-behavior: smooth;
 }
 
 body {
@@ -499,21 +499,21 @@ body {
 }
 
 .replyContents {
-    flex: 1;
-    min-width: 0;
-    min-height: 38px;
-    padding: 8px 12px;
-    border: 1px solid transparent;
-    border-radius: 5px;
-    background-color: transparent;
-    font-size: 15px;
-    color: #333;
-    font-family: Arial, sans-serif;
-    outline: none;
-    resize: none;
-    overflow: hidden;
-    line-height: 1.5;
-    box-sizing: border-box;
+	flex: 1;
+	min-width: 0;
+	min-height: 38px;
+	padding: 8px 12px;
+	border: 1px solid transparent;
+	border-radius: 5px;
+	background-color: transparent;
+	font-size: 15px;
+	color: #333;
+	font-family: Arial, sans-serif;
+	outline: none;
+	resize: none;
+	overflow: hidden;
+	line-height: 1.5;
+	box-sizing: border-box;
 }
 
 .replyContents:not([readonly]) {
@@ -633,150 +633,150 @@ body {
 	background: #476aaa;
 	color: white;
 }
+
 .header>.logo:hover {
 	cursor: pointer;
 }
 
-
 /* 댓글 한 개의 영역 */
 .replyItem {
-    padding: 8px 10px;
-    border-bottom: 1px solid #eee;
-    transition: background-color 0.2s ease;
+	padding: 8px 10px;
+	border-bottom: 1px solid #eee;
+	transition: background-color 0.2s ease;
 }
 
 /* 댓글에 마우스를 올리면 배경색 변경 */
 .replyItem:hover {
-    background-color: #f8f9fc;
+	background-color: #f8f9fc;
 }
 
 /* 댓글 본문 한 줄 */
 .replyLine {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	gap: 10px;
 }
 
 /* 답글 버튼 영역 */
 .replyActions {
-    margin: 3px 0 0 12px;
+	margin: 3px 0 0 12px;
 }
 
 .reReplyOpen {
-    padding: 5px 8px;
-    border: none;
-    border-radius: 4px;
-    background: transparent;
-    color: #64739b;
-    font-size: 13px;
-    cursor: pointer;
+	padding: 5px 8px;
+	border: none;
+	border-radius: 4px;
+	background: transparent;
+	color: #64739b;
+	font-size: 13px;
+	cursor: pointer;
 }
 
 .reReplyOpen:hover {
-    background-color: #e9edf7;
-    color: #293d78;
+	background-color: #e9edf7;
+	color: #293d78;
 }
 
 /* 대댓글 전체 영역 */
 .reReplyArea {
-    margin: 10px 0 5px 25px;
-    padding-left: 18px;
-    border-left: 2px solid #dce3f3;
+	margin: 10px 0 5px 25px;
+	padding-left: 18px;
+	border-left: 2px solid #dce3f3;
 }
 
 /* 대댓글 입력창 */
 .reReplyWrite {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 12px;
+	display: flex;
+	gap: 8px;
+	margin-bottom: 12px;
 }
 
 .reReplyWrite textarea {
-    flex: 1;
-    min-width: 0;
-    min-height: 65px;
-    padding: 10px 12px;
-    border: 1px solid #dce1ea;
-    border-radius: 6px;
-    background-color: #fff;
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-    resize: vertical;
-    outline: none;
+	flex: 1;
+	min-width: 0;
+	min-height: 65px;
+	padding: 10px 12px;
+	border: 1px solid #dce1ea;
+	border-radius: 6px;
+	background-color: #fff;
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	resize: vertical;
+	outline: none;
 }
 
 .reReplyWrite textarea:focus {
-    border-color: #526ba8;
-    box-shadow: 0 0 0 3px rgba(82, 107, 168, 0.08);
+	border-color: #526ba8;
+	box-shadow: 0 0 0 3px rgba(82, 107, 168, 0.08);
 }
 
 .reReplyWrite button {
-    align-self: flex-end;
-    height: 35px;
-    padding: 0 13px;
-    border: 1px solid #293d78;
-    border-radius: 5px;
-    background-color: #293d78;
-    color: white;
-    font-size: 13px;
-    cursor: pointer;
+	align-self: flex-end;
+	height: 35px;
+	padding: 0 13px;
+	border: 1px solid #293d78;
+	border-radius: 5px;
+	background-color: #293d78;
+	color: white;
+	font-size: 13px;
+	cursor: pointer;
 }
 
 .reReplyWrite button:hover {
-    background-color: #354d91;
+	background-color: #354d91;
 }
 
 /* 기존 대댓글 한 개 */
 .reReplyItem {
-    padding: 10px 12px;
-    margin-bottom: 5px;
-    border-radius: 5px;
-    transition: background-color 0.2s ease;
+	padding: 10px 12px;
+	margin-bottom: 5px;
+	border-radius: 5px;
+	transition: background-color 0.2s ease;
 }
 
 .reReplyItem:hover {
-    background-color: #f0f2f8;
+	background-color: #f0f2f8;
 }
 
 /* 대댓글 본문 */
 .reReplyForm {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+	display: flex;
+	align-items: center;
+	gap: 10px;
 }
 
 .reReplyForm textarea {
-    flex: 1;
-    min-width: 0;
-    min-height: 35px;
-    padding: 8px 10px;
-    border: 1px solid transparent;
-    border-radius: 5px;
-    background-color: transparent;
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-    color: #444;
-    resize: none;
-    outline: none;
+	flex: 1;
+	min-width: 0;
+	min-height: 35px;
+	padding: 8px 10px;
+	border: 1px solid transparent;
+	border-radius: 5px;
+	background-color: transparent;
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	color: #444;
+	resize: none;
+	outline: none;
 }
 
 .reReplyForm textarea:not([readonly]) {
-    background-color: white;
-    border-color: #dce3f3;
+	background-color: white;
+	border-color: #dce3f3;
 }
 
 .reReplyForm textarea:not([readonly]):focus {
-    border-color: #526ba8;
+	border-color: #526ba8;
 }
 
 .reReplyForm .replyWriter {
-    width: 90px;
+	width: 90px;
 }
 
 .reReplyForm .replyDate {
-    width: 130px;
-    font-size: 12px;
+	width: 130px;
+	font-size: 12px;
 }
 </style>
 </head>
@@ -794,11 +794,11 @@ body {
 				<a href="#">야구</a>
 
 				<div class="sub-menu">
-					<a href="#">예매</a> 
-					<a href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a> 
-					<a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a> 
-					<a href="#">선수순위</a> 
-					<a href="${pageContext.request.contextPath}/board/board?cpage=1">게시판</a>
+					<a href="#">예매</a> <a
+						href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a>
+					<a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a>
+					<a href="#">선수순위</a> <a
+						href="${pageContext.request.contextPath}/board/board?cpage=1">게시판</a>
 				</div>
 			</div>
 
@@ -807,11 +807,8 @@ body {
 				<a href="#">축구</a>
 
 				<div class="sub-menu">
-					<a href="#">예매</a> 
-					<a href="#">경기일정</a> 
-					<a href="#">팀순위</a> 
-					<a href="#">선수순위</a> 
-					<a href="#">게시판</a>
+					<a href="#">예매</a> <a href="#">경기일정</a> <a href="#">팀순위</a> <a
+						href="#">선수순위</a> <a href="#">게시판</a>
 				</div>
 			</div>
 
@@ -820,59 +817,54 @@ body {
 				<a href="#">미니게임</a>
 
 				<div class="sub-menu">
-					<a href="#">상식 퀴즈</a> 
-					<a href="#">OX 퀴즈</a> 
-					<a href="#">승부예측</a> 
-					<a href="#">게임 랭킹</a>
+					<a href="#">상식 퀴즈</a> <a href="#">OX 퀴즈</a> <a href="#">승부예측</a> <a
+						href="#">게임 랭킹</a>
 				</div>
 			</div>
 		</nav>
 
 		<div class="member-menu">
 
-    <c:choose>
+			<c:choose>
 
-        <c:when test="${not empty sessionScope.id}">
-            <span>${sessionScope.id}님</span>
+				<c:when test="${not empty sessionScope.id}">
+					<span>${sessionScope.id}님</span>
 
-            <button class="login-btn"
-                    onclick="location.href='${pageContext.request.contextPath}/mypage'">
-                마이페이지
-            </button>
+					<button class="login-btn"
+						onclick="location.href='${pageContext.request.contextPath}/mypage'">
+						마이페이지</button>
 
-            <form action="${pageContext.request.contextPath}/logout"
-                  method="post">
-                <button type="submit" class="sign-btn">
-                    로그아웃
-                </button>
-            </form>
-        </c:when>
+					<form action="${pageContext.request.contextPath}/logout"
+						method="post">
+						<button type="submit" class="sign-btn">로그아웃</button>
+					</form>
+				</c:when>
 
-        <c:otherwise>
-            <button class="login-btn"
-                    onclick="location.href='${pageContext.request.contextPath}/login'">
-                로그인
-            </button>
+				<c:otherwise>
+					<button class="login-btn"
+						onclick="location.href='${pageContext.request.contextPath}/login'">
+						로그인</button>
 
-            <button class="sign-btn"
-                    onclick="location.href='${pageContext.request.contextPath}/signup'">
-                회원가입
-            </button>
-        </c:otherwise>
+					<button class="sign-btn"
+						onclick="location.href='${pageContext.request.contextPath}/signup'">
+						회원가입</button>
+				</c:otherwise>
 
-    </c:choose>
-			
-			
+			</c:choose>
+
+
 		</div>
 
 	</div>
 	<!-- 오른쪽 퀵메뉴 -->
 	<div class="quick-menu">
-		   <div class="menu">QUICK MENU</div>
-		   <div onclick="location.href='${pageContext.request.contextPath}/'">홈</div>
-		   <div onclick="location.href='${pageContext.request.contextPath}/#reservation'">예매</div>
-		   <div onclick="location.href='${pageContext.request.contextPath}/board/board?cpage=1'">게시판</div>
-		   <div>마이페이지</div>
+		<div class="menu">QUICK MENU</div>
+		<div onclick="location.href='${pageContext.request.contextPath}/'">홈</div>
+		<div
+			onclick="location.href='${pageContext.request.contextPath}/#reservation'">예매</div>
+		<div
+			onclick="location.href='${pageContext.request.contextPath}/board/board?cpage=1'">게시판</div>
+		<div>마이페이지</div>
 	</div>
 	<div class="container">
 		<div class="page-heading">
@@ -926,7 +918,8 @@ body {
 						<input type="hidden" name="target_id" value="${board.writer}">
 						<input type="hidden" name="reporter" value="${id}"> <input
 							type="hidden" id="report_type" name="report_type">
-						<button type="button" class="bookmark" onclick="location.href='/board/bookmark'">북마크</button>
+						<button type="button" class="bookmark"
+							onclick="location.href='/board/bookmark'">북마크</button>
 						<button type="button" class="boardReport">신고</button>
 					</form>
 				</div>
@@ -949,79 +942,83 @@ body {
 					<c:when test="${not empty replyList}">
 						<c:forEach var="reply" items="${replyList}">
 							<tr>
-    <td colspan="5">
-        <div class="replyItem">
+								<td colspan="5">
+									<div class="replyItem">
 
-            <!-- 일반 댓글 -->
-            <div class="replyLine">
-                <form action="/board/replyUpdate" class="replyForm">
-                    <textarea name="contents" class="replyContents" readonly>${reply.contents}</textarea>
-                    <input type="hidden" name="parent_seq" value="${board.board_seq}">
-                    <input type="hidden" name="reply_seq" value="${reply.reply_seq}">
+										<!-- 일반 댓글 -->
+										<div class="replyLine">
+											<form action="/board/replyUpdate" class="replyForm">
+												<textarea name="contents" class="replyContents" readonly>${reply.contents}</textarea>
+												<input type="hidden" name="parent_seq"
+													value="${board.board_seq}"> <input type="hidden"
+													name="reply_seq" value="${reply.reply_seq}"> <span
+													class="replyWriter">${reply.writer}</span> <span
+													class="replyDate">${reply.write_date}</span>
 
-                    <span class="replyWriter">${reply.writer}</span>
-                    <span class="replyDate">${reply.write_date}</span>
+												<c:if test="${id == reply.writer}">
+													<button type="button" class="replyFix">수정</button>
+													<button type="button" class="replyDel">삭제</button>
+												</c:if>
+											</form>
 
-                    <c:if test="${id == reply.writer}">
-                        <button type="button" class="replyFix">수정</button>
-                        <button type="button" class="replyDel">삭제</button>
-                    </c:if>
-                </form>
+											<form action="/board/reportComplete" class="replyReportForm">
+												<input type="hidden" name="target_contents"
+													value="${reply.contents}"> <input type="hidden"
+													name="target_type" value="댓글"> <input type="hidden"
+													name="target_seq" value="${reply.reply_seq}"> <input
+													type="hidden" name="target_id" value="${reply.writer}">
+												<input type="hidden" name="parent_seq"
+													value="${board.board_seq}"> <input type="hidden"
+													name="reporter" value="${id}"> <input type="hidden"
+													class="report_type" name="report_type">
+												<button type="button" class="replyReport">신고</button>
+											</form>
+										</div>
 
-                <form action="/board/reportComplete" class="replyReportForm">
-                    <input type="hidden" name="target_contents" value="${reply.contents}">
-                    <input type="hidden" name="target_type" value="댓글">
-                    <input type="hidden" name="target_seq" value="${reply.reply_seq}">
-                    <input type="hidden" name="target_id" value="${reply.writer}">
-                    <input type="hidden" name="parent_seq" value="${board.board_seq}">
-                    <input type="hidden" name="reporter" value="${id}">
-                    <input type="hidden" class="report_type" name="report_type">
-                    <button type="button" class="replyReport">신고</button>
-                </form>
-            </div>
+										<!-- 답글 열기 버튼 -->
+										<div class="replyActions">
+											<button type="button" class="reReplyOpen">↳ 답글 달기</button>
+										</div>
 
-            <!-- 답글 열기 버튼 -->
-            <div class="replyActions">
-                <button type="button" class="reReplyOpen">↳ 답글 달기</button>
-            </div>
+										<!-- 대댓글 입력창 + 기존 대댓글 -->
+										<div class="reReplyArea" style="display: none;">
 
-            <!-- 대댓글 입력창 + 기존 대댓글 -->
-            <div class="reReplyArea" style="display: none;">
+											<form action="/board/re_replyWrite" class="reReplyWrite">
+												<textarea name="re_contents" placeholder="답글을 입력해주세요..."></textarea>
+												<input type="hidden" name="writer" value="${id}"> <input
+													type="hidden" name="parent_seq" value="${reply.reply_seq}">
+												<input type="hidden" name="board_seq"
+													value="${board.board_seq}">
+												<button type="submit">등록</button>
+											</form>
 
-                <form action="/board/re_replyWrite" class="reReplyWrite">
-                    <textarea name="re_contents" placeholder="답글을 입력해주세요..."></textarea>
-                    <input type="hidden" name="writer" value="${id}">
-                    <input type="hidden" name="parent_seq" value="${reply.reply_seq}">
-                    <input type="hidden" name="board_seq" value="${board.board_seq}">
-                    <button type="submit">등록</button>
-                </form>
+											<c:if test="${not empty re_replyList}">
+												<c:forEach var="re_reply" items="${re_replyList}">
+													<c:if test="${re_reply.parent_seq == reply.reply_seq}">
+														<div class="reReplyItem">
+															<form action="/board/re_replyUpdate" class="reReplyForm">
+																<textarea name="re_contents" readonly>${re_reply.contents}</textarea>
+																<input type="hidden" name="parent_seq"
+																	value="${reply.reply_seq}"> <input
+																	type="hidden" name="re_reply_seq"
+																	value="${re_reply.re_reply_seq}"> <span
+																	class="replyWriter">${re_reply.writer}</span> <span
+																	class="replyDate">${re_reply.write_date}</span>
 
-                <c:if test="${not empty re_replyList}">
-                    <c:forEach var="re_reply" items="${re_replyList}">
-                        <c:if test="${re_reply.parent_seq == reply.reply_seq}">
-                            <div class="reReplyItem">
-                                <form action="/board/re_replyUpdate" class="reReplyForm">
-                                    <textarea name="re_contents" readonly>${re_reply.contents}</textarea>
-                                    <input type="hidden" name="parent_seq" value="${reply.reply_seq}">
-                                    <input type="hidden" name="re_reply_seq" value="${re_reply.re_reply_seq}">
+																<c:if test="${id == re_reply.writer}">
+																	<button type="button" class="replyFix reReplyFix">수정</button>
+																	<button type="button" class="replyDel reReplyDel">삭제</button>
+																</c:if>
+															</form>
+														</div>
+													</c:if>
+												</c:forEach>
+											</c:if>
 
-                                    <span class="replyWriter">${re_reply.writer}</span>
-                                    <span class="replyDate">${re_reply.write_date}</span>
-
-                                    <c:if test="${id == re_reply.writer}">
-                                        <button type="button" class="replyFix reReplyFix">수정</button>
-                                        <button type="button" class="replyDel reReplyDel">삭제</button>
-                                    </c:if>
-                                </form>
-                            </div>
-                        </c:if>
-                    </c:forEach>
-                </c:if>
-
-            </div>
-        </div>
-    </td>
-</tr>
+										</div>
+									</div>
+								</td>
+							</tr>
 						</c:forEach>
 					</c:when>
 					<c:otherwise>
@@ -1057,60 +1054,30 @@ body {
 			$(".buttons").prepend(update, del);
 
 		}
-		$(".buttons")
-				.on(
-						"click",
-						"#update",
-						function() {
-							if ($(this).text() == "수정") {
-								$("#title").attr("contenteditable", true);
-								$("#contents")
-										.summernote(
-												{
-													height : 400,
-													lang : "ko-KR",
-													toolbar : [
-															[
-																	"font",
-																	[
-																			"fontname",
-																			"fontsize" ] ],
-															[
-																	"style",
-																	[
-																			"bold",
-																			"italic",
-																			"underline",
-																			"strikethrough" ] ],
-															[ "color",
-																	[ "color" ] ],
-															[
-																	"para",
-																	[
-																			"ul",
-																			"ol",
-																			"paragraph" ] ],
-															[
-																	"insert",
-																	[ "link",
-																			"picture" ] ],
-															[
-																	"view",
-																	[
-																			"fullscreen",
-																			"codeview" ] ] ]
+		$(".buttons").on("click", "#update", function() {
+			if ($(this).text() == "수정") {
+				$("#title").attr("contenteditable", true);
+				$("#contents").summernote({
+					height : 400,
+					lang : "ko-KR",
+					toolbar : [[
+						"font",[
+							"fontname", "fontsize" ] ], [
+								"style",["bold", "italic", "underline", "strikethrough" ] ],
+									[ "color", [ "color" ] ], [
+										"para", ["ul", "ol", "paragraph" ] ],
+											["insert", [ "link", "picture" ] ],
+												["view", ["fullscreen", "codeview" ] ] ]
+				});
 
-												});
-
-								$(this).text("수정완료");
-								$("#delete").text("취소");
-								$("#title").focus();
-							} else {
-								if ($("#title").text().trim() == ""
-										|| $("#contents").summernote("isEmpty")) {
-									alert("제목과 내용을 입력해주세요.");
-									return;
-								}
+				$(this).text("수정완료");
+				$("#delete").text("취소");
+				$("#title").focus(); 
+					} else {
+						if ($("#title").text().trim() == "" || $("#contents").summernote("isEmpty")) {
+							alert("제목과 내용을 입력해주세요.");
+								return;
+							}
 								if (!confirm("수정한 내용을 저장하시겠습니까?")) {
 									return;
 								}
@@ -1150,20 +1117,20 @@ body {
 		});
 
 		$(".replyFix").on("click", function() {
-		    let form = $(this).closest(".replyForm");
-		    let contents = form.find(".replyContents");
+			let form = $(this).closest(".replyForm");
+			let contents = form.find(".replyContents");
 
-		    if(contents.prop("readonly")) {
-		        contents.prop("readonly", false);
-		        contents.focus();
+			if (contents.prop("readonly")) {
+				contents.prop("readonly", false);
+				contents.focus();
 
-		        contents[0].style.height = "auto";
-		        contents[0].style.height = contents[0].scrollHeight + "px";
-		    } else {
-		        form.submit();
-		    }
+				contents[0].style.height = "auto";
+				contents[0].style.height = contents[0].scrollHeight + "px";
+			} else {
+				form.submit();
+			}
 		});
-		
+
 		$(".replyDel").on(
 				"click",
 				function() {
@@ -1176,52 +1143,56 @@ body {
 							+ "&parent_seq=${board.board_seq}";
 				});
 
-		$(".boardReport").on("click", function() {
-			if("${id}"!="") {
-		    $("#target_contents").val($("#contents").text());
+		$(".boardReport").on(
+				"click",
+				function() {
+					if ("${id}" != "") {
+						$("#target_contents").val($("#contents").text());
 
-		    let params = $("#boardReport").serialize();
+						let params = $("#boardReport").serialize();
 
-		    window.open("/board/report?" + params,
-		            "report", "width=500, height=500");
-			} else {
-				alert("로그인 후 이용 가능한 서비스입니다.");
-			}
-		});
+						window.open("/board/report?" + params, "report",
+								"width=500, height=500");
+					} else {
+						alert("로그인 후 이용 가능한 서비스입니다.");
+					}
+				});
 
-		$(".replyReport").on("click", function() {
-			if("${id}"!="") {
-		    let reportForm = $(this).closest(".replyReportForm");
-		    let params = reportForm.serialize();
+		$(".replyReport").on(
+				"click",
+				function() {
+					if ("${id}" != "") {
+						let reportForm = $(this).closest(".replyReportForm");
+						let params = reportForm.serialize();
 
-		    window.open("/board/report?" + params,
-		            "report", "width=500, height=500");
-			} else {
-				alert("로그인 후 이용 가능한 서비스입니다.");
-			}
-		});
-		
+						window.open("/board/report?" + params, "report",
+								"width=500, height=500");
+					} else {
+						alert("로그인 후 이용 가능한 서비스입니다.");
+					}
+				});
+
 		$(".replyContents").each(function() {
-		    this.style.height = "auto";
-		    this.style.height = this.scrollHeight + "px";
+			this.style.height = "auto";
+			this.style.height = this.scrollHeight + "px";
 		});
-		
+
 		$(".reply").on("click", ".reReplyOpen", function() {
-		    if ("${id}" == "") {
-		        alert("로그인 후 이용 가능한 서비스입니다.");
-		        return;
-		    }
+			if ("${id}" == "") {
+				alert("로그인 후 이용 가능한 서비스입니다.");
+				return;
+			}
 
-		    let area = $(this).closest(".replyItem").find(".reReplyArea");
+			let area = $(this).closest(".replyItem").find(".reReplyArea");
 
-		    if (area.is(":visible")) {
-		        area.hide();
-		        $(this).text("↳ 답글 달기");
-		    } else {
-		        area.show();
-		        $(this).text("접기");
-		        area.find("textarea").first().focus();
-		    }
+			if (area.is(":visible")) {
+				area.hide();
+				$(this).text("↳ 답글 달기");
+			} else {
+				area.show();
+				$(this).text("접기");
+				area.find("textarea").first().focus();
+			}
 		});
 	</script>
 </body>
