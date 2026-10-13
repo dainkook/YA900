@@ -39,10 +39,10 @@ public class UsersController {
 
 	@Autowired
 	private EmailService emailService;
-	
+
 	@Autowired
 	private ReservationDAO reservationDAO;
-	
+
 
 	@RequestMapping("/signup")
 	public String signup() {
@@ -63,19 +63,19 @@ public class UsersController {
 	public String finduserpw() {
 		return "member/finduserpw";
 	}
-	
+
 	@RequestMapping("/mypage")
 	public String myPage(HttpSession session, Model model) {
 
-	    String id = (String) session.getAttribute("id");
+		String id = (String) session.getAttribute("id");
 
-	    List<Map<String, Object>> reservationList =
-	            reservationDAO.selectMyReservations(id);
+		List<Map<String, Object>> reservationList =
+				reservationDAO.selectMyReservations(id);
 
-	    model.addAttribute("reservationList", reservationList);
-	    model.addAttribute("user", dao.selectUser((String)session.getAttribute("id")));
+		model.addAttribute("reservationList", reservationList);
+		model.addAttribute("user", dao.selectUser((String)session.getAttribute("id")));
 
-	    return "member/mypage";
+		return "member/mypage";
 	}
 
 
@@ -100,7 +100,7 @@ public class UsersController {
 
 		if(!file.isEmpty()) {
 
-			String uploadPath = "C:/upload/";
+			String uploadPath = "D:/upload/";
 			String originalName = file.getOriginalFilename();
 			String extension = originalName.substring(originalName.lastIndexOf("."));
 			String fileName = UUID.randomUUID().toString() + "_" + extension;
@@ -160,8 +160,6 @@ public class UsersController {
 
 		String id = dao.findUserId(name, email);
 
-		System.out.println("李얠� �븘�씠�뵒 : " + id);
-
 		model.addAttribute("id", id);
 
 
@@ -170,14 +168,14 @@ public class UsersController {
 		session.removeAttribute("emailcode");
 		return "member/finduserid";
 	}
-	
-	
+
+
 	@RequestMapping(value="/sendemail")
 	@ResponseBody
 	public String sendEmail(String email , HttpSession session) {
 		String code = String.valueOf((int)(Math.random() * 900000)+ 100000);
 		session.setAttribute("emailcode", code);
-		emailService.sendEmail(email,"�씠硫붿씪 �씤利앸쾲�샇", "�씤利앸쾲�샇�뒗 " + code + " �엯�땲�떎.");
+		emailService.sendEmail(email,"YA900 이메일 인증번호", "인증번호는 " + code + " 입니다.");
 		return "success";
 	}
 	@RequestMapping(value="/verifyemail")
@@ -208,7 +206,7 @@ public class UsersController {
 		}
 		return "fail";
 	}
-	
+
 	@RequestMapping("/updatepw")
 	@ResponseBody
 	public String updatePw(String id, String newPw) {
@@ -227,106 +225,106 @@ public class UsersController {
 	@RequestMapping(value="/mypage/update", method=RequestMethod.POST)
 	@ResponseBody
 	public String updateUser(
-	        String phone,
-	        String email,
-	        String zipcode,
-	        String address1,
-	        String address2,
-	        String team,
-	        @RequestParam(value="profileFile", required=false) MultipartFile profileFile,
-	        HttpSession session) throws Exception {
+			String phone,
+			String email,
+			String zipcode,
+			String address1,
+			String address2,
+			String team,
+			@RequestParam(value="profileFile", required=false) MultipartFile profileFile,
+			HttpSession session) throws Exception {
 
 
-	    UsersDTO loginUser = dao.selectUser((String)session.getAttribute("id"));
+		UsersDTO loginUser = dao.selectUser((String)session.getAttribute("id"));
 
 
-	    if (loginUser == null) {
+		if (loginUser == null) {
 
-	        return "login";
+			return "login";
 
-	    }
-
-
-	    String id =
-	            loginUser.getId();
-
-	    String profileImg =
-	            loginUser.getProfile_img();
+		}
 
 
-	    if (profileFile != null && !profileFile.isEmpty()) {
+		String id =
+				loginUser.getId();
 
-	        String uploadPath =
-	                "D:/uploads/";
-
-	        String originalName =
-	                profileFile.getOriginalFilename();
-
-	        String extension =
-	                originalName.substring(
-	                        originalName.lastIndexOf(".")
-	                );
-
-	        String fileName =
-	                UUID.randomUUID().toString()
-	                + extension;
-
-	        File saveFile =
-	                new File(uploadPath + fileName);
-
-	        profileFile.transferTo(saveFile);
+		String profileImg =
+				loginUser.getProfile_img();
 
 
-	        profileImg =
-	                fileName;
+		if (profileFile != null && !profileFile.isEmpty()) {
 
-	    }
+			String uploadPath =
+					"D:/uploads/";
+
+			String originalName =
+					profileFile.getOriginalFilename();
+
+			String extension =
+					originalName.substring(
+							originalName.lastIndexOf(".")
+							);
+
+			String fileName =
+					UUID.randomUUID().toString()
+					+ extension;
+
+			File saveFile =
+					new File(uploadPath + fileName);
+
+			profileFile.transferTo(saveFile);
 
 
+			profileImg =
+					fileName;
 
-	    int result =
-	            dao.updateUser(
-	                    id,
-	                    phone,
-	                    email,
-	                    zipcode,
-	                    address1,
-	                    address2,
-	                    team,
-	                    profileImg
-	            );
+		}
 
 
 
-	    if (result > 0) {
+		int result =
+				dao.updateUser(
+						id,
+						phone,
+						email,
+						zipcode,
+						address1,
+						address2,
+						team,
+						profileImg
+						);
 
 
 
-	        loginUser.setPhone(phone);
-
-	        loginUser.setEmail(email);
-
-	        loginUser.setZipcode(zipcode);
-
-	        loginUser.setAddress1(address1);
-
-	        loginUser.setAddress2(address2);
-
-	        loginUser.setTeam(team);
-
-	        loginUser.setProfile_img(profileImg);
+		if (result > 0) {
 
 
-	        session.setAttribute(
-	                "loginUser",
-	                loginUser
-	        );
+
+			loginUser.setPhone(phone);
+
+			loginUser.setEmail(email);
+
+			loginUser.setZipcode(zipcode);
+
+			loginUser.setAddress1(address1);
+
+			loginUser.setAddress2(address2);
+
+			loginUser.setTeam(team);
+
+			loginUser.setProfile_img(profileImg);
 
 
-	        return "success";
+			session.setAttribute(
+					"loginUser",
+					loginUser
+					);
 
-	    }
-	    return "fail";
+
+			return "success";
+
+		}
+		return "fail";
 
 	}
 }

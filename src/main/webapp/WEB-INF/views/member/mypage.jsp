@@ -97,8 +97,8 @@ body {
 }
 
 .profile-image {
-	width: 220px;
-	height: 220px;
+	width: 150px;
+	height: 150px;
 	margin-right: 0;
 	object-fit: cover;
 	border-radius: 10px;
@@ -110,9 +110,20 @@ body {
 .profile-info {
 	display: flex;
 	flex-direction: column;
-	gap: 10px;
-	padding-top: 10px;
+	justify-content:center;
+	gap: 8px;
+	padding-top: 5px;
 }
+.profile-info h3{
+margin: 0 0 5px 0;
+font-size: 22px;
+color: #111936;
+}
+.profile-info p{
+margin: 0;
+font-size: 14px;
+color: #68718a;
+line-height: 1.6;}
 
 .profile-id {
 	font-size: 21px;
@@ -546,6 +557,7 @@ body {
 							<img class="profile-image"
 								src="${pageContext.request.contextPath}/images/default-profile.png"
 								alt="기본 프로필 이미지">
+							
 						</c:otherwise>
 					</c:choose>
 					<div class="edit-mode profile-change-area">
@@ -554,7 +566,13 @@ body {
 						<button type="button" class="profile-change-btn"
 							onclick="document.getElementById('profileFile').click();">프로필
 							사진 변경</button>
+							
 					</div>
+				</div>
+				<div class="profile-info">
+					<h3>${user.name}님, 반갑습니다.!</h3>
+					<p>아이디: ${user.id}</p>
+					<p>회원님의 정보 및 예매 상태를 관리할 수 있습니다.</p>
 				</div>
 			</div>
 			<div class="info-section">

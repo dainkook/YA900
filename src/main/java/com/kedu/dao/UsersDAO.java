@@ -21,7 +21,7 @@ public class UsersDAO {
 				+ "point, team, regdate, blackList, admin"
 				+ ") VALUES ("
 				+ "USERS_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "
-				+ "0, ?, SYSTIMESTAMP, 0, '¿œπ›'"
+				+ "0, ?, SYSTIMESTAMP, 0, 'ÏùºÎ∞ò'"
 				+ ")";
 
 		return jdbc.update(sql,
@@ -56,10 +56,12 @@ public class UsersDAO {
 			return null;
 		}
 	}
+
 	public int idCheck(String id) {
 		String sql= "select count(*) from users where id = ?";
 		return jdbc.queryForObject(sql, Integer.class, id);
 	}
+
 	public int emailCheck(String email) {
 		String sql = "select count(*) from users where email =?";
 		return jdbc.queryForObject(sql, Integer.class, email);
@@ -80,22 +82,24 @@ public class UsersDAO {
 			return null;
 		}
 	}
+
 	public UsersDTO findUserPw(String name, String id, String email) {
 		String sql= "select * from users where id=? and name=? and email=?";
 		return  jdbc.queryForObject(sql, new BeanPropertyRowMapper<>(UsersDTO.class), id,name,email);
 	}
+
 	public int updatePw(String id, String newPw) {
 		String sql = "update users set pw=? where id=?";
 		return jdbc.update(sql, newPw, id);
 
 	}
-	
+
 	public int updateUser(String id, String phone, String email, String zipcode, String address1, String address2, String team, String profile_img) {
 		String sql = "update users set phone=?, email=?, zipcode=?, address1=?, address2=?, team=?, profile_img=? where id=?";
 		return jdbc.update(sql, phone, email, zipcode, address1, address2, team, profile_img, id);
-		
+
 	}
-	
+
 	public UsersDTO selectUser(String id) {
 		String sql = "select * from users where id = ?";
 		return jdbc.queryForObject(sql,new BeanPropertyRowMapper<>(UsersDTO.class),id);
