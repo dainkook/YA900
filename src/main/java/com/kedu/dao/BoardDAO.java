@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kedu.dto.BoardDTO;
 import com.kedu.dto.LiveChatDTO;
+import com.kedu.dto.Re_ReplyDTO;
 import com.kedu.dto.ReplyDTO;
 import com.kedu.dto.ReportDTO;
 
@@ -193,5 +194,15 @@ public class BoardDAO {
 	public int whereReply(int reply_seq) {
 		String sql = "select parent_seq from reply where reply_seq = ?";
 		return jdbc.queryForObject(sql, Integer.class, reply_seq);
+	}
+	
+	public List<Re_ReplyDTO> getReReplyList(int boards_seq) {
+		String sql = "select * from re_reply where parent_seq = ?";
+		return jdbc.query(sql, new BeanPropertyRowMapper<>(Re_ReplyDTO.class), boards_seq);
+	}
+	
+	public int addReReply(Re_ReplyDTO dto) {
+		String sql = "insert into re_reply values(re_reply_seq.nextval, ?, ?, sysdate, ?, ?)";
+		return jdbc.update(sql, dto.getContents(), dto.getWriter(), dto.getParent_seq(), dto.getBoards_seq());
 	}
 }

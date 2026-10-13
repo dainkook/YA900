@@ -25,6 +25,7 @@ import com.kedu.dao.FilesDAO;
 import com.kedu.dto.BoardDTO;
 import com.kedu.dto.FilesDTO;
 import com.kedu.dto.LiveChatDTO;
+import com.kedu.dto.Re_ReplyDTO;
 import com.kedu.dto.ReplyDTO;
 import com.kedu.dto.ReportDTO;
 
@@ -82,6 +83,8 @@ public class BoardController {
 		model.addAttribute("files", files);
 		List<ReplyDTO> replyList = dao.getReplyList(seq);
 		model.addAttribute("replyList", replyList);
+		List<Re_ReplyDTO> re_replyList = dao.getReReplyList(seq);
+		model.addAttribute("re_replyList", re_replyList);
 		dao.viewCount(seq);
 		return "/board/detail";
 	}
@@ -283,10 +286,28 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/replyDelete")
-	public String replyDelete(int reply_seq, int parent_seq) throws Exception {
-		dao.deleteReply(reply_seq);
+	public String replyDelete(int re_reply_seq, int parent_seq) throws Exception {
+		dao.deleteReply(re_reply_seq);
 		return "redirect:/board/detail?seq=" + parent_seq;
 	}
+	
+	@RequestMapping("/reReplyWrite")
+	public String reReplyWrite(Re_ReplyDTO dto) throws Exception {
+		dao.addReReply(dto);
+		return "redirect:/board/detail?seq=" + dto.getParent_seq();
+	}
+	
+//	@RequestMapping("/reReplyUpdate")
+//	public String reReplyUpdate(Re_ReplyDTO dto) throws Exception {
+//		dao.updateReReply(dto);
+//		return "redirect:/board/detail?seq=" + dto.getParent_seq();
+//	}
+//	
+//	@RequestMapping("/reReplyDelete")
+//	public String reReplyDelete(int reply_seq, int parent_seq) throws Exception {
+//		dao.deleteReReply(reply_seq);
+//		return "redirect:/board/detail?seq=" + parent_seq;
+//	}
 	
 	@RequestMapping("/report")
 	public String report() throws Exception {
