@@ -443,7 +443,7 @@ body {
 
 			<form action="${pageContext.request.contextPath}/signup"
 				method="post" enctype="multipart/form-data" id="signupForm">
-
+				<input type="hidden" name="admin" value="일반">
 				<div class="input-group">
 
 					<label class="title"> 아이디 </label>

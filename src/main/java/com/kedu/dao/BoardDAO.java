@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kedu.dto.BoardDTO;
 import com.kedu.dto.LiveChatDTO;
+import com.kedu.dto.Re_ReplyDTO;
 import com.kedu.dto.ReplyDTO;
 import com.kedu.dto.ReportDTO;
 
@@ -22,16 +23,36 @@ public class BoardDAO {
 		String sql = "select count(*) from board";
 		return jdbc.queryForObject(sql, Integer.class);
 	}
+
+	public int totalCountByTeam(String team) {
+	    String sql = "select count(*) from board where team = ?";
+	    return jdbc.queryForObject(sql, Integer.class, team);
+	}
+
+	
+	public List<BoardDTO> listOfPageByTeam(String team, int first, int last) {
+	    String sql =
+	        "select * from (" +
+	        " select board.*, row_number() over(order by board_seq desc) rn " +
+	        " from board where team = ?" +
+	        ") where rn between ? and ?";
+
+	    return jdbc.query(
+	        sql,
+	        new BeanPropertyRowMapper<>(BoardDTO.class),
+	        team, first, last
+	    );
+	}
 	
 	public int searchCount(String option, String search) {
 		int result = 0;
-		if(option.equals("Á¦¸ñ")) {
+		if(option.equals("ï¿½ï¿½ï¿½ï¿½")) {
 			String sql = "select count(*) from board where title like '%' || ? || '%'";
 			result = jdbc.queryForObject(sql, Integer.class, search);
-		} else if(option.equals("³»¿ë")) {
+		} else if(option.equals("ï¿½ï¿½ï¿½ï¿½")) {
 			String sql = "select count(*) from board where contents like '%' || ? || '%'";
 			result = jdbc.queryForObject(sql, Integer.class, search);
-		} else if(option.equals("±Û¾´ÀÌ")) {
+		} else if(option.equals("ï¿½Û¾ï¿½ï¿½ï¿½")) {
 			String sql = "select count(*) from board where writer like '%' || ? || '%'";
 		result = jdbc.queryForObject(sql, Integer.class, search);
 		}
@@ -64,30 +85,30 @@ public class BoardDAO {
 			return jdbc.update(sql, dto.getBoard_seq(), dto.getTitle(), dto.getContents(), dto.getWriter(), dto.getTeam());
 		}
 	
-	public List<BoardDTO> searchBoard(String option, String search, int first, int last) {
-		if(option.equals("Á¦¸ñ")) {
-			String sql = "select * from "
-			           + "(select board.*, row_number() over(order by board_seq desc) rn "
-			           + "from board where title like '%' || ? || '%')"
-			           + "where rn between ? and ?";
-			return jdbc.query(sql, new BeanPropertyRowMapper<>(BoardDTO.class), search, first, last);
-		} else if(option.equals("³»¿ë")) {
-			String sql = "select * from "
-			           + "(select board.*, row_number() over(order by board_seq desc) rn "
-			           + "from board where contents like '%' || ? || '%')"
-			           + "where rn between ? and ?";
-			return jdbc.query(sql, new BeanPropertyRowMapper<>(BoardDTO.class), search, first, last);
-		} else if(option.equals("±Û¾´ÀÌ")) {
-			String sql = "select * from "
-			           + "(select board.*, row_number() over(order by board_seq desc) rn "
-			           + "from board where writer like '%' || ? || '%')"
-			           + "where rn between ? and ?";
-			return jdbc.query(sql, new BeanPropertyRowMapper<>(BoardDTO.class), search, first, last);
-		} else {
-			List<BoardDTO> fail = new ArrayList<>();
-			return fail;
-		}
-	}
+		   public List<BoardDTO> searchBoard(String option, String search, int first, int last) {
+			      if(option.equals("Á¦¸ñ")) {
+			         String sql = "select * from "
+			                    + "(select board.*, row_number() over(order by board_seq desc) rn "
+			                    + "from board where title like '%' || ? || '%')"
+			                    + "where rn between ? and ?";
+			         return jdbc.query(sql, new BeanPropertyRowMapper<>(BoardDTO.class), search, first, last);
+			      } else if(option.equals("³»¿ë")) {
+			         String sql = "select * from "
+			                    + "(select board.*, row_number() over(order by board_seq desc) rn "
+			                    + "from board where contents like '%' || ? || '%')"
+			                    + "where rn between ? and ?";
+			         return jdbc.query(sql, new BeanPropertyRowMapper<>(BoardDTO.class), search, first, last);
+			      } else if(option.equals("±Û¾´ÀÌ")) {
+			         String sql = "select * from "
+			                    + "(select board.*, row_number() over(order by board_seq desc) rn "
+			                    + "from board where writer like '%' || ? || '%')"
+			                    + "where rn between ? and ?";
+			         return jdbc.query(sql, new BeanPropertyRowMapper<>(BoardDTO.class), search, first, last);
+			      } else {
+			         List<BoardDTO> fail = new ArrayList<>();
+			         return fail;
+			      }
+			   }
 	
 	public String teamLogoEditer(int seq) {
 		String sql = "select team from board where board_seq = ?";
@@ -165,12 +186,22 @@ public class BoardDAO {
 		    System.out.println("reporter : " + dto.getReporter());
 		    System.out.println("report_type : " + dto.getReport_type());
 		
-		String sql = "insert into report values(report_seq.nextval, ?, ?, ?, ?, ?, ?, ?, '¹ÌÈ®ÀÎ', sysdate)";
+		String sql = "insert into report values(report_seq.nextval, ?, ?, ?, ?, ?, ?, ?, 'ï¿½ï¿½È®ï¿½ï¿½', sysdate)";
 		return jdbc.update(sql, dto.getTarget_contents(), dto.getTarget_type(), dto.getTarget_seq(), dto.getParent_seq(), dto.getTarget_id(), dto.getReporter(), dto.getReport_type());
 	}
 	
 	public int whereReply(int reply_seq) {
 		String sql = "select parent_seq from reply where reply_seq = ?";
 		return jdbc.queryForObject(sql, Integer.class, reply_seq);
+	}
+	
+	public List<Re_ReplyDTO> getReReplyList(int boards_seq) {
+		String sql = "select * from re_reply where parent_seq = ?";
+		return jdbc.query(sql, new BeanPropertyRowMapper<>(Re_ReplyDTO.class), boards_seq);
+	}
+	
+	public int addReReply(Re_ReplyDTO dto) {
+		String sql = "insert into re_reply values(re_reply_seq.nextval, ?, ?, sysdate, ?, ?)";
+		return jdbc.update(sql, dto.getContents(), dto.getWriter(), dto.getParent_seq(), dto.getBoards_seq());
 	}
 }

@@ -499,11 +499,44 @@ body {
 			<div class="category">COMMUNITY / WRITE</div>
 		</div>
 
-		<form action="/board/writeComplete" enctype="multipart/form-data"
-			method="post">
+		
+		<form action="${pageContext.request.contextPath}/board/writeComplete"
+		    enctype="multipart/form-data" method="post">
 
 			<div class="body">
-
+					
+			<!-- 게시판 안내 -->
+			<div class="board-select" style="
+			    padding: 20px 0;
+			    border-bottom: 1px solid #e5e7ec;
+			">
+			    <span style="
+			        font-weight: bold;
+			        margin-right: 15px;
+			        color: #171f46;
+			    ">작성 게시판</span>
+			
+			    <span style="
+			        display: inline-block;
+			        padding: 10px 15px;
+			        background: #f5f7fc;
+			        border: 1px solid #d5d8df;
+			        border-radius: 5px;
+			        color: #293d78;
+			        font-weight: bold;
+			    ">
+			        ${selectedTeam} 게시판
+			    </span>
+			
+			    <span style="
+			        margin-left: 10px;
+			        font-size: 13px;
+			        color: #888;
+			    ">
+			        소속 구단 게시판에 등록됩니다.
+			    </span>
+			</div>
+			
 				<div class="title">
 					<div id="title" contenteditable="true"></div>
 					<input id="titleSubmit" type="hidden" name="title" value="">
@@ -573,8 +606,16 @@ body {
 	    });
 	}
 
+
 		$("#cancel").on("click", function() {
-			location.href = "/board/board?cpage=1";
+		    const base = "${pageContext.request.contextPath}/board/board";
+		    const team = "${selectedTeam}";
+	
+		    if (team) {
+		        location.href = base + "?team=" + encodeURIComponent(team) + "&cpage=1";
+		    } else {
+		        location.href = base + "?cpage=1";
+		    }
 		});
 
 		$("form").on("submit", function(e) {
