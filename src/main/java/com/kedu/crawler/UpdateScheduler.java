@@ -29,7 +29,7 @@ public class UpdateScheduler {
     /*
      * 1분마다 실행
      */
-    @Scheduled(fixedRate = 300000)
+//    @Scheduled(fixedRate = 300000)
     public void updateSchedule() {
 
         System.out.println();

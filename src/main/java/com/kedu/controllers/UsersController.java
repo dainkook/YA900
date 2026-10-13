@@ -92,7 +92,9 @@ public class UsersController {
         String birthString = birth_year + "-" + birth_month + "-" + birth_day;
         Timestamp birth = Timestamp.valueOf(birthString + " 00:00:00");
 
-        dto.setPhone(콜);
+
+        dto.setPhone(phone);
+
         dto.setBirth(birth);
 
         String hashedPw = EncryptionUtils.encryptSHA512(dto.getPw());
@@ -336,7 +338,8 @@ public class UsersController {
 
         if (result > 0) {
 
-            loginUser.setPhone(콜);
+
+            loginUser.setPhone(phone);
             loginUser.setEmail(email);
             loginUser.setZipcode(zipcode);
             loginUser.setAddress1(address1);

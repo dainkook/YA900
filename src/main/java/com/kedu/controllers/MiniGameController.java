@@ -17,10 +17,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kedu.dao.PlayerDAO;
-
+import com.kedu.dao.PredictionDAO;
+import com.kedu.dao.PredictionResultDAO;
 import com.kedu.dao.QuizDAO;
 import com.kedu.dto.MyTeamDTO;
 import com.kedu.dto.PlayerDTO;
+import com.kedu.dto.PredictionResultDTO;
+import com.kedu.dto.PredictionViewDTO;
 import com.kedu.dto.QuizDTO;
 
 @Controller
@@ -28,6 +31,13 @@ public class MiniGameController {
 
     @Autowired
     private PlayerDAO playerDAO;
+
+  
+    @Autowired
+    private PredictionDAO predictionDAO;
+    
+    @Autowired 
+    private PredictionResultDAO predictionresultDAO;
 
     @Autowired
     private QuizDAO quizDAO;
@@ -105,16 +115,24 @@ public class MiniGameController {
     }
 
     @RequestMapping("/prediction")
-    public String prediction(Model model,HttpSession session) {
+    public String prediction(Model model, HttpSession session) {
 
-      List<PredictionViewDTO> predictionList = predictionDAO.selectAllPredictions();
-      String id = (String) session.getAttribute("id");
-      model.addAttribute("predictionList", predictionList);
-      if(id != null) {
-        model.addAttribute("myPredictionList", predictionresultDAO.selectMyPredictions(id));
-      }
+        String id = (String) session.getAttribute("id");
+        List<Integer> gameIds = predictionDAO.searchGameId();
+        for (int i = 0; i < gameIds.size(); i++) {
+            predictionDAO.insertPrediction(gameIds.get(i));
+            System.out.println(gameIds.get(i));
+        }
+        List<PredictionViewDTO> predictionList = predictionDAO.selectAllPredictions();
+        model.addAttribute("predictionList", predictionList);
+        if (id != null) {
+            model.addAttribute(
+                "myPredictionList",
+                predictionresultDAO.selectMyPredictions(id)
+            );
+        }
 
-      return "minigame/prediction";
+        return "minigame/prediction";
     }
 
     @RequestMapping(value = "/prediction/submit", method = RequestMethod.POST)
@@ -218,7 +236,9 @@ public class MiniGameController {
 
         if (memberId == null || memberId.trim().isEmpty()) {
             response.setStatus(401);
-            return "로그인이 필요합니다.";
+
+            return "login plz";
+
         }
 
         if (quizIds == null || userAnswers == null
@@ -227,7 +247,8 @@ public class MiniGameController {
                 || quizIds.size() > 10) {
 
             response.setStatus(400);
-            return "ÄûÁî Àü¼Û µ¥ÀÌÅÍ°¡ ¿Ã¹Ù¸£Áö ¾Ê½À´Ï´Ù.";
+            return "no data quiz";
+
         }
 
      
@@ -242,14 +263,17 @@ public class MiniGameController {
                     || !uniqueQuizIds.add(quizId)) {
 
                 response.setStatus(400);
-                return "¹®Á¦ ID°¡ ¿Ã¹Ù¸£Áö ¾Ê½À´Ï´Ù.";
+                return "id boom";
+
             }
 
             if (answer == null
                     || !("O".equals(answer) || "X".equals(answer))) {
 
                 response.setStatus(400);
-                return "´ä¾ÈÀº O ¶Ç´Â X¸¸ °¡´ÉÇÕ´Ï´Ù.";
+
+                return "O or X";
+
             }
         }
 
@@ -267,7 +291,8 @@ public class MiniGameController {
             e.printStackTrace();
 
             response.setStatus(500);
-            return "ÄûÁî °á°ú ÀúÀå¿¡ ½ÇÆÐÇß½À´Ï´Ù.";
+            return "result quiz save X";
+
         }
     }
   

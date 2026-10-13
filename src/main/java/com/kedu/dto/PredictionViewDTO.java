@@ -9,7 +9,7 @@ public class PredictionViewDTO {
     private int game_id;
     private Timestamp start_date;
     private Timestamp end_date;
-    private int winner;
+    private Integer winner;
 
     private String title;
     private String location;
@@ -19,8 +19,8 @@ public class PredictionViewDTO {
     private String away_logo;
     private String game_status;
 
-    private int home_score;
-    private int away_score;
+    private Integer home_score;
+    private Integer away_score;
     
     private Timestamp gameStartDate;
 
@@ -56,11 +56,11 @@ public class PredictionViewDTO {
         this.end_date = end_date;
     }
 
-    public int getWinner() {
+    public Integer getWinner() {
         return winner;
     }
 
-    public void setWinner(int winner) {
+    public void setWinner(Integer winner) {
         this.winner = winner;
     }
 
@@ -120,19 +120,19 @@ public class PredictionViewDTO {
         this.game_status = game_status;
     }
 
-    public int getHome_score() {
+    public Integer getHome_score() {
         return home_score;
     }
 
-    public void setHome_score(int home_score) {
+    public void setHome_score(Integer home_score) {
         this.home_score = home_score;
     }
 
-    public int getAway_score() {
+    public Integer getAway_score() {
         return away_score;
     }
 
-    public void setAway_score(int away_score) {
+    public void setAway_score(Integer away_score) {
         this.away_score = away_score;
     }
     
@@ -143,4 +143,28 @@ public class PredictionViewDTO {
     public void setGameStartDate(Timestamp gameStartDate) {
         this.gameStartDate = gameStartDate;
     }
+    
+    public PredictionViewDTO () {}
+
+	public PredictionViewDTO(int prediction_seq, int game_id, Timestamp start_date, Timestamp end_date, Integer winner,
+			String title, String location, String home_team, String away_team, String home_logo, String away_logo,
+			String game_status, Integer home_score, Integer away_score, Timestamp gameStartDate) {
+		this.prediction_seq = prediction_seq;
+		this.game_id = game_id;
+		this.start_date = start_date;
+		this.end_date = end_date;
+		this.winner = winner;
+		this.title = title;
+		this.location = location;
+		this.home_team = home_team;
+		this.away_team = away_team;
+		this.home_logo = home_logo;
+		this.away_logo = away_logo;
+		this.game_status = game_status;
+		this.home_score = home_score;
+		this.away_score = away_score;
+		this.gameStartDate = gameStartDate;
+	}
+    
+    
 }
