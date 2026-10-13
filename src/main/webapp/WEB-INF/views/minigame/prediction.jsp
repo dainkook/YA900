@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -258,13 +259,39 @@ body {
 ========================= */
 
 .match-card {
-	border: 1px solid #e1e4e8;
-	border-radius: 8px;
-	padding: 18px;
-	margin-bottom: 12px;
-	background: #fafbfc;
-	transition: 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #e1e4e8;
+    border-radius: 8px;
+    padding: 18px;
+    margin-bottom: 12px;
+    background: #fafbfc;
+    transition: 0.2s ease;
 }
+
+
+/* 예측 완료 카드 전체 도장 */
+.match-card.completed::after {
+    content: "예측 완료";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-12deg);
+    width: 85%;
+    padding: 16px 0;
+    border: 5px solid rgba(71, 106, 170, 0.65);
+    border-radius: 8px;
+    color: rgba(71, 106, 170, 0.78);
+    background: rgba(238, 242, 250, 0.35);
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 900;
+    letter-spacing: 5px;
+    text-align: center;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
+    pointer-events: none;
+    z-index: 5;
+}
+
 
 .match-card:last-child {
 	margin-bottom: 0;
@@ -276,31 +303,83 @@ body {
 }
 
 .match-info {
-	display: grid;
-	grid-template-columns: 1fr 1fr 80px 1fr;
-	align-items: center;
-	text-align: center;
-	min-height: 40px;
-	margin-bottom: 15px;
-	font-size: 13px;
+    width: 100%;
+    padding: 20px 30px;
+    box-sizing: border-box;
 }
 
 .match-time {
-	color: #666;
+    margin-bottom: 28px;
+    text-align: center;
+    font-size: 15px;
+    color: #555;
+    line-height: 1.6;
+}
+
+.match-teams {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 20px;
 }
 
 .match-team {
-	font-weight: bold;
-	font-size: 15px;
-	min-height: 18px;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-width: 0;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.match-pick button:disabled {
+    background: #e5e8ef;
+    border-color: #d3d8e2;
+    color: #888;
+    cursor: not-allowed;
+}
+
+.team-logo {
+    width: 75px;
+    height: 75px;
+    object-fit: contain;
 }
 
 .match-vs {
-	font-size: 12px;
-	color: #777;
-	font-weight: bold;
+    flex-shrink: 0;
+    padding: 0 15px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #476aaa;
 }
 
+@media (max-width: 600px) {
+    .match-info {
+        padding: 16px 10px;
+    }
+
+    .match-teams {
+        gap: 8px;
+    }
+
+    .match-team {
+        font-size: 14px;
+    }
+
+    .team-logo {
+        width: 55px;
+        height: 55px;
+    }
+
+    .match-vs {
+        padding: 0 5px;
+        font-size: 16px;
+    }
+}
 /* =========================
    승부 선택 버튼
 ========================= */
@@ -328,7 +407,6 @@ body {
 	color: white;
 }
 
-/* 선택된 버튼을 나중에 사용할 경우 */
 .match-pick button.active {
 	background: #476aaa;
 	border-color: #476aaa;
@@ -621,77 +699,88 @@ tbody tr:hover {
 			</div>
 		</div>
 
-		<section class="box">
-			<div class="area-title">오늘의 경기</div>
+		
+			<section class="box">
+			    <div class="area-title">오늘의 경기</div>
+			
+			    <c:choose>
+			        <c:when test="${not empty predictionList}">
+			            <c:forEach var="game" items="${predictionList}">
+			                <div class="match-card" 
+					                data-home-team="${game.home_team}"
+		     						data-away-team="${game.away_team}"
+		     						data-game-date="<fmt:formatDate value='${game.gameStartDate}' pattern='MM월 dd일 HH:mm'/>">
+			
+			                    <div class="match-info">
+			                        <div class="match-time">
+			                            <fmt:formatDate value="${game.gameStartDate}" pattern="MM월 dd일 HH:mm" />
+			                        </div>
+			
+			                        <div class="match-teams">
+									       
+									        <div class="match-team">
+									            <img src="${game.home_logo}" alt="${game.home_team} 로고" class="team-logo" onerror="this.style.display='none'">
+									            <span>${game.home_team}</span>
+									        </div>
+									
+									        <div class="match-vs">VS</div>
+									 
+									        <div class="match-team">
+									            <img src="${game.away_logo}" alt="${game.away_team} 로고" class="team-logo"  onerror="this.style.display='none'">
+									            <span>${game.away_team}</span>
+									        </div>
+									    </div>
+									</div>
+			
+			                    <div class="match-pick">
+			                        <button type="button"
+			                                data-prediction-id="${game.prediction_seq}"
+			                                data-choice="1">
+			                            홈팀 승
+			                        </button>
+			
+			                        <button type="button"
+			                                data-prediction-id="${game.prediction_seq}"
+			                                data-choice="0">
+			                            무승부
+			                        </button>
+			
+			                        <button type="button"
+			                                data-prediction-id="${game.prediction_seq}"
+			                                data-choice="2">
+			                            원정팀 승
+			                        </button>
+			                    </div>
+			
+			                </div>
+			            </c:forEach>
+			        </c:when>
+			
+			        <c:otherwise>
+			            <p>예측 가능한 경기가 없습니다.</p>
+			        </c:otherwise>
+			    </c:choose>
+			</section>
 
-			<div class="match-card">
-				<div class="match-info">
-					<div class="match-time"></div>
-					<div class="match-team"></div>
-					<div class="match-vs">VS</div>
-					<div class="match-team"></div>
-				</div>
-				<div class="match-pick">
-					<button type="button">승</button>
-					<button type="button">무승부</button>
-					<button type="button">승</button>
-				</div>
-			</div>
 
-			<div class="match-card">
-				<div class="match-info">
-					<div class="match-time"></div>
-					<div class="match-team"></div>
-					<div class="match-vs">VS</div>
-					<div class="match-team"></div>
-				</div>
-				<div class="match-pick">
-					<button type="button">승</button>
-					<button type="button">무승부</button>
-					<button type="button">승</button>
-				</div>
-			</div>
-
-			<div class="match-card">
-				<div class="match-info">
-					<div class="match-time"></div>
-					<div class="match-team"></div>
-					<div class="match-vs">VS</div>
-					<div class="match-team"></div>
-				</div>
-				<div class="match-pick">
-					<button type="button">승</button>
-					<button type="button">무승부</button>
-					<button type="button">승</button>
-				</div>
-			</div>
-		</section>
-
-		<section class="box">
+		<section class="box" id="my-prediction=box">
 			<div class="area-title">내 예측</div>
 
 			<div class="table-scroll">
 				<table class="my-table">
-					<colgroup>
-						<col style="width: 16%">
-						<col style="width: 40%">
-						<col style="width: 24%">
-						<col style="width: 20%">
-					</colgroup>
-					<tbody>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-					</tbody>
+				    <thead>
+				        <tr>
+				            <th style="width: 20%">날짜</th>
+				            <th style="width: 35%">경기</th>
+				            <th style="width: 25%">예측</th>
+				            <th style="width: 20%">취소</th>
+				        </tr>
+				    </thead>
+				    <tbody id="my-prediction-list">
+				        <tr class="empty-row">
+				            <td colspan="4">선택한 예측이 없습니다.</td>
+				        </tr>
+				    </tbody>
 				</table>
 			</div>
 
@@ -700,49 +789,216 @@ tbody tr:hover {
 			</div>
 		</section>
 
-		<section class="box">
-			<div class="area-title">예측 내역</div>
-
-			<div class="table-scroll">
-				<table>
-					<thead>
-						<tr>
-							<th style="width: 16%">날짜</th>
-							<th style="width: 34%">경기</th>
-							<th style="width: 20%">예측</th>
-							<th style="width: 15%">결과</th>
-							<th style="width: 15%">포인트</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</section>
+		
+			<section class="box">
+			    <div class="area-title">예측 내역</div>
+			
+			    <div class="table-scroll">
+			        <table class="my-table">
+			            <thead>
+			                <tr>
+			                    <th>날짜</th>
+			                    <th>경기</th>
+			                    <th>예측</th>
+			                    <th>결과</th>
+			                    <th>포인트</th>
+			                </tr>
+			            </thead>
+			
+			            <tbody>
+			                <c:choose>
+			                    <c:when test="${not empty myPredictionList}">
+			                        <c:forEach var="item" items="${myPredictionList}">
+			                            <tr>
+			                                <td>
+			                                    <fmt:formatDate
+			                                        value="${item.START_DATE}"
+			                                        pattern="MM월 dd일 HH:mm" />
+			                                </td>
+			
+			                                <td>${item.HOME_TEAM} vs ${item.AWAY_TEAM}</td>
+			
+			                                <td>
+			                                    <c:choose>
+			                                        <c:when test="${item.PREDICTED_RESULT == 1}">홈팀 승</c:when>
+			                                        <c:when test="${item.PREDICTED_RESULT == 0}">무승부</c:when>
+			                                        <c:when test="${item.PREDICTED_RESULT == 2}">원정팀 승</c:when>
+			                                        <c:otherwise>-</c:otherwise>
+			                                    </c:choose>
+			                                </td>
+			
+			                                <td>
+			                                    <c:choose>
+			                                        <c:when test="${item.IS_CORRECT == 1}">적중</c:when>
+			                                        <c:when test="${item.IS_CORRECT == 0}">미확정</c:when>
+			                                        <c:otherwise>-</c:otherwise>
+			                                    </c:choose>
+			                                </td>
+			
+			                                <td>
+			                                    <c:choose>
+			                                        <c:when test="${item.IS_CORRECT == 1}">적중 포인트</c:when>
+			                                        <c:otherwise>0</c:otherwise>
+			                                    </c:choose>
+			                                </td>
+			                            </tr>
+			                        </c:forEach>
+			                    </c:when>
+			
+			                    <c:otherwise>
+			                        <tr>
+			                            <td colspan="5">아직 제출한 예측이 없습니다.</td>
+			                        </tr>
+			                    </c:otherwise>
+			                </c:choose>
+			            </tbody>
+			        </table>
+			    </div>
+			</section>
 
 	</div>
 
 	<footer class="footer"> YA900 </footer>
+
+	<script>
+	$(function() {
+		const myPredictions = {};
+
+		const submittedPredictionIds = [
+		    <c:forEach var="item" items="${myPredictionList}">
+		        ${item.PREDICTION_ID},
+		    </c:forEach>
+		];
+
+		const choiceNames = {
+		    "1": "홈팀 승",
+		    "0": "무승부",
+		    "2": "원정팀 승"
+		};
+
+		// 이미 예측을 제출한 경기 처리
+		$(".match-card").each(function() {
+		    const card = $(this);
+
+		    const predictionId = Number(
+		        card.find(".match-pick button").first().attr("data-prediction-id")
+		    );
+
+		    if (submittedPredictionIds.includes(predictionId)) {
+		        card.addClass("completed");
+		        card.find(".match-pick button").prop("disabled", true);
+		    }
+		});
+
+		// 경기별 예측 선택
+		$(document).on("click", ".match-pick button", function() {
+		    const button = $(this);
+		    const card = button.closest(".match-card");
+
+		    const id = String(button.attr("data-prediction-id"));
+		    const choice = String(button.attr("data-choice"));
+
+		    if (submittedPredictionIds.includes(Number(id))) {
+		        return;
+		    }
+
+		    myPredictions[id] = {
+		        date: card.attr("data-game-date"),
+		        home: card.attr("data-home-team"),
+		        away: card.attr("data-away-team"),
+		        choice: choice
+		    };
+
+		    card.find(".match-pick button").removeClass("active");
+		    button.addClass("active");
+
+		    renderMyPredictions();
+		});
+
+		// 내 예측 테이블 출력
+		function renderMyPredictions() {
+		    const tbody = $("#my-prediction-list");
+		    tbody.empty();
+
+		    const ids = Object.keys(myPredictions);
+
+		    if (ids.length === 0) {
+		        tbody.append(
+		            '<tr class="empty-row">' +
+		            '<td colspan="4">선택한 예측이 없습니다.</td></tr>'
+		        );
+		        return;
+		    }
+
+		    ids.forEach(function(id) {
+		        const item = myPredictions[id];
+		        const row = $("<tr>");
+
+		        $("<td>").text(item.date).appendTo(row);
+		        $("<td>").text(item.home + " vs " + item.away).appendTo(row);
+		        $("<td>").text(choiceNames[item.choice]).appendTo(row);
+
+		        const cancelButton = $("<button>", {
+		            type: "button",
+		            text: "취소"
+		        }).css({
+		            padding: "5px 10px",
+		            border: "1px solid #d3d8e2",
+		            borderRadius: "5px",
+		            background: "#fff",
+		            cursor: "pointer"
+		        });
+
+		        cancelButton.on("click", function() {
+		            delete myPredictions[id];
+		            cardButtons(id).removeClass("active");
+		            renderMyPredictions();
+		        });
+
+		        $("<td>").append(cancelButton).appendTo(row);
+		        tbody.append(row);
+		    });
+		}
+
+		// 해당 경기의 선택 버튼 가져오기
+		function cardButtons(id) {
+		    return $('.match-pick button[data-prediction-id="' + id + '"]');
+		}
+
+		// 예측 저장
+		$(".save-btn").on("click", function() {
+		    const ids = Object.keys(myPredictions);
+
+		    if (ids.length === 0) {
+		        alert("예측할 경기를 선택해 주세요.");
+		        return;
+		    }
+
+		    const form = $("<form>", {
+		        method: "post",
+		        action: "${pageContext.request.contextPath}/prediction/submit"
+		    });
+
+		    ids.forEach(function(id) {
+		        $("<input>", {
+		            type: "hidden",
+		            name: "predictionIds",
+		            value: id
+		        }).appendTo(form);
+
+		        $("<input>", {
+		            type: "hidden",
+		            name: "choices",
+		            value: myPredictions[id].choice
+		        }).appendTo(form);
+		    });
+
+		    $("body").append(form);
+		    form.submit();
+		});
+
+		});
+	</script>
+
 </body>
 </html>
