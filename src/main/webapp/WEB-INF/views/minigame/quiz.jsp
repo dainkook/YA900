@@ -20,8 +20,8 @@ html, body {
 }
 
 body {
-	background: linear-gradient(to bottom, #111936 0%, #111936 12%, #171f46 22%, #252f67 32%,
-		#71809f 43%, #aeb7ca 55%, #d5dae5 70%, #eef1f8 85%, #eef1f8 100%);
+	background: linear-gradient(to bottom, #111936 0%, #111936 12%, #171f46 22%, #252f67
+		32%, #71809f 43%, #aeb7ca 55%, #d5dae5 70%, #eef1f8 85%, #eef1f8 100%);
 	font-family: Arial, "Malgun Gothic", sans-serif;
 	color: #18213f;
 	min-height: 100vh;
@@ -30,7 +30,6 @@ body {
 /* =========================
    HEADER
 ========================= */
-
 .header {
 	width: 100%;
 	height: 100px;
@@ -69,7 +68,7 @@ body {
 	align-items: center;
 }
 
-.menu-item > a {
+.menu-item>a {
 	font-size: 18px;
 	font-weight: bold;
 	text-decoration: none;
@@ -78,14 +77,13 @@ body {
 	transition: color 0.2s ease;
 }
 
-.menu-item > a:hover {
+.menu-item>a:hover {
 	color: #aebee7;
 }
 
 /* =========================
    SUB MENU
 ========================= */
-
 .sub-menu {
 	position: absolute;
 	top: 100%;
@@ -127,7 +125,6 @@ body {
 /* =========================
    LOGIN / SIGNUP
 ========================= */
-
 .member-menu {
 	font-size: 14px;
 	margin-left: auto;
@@ -148,8 +145,7 @@ body {
 	white-space: nowrap;
 }
 
-.login-btn,
-.sign-btn {
+.login-btn, .sign-btn {
 	border: 1px solid #7180b1;
 	background: transparent;
 	color: white;
@@ -160,8 +156,7 @@ body {
 	transition: 0.2s ease;
 }
 
-.login-btn:hover,
-.sign-btn:hover {
+.login-btn:hover, .sign-btn:hover {
 	background: #476aaa;
 	border-color: #476aaa;
 	color: white;
@@ -170,7 +165,6 @@ body {
 /* =========================
    CONTAINER
 ========================= */
-
 .wrap {
 	width: 1310px;
 	max-width: calc(100% - 40px);
@@ -180,7 +174,6 @@ body {
 /* =========================
    COMMON BOX
 ========================= */
-
 .box {
 	background: white;
 	border: 1px solid #e1e4e8;
@@ -192,8 +185,7 @@ body {
 /* =========================
    TITLE
 ========================= */
-
-.wrap > .box:first-child {
+.wrap>.box:first-child {
 	height: 70px;
 	display: flex;
 	align-items: center;
@@ -217,7 +209,6 @@ h2 {
 /* =========================
    ROW
 ========================= */
-
 .row {
 	display: flex;
 	gap: 20px;
@@ -227,7 +218,6 @@ h2 {
 /* =========================
    QUIZ START
 ========================= */
-
 .quiz-start {
 	flex: 2;
 	min-height: 300px;
@@ -247,7 +237,6 @@ h2 {
 /* =========================
    MY POINT
 ========================= */
-
 .my-point {
 	flex: 1;
 	min-height: 300px;
@@ -279,7 +268,6 @@ h2 {
 /* =========================
    BUTTON
 ========================= */
-
 .btn {
 	height: 45px;
 	min-width: 150px;
@@ -302,7 +290,6 @@ h2 {
 /* =========================
    INFO
 ========================= */
-
 .info {
 	flex: 1;
 	min-height: 230px;
@@ -325,7 +312,6 @@ h2 {
 /* =========================
    TABLE
 ========================= */
-
 .table-scroll {
 	overflow-x: auto;
 }
@@ -359,15 +345,13 @@ tbody tr:hover {
 /* =========================
    BOTTOM BOX
 ========================= */
-
-.wrap > section.box {
+.wrap>section.box {
 	margin-bottom: 20px;
 }
 
 /* =========================
    FOOTER
 ========================= */
-
 .site-footer {
 	width: 100%;
 	border-top: 1px solid #d8dce3;
@@ -382,7 +366,6 @@ tbody tr:hover {
 /* =========================
    QUICK MENU
 ========================= */
-
 .quick-menu {
 	width: 280px;
 	position: fixed;
@@ -419,8 +402,7 @@ tbody tr:hover {
 	background: #252f67;
 }
 
-.quick-menu .menu,
-.quick-menu .menu:hover {
+.quick-menu .menu, .quick-menu .menu:hover {
 	background: #476aaa;
 	color: white;
 }
@@ -428,82 +410,90 @@ tbody tr:hover {
 /* =========================
    RESPONSIVE
 ========================= */
-
-@media (max-width: 900px) {
-
+@media ( max-width : 900px) {
 	.header {
 		padding: 0 25px;
 	}
-
 	.logo {
 		margin-right: 30px;
 	}
-
 	.main-menu {
 		gap: 20px;
 	}
-
 	.wrap {
 		width: 100%;
 		max-width: calc(100% - 30px);
 	}
-
 	.row {
 		flex-direction: column;
 	}
-
-	.quiz-start,
-	.my-point,
-	.info {
+	.quiz-start, .my-point, .info {
 		width: 100%;
 	}
-
 }
 
-@media (max-width: 600px) {
-
+@media ( max-width : 600px) {
 	.header {
 		height: 80px;
 		padding: 0 15px;
 	}
-
 	.logo {
 		font-size: 24px;
 		margin-right: 20px;
 	}
-
 	.main-menu {
 		gap: 10px;
 	}
-
-	.menu-item > a {
+	.menu-item>a {
 		font-size: 14px;
 	}
-
 	.member-menu {
 		display: none;
 	}
-
 	.wrap {
 		margin-top: 40px;
 		max-width: calc(100% - 20px);
 	}
-
 	.box {
 		padding: 20px;
 	}
-
 	h1 {
 		font-size: 20px;
 	}
-
 	h2 {
 		font-size: 18px;
 	}
-
 	.quick-menu {
 		display: none;
 	}
+}
+.history-btn-wrap {
+    margin-top: 22px;
+    text-align: center;
+}
+
+.history-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 150px;
+    height: 42px;
+    padding: 0 20px;
+
+    background: #476aaa;
+    color: white;
+    border-radius: 7px;
+
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+
+    transition: all 0.2s ease;
+}
+
+.history-btn:hover {
+    background: #3d5e97;
+    box-shadow: 0 3px 8px rgba(71, 106, 170, 0.2);
 }
 </style>
 </head>
@@ -522,10 +512,11 @@ tbody tr:hover {
 				<a href="#">야구</a>
 
 				<div class="sub-menu">
-					<a href="#">예매</a> 
-					<a href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a> 
-					<a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a> 
-					<a href="${pageContext.request.contextPath}/schedule/rankdetail?tab=pitcher">선수순위</a> 
+					<a href="#">예매</a> <a
+						href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a>
+					<a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a>
+					<a
+						href="${pageContext.request.contextPath}/schedule/rankdetail?tab=pitcher">선수순위</a>
 					<a href="${pageContext.request.contextPath}/board/board?cpage=1">게시판</a>
 				</div>
 			</div>
@@ -535,11 +526,8 @@ tbody tr:hover {
 				<a href="#">축구</a>
 
 				<div class="sub-menu">
-					<a href="#">예매</a> 
-					<a href="#">경기일정</a> 
-					<a href="#">팀순위</a> 
-					<a href="#">선수순위</a> 
-					<a href="#">게시판</a>
+					<a href="#">예매</a> <a href="#">경기일정</a> <a href="#">팀순위</a> <a
+						href="#">선수순위</a> <a href="#">게시판</a>
 				</div>
 			</div>
 
@@ -548,49 +536,44 @@ tbody tr:hover {
 				<a href="#">미니게임</a>
 
 				<div class="sub-menu">
-					<a href="${pageContext.request.contextPath}/quiz">상식 퀴즈</a> 
-					<a href="${pageContext.request.contextPath}/myteam">나만의 팀</a> 
-					<a href="${pageContext.request.contextPath}/prediction">승부예측</a> 
-					<a href="#">게임 랭킹</a>
+					<a href="${pageContext.request.contextPath}/quiz">상식 퀴즈</a> <a
+						href="${pageContext.request.contextPath}/myteam">나만의 팀</a> <a
+						href="${pageContext.request.contextPath}/prediction">승부예측</a> <a
+						href="#">게임 랭킹</a>
 				</div>
 			</div>
 		</nav>
 
 		<div class="member-menu">
 
-    <c:choose>
+			<c:choose>
 
-        <c:when test="${not empty sessionScope.id}">
-            <span>${sessionScope.id}님</span>
+				<c:when test="${not empty sessionScope.id}">
+					<span>${sessionScope.id}님</span>
 
-            <button class="login-btn"
-                    onclick="location.href='${pageContext.request.contextPath}/mypage'">
-                마이페이지
-            </button>
+					<button class="login-btn"
+						onclick="location.href='${pageContext.request.contextPath}/mypage'">
+						마이페이지</button>
 
-            <form action="${pageContext.request.contextPath}/logout"
-                  method="post">
-                <button type="submit" class="sign-btn">
-                    로그아웃
-                </button>
-            </form>
-        </c:when>
+					<form action="${pageContext.request.contextPath}/logout"
+						method="post">
+						<button type="submit" class="sign-btn">로그아웃</button>
+					</form>
+				</c:when>
 
-        <c:otherwise>
-            <button class="login-btn"
-                    onclick="location.href='${pageContext.request.contextPath}/login'">
-                로그인
-            </button>
+				<c:otherwise>
+					<button class="login-btn"
+						onclick="location.href='${pageContext.request.contextPath}/login'">
+						로그인</button>
 
-            <button class="sign-btn"
-                    onclick="location.href='${pageContext.request.contextPath}/signup'">
-                회원가입
-            </button>
-        </c:otherwise>
+					<button class="sign-btn"
+						onclick="location.href='${pageContext.request.contextPath}/signup'">
+						회원가입</button>
+				</c:otherwise>
 
-    </c:choose>
-			
-			
+			</c:choose>
+
+
 		</div>
 
 	</div>
@@ -606,7 +589,9 @@ tbody tr:hover {
 				<h2>오늘의 야구 상식퀴즈</h2>
 				<p>문제 수</p>
 				<p>획득 가능 포인트</p>
-				<button type="button" class="btn">퀴즈 시작</button>
+				<button type="button" class="btn"
+					onclick="location.href='${pageContext.request.contextPath}/quiz/start'">
+					퀴즈 시작</button>
 			</section>
 
 			<section class="box my-point">
@@ -629,12 +614,18 @@ tbody tr:hover {
 
 			<section class="box info">
 				<h2>최근 기록</h2>
+
 				<ul>
 					<li>최근 점수</li>
 					<li>최고 점수</li>
 					<li>참여 횟수</li>
 					<li>정답률</li>
 				</ul>
+
+				<div class="history-btn-wrap">
+					<a href="${pageContext.request.contextPath}/quiz/history"
+						class="history-btn"> 전체 기록 보기 </a>
+				</div>
 			</section>
 		</div>
 
