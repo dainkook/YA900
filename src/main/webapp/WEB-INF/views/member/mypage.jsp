@@ -649,7 +649,7 @@ button:disabled {
                         <c:otherwise>
                             <img id="profileImage"
                                 class="profile-image"
-                                src="${pageContext.request.contextPath}/images/default-profile.png"
+                                src="${pageContext.request.contextPath}/images/mypage/profile.png"
                                 alt="기본 프로필 이미지">
                         </c:otherwise>
                     </c:choose>
@@ -776,7 +776,7 @@ button:disabled {
                         </div>
 
                         <select class="team-select edit-mode"
-                            name="team" id="team" required>
+                            name="team" id="team" >
                             <option value="">응원 팀을 선택하세요</option>
                             <option value="KT">KT</option>
                             <option value="삼성">삼성</option>
@@ -1029,7 +1029,7 @@ function updateUser() {
         return;
     }
 
-    if (!phoneRegex.test(콜)) {
+    if (!phoneRegex.test(phone)) {
         alert("전화번호를 올바르게 입력해주세요.");
         $("#phone").focus();
         return;
@@ -1062,12 +1062,6 @@ function updateUser() {
     if (address2 === "") {
         alert("상세주소를 입력해주세요.");
         $("#address2").focus();
-        return;
-    }
-
-    if (!team) {
-        alert("응원 팀을 선택해주세요.");
-        $("#team").focus();
         return;
     }
 

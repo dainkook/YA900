@@ -21,7 +21,7 @@ public class UsersDAO {
             + "point, team, regdate, blackList, admin"
             + ") VALUES ("
             + "USERS_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "
-            + "0, ?, SYSTIMESTAMP, 0, ' Ϲ '"
+            + "0, ?, SYSTIMESTAMP, 0, ? "
             + ")";
 
       return jdbc.update(sql,
@@ -37,7 +37,9 @@ public class UsersDAO {
             dto.getAge(),
             dto.getBirth(),
             dto.getProfile_img(),
-            dto.getTeam()
+            dto.getTeam(),
+            dto.getAdmin()
+
             );
    }
 
@@ -99,5 +101,14 @@ public class UsersDAO {
    public UsersDTO selectUser(String id) {
       String sql = "select * from users where id = ?";
       return jdbc.queryForObject(sql,new BeanPropertyRowMapper<>(UsersDTO.class),id);
+   }
+   
+   public int selectPoint(String id) {
+	   String sql = "select nvl(point, 0) from users where id= ?";
+	   return jdbc.queryForObject(sql, Integer.class, id);
+   }
+   public int updatePoint(String id, int earnedPoint) {
+	   String sql= "update users set point =nvl(point, 0) + ? where id= ?";
+	   return jdbc.update(sql, earnedPoint, id);
    }
 }
