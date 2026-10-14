@@ -1,5 +1,8 @@
 package com.kedu.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -104,11 +107,20 @@ public class UsersDAO {
    }
    
    public int selectPoint(String id) {
-	   String sql = "select nvl(point, 0) from users where id= ?";
-	   return jdbc.queryForObject(sql, Integer.class, id);
+      String sql = "select nvl(point, 0) from users where id= ?";
+      return jdbc.queryForObject(sql, Integer.class, id);
    }
    public int updatePoint(String id, int earnedPoint) {
-	   String sql= "update users set point =nvl(point, 0) + ? where id= ?";
-	   return jdbc.update(sql, earnedPoint, id);
+      String sql= "update users set point =nvl(point, 0) + ? where id= ?";
+      return jdbc.update(sql, earnedPoint, id);
    }
+   public List<Map<String, Object>> selectPointRanking(){
+      String sql= "select * from(" +
+            "select row_number() Over(" +
+            "order by point desc, member_seq asc" +
+            ") as ranking, id, point" +
+            " from users" +
+            ") where ranking <=5 order by ranking";
+      return jdbc.queryForList(sql);
+}
 }

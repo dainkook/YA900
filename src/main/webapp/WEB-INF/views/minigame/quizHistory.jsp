@@ -192,6 +192,46 @@ tbody tr:hover {
 	font-size: 12px;
 	border-top: 1px solid #d8deea;
 }
+.quick-menu {
+	width: 280px;
+	position: fixed;
+	left: -250px;
+	top: 50%;
+	transform: translateY(-50%);
+	border: 1px solid #3b4778;
+	transition: left 0.5s ease;
+	z-index: 1000;
+	background: #111936;
+	color: white;
+	box-shadow: 5px 8px 25px rgba(10, 15, 35, 0.18);
+}
+
+.quick-menu:hover {
+	left: 0;
+}
+
+.quick-menu div {
+	width: 100%;
+	height: 55px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	border-bottom: 1px solid #303b68;
+}
+
+.quick-menu div:last-child {
+	border-bottom: none;
+}
+
+.quick-menu div:hover {
+	background: #252f67;
+}
+
+.quick-menu .menu, .quick-menu .menu:hover {
+	background: #476aaa;
+	color: white;
+}
 
 @media ( max-width : 600px) {
 	.header {
@@ -234,6 +274,28 @@ tbody tr:hover {
 	color: white;
 	background: #476aaa;
 }
+/* =========================
+   FOOTER
+========================= */
+.footer {
+	width: 100%;
+	height: 70px;
+	margin-top: 0;
+	background: #eef1f8;
+	color: #838ec9;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 13px;
+	border: none;
+}
+
+.footer a {
+    margin: 0 4px;
+    text-decoration: none;
+	color: #838ec9;
+}
+
 </style>
 </head>
 
@@ -244,16 +306,22 @@ tbody tr:hover {
 			class="header-link" href="${pageContext.request.contextPath}/quiz">
 			퀴즈 메인 </a>
 	</header>
-
+	<div class="quick-menu">
+		    <div class="menu">QUICK MENU</div>
+		    <div onclick="location.href='${pageContext.request.contextPath}/'">홈</div>
+		    <div onclick="location.href='${pageContext.request.contextPath}/#reservation'">예매</div>
+		    <div onclick="location.href='${pageContext.request.contextPath}/board/board?cpage=1'">게시판</div>
+		    <div onclick="location.href='${pageContext.request.contextPath}/mypage'">마이페이지</div>
+		</div>
 	<main class="container">
 
 		<section class="page-title">
 			<h1>나의 퀴즈 기록</h1>
 			<p>지금까지 도전한 야구 상식 퀴즈 기록을 확인하세요.</p>
 		</section>
-
+		
 		<section class="history-card">
-
+			
 			<div class="card-title">
 				<h2>전체 기록</h2>
 
@@ -299,31 +367,44 @@ tbody tr:hover {
 									varStatus="status">
 
 									<tr>
-										<td>${status.count}</td>
-
-										<td><c:out value="${history.playDate}" /></td>
-
-										<td><c:out value="${history.totalCount}" />문제</td>
-
-										<td class="score"><c:out value="${history.correctCount}" />
-											/ <c:out value="${history.totalCount}" /></td>
-
-										<td><c:choose>
-												<c:when test="${history.totalCount > 0}">
-													<span class="rate"> <fmt:formatNumber
-															value="${history.correctCount * 100 / history.totalCount}"
-															maxFractionDigits="0" />%
-													</span>
-												</c:when>
-												<c:otherwise>
-                -
-            </c:otherwise>
-											</c:choose></td>
-
-										<%-- 해당 퀴즈 기록의 상세 페이지로 이동 --%>
-										<td><a class="detail-btn"
-											href="${pageContext.request.contextPath}/quiz/history/detail?resultId=${history.resultId}">
-												상세 보기 </a></td>
+									    <td>${status.count}</td>
+									
+									    <td>
+									        <c:out value="${history.playDate}" />
+									    </td>
+									
+									    <td>
+									        <c:out value="${history.totalCount}" />문제
+									    </td>
+									
+									    <td class="score">
+									        <c:out value="${history.correctCount}" />
+									        /
+									        <c:out value="${history.totalCount}" />
+									    </td>
+									
+									    <td>
+									        <c:choose>
+									            <c:when test="${history.totalCount > 0}">
+									                <span class="rate">
+									                    <fmt:formatNumber
+									                        value="${history.correctCount * 100 / history.totalCount}"
+									                        maxFractionDigits="0" />%
+									                </span>
+									            </c:when>
+									            <c:otherwise>
+									                -
+									            </c:otherwise>
+									        </c:choose>
+									    </td>
+									
+									    <%-- 해당 퀴즈 기록의 상세 페이지로 이동 --%>
+									    <td>
+									        <a class="detail-btn"
+									           href="${pageContext.request.contextPath}/quiz/history/detail?resultId=${history.resultId}">
+									            상세 보기
+									        </a>
+									    </td>
 									</tr>
 
 								</c:forEach>
@@ -345,7 +426,13 @@ tbody tr:hover {
 
 	</main>
 
-	<footer class="site-footer"> YA900 </footer>
+	<div class="footer">
+
+			<a href="#">개인정보처리방침</a> | <a href="#">전체 서비스</a> | <a href="#">문제
+				신고</a> | <a href="#">고객센터</a> | <a
+				href="${pageContext.request.contextPath}/admin">관리자</a>
+
+		</div>
 
 </body>
 </html>
