@@ -254,25 +254,25 @@ tbody tr:hover {
 	.card-title h2 {
 		font-size: 17px;
 	}
-	
 }
+
 .detail-btn {
-    display: inline-block;
-    padding: 8px 12px;
-    color: #476aaa;
-    background: white;
-    border: 1px solid #476aaa;
-    border-radius: 6px;
-    text-decoration: none;
-    font-size: 12px;
-    font-weight: bold;
-    white-space: nowrap;
-    transition: all 0.2s ease;
+	display: inline-block;
+	padding: 8px 12px;
+	color: #476aaa;
+	background: white;
+	border: 1px solid #476aaa;
+	border-radius: 6px;
+	text-decoration: none;
+	font-size: 12px;
+	font-weight: bold;
+	white-space: nowrap;
+	transition: all 0.2s ease;
 }
 
 .detail-btn:hover {
-    color: white;
-    background: #476aaa;
+	color: white;
+	background: #476aaa;
 }
 /* =========================
    FOOTER
@@ -348,7 +348,7 @@ tbody tr:hover {
 
 					<div class="table-scroll">
 						<table>
-							
+
 							<thead>
 								<tr>
 									<th style="width: 7%;">번호</th>
@@ -359,7 +359,7 @@ tbody tr:hover {
 									<th style="width: 14%;">상세</th>
 								</tr>
 							</thead>
-							
+
 
 							<tbody>
 

@@ -822,7 +822,7 @@ tbody tr:hover {
 
 		
 			<section class="box">
-			    <div class="area-title">오늘의 경기</div>
+			    <div class="area-title">YA900 승부예측</div>
 			
 			    <c:choose>
 			        <c:when test="${not empty predictionList}">

@@ -812,7 +812,7 @@ button:disabled {
                         <c:otherwise>
                             <img id="profileImage"
                                 class="profile-image"
-                                src="${pageContext.request.contextPath}/images/mypage/profile.png"
+                                src="${pageContext.request.contextPath}resources/images/mypage/default-profile.png"
                                 alt="기본 프로필 이미지">
                         </c:otherwise>
                     </c:choose>
@@ -1192,7 +1192,7 @@ function updateUser() {
         return;
     }
 
-    if (!phoneRegex.test(phone)) {
+    if (!phoneRegex.test(콜)) {
         alert("전화번호를 올바르게 입력해주세요.");
         $("#phone").focus();
         return;
