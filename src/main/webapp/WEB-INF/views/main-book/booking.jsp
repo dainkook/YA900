@@ -696,6 +696,63 @@ body {
 
 
 /* =========================
+   포인트 사용
+========================= */
+
+.point-balance {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 13px;
+}
+
+.point-balance strong {
+    color: var(--point);
+}
+
+.point-use-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.point-input {
+    flex: 1;
+    min-width: 0;
+    height: 38px;
+    padding: 0 10px;
+    border: 1px solid #c5cde0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+.point-use-btn {
+    padding: 0 13px;
+    background: var(--point);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.point-use-btn:hover {
+    background: var(--navy);
+}
+
+.point-help {
+    margin: 0;
+    font-size: 11px;
+    color: var(--sub-text);
+}
+
+.point-discount {
+    color: #476aaa !important;
+    font-weight: bold;
+}
+
+
+/* =========================
    이전 / 결제 버튼
 ========================= */
 
@@ -1171,26 +1228,75 @@ body {
                 </div>
 
             </div>
+            				            
+				<!-- 포인트 사용 -->
+				
+				<div class="payment-box">
+				
+				    <h3>포인트 사용</h3>
+				
+				    <div class="point-balance">
+				        <span>보유 포인트</span>
+				        <strong>
+				            <fmt:formatNumber value="${memberPoint}" pattern="#,##0"/> P
+				        </strong>
+				    </div>
+				
+				    <div class="point-use-row">
+				
+				        <input
+				            type="number"
+				            id="pointInput"
+				            class="point-input"
+				            min="0"
+				            step="1"
+				            value="0"
+				            placeholder="사용할 포인트 입력">
+				
+				        <button
+				            type="button"
+				            class="point-use-btn"
+				            onclick="useAllPoints()">
+				            전액 사용
+				        </button>
+				
+				    </div>
+				
+				    <p class="point-help">
+				        1포인트는 1원으로 사용할 수 있습니다.
+				    </p>
+				
+				</div>
+				
+			<!-- 결제 금액 -->
+			
+			<div class="payment-box">
+			
+			    <div class="payment-info">
+			        <span>티켓 금액</span>
+			        <span id="originalTotal">0원</span>
+			    </div>
+			
+			    <div class="payment-info">
+			        <span>포인트 할인</span>
+			        <span id="pointDiscount" class="point-discount">-0원</span>
+			    </div>
+			
+			    <div class="payment-total">
+			        <span>최종 결제 금액</span>
+			        <strong id="paymentTotal">0원</strong>
+			    </div>
+			
+			    <button class="payment-back-btn" onclick="goBackBooking()">
+			        이전 단계
+			    </button>
+			
+			    <button class="payment-btn" onclick="completePayment()">
+			        결제하기
+			    </button>
+			
+			</div>
 
-
-            <!-- 결제 금액 -->
-
-            <div class="payment-box">
-
-                <div class="payment-total">
-                    <span>총 결제 금액</span>
-                    <strong id="paymentTotal">0원</strong>
-                </div>
-
-                <button class="payment-back-btn" onclick="goBackBooking()">
-                    이전 단계
-                </button>
-
-                <button class="payment-btn" onclick="completePayment()">
-                    결제하기
-                </button>
-
-            </div>
 
         </div>
 
@@ -1224,10 +1330,18 @@ const reservedSeatIds = [
    기본 설정
 ========================= */
 
+
 let seatPrice = 16000;
 let totalPrice = 0;
 let selectedCount = 0;
 
+// 서버에서 전달받은 회원 보유 포인트
+const availablePoint = Math.max(
+    0,
+    Number("${memberPoint}") || 0
+);
+
+let usedPoint = 0;
 
 const seats = document.querySelectorAll(".seat");
 
@@ -1316,8 +1430,82 @@ function updateBookingInfo() {
         selectedSeatNames.length > 0
         ? selectedSeatNames.join(", ")
         : "-";
+        
+        updatePaymentAmount();
 
 }
+
+
+/* =========================
+   포인트 및 결제 금액 계산
+========================= */
+
+
+function updatePaymentAmount() {
+    const originalAmount =
+        document.querySelectorAll(".seat.selected").length * seatPrice;
+
+    const input = document.getElementById("pointInput");
+    const rawValue = input.value.trim();
+
+    // 입력 중 빈칸은 허용하고, 계산할 때만 0으로 처리
+    let inputPoint = rawValue === "" ? 0 : Number(rawValue);
+
+    if (!Number.isFinite(inputPoint) || inputPoint < 0) {
+        inputPoint = 0;
+    }
+
+    inputPoint = Math.floor(inputPoint);
+
+    // 사용할 수 있는 최대 포인트
+    const maxPoint = Math.min(
+	    availablePoint,
+	    Math.max(0, originalAmount - 1)
+	);
+
+    // 최대 사용 가능 포인트를 초과한 경우에만 입력값 보정
+    if (inputPoint > maxPoint) {
+        inputPoint = maxPoint;
+        input.value = maxPoint;
+    }
+
+    usedPoint = inputPoint;
+
+    const finalAmount = originalAmount - usedPoint;
+
+    document.getElementById("originalTotal").innerText =
+        originalAmount.toLocaleString() + "원";
+
+    document.getElementById("pointDiscount").innerText =
+        "-" + usedPoint.toLocaleString() + "원";
+
+    document.getElementById("paymentTotal").innerText =
+        finalAmount.toLocaleString() + "원";
+}
+
+
+/* 전액 사용 */
+
+function useAllPoints() {
+    const originalAmount =
+        document.querySelectorAll(".seat.selected").length * seatPrice;
+
+    const maxUsablePoint = Math.min(
+        availablePoint,
+        Math.max(0, originalAmount - 1)
+    );
+
+    document.getElementById("pointInput").value = maxUsablePoint;
+
+    updatePaymentAmount();
+}
+
+/* 포인트 입력 시 즉시 계산 */
+
+document.getElementById("pointInput").addEventListener(
+    "input",
+    updatePaymentAmount
+);
 
 
 /* =========================
@@ -1370,8 +1558,7 @@ function goPayment() {
 
     // 결제 금액 표시
 
-    document.getElementById("paymentTotal").innerText =
-        (selectedSeats.length * seatPrice).toLocaleString() + "원";
+    updatePaymentAmount();
 
 
     // 예매 화면 숨기기
@@ -1507,8 +1694,21 @@ async function completePayment() {
     // 결제 금액
     // =========================
 
-    const amount =
-        selectedSeats.length * seatPrice;
+    const originalAmount =
+	    selectedSeats.length * seatPrice;
+	
+	updatePaymentAmount();
+	
+	const amount = originalAmount - usedPoint;
+	
+	// 현재는 PortOne 무료 결제 처리가 별도로 구현되어 있지 않음
+	if (amount <= 0) {
+	    alert(
+	        "포인트로 전액 결제하는 기능은 아직 연결되지 않았습니다. " +
+	        "포인트 사용 금액을 조정해주세요."
+	    );
+	    return;
+	}
 
 
     // =========================
@@ -1578,7 +1778,8 @@ async function completePayment() {
             data: {
                 game_id: ${game.game_id},
                 seat_ids: seatIds,
-                paymentId: paymentId
+                paymentId: paymentId,
+                usedPoint: usedPoint
             },
 
             success: function(result) {
@@ -1597,6 +1798,14 @@ async function completePayment() {
                     location.href =
                         "${pageContext.request.contextPath}/login";
 
+                } else if (result === "POINT_INSUFFICIENT") {
+
+                    alert("보유 포인트가 부족합니다. 포인트를 다시 확인해주세요.");
+
+                } else if (result === "INVALID_REQUEST") {
+
+                    alert("잘못된 예매 요청입니다.");
+                
                 } else {
 
                     alert("예매 저장에 실패했습니다.");
