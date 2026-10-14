@@ -43,12 +43,6 @@ public class MiniGameController {
     @Autowired
     private QuizDAO quizDAO;
     
-    @Autowired
-    private PredictionDAO predictionDAO;
-    
-    @Autowired
-    private PredictionResultDAO predictionresultDAO;
-    
    @Autowired
    private UsersDAO usersDAO;
     
@@ -168,8 +162,8 @@ public class MiniGameController {
             predictionresultDAO.insertPredictionResult(dto);
         }
 
-	    return "redirect:/prediction";
-	}
+       return "redirect:/prediction";
+   }
 
    
 
@@ -194,7 +188,7 @@ public class MiniGameController {
         model.addAttribute("maxPoint", maxPoint);
 
   
-        model.addAttribute("rankingList", quizDAO.selectQuizRanking());
+        model.addAttribute("rankingList", usersDAO.selectPointRanking());
 
         String id = (String) session.getAttribute("id");
 
