@@ -79,13 +79,28 @@ public class BoardDAO {
 	}
 
 	public String isTeamLogo(String team) {
-		String sql = "select team_logo from team where team_name=?";
-		return jdbc.queryForObject(sql, String.class, team);
+	    if (team == null || team.trim().isEmpty()) {
+	        return null;
+	    }
+
+	    String sql = "select team_logo from team where team_name=?";
+
+	    try {
+	        return jdbc.queryForObject(sql, String.class, team);
+	    } catch (org.springframework.dao.EmptyResultDataAccessException e) {
+	        return null;
+	    }
 	}
 
 	public int write(BoardDTO dto) {
-		String sql = "insert into board values(?, ?, ?, ?, 0, sysdate, ?, null, 0, null)";
-		return jdbc.update(sql, dto.getBoard_seq(), dto.getTitle(), dto.getContents(), dto.getWriter(), dto.getTeam());
+	    String sql;
+	    if (dto.getTeam() == null) {
+	        sql = "insert into board values(?, ?, ?, ?, 0, sysdate, null, null, 0, null)";
+	        return jdbc.update(sql, dto.getBoard_seq(), dto.getTitle(), dto.getContents(), dto.getWriter());
+	    } else {
+	        sql = "insert into board values(?, ?, ?, ?, 0, sysdate, ?, ?, 0, null)";
+	        return jdbc.update(sql, dto.getBoard_seq(), dto.getTitle(), dto.getContents(), dto.getWriter(), dto.getTeam(), dto.getTeamLogo());
+	    }
 	}
 
 	public List<BoardDTO> searchBoard(String option, String search, int first, int last) {

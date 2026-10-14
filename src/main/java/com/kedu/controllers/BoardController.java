@@ -53,6 +53,7 @@ public class BoardController {
        } else if(team!=null&&!team.trim().isEmpty()) {
     	   list = dao.listOfPageByTeam(team, cpage * 10 - 9, cpage * 10);
            totalCount = dao.totalCountByTeam(team);
+           model.addAttribute("teamLogo", dao.isTeamLogo(team));
            model.addAttribute("selectedTeam", team);
        } else {
            list = dao.listOfPage(cpage * 10 - 9, cpage * 10);
@@ -102,6 +103,8 @@ public class BoardController {
 	        dto.setTeam(null);
 	    }
 	    dto.setWriter(id);
+	    String logo = dao.isTeamLogo(dto.getTeam());
+	    dto.setTeamLogo(logo);
 	    int seq = dao.getNextval();
 	    dto.setBoard_seq(seq);
 	    dao.write(dto);
@@ -119,6 +122,10 @@ public class BoardController {
 	            );
 	        }
 	    }
+	    if (dto.getTeam() == null) {
+	        return "redirect:/board/board?cpage=1";
+	    }
+
 	    return "redirect:/board/board?team="
 	            + URLEncoder.encode(dto.getTeam(), "UTF-8")
 	            + "&cpage=1";

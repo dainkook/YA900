@@ -390,16 +390,16 @@ body {
 
 /* 컬럼 */
 .body table td:nth-child(1) {
-	width: 10%;
+	width: 7%;
 }
 
 .body table td:nth-child(2) {
-	width: 50%;
-	text-align: left;
+	width: 8%;
 }
 
 .body table td:nth-child(3) {
-	width: 15%;
+	width: 50%;
+	text-align: center;
 }
 
 .body table td:nth-child(4) {
@@ -407,6 +407,10 @@ body {
 }
 
 .body table td:nth-child(5) {
+	width: 10%;
+}
+
+.body table td:nth-child(6) {
 	width: 10%;
 }
 
@@ -903,6 +907,7 @@ body.theme-kiwoom {
 			<table>
 				<tr>
 					<td>번호</td>
+					<td>팀</td>
 					<td>제목</td>
 					<td>작성자</td>
 					<td>작성일</td>
@@ -913,10 +918,15 @@ body.theme-kiwoom {
 						<c:forEach var="i" items="${list}">
 							<tr>
 								<td>${i.board_seq}</td>
+								<td>
+    								<c:if test="${not empty i.teamLogo}">
+        								<img src="${i.teamLogo}" style="width:50px; height:40px">
+    								</c:if>
+								</td>
 								<td><a href="/board/detail?seq=${i.board_seq}">
 										${i.title} </a></td>
 								<td>${i.writer}</td>
-								<td>${i.write_date}</td>
+								<td><fmt:formatDate value="${i.write_date}" pattern="yyyy-MM-dd"/></td>
 								<td>${i.view_count}</td>
 							</tr>
 						</c:forEach>

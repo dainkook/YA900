@@ -884,7 +884,7 @@ body {
 				</div>
 
 				<div>
-					<span>작성일</span>${board.write_date}
+					<span>작성일</span><fmt:formatDate value="${board.write_date}" pattern="yyyy-MM-dd HH:mm"/>
 				</div>
 
 			</div>
