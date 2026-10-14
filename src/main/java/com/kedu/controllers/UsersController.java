@@ -91,10 +91,8 @@ public class UsersController {
         String phone = phone1 + phone2 + phone3;
         String birthString = birth_year + "-" + birth_month + "-" + birth_day;
         Timestamp birth = Timestamp.valueOf(birthString + " 00:00:00");
-
-
+      
         dto.setPhone(phone);
-
         dto.setBirth(birth);
 
         String hashedPw = EncryptionUtils.encryptSHA512(dto.getPw());
@@ -301,7 +299,10 @@ public class UsersController {
 
         String id = loginUser.getId();
         String profileImg = loginUser.getProfile_img();
-
+        
+        if (team != null && team.trim().isEmpty()) {
+           team= null;
+        }
         if (profileFile != null && !profileFile.isEmpty()) {
 
             String uploadPath = "D:/uploads/";
@@ -337,7 +338,6 @@ public class UsersController {
         );
 
         if (result > 0) {
-
 
             loginUser.setPhone(phone);
             loginUser.setEmail(email);

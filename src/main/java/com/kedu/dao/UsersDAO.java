@@ -102,4 +102,13 @@ public class UsersDAO {
       String sql = "select * from users where id = ?";
       return jdbc.queryForObject(sql,new BeanPropertyRowMapper<>(UsersDTO.class),id);
    }
+   
+   public int selectPoint(String id) {
+	   String sql = "select nvl(point, 0) from users where id= ?";
+	   return jdbc.queryForObject(sql, Integer.class, id);
+   }
+   public int updatePoint(String id, int earnedPoint) {
+	   String sql= "update users set point =nvl(point, 0) + ? where id= ?";
+	   return jdbc.update(sql, earnedPoint, id);
+   }
 }

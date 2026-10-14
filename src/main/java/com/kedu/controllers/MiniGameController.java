@@ -1,4 +1,3 @@
-
 package com.kedu.controllers;
 
 import java.util.HashSet;
@@ -16,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kedu.commons.QuizService;
 import com.kedu.dao.PlayerDAO;
 import com.kedu.dao.PredictionDAO;
 import com.kedu.dao.PredictionResultDAO;
 import com.kedu.dao.QuizDAO;
+import com.kedu.dao.UsersDAO;
 import com.kedu.dto.MyTeamDTO;
 import com.kedu.dto.PlayerDTO;
 import com.kedu.dto.PredictionResultDTO;
@@ -41,6 +42,18 @@ public class MiniGameController {
 
     @Autowired
     private QuizDAO quizDAO;
+    
+    @Autowired
+    private PredictionDAO predictionDAO;
+    
+    @Autowired
+    private PredictionResultDAO predictionresultDAO;
+    
+   @Autowired
+   private UsersDAO usersDAO;
+    
+    @Autowired
+    private QuizService quizService;
 
     @RequestMapping("/myteam")
     public String myTeam(
@@ -188,6 +201,7 @@ public class MiniGameController {
         if (id != null) {
             model.addAttribute("summary", quizDAO.selectQuizSummary(id));
             model.addAttribute("latest", quizDAO.selectLatestQuizResult(id));
+            model.addAttribute("point", usersDAO.selectUser(id).getPoint());
         }
 
         return "minigame/quiz";
@@ -279,17 +293,12 @@ public class MiniGameController {
 
         try {
 
-           
-            quizDAO.saveQuizResult(memberId, quizIds, userAnswers);
+            quizService.submitQuiz(memberId, quizIds, userAnswers);
 
-        
             return "OK";
 
         } catch (Exception e) {
-
-            
             e.printStackTrace();
-
             response.setStatus(500);
             return "result quiz save X";
 
