@@ -116,37 +116,44 @@ public class ScheduleDAO {
 		try {
 			return jdbc.queryForObject(sql, String.class, teamId);
 		} catch (Exception e) {
-			return "¡§∫∏æ¯¿Ω";
+			return "ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ";
 		}
 	}
 
+	// Î©îÏù∏ ÌôîÎ©¥ Í≤ΩÍ∏∞ ÏùºÏ†ï: Ïò§ÎäòÎ∂ÄÌÑ∞ ÏòàÏ†ïÎêú Í≤ΩÍ∏∞ 5Í∞ú
 	public List<ScheduleDTO> selectHomeSchedules() {
-		String sql = "SELECT * "
-				+ "FROM ("
-				+ "SELECT "
-				+ "s.game_id, "
-				+ "s.naver_game_id, "
-				+ "s.title, "
-				+ "s.location, "
-				+ "s.start_date, "
-				+ "s.end_date, "
-				+ "s.winner_id, "
-				+ "s.home_id, "
-				+ "s.away_id, "
-				+ "s.home_score, "
-				+ "s.away_score, "
-				+ "s.game_status, "
-				+ "h.team_name AS home_team, "
-				+ "a.team_name AS away_team, "
-				+ "h.team_logo AS home_logo, "
-				+ "a.team_logo AS away_logo "
-				+ "FROM schedule s "
-				+ "JOIN team h ON s.home_id = h.team_id "
-				+ "JOIN team a ON s.away_id = a.team_id "
-				+ "ORDER BY s.start_date"
-				+ ") "
-				+ "WHERE ROWNUM <= 5";
-		return jdbc.query(sql, new BeanPropertyRowMapper<>(ScheduleDTO.class));
+
+	    String sql = "SELECT * "
+	            + "FROM ("
+	            + "    SELECT "
+	            + "    s.game_id, "
+	            + "    s.naver_game_id, "
+	            + "    s.title, "
+	            + "    s.location, "
+	            + "    s.start_date, "
+	            + "    s.end_date, "
+	            + "    s.winner_id, "
+	            + "    s.home_id, "
+	            + "    s.away_id, "
+	            + "    s.home_score, "
+	            + "    s.away_score, "
+	            + "    s.game_status, "
+	            + "    h.team_name AS home_team, "
+	            + "    a.team_name AS away_team, "
+	            + "    h.team_logo AS home_logo, "
+	            + "    a.team_logo AS away_logo "
+	            + "    FROM schedule s "
+	            + "    JOIN team h ON s.home_id = h.team_id "
+	            + "    JOIN team a ON s.away_id = a.team_id "
+	            + "    WHERE s.start_date >= TRUNC(SYSDATE) "
+	            + "    ORDER BY s.start_date ASC"
+	            + ") "
+	            + "WHERE ROWNUM <= 5";
+
+	    return jdbc.query(
+	            sql,
+	            new BeanPropertyRowMapper<>(ScheduleDTO.class)
+	    );
 	}
 
 	public ScheduleDTO selectByGameId(int game_id) {
@@ -165,8 +172,8 @@ public class ScheduleDAO {
 				+ "s.away_score, "
 				+ "CASE "
 				+ "WHEN s.end_date IS NOT NULL AND s.end_date <= SYSTIMESTAMP "
-				+ "THEN '∞Ê±‚¡æ∑·' "
-				+ "ELSE '∞Ê±‚øπ¡§' "
+				+ "THEN 'ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ' "
+				+ "ELSE 'ÔøΩÔøΩ‚øπÔøΩÔøΩ' "
 				+ "END AS game_status, "
 				+ "h.team_name AS home_team, "
 				+ "a.team_name AS away_team, "
@@ -209,6 +216,42 @@ public class ScheduleDAO {
 	            dto.getGame_status(),
 	            dto.getWinner_id(),
 	            dto.getNaver_game_id()
+	    );
+	}
+	
+	// Î©îÏù∏ ÌôîÎ©¥ ÏòàÎß§ ÏòÅÏó≠: ÌòÑÏû¨ ÏãúÍ∞Å Ïù¥ÌõÑ Í≤ΩÍ∏∞ 5Í∞ú
+	public List<ScheduleDTO> selectBookingSchedules() {
+
+	    String sql = "SELECT * "
+	            + "FROM ("
+	            + "    SELECT "
+	            + "    s.game_id, "
+	            + "    s.naver_game_id, "
+	            + "    s.title, "
+	            + "    s.location, "
+	            + "    s.start_date, "
+	            + "    s.end_date, "
+	            + "    s.winner_id, "
+	            + "    s.home_id, "
+	            + "    s.away_id, "
+	            + "    s.home_score, "
+	            + "    s.away_score, "
+	            + "    s.game_status, "
+	            + "    h.team_name AS home_team, "
+	            + "    a.team_name AS away_team, "
+	            + "    h.team_logo AS home_logo, "
+	            + "    a.team_logo AS away_logo "
+	            + "    FROM schedule s "
+	            + "    JOIN team h ON s.home_id = h.team_id "
+	            + "    JOIN team a ON s.away_id = a.team_id "
+	            + "    WHERE s.start_date >= SYSDATE "
+	            + "    ORDER BY s.start_date ASC"
+	            + ") "
+	            + "WHERE ROWNUM <= 5";
+
+	    return jdbc.query(
+	            sql,
+	            new BeanPropertyRowMapper<>(ScheduleDTO.class)
 	    );
 	}
 }
