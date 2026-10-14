@@ -123,7 +123,6 @@ public class MiniGameController {
 
     @RequestMapping("/prediction")
     public String prediction(Model model, HttpSession session) {
-
         String id = (String) session.getAttribute("id");
         List<Integer> gameIds = predictionDAO.searchGameId();
         for (int i = 0; i < gameIds.size(); i++) {
@@ -132,10 +131,11 @@ public class MiniGameController {
         List<PredictionViewDTO> predictionList = predictionDAO.selectAllPredictions();
         model.addAttribute("predictionList", predictionList);
         if (id != null) {
-            model.addAttribute(
-                "myPredictionList",
-                predictionresultDAO.selectMyPredictions(id)
-            );
+        	predictionresultDAO.isUserCorrect(id);
+        	model.addAttribute("myPoint", predictionresultDAO.getUserPoint(id));
+        	model.addAttribute("predictionCount", predictionresultDAO.getPredictionCount(id));
+        	model.addAttribute("hitRate", predictionresultDAO.getHitRate(id));
+            model.addAttribute("myPredictionList", predictionresultDAO.selectMyPredictions(id));
         }
 
         return "minigame/prediction";

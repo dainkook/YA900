@@ -495,6 +495,32 @@ body {
 ::-webkit-scrollbar-thumb:hover {
 	background: #7189c2;
 }
+
+/* =========================
+   FOOTER
+========================= */
+.footer {
+	width: 100%;
+	height: 70px;
+	margin-top: 0;
+	background: #eef1f8;
+	color: #838ec9;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 13px;
+	border: none;
+}
+
+.footer a {
+    margin: 0 4px;
+    text-decoration: none;
+	color: #838ec9;
+}
+
+.footer a:hover {
+	color: #a9b1db;
+}
 </style>
 </head>
 <body>
@@ -510,7 +536,7 @@ body {
 				<a href="#">야구</a>
 
 				<div class="sub-menu">
-					<a href="#">예매</a> 
+					<a href="${pageContext.request.contextPath}/#reservation">예매</a>
 					<a href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a> 
 					<a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a> 
 					<a href="${pageContext.request.contextPath}/schedule/rankdetail?tab=pitcher">선수순위</a> 
@@ -538,8 +564,7 @@ body {
 				<div class="sub-menu">
 					<a href="${pageContext.request.contextPath}/quiz">상식 퀴즈</a> 
 					<a href="${pageContext.request.contextPath}/myteam">나만의 팀</a> 
-					<a href="${pageContext.request.contextPath}/prediction">승부예측</a> 
-					<a href="#">게임 랭킹</a>
+					<a href="${pageContext.request.contextPath}/prediction">승부예측</a>
 				</div>
 			</div>
 		</nav>
@@ -893,6 +918,13 @@ body {
 			</div>
 		</section>
 	</main>
+	<div class="footer">
+
+			<a href="#">개인정보처리방침</a> | <a href="#">전체 서비스</a> | <a href="#">문제
+				신고</a> | <a href="#">고객센터</a> | <a
+				href="${pageContext.request.contextPath}/admin">관리자</a>
+
+		</div>
 	<script>
 		function showTab(tabId, button) {
 			document.querySelectorAll(".tab-content").forEach(function(tab) {

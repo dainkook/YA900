@@ -15,19 +15,16 @@
 	box-sizing: border-box;
 }
 
-html, body {
-	margin: 0;
-	min-height: 100%;
+html {
+    scroll-behavior: smooth;
 }
 
 body {
-	background: linear-gradient(to bottom, #111936 0%, #111936 12%, #171f46 22%, #252f67
-		32%, #71809f 43%, #aeb7ca 55%, #d5dae5 70%, #eef1f8 85%, #eef1f8 100%);
-	font-family: "Malgun Gothic", "Apple SD Gothic Neo", Arial, sans-serif;
-	color: #202945;
-	min-height: 100vh;
-	font-size: 15px;
-	line-height: 1.6;
+	margin: 0;
+	background: linear-gradient(to bottom, #111936 0%, #111936 15%, #0b1026 25%, #171f46
+		35%, #252f67 48%, #71809f 65%, #aeb7ca 76%, #d5dae5 86%, #eef1f8 94%,
+		#eef1f8 100%);
+	color: #18213f;
 }
 
 h1 {
@@ -67,11 +64,10 @@ h2 {
 
 .logo {
 	font-size: 30px;
-	font-weight: 900;
+	font-weight: bold;
 	margin-right: 60px;
 	color: white;
-	letter-spacing: 1.2px;
-	cursor: pointer;
+	letter-spacing: 1px;
 }
 
 .main-menu {
@@ -89,13 +85,12 @@ h2 {
 }
 
 .menu-item>a {
-	font-size: 16px;
-	font-weight: 700;
+	font-size: 18px;
+	font-weight: bold;
 	text-decoration: none;
 	color: #f7f8ff;
 	padding: 10px 5px;
 	transition: color 0.2s ease;
-	letter-spacing: -0.3px;
 }
 
 .menu-item>a:hover {
@@ -103,7 +98,7 @@ h2 {
 }
 
 /* =========================
-   SUB MENU
+   서브 메뉴
 ========================= */
 .sub-menu {
 	position: absolute;
@@ -131,9 +126,7 @@ h2 {
 	padding: 13px 15px;
 	text-decoration: none;
 	color: #f5f7ff;
-	font-size: 13px;
-	font-weight: 500;
-	letter-spacing: -0.2px;
+	font-size: 14px;
 	border-bottom: 1px solid #35406b;
 }
 
@@ -146,47 +139,47 @@ h2 {
 }
 
 /* =========================
-   LOGIN / SIGNUP
+   로그인 / 회원가입
 ========================= */
 .member-menu {
-	font-size: 14px;
-	margin-left: auto;
-	display: flex;
-	align-items: center;
-	gap: 10px;
-	white-space: nowrap;
+    font-size: 14px;
+    margin-left: auto;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    white-space: nowrap;
 }
 
 .member-menu form {
-	display: flex;
-	margin: 0;
+    display: flex;
+    margin: 0;
 }
 
 .member-menu span {
-	color: white;
-	font-size: 13px;
-	font-weight: 600;
-	white-space: nowrap;
+    color: white;
+    font-weight: bold;
+    white-space: nowrap;
 }
 
-.login-btn, .sign-btn {
-	border: 1px solid #7180b1;
-	background: transparent;
-	color: white;
-	border-radius: 5px;
-	padding: 6px 10px;
-	cursor: pointer;
-	white-space: nowrap;
-	transition: 0.2s ease;
-	font-family: inherit;
-	font-size: 12px;
-	font-weight: 700;
+.login-btn,
+.sign-btn {
+    border: 1px solid #7180b1;
+    background: transparent;
+    color: white;
+    border-radius: 5px;
+    padding: 6px 10px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: 0.2s ease;
 }
 
-.login-btn:hover, .sign-btn:hover {
-	background: #476aaa;
-	border-color: #476aaa;
-	color: white;
+.login-btn:hover,
+.sign-btn:hover {
+    background: #476aaa;
+    border-color: #476aaa;
+    color: white;
 }
 
 /* =========================
@@ -507,16 +500,29 @@ tbody tr:hover {
 /* =========================
    FOOTER
 ========================= */
-.site-footer {
+.footer {
 	width: 100%;
-	border-top: 1px solid #d8dce3;
-	padding: 28px 16px;
-	text-align: center;
-	font-size: 11px;
-	color: #777;
-	background: rgba(255, 255, 255, 0.5);
-	margin-top: 20px;
+	height: 70px;
+	margin-top: 0;
+	background: #eef1f8;
+	color: #838ec9;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 13px;
+	border: none;
 }
+
+.footer a {
+    margin: 0 4px;
+    text-decoration: none;
+	color: #838ec9;
+}
+
+.footer a:hover {
+	color: #a9b1db;
+}
+
 
 /* =========================
    QUICK MENU
@@ -665,11 +671,10 @@ tbody tr:hover {
 				<a href="#">야구</a>
 
 				<div class="sub-menu">
-					<a href="#">예매</a> <a
-						href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a>
+					<a href="${pageContext.request.contextPath}/#reservation">예매</a>
+					<a href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a>
 					<a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a>
-					<a
-						href="${pageContext.request.contextPath}/schedule/rankdetail?tab=pitcher">선수순위</a>
+					<a href="${pageContext.request.contextPath}/schedule/rankdetail?tab=pitcher">선수순위</a>
 					<a href="${pageContext.request.contextPath}/board/board?cpage=1">게시판</a>
 				</div>
 			</div>
@@ -691,8 +696,7 @@ tbody tr:hover {
 				<div class="sub-menu">
 					<a href="${pageContext.request.contextPath}/quiz">상식 퀴즈</a> <a
 						href="${pageContext.request.contextPath}/myteam">나만의 팀</a> <a
-						href="${pageContext.request.contextPath}/prediction">승부예측</a> <a
-						href="#">게임 랭킹</a>
+						href="${pageContext.request.contextPath}/prediction">승부예측</a>
 				</div>
 			</div>
 		</nav>
@@ -730,7 +734,13 @@ tbody tr:hover {
 		</div>
 
 	</div>
-
+	<div class="quick-menu">
+		    <div class="menu">QUICK MENU</div>
+		    <div onclick="location.href='${pageContext.request.contextPath}/'">홈</div>
+		    <div onclick="location.href='${pageContext.request.contextPath}/#reservation'">예매</div>
+		    <div onclick="location.href='${pageContext.request.contextPath}/board/board?cpage=1'">게시판</div>
+		    <div onclick="location.href='${pageContext.request.contextPath}/mypage'">마이페이지</div>
+		</div>
 	<main class="wrap">
 
 		<div class="box">
@@ -917,7 +927,12 @@ tbody tr:hover {
 		</section>
 
 	</main>
+	<div class="footer">
 
-	<footer class="site-footer">YA900</footer>
+			<a href="#">개인정보처리방침</a> | <a href="#">전체 서비스</a> | <a href="#">문제
+				신고</a> | <a href="#">고객센터</a> | <a
+				href="${pageContext.request.contextPath}/admin">관리자</a>
+
+	</div>
 </body>
 </html>

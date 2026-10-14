@@ -1348,7 +1348,7 @@ body {
 				<a href="#">야구</a>
 
 				<div class="sub-menu">
-					<a href="#">예매</a> 
+					<a href="${pageContext.request.contextPath}/#reservation">예매</a> 
 					<a href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a> 
 					<a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a> 
 					<a href="${pageContext.request.contextPath}/schedule/rankdetail?tab=pitcher">선수순위</a> 
@@ -1377,7 +1377,6 @@ body {
 					<a href="${pageContext.request.contextPath}/quiz">상식 퀴즈</a> 
 					<a href="${pageContext.request.contextPath}/myteam">나만의 팀</a> 
 					<a href="${pageContext.request.contextPath}/prediction">승부예측</a> 
-					<a href="#">게임 랭킹</a>
 				</div>
 			</div>
 		</nav>
@@ -1431,7 +1430,7 @@ body {
 		<div class="banner-slide"></div>
 		<div class="banner-slide"></div>
 
-		<h1>대충 간지나는 말 어쩌구 저쩌구</h1>
+		<h1>우리의 함성이 승리가 되는 순간.</h1>
 
 	</div>
 
