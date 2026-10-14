@@ -32,6 +32,9 @@ body {
 	color: #18213f;
 }
 
+/* =========================
+   HEADER
+========================= */
 .header {
 	width: 100%;
 	height: 100px;
@@ -53,7 +56,6 @@ body {
 	margin-right: 60px;
 	color: white;
 	letter-spacing: 1px;
-	cursor: pointer;
 }
 
 .main-menu {
@@ -83,6 +85,9 @@ body {
 	color: #aebee7;
 }
 
+/* =========================
+   서브 메뉴
+========================= */
 .sub-menu {
 	position: absolute;
 	top: 100%;
@@ -121,27 +126,48 @@ body {
 	background: #252f67;
 }
 
+/* =========================
+   로그인 / 회원가입
+========================= */
 .member-menu {
-	font-size: 14px;
-	margin-left: auto;
-	display: flex;
-	gap: 8px;
+    font-size: 14px;
+    margin-left: auto;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    white-space: nowrap;
 }
 
-.login-btn, .sign-btn {
-	padding: 10px 17px;
-	border: 1px solid #7180b1;
-	background: transparent;
-	color: white;
-	border-radius: 5px;
-	cursor: pointer;
-	transition: 0.2s ease;
+.member-menu form {
+    display: flex;
+    margin: 0;
 }
 
-.login-btn:hover, .sign-btn:hover {
-	background: #476aaa;
-	border-color: #476aaa;
-	color: white;
+.member-menu span {
+    color: white;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.login-btn,
+.sign-btn {
+    border: 1px solid #7180b1;
+    background: transparent;
+    color: white;
+    border-radius: 5px;
+    padding: 6px 10px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: 0.2s ease;
+}
+
+.login-btn:hover,
+.sign-btn:hover {
+    background: #476aaa;
+    border-color: #476aaa;
+    color: white;
 }
 
 .container {
@@ -785,69 +811,82 @@ body {
 
 		<div class="logo" onclick="location.href='/'">YA900</div>
 
+		<!-- 메인 메뉴 -->
 		<nav class="main-menu">
 
+			<!-- 야구 -->
 			<div class="menu-item">
 				<a href="#">야구</a>
 
 				<div class="sub-menu">
-					<a href="#">예매</a> <a
-						href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a>
-					<a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a>
-					<a href="#">선수순위</a> <a
-						href="${pageContext.request.contextPath}/board/board?cpage=1">게시판</a>
+					<a href="${pageContext.request.contextPath}/#reservation">예매</a> 
+					<a href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a> 
+					<a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a> 
+					<a href="${pageContext.request.contextPath}/schedule/rankdetail?tab=pitcher">선수순위</a> 
+					<a href="${pageContext.request.contextPath}/board/board?cpage=1">게시판</a>
 				</div>
 			</div>
 
+			<!-- 축구 -->
 			<div class="menu-item">
 				<a href="#">축구</a>
 
 				<div class="sub-menu">
-					<a href="#">예매</a> <a href="#">경기일정</a> <a href="#">팀순위</a> <a
-						href="#">선수순위</a> <a href="#">게시판</a>
+					<a href="#">예매</a> 
+					<a href="#">경기일정</a> 
+					<a href="#">팀순위</a> 
+					<a href="#">선수순위</a> 
+					<a href="#">게시판</a>
 				</div>
 			</div>
 
+			<!-- 미니게임 -->
 			<div class="menu-item">
 				<a href="#">미니게임</a>
 
 				<div class="sub-menu">
-					<a href="#">상식 퀴즈</a> <a href="#">OX 퀴즈</a> <a href="#">승부예측</a> <a
-						href="#">게임 랭킹</a>
+					<a href="${pageContext.request.contextPath}/quiz">상식 퀴즈</a> 
+					<a href="${pageContext.request.contextPath}/myteam">나만의 팀</a> 
+					<a href="${pageContext.request.contextPath}/prediction">승부예측</a> 
 				</div>
 			</div>
 		</nav>
 
 		<div class="member-menu">
 
-			<c:choose>
+    <c:choose>
 
-				<c:when test="${not empty sessionScope.id}">
-					<span>${sessionScope.id}님</span>
+        <c:when test="${not empty sessionScope.id}">
+            <span>${sessionScope.id}님</span>
 
-					<button class="login-btn"
-						onclick="location.href='${pageContext.request.contextPath}/mypage'">
-						마이페이지</button>
+            <button class="login-btn"
+                    onclick="location.href='${pageContext.request.contextPath}/mypage'">
+                마이페이지
+            </button>
 
-					<form action="${pageContext.request.contextPath}/logout"
-						method="post">
-						<button type="submit" class="sign-btn">로그아웃</button>
-					</form>
-				</c:when>
+            <form action="${pageContext.request.contextPath}/logout"
+                  method="post">
+                <button type="submit" class="sign-btn">
+                    로그아웃
+                </button>
+            </form>
+        </c:when>
 
-				<c:otherwise>
-					<button class="login-btn"
-						onclick="location.href='${pageContext.request.contextPath}/login'">
-						로그인</button>
+        <c:otherwise>
+            <button class="login-btn"
+                    onclick="location.href='${pageContext.request.contextPath}/login'">
+                로그인
+            </button>
 
-					<button class="sign-btn"
-						onclick="location.href='${pageContext.request.contextPath}/signup'">
-						회원가입</button>
-				</c:otherwise>
+            <button class="sign-btn"
+                    onclick="location.href='${pageContext.request.contextPath}/signup'">
+                회원가입
+            </button>
+        </c:otherwise>
 
-			</c:choose>
-
-
+    </c:choose>
+			
+			
 		</div>
 
 	</div>

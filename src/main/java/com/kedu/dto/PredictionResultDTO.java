@@ -7,7 +7,7 @@ public class PredictionResultDTO {
     private int result_id;
     private int prediction_id;
     private String member_id;
-    private int team_id;
+    private Integer team_id;
     private Timestamp predict_date;
     private int is_correct;
     private int predicted_result;
@@ -49,11 +49,11 @@ public class PredictionResultDTO {
         this.member_id = member_id;
     }
 
-    public int getTeam_id() {
+    public Integer getTeam_id() {
         return team_id;
     }
 
-    public void setTeam_id(int team_id) {
+    public void setTeam_id(Integer team_id) {
         this.team_id = team_id;
     }
 
