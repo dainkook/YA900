@@ -30,10 +30,22 @@ public class BoardDAO {
 
 		return jdbc.query(sql, new BeanPropertyRowMapper<>(BoardDTO.class), team, first, last);
 	}
+	
+	public List<BoardDTO> listOfPageNotTeam(int first, int last) {
+		String sql = "select * from (" + " select board.*, row_number() over(order by board_seq desc) rn "
+				+ " from board where team is null" + ") where rn between ? and ?";
 
+		return jdbc.query(sql, new BeanPropertyRowMapper<>(BoardDTO.class), first, last);
+	}
+	
 	public int totalCountByTeam(String team) {
 		String sql = "select count(*) from board where team = ?";
 		return jdbc.queryForObject(sql, Integer.class, team);
+	}
+	
+	public int totalCountFreeBoard() {
+		String sql = "select count(*) from board where team is null";
+		return jdbc.queryForObject(sql, Integer.class);
 	}
 
 	public int searchCount(String option, String search) {
@@ -183,12 +195,23 @@ public class BoardDAO {
 	}
 
 	public List<Re_ReplyDTO> getReReplyList(int boards_seq) {
-		String sql = "select * from re_reply where parent_seq = ?";
+		String sql = "select * from re_reply where boards_seq = ? order by re_reply_seq desc";
 		return jdbc.query(sql, new BeanPropertyRowMapper<>(Re_ReplyDTO.class), boards_seq);
 	}
 
 	public int addReReply(Re_ReplyDTO dto) {
 		String sql = "insert into re_reply values(re_reply_seq.nextval, ?, ?, sysdate, ?, ?)";
 		return jdbc.update(sql, dto.getContents(), dto.getWriter(), dto.getParent_seq(), dto.getBoards_seq());
+	}
+	
+	public int updateReReply(Re_ReplyDTO dto) {
+		String sql = "update re_reply set contents = ? where re_reply_seq = ?";
+		return jdbc.update(sql, dto.getContents(), dto.getRe_reply_seq());
+		
+	}
+	
+	public int deleteReReply(int re_reply_seq) {
+		String sql = "delete from re_reply where re_reply_seq = ?";
+		return jdbc.update(sql, re_reply_seq);
 	}
 }

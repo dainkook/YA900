@@ -803,8 +803,8 @@ body.theme-kiwoom {
 						<c:when test="${empty param.team}">
 			            전체 게시판
 			        </c:when>
-						<c:otherwise>
-			            ${param.team} 게시판
+					<c:otherwise>
+			            ${selectedTeam} 게시판
 			        </c:otherwise>
 					</c:choose>
 				</h1>
@@ -817,61 +817,72 @@ body.theme-kiwoom {
 
 					<a class="team-item"
 						href="${pageContext.request.contextPath}/board/board?cpage=1">
-						<span style="font-size: 32px;">⚾</span> <span>전체 게시판</span>
-					</a> <a class="team-item"
+						<span style="font-size: 32px;">⚾</span> <span>게시판 전체보기</span>
+					</a> 
+					<a class="team-item"
+						href="${pageContext.request.contextPath}/board/board?team=free&cpage=1">
+						<span style="font-size: 32px;">⚾</span> <span>자유게시판</span>
+					</a> 
+					<a class="team-item"
 						href="${pageContext.request.contextPath}/board/board?team=두산&cpage=1">
 						<img
 						src="${pageContext.request.contextPath}/resources/images/team/doosan.png"
 						alt="두산 베어스"> <span>두산 베어스</span>
-					</a> <a class="team-item"
+					</a> 
+					<a class="team-item"
 						href="${pageContext.request.contextPath}/board/board?team=LG&cpage=1">
 						<img
 						src="${pageContext.request.contextPath}/resources/images/team/lg.png"
 						alt="LG 트윈스"> <span>LG 트윈스</span>
-					</a> <a class="team-item"
+					</a> 
+					<a class="team-item"
 						href="${pageContext.request.contextPath}/board/board?team=KIA&cpage=1">
 						<img
 						src="${pageContext.request.contextPath}/resources/images/team/kia.png"
 						alt="KIA 타이거즈"> <span>KIA 타이거즈</span>
-					</a> <a class="team-item"
+					</a> 
+					<a class="team-item"
 						href="${pageContext.request.contextPath}/board/board?team=삼성&cpage=1">
 						<img
 						src="${pageContext.request.contextPath}/resources/images/team/samsung.png"
 						alt="삼성 라이온즈"> <span>삼성 라이온즈</span>
-					</a> <a class="team-item"
+					</a> 
+					<a class="team-item"
 						href="${pageContext.request.contextPath}/board/board?team=SSG&cpage=1">
 						<img
 						src="${pageContext.request.contextPath}/resources/images/team/ssg.png"
 						alt="SSG 랜더스"> <span>SSG 랜더스</span>
-					</a> <a class="team-item"
+					</a> 
+					<a class="team-item"
 						href="${pageContext.request.contextPath}/board/board?team=KT&cpage=1">
 						<img
 						src="${pageContext.request.contextPath}/resources/images/team/kt.png"
 						alt="KT 위즈"> <span>KT 위즈</span>
-					</a> <a class="team-item"
+					</a> 
+					<a class="team-item"
 						href="${pageContext.request.contextPath}/board/board?team=롯데&cpage=1">
 						<img
 						src="${pageContext.request.contextPath}/resources/images/team/lotte.png"
 						alt="롯데 자이언츠"> <span>롯데 자이언츠</span>
-					</a> <a class="team-item"
+					</a> 
+					<a class="team-item"
 						href="${pageContext.request.contextPath}/board/board?team=한화&cpage=1">
 						<img
 						src="${pageContext.request.contextPath}/resources/images/team/hanhwa.png"
 						alt="한화 이글스"> <span>한화 이글스</span>
-					</a> <a class="team-item"
+					</a> 
+					<a class="team-item"
 						href="${pageContext.request.contextPath}/board/board?team=NC&cpage=1">
 						<img
 						src="${pageContext.request.contextPath}/resources/images/team/nc.png"
 						alt="NC 다이노스"> <span>NC 다이노스</span>
-					</a> <a class="team-item"
+					</a> 
+					<a class="team-item"
 						href="${pageContext.request.contextPath}/board/board?team=키움&cpage=1">
 						<img
 						src="${pageContext.request.contextPath}/resources/images/team/kiwoom.png"
 						alt="키움 히어로즈"> <span>키움 히어로즈</span>
-					</a> <a class="team-item"
-						href="${pageContext.request.contextPath}/board/board/"> <span
-						class="team-logo">🗨️</span> <span>문의 게시판</span>
-					</a>
+					</a> 
 				</div>
 			</div>
 

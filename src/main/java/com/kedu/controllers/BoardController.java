@@ -39,29 +39,25 @@ public class BoardController {
    private FilesDAO fdao;
    
    @RequestMapping("/board")
-   public String board(
-           Model model,
+   public String board(Model model,
            @RequestParam(defaultValue = "1") int cpage,
            @RequestParam(required = false) String team
    ) throws Exception {
-
        List<BoardDTO> list;
        int totalCount;
-
-       if (team != null && !team.trim().isEmpty()) {
-           list = dao.listOfPageByTeam(
-               team, cpage * 10 - 9, cpage * 10
-           );
+       if ("free".equals(team)) {
+    	   list = dao.listOfPageNotTeam(cpage * 10 - 9, cpage * 10);
+    	   totalCount = dao.totalCountFreeBoard();
+    	   model.addAttribute("selectedTeam", "자유");
+           
+       } else if(team!=null&&!team.trim().isEmpty()) {
+    	   list = dao.listOfPageByTeam(team, cpage * 10 - 9, cpage * 10);
            totalCount = dao.totalCountByTeam(team);
-
            model.addAttribute("selectedTeam", team);
        } else {
-           list = dao.listOfPage(
-               cpage * 10 - 9, cpage * 10
-           );
+           list = dao.listOfPage(cpage * 10 - 9, cpage * 10);
            totalCount = dao.totalCount();
        }
-
        model.addAttribute("list", list);
        model.addAttribute("recordTotalCount", totalCount);
        model.addAttribute("recordCountPerPage", 10);
@@ -98,7 +94,6 @@ public class BoardController {
 	    if (myTeam == null || myTeam.trim().isEmpty()) {
 	        return "redirect:/board/board?cpage=1";
 	    }
-	    model.addAttribute("selectedTeam", myTeam);
 	    return "/board/write";
 	}
 	
@@ -106,8 +101,8 @@ public class BoardController {
 	@RequestMapping("/writeComplete")
 	public String writeComplete(BoardDTO dto, HttpSession session, MultipartFile[] files) throws Exception {
 	    String id = (String) session.getAttribute("id");
-	    if (id == null) {
-	        return "redirect:/login";
+	    if (dto.getTeam() != null && dto.getTeam().trim().isEmpty()) {
+	        dto.setTeam(null);
 	    }
 	    String myTeam = dao.isUserTeam(id);
 	    if (myTeam == null || myTeam.trim().isEmpty()) {
@@ -121,16 +116,12 @@ public class BoardController {
 	    String path = "d:/uploads/";
 	    if (files != null) {
 	        for (MultipartFile file : files) {
-
 	            if (file == null || file.isEmpty()) {
 	                continue;
 	            }
-
 	            String oriName = file.getOriginalFilename();
 	            String sysName = UUID.randomUUID() + "_" + oriName;
-
 	            file.transferTo(new File(path + sysName));
-
 	            fdao.insertFile(
 	                new FilesDTO(0, oriName, sysName, null, seq)
 	            );
@@ -260,23 +251,23 @@ public class BoardController {
 		return "redirect:/board/detail?seq=" + parent_seq;
 	}
 	
-	@RequestMapping("/reReplyWrite")
+	@RequestMapping("/re_replyWrite")
 	public String reReplyWrite(Re_ReplyDTO dto) throws Exception {
 		dao.addReReply(dto);
-		return "redirect:/board/detail?seq=" + dto.getParent_seq();
+		return "redirect:/board/detail?seq=" + dto.getBoards_seq();
 	}
 	
-//	@RequestMapping("/reReplyUpdate")
-//	public String reReplyUpdate(Re_ReplyDTO dto) throws Exception {
-//		dao.updateReReply(dto);
-//		return "redirect:/board/detail?seq=" + dto.getParent_seq();
-//	}
-//	
-//	@RequestMapping("/reReplyDelete")
-//	public String reReplyDelete(int reply_seq, int parent_seq) throws Exception {
-//		dao.deleteReReply(reply_seq);
-//		return "redirect:/board/detail?seq=" + parent_seq;
-//	}
+	@RequestMapping("/re_replyUpdate")
+	public String reReplyUpdate(Re_ReplyDTO dto) throws Exception {
+		dao.updateReReply(dto);
+		return "redirect:/board/detail?seq=" + dto.getBoards_seq();
+	}
+	
+	@RequestMapping("/re_replyDelete")
+	public String reReplyDelete(int re_reply_seq, int boards_seq) throws Exception {
+		dao.deleteReReply(re_reply_seq);
+		return "redirect:/board/detail?seq=" + boards_seq;
+	}
 	
 	@RequestMapping("/report")
 	public String report() throws Exception {

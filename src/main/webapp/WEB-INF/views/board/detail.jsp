@@ -781,15 +781,12 @@ body {
 </style>
 </head>
 <body>
-	<!-- HEADER -->
 	<div class="header">
 
 		<div class="logo" onclick="location.href='/'">YA900</div>
 
-		<!-- 메인 메뉴 -->
 		<nav class="main-menu">
 
-			<!-- 야구 -->
 			<div class="menu-item">
 				<a href="#">야구</a>
 
@@ -802,7 +799,6 @@ body {
 				</div>
 			</div>
 
-			<!-- 축구 -->
 			<div class="menu-item">
 				<a href="#">축구</a>
 
@@ -812,7 +808,6 @@ body {
 				</div>
 			</div>
 
-			<!-- 미니게임 -->
 			<div class="menu-item">
 				<a href="#">미니게임</a>
 
@@ -856,7 +851,6 @@ body {
 		</div>
 
 	</div>
-	<!-- 오른쪽 퀵메뉴 -->
 	<div class="quick-menu">
 		<div class="menu">QUICK MENU</div>
 		<div onclick="location.href='${pageContext.request.contextPath}/'">홈</div>
@@ -918,8 +912,6 @@ body {
 						<input type="hidden" name="target_id" value="${board.writer}">
 						<input type="hidden" name="reporter" value="${id}"> <input
 							type="hidden" id="report_type" name="report_type">
-						<button type="button" class="bookmark"
-							onclick="location.href='/board/bookmark'">북마크</button>
 						<button type="button" class="boardReport">신고</button>
 					</form>
 				</div>
@@ -945,7 +937,6 @@ body {
 								<td colspan="5">
 									<div class="replyItem">
 
-										<!-- 일반 댓글 -->
 										<div class="replyLine">
 											<form action="/board/replyUpdate" class="replyForm">
 												<textarea name="contents" class="replyContents" readonly>${reply.contents}</textarea>
@@ -975,19 +966,17 @@ body {
 											</form>
 										</div>
 
-										<!-- 답글 열기 버튼 -->
 										<div class="replyActions">
 											<button type="button" class="reReplyOpen">↳ 답글 달기</button>
 										</div>
 
-										<!-- 대댓글 입력창 + 기존 대댓글 -->
-										<div class="reReplyArea" style="display: none;">
+										<div class="reReplyArea">
 
-											<form action="/board/re_replyWrite" class="reReplyWrite">
-												<textarea name="re_contents" placeholder="답글을 입력해주세요..."></textarea>
+											<form action="/board/re_replyWrite" class="reReplyWrite" style="display: none;">
+												<textarea name="contents" placeholder="답글을 입력해주세요..."></textarea>
 												<input type="hidden" name="writer" value="${id}"> <input
 													type="hidden" name="parent_seq" value="${reply.reply_seq}">
-												<input type="hidden" name="board_seq"
+												<input type="hidden" name="boards_seq"
 													value="${board.board_seq}">
 												<button type="submit">등록</button>
 											</form>
@@ -997,11 +986,13 @@ body {
 													<c:if test="${re_reply.parent_seq == reply.reply_seq}">
 														<div class="reReplyItem">
 															<form action="/board/re_replyUpdate" class="reReplyForm">
-																<textarea name="re_contents" readonly>${re_reply.contents}</textarea>
+																<textarea name="contents" readonly>${re_reply.contents}</textarea>
 																<input type="hidden" name="parent_seq"
 																	value="${reply.reply_seq}"> <input
 																	type="hidden" name="re_reply_seq"
-																	value="${re_reply.re_reply_seq}"> <span
+																	value="${re_reply.re_reply_seq}"> <input
+																	type="hidden" name="boards_seq"
+																	value="${board.board_seq}"> <span
 																	class="replyWriter">${re_reply.writer}</span> <span
 																	class="replyDate">${re_reply.write_date}</span>
 
@@ -1116,7 +1107,7 @@ body {
 			}
 		});
 
-		$(".replyFix").on("click", function() {
+		$(".replyFix:not(.reReplyFix)").on("click", function() {
 			let form = $(this).closest(".replyForm");
 			let contents = form.find(".replyContents");
 
@@ -1131,42 +1122,66 @@ body {
 			}
 		});
 
-		$(".replyDel").on(
-				"click",
-				function() {
-					if (!confirm("댓글을 삭제하시겠습니까?")) {
-						return;
-					}
-					let replySeq = $(this).closest(".replyForm").find(
-							"input[name='reply_seq']").val();
-					location.href = "/board/replyDelete?reply_seq=" + replySeq
-							+ "&parent_seq=${board.board_seq}";
-				});
+		$(".replyDel:not(.reReplyDel)").on("click", function() {
+			if (!confirm("댓글을 삭제하시겠습니까?")) {
+				return;
+			}
+			let replySeq = $(this).closest(".replyForm").find(
+					"input[name='reply_seq']").val();
+			location.href = "/board/replyDelete?reply_seq=" + replySeq
+					+ "&parent_seq=${board.board_seq}";
+		});
 
-		$(".boardReport").on(
-				"click",
-				function() {
-					if ("${id}" != "") {
-						$("#target_contents").val($("#contents").text());
+		$(".reReplyFix").on("click", function() {
+			let form = $(this).closest(".reReplyForm");
+			let contents = form.find("textarea");
 
-						let params = $("#boardReport").serialize();
+			if (contents.prop("readonly")) {
+				contents.prop("readonly", false);
+				contents.focus();
+				$(this).text("수정완료");
+			} else {
+				if (contents.val().trim() == "") {
+					alert("대댓글 내용을 입력해주세요.");
+					return;
+				}
 
-						window.open("/board/report?" + params, "report",
-								"width=500, height=500");
+				if (!confirm("대댓글을 수정하시겠습니까?")) {
+					return;
+				}
+
+				form.submit();
+			}
+		});
+
+		$(".reReplyDel").on("click", function() {
+			if (!confirm("대댓글을 삭제하시겠습니까?")) {
+				return;
+			}
+
+			let form = $(this).closest(".reReplyForm");
+			let reReplySeq = form.find("input[name='re_reply_seq']").val();
+			let boardsSeq = form.find("input[name='boards_seq']").val();
+
+			location.href = "/board/re_replyDelete?re_reply_seq="
+					+ reReplySeq + "&boards_seq=" + boardsSeq;
+		});
+
+		$(".boardReport").on("click", function() {
+			if ("${id}" != "") {
+				$("#target_contents").val($("#contents").text());
+				let params = $("#boardReport").serialize();
+				window.open("/board/report?" + params, "report", "width=500, height=500");
 					} else {
 						alert("로그인 후 이용 가능한 서비스입니다.");
 					}
 				});
 
-		$(".replyReport").on(
-				"click",
-				function() {
-					if ("${id}" != "") {
-						let reportForm = $(this).closest(".replyReportForm");
-						let params = reportForm.serialize();
-
-						window.open("/board/report?" + params, "report",
-								"width=500, height=500");
+		$(".replyReport").on("click", function() {
+			if ("${id}" != "") {
+				let reportForm = $(this).closest(".replyReportForm");
+				let params = reportForm.serialize();
+				window.open("/board/report?" + params, "report", "width=500, height=500");
 					} else {
 						alert("로그인 후 이용 가능한 서비스입니다.");
 					}
@@ -1178,21 +1193,30 @@ body {
 		});
 
 		$(".reply").on("click", ".reReplyOpen", function() {
-			if ("${id}" == "") {
-				alert("로그인 후 이용 가능한 서비스입니다.");
-				return;
-			}
+		    let form = $(this).closest(".replyItem").find(".reReplyWrite");
 
-			let area = $(this).closest(".replyItem").find(".reReplyArea");
+		    if (form.is(":visible")) {
+		        form.hide();
+		        $(this).text("↳ 답글 달기");
+		    } else {
+		        form.show();
+		        $(this).text("접기");
+		        form.find("textarea").focus();
+		    }
+		});
 
-			if (area.is(":visible")) {
-				area.hide();
-				$(this).text("↳ 답글 달기");
-			} else {
-				area.show();
-				$(this).text("접기");
-				area.find("textarea").first().focus();
-			}
+		$(".reReplyWrite").on("submit", function(e) {
+		    if ("${id}" == "") {
+		        e.preventDefault();
+		        alert("로그인이 필요한 서비스입니다.");
+		        return;
+		    }
+
+		    if ($(this).find("textarea").val().trim() == "") {
+		        e.preventDefault();
+		        alert("대댓글 내용을 입력해주세요.");
+		        return;
+		    }
 		});
 	</script>
 </body>
