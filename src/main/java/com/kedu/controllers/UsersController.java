@@ -136,7 +136,7 @@ public class UsersController {
         }
 
         session.setAttribute("id", result.getId());
-
+        session.setAttribute("team", result.getTeam());
         return "redirect:/";
     }
 

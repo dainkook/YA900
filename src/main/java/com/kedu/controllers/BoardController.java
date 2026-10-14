@@ -70,7 +70,8 @@ public class BoardController {
 	@RequestMapping("/detail")
 	public String detail(int seq, Model model) throws Exception {
 		model.addAttribute("board", dao.getDetail(seq));
-		String logo = dao.teamLogoEditer(seq);
+		String writer = dao.whoIsWriter(seq);
+		String logo = dao.teamLogoEditer(writer);
 		List<FilesDTO> files = fdao.getFiles(seq);
 		if(logo!=null) {
 		model.addAttribute("logo", logo);
@@ -86,13 +87,9 @@ public class BoardController {
 	
 	@RequestMapping("/write")
 	public String write(HttpSession session, Model model) throws Exception {
-	    String id = (String) session.getAttribute("id");
+	    String id = (String)session.getAttribute("id");
 	    if (id == null) {
 	        return "redirect:/login";
-	    }
-	    String myTeam = dao.isUserTeam(id);
-	    if (myTeam == null || myTeam.trim().isEmpty()) {
-	        return "redirect:/board/board?cpage=1";
 	    }
 	    return "/board/write";
 	}
@@ -104,11 +101,6 @@ public class BoardController {
 	    if (dto.getTeam() != null && dto.getTeam().trim().isEmpty()) {
 	        dto.setTeam(null);
 	    }
-	    String myTeam = dao.isUserTeam(id);
-	    if (myTeam == null || myTeam.trim().isEmpty()) {
-	        return "redirect:/board/board?cpage=1";
-	    }
-	    dto.setTeam(myTeam);
 	    dto.setWriter(id);
 	    int seq = dao.getNextval();
 	    dto.setBoard_seq(seq);
@@ -128,7 +120,7 @@ public class BoardController {
 	        }
 	    }
 	    return "redirect:/board/board?team="
-	            + URLEncoder.encode(myTeam, "UTF-8")
+	            + URLEncoder.encode(dto.getTeam(), "UTF-8")
 	            + "&cpage=1";
 	}
 	

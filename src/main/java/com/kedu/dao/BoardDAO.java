@@ -107,9 +107,9 @@ public class BoardDAO {
 		}
 	}
 
-	public String teamLogoEditer(int seq) {
-		String sql = "select team from board where board_seq = ?";
-		String team = jdbc.queryForObject(sql, String.class, seq);
+	public String teamLogoEditer(String id) {
+		String sql = "select team from users where id = ?";
+		String team = jdbc.queryForObject(sql, String.class, id);
 		if (team != null) {
 			String sql2 = "select team_logo from team where team_name = ?";
 			return jdbc.queryForObject(sql2, String.class, team);
@@ -213,5 +213,10 @@ public class BoardDAO {
 	public int deleteReReply(int re_reply_seq) {
 		String sql = "delete from re_reply where re_reply_seq = ?";
 		return jdbc.update(sql, re_reply_seq);
+	}
+	
+	public String whoIsWriter(int seq) {
+		String sql = "select writer from board where board_seq = ?";
+		return jdbc.queryForObject(sql, String.class, seq);
 	}
 }
