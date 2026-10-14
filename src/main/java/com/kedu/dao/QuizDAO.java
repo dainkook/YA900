@@ -335,4 +335,16 @@ public class QuizDAO {
 
         return jdbc.queryForList(sql);
     }
+    public List<Map<String, Object>> selectPointHistory(String memberId){
+    	String sql = "select play_date, total_count, correct_count, "+
+    "	correct_count * ? AS earned_point " +
+    "from quiz_result " +
+    "where member_id = ? " +
+    "order by play_date desc";
+    	
+    	int pointPerCorrect = selectPointPerCorrect();
+    	
+    	return jdbc.queryForList(sql, pointPerCorrect, memberId);
+    	
+    }
 }

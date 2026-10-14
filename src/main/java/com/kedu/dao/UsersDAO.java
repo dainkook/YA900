@@ -113,6 +113,7 @@ public class UsersDAO {
    public int updatePoint(String id, int earnedPoint) {
       String sql= "update users set point =nvl(point, 0) + ? where id= ?";
       return jdbc.update(sql, earnedPoint, id);
+
    }
    public List<Map<String, Object>> selectPointRanking(){
       String sql= "select * from(" +
@@ -122,5 +123,12 @@ public class UsersDAO {
             " from users" +
             ") where ranking <=5 order by ranking";
       return jdbc.queryForList(sql);
+}
+   public int withdraw(String id) {
+	   String sql = "delete from users where id =?";
+	   
+	   return jdbc.update(sql ,id);
+	   
+
 }
 }

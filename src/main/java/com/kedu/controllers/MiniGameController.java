@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.kedu.commons.QuizService;
 import com.kedu.dao.PlayerDAO;
 import com.kedu.dao.PredictionDAO;
 import com.kedu.dao.PredictionResultDAO;
@@ -46,8 +45,7 @@ public class MiniGameController {
    @Autowired
    private UsersDAO usersDAO;
     
-    @Autowired
-    private QuizService quizService;
+  
 
     @RequestMapping("/myteam")
     public String myTeam(
@@ -195,6 +193,8 @@ public class MiniGameController {
             model.addAttribute("summary", quizDAO.selectQuizSummary(id));
             model.addAttribute("latest", quizDAO.selectLatestQuizResult(id));
             model.addAttribute("point", usersDAO.selectUser(id).getPoint());
+            
+            model.addAttribute("pointHistoryList",quizDAO.selectPointHistory(id));
         }
 
         return "minigame/quiz";
@@ -285,11 +285,14 @@ public class MiniGameController {
         }
 
         try {
-
-            quizService.submitQuiz(memberId, quizIds, userAnswers);
-
-            return "OK";
-
+        	int correctCount = quizDAO.saveQuizResult(memberId, quizIds, userAnswers);
+        	int earnedPoint = correctCount * 10;
+        	int updateRows = usersDAO.updatePoint(memberId, earnedPoint);
+        	
+        	if(updateRows !=1){
+        		throw new IllegalStateException("포인트 적립에 실패했습니다.");
+        	}
+        		return "OK";
         } catch (Exception e) {
             e.printStackTrace();
             response.setStatus(500);
@@ -348,5 +351,19 @@ public class MiniGameController {
         model.addAttribute("resultId", resultId);
 
         return "minigame/quizHistoryDetail";
+    }
+    
+    @RequestMapping("/quiz/pointHistory")
+    	public String pointHistory(HttpSession session, Model model) {
+    	String memberId=(String) session.getAttribute("id");
+    	
+    	if(memberId == null) {
+    		return "redirect:/login";
+    	}
+    	List<Map<String, Object>> pointHistoryList =
+    			quizDAO.selectPointHistory(memberId);
+    	
+    	model.addAttribute("pointHistoryList", pointHistoryList);
+    	return "minigame/quiz";
     }
 }
