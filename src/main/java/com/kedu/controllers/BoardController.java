@@ -32,43 +32,42 @@ import com.kedu.dto.ReportDTO;
 @Controller
 @RequestMapping("/board")
 public class BoardController {
-	
-	@Autowired
-	private BoardDAO dao;
-	@Autowired
-	private FilesDAO fdao;
-	
-	@RequestMapping("/board")
-	public String board(
-	        Model model,
-	        @RequestParam(defaultValue = "1") int cpage,
-	        @RequestParam(required = false) String team
-	) throws Exception {
+   
+   @Autowired
+   private BoardDAO dao;
+   @Autowired
+   private FilesDAO fdao;
+   
+   @RequestMapping("/board")
+   public String board(
+           Model model,
+           @RequestParam(defaultValue = "1") int cpage,
+           @RequestParam(required = false) String team
+   ) throws Exception {
 
-	    List<BoardDTO> list;
-	    int totalCount;
+       List<BoardDTO> list;
+       int totalCount;
 
-	    if (team != null && !team.trim().isEmpty()) {
-	        list = dao.listOfPageByTeam(
-	            team, cpage * 10 - 9, cpage * 10
-	        );
-	        totalCount = dao.totalCountByTeam(team);
+       if (team != null && !team.trim().isEmpty()) {
+           list = dao.listOfPageByTeam(
+               team, cpage * 10 - 9, cpage * 10
+           );
+           totalCount = dao.totalCountByTeam(team);
 
-	        model.addAttribute("selectedTeam", team);
-	    } else {
-	        list = dao.listOfPage(
-	            cpage * 10 - 9, cpage * 10
-	        );
-	        totalCount = dao.totalCount();
-	    }
+           model.addAttribute("selectedTeam", team);
+       } else {
+           list = dao.listOfPage(
+               cpage * 10 - 9, cpage * 10
+           );
+           totalCount = dao.totalCount();
+       }
 
-	    model.addAttribute("list", list);
-	    model.addAttribute("recordTotalCount", totalCount);
-	    model.addAttribute("recordCountPerPage", 10);
-	    model.addAttribute("naviCountPerPage", 10);
-	    model.addAttribute("cpage", cpage);
-	    model.addAttribute("isSearch", false);
-
+       model.addAttribute("list", list);
+       model.addAttribute("recordTotalCount", totalCount);
+       model.addAttribute("recordCountPerPage", 10);
+       model.addAttribute("naviCountPerPage", 10);
+       model.addAttribute("cpage", cpage);
+       model.addAttribute("isSearch", false);
 	    return "/board/board";
 	}
 	
@@ -291,5 +290,4 @@ public class BoardController {
 	    model.addAttribute("seq", seq);
 	    return "board/reportComplete";
 	}
-	
 }

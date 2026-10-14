@@ -91,7 +91,6 @@ public class UsersController {
         String phone = phone1 + phone2 + phone3;
         String birthString = birth_year + "-" + birth_month + "-" + birth_day;
         Timestamp birth = Timestamp.valueOf(birthString + " 00:00:00");
-
         dto.setPhone(phone);
         dto.setBirth(birth);
 
@@ -335,7 +334,6 @@ public class UsersController {
         );
 
         if (result > 0) {
-
             loginUser.setPhone(phone);
             loginUser.setEmail(email);
             loginUser.setZipcode(zipcode);
