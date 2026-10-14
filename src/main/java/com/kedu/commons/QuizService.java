@@ -35,9 +35,10 @@ public class QuizService {
 
         if (updateRows != 1) {
             throw new IllegalStateException(
-                    "포인트 적립에 실패했습니다.");
+                    "�룷�씤�듃 �쟻由쎌뿉 �떎�뙣�뻽�뒿�땲�떎.");
         }
 
         return correctCount;
     }
+    
 }

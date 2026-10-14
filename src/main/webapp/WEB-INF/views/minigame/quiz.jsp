@@ -15,19 +15,16 @@
    box-sizing: border-box;
 }
 
-html, body {
-   margin: 0;
-   min-height: 100%;
+html {
+    scroll-behavior: smooth;
 }
 
 body {
-   background: linear-gradient(to bottom, #111936 0%, #111936 12%, #171f46 22%, #252f67
-      32%, #71809f 43%, #aeb7ca 55%, #d5dae5 70%, #eef1f8 85%, #eef1f8 100%);
-   font-family: "Malgun Gothic", "Apple SD Gothic Neo", Arial, sans-serif;
-   color: #202945;
-   min-height: 100vh;
-   font-size: 15px;
-   line-height: 1.6;
+	margin: 0;
+	background: linear-gradient(to bottom, #111936 0%, #111936 15%, #0b1026 25%, #171f46
+		35%, #252f67 48%, #71809f 65%, #aeb7ca 76%, #d5dae5 86%, #eef1f8 94%,
+		#eef1f8 100%);
+	color: #18213f;
 }
 
 h1 {
@@ -66,12 +63,12 @@ h2 {
 }
 
 .logo {
-   font-size: 30px;
-   font-weight: 900;
-   margin-right: 60px;
-   color: white;
-   letter-spacing: 1.2px;
-   cursor: pointer;
+	font-size: 30px;
+	font-weight: bold;
+	margin-right: 60px;
+	color: white;
+	letter-spacing: 1px;
+  cursor: pointer;
 }
 
 .main-menu {
@@ -89,13 +86,12 @@ h2 {
 }
 
 .menu-item>a {
-   font-size: 16px;
-   font-weight: 700;
-   text-decoration: none;
-   color: #f7f8ff;
-   padding: 10px 5px;
-   transition: color 0.2s ease;
-   letter-spacing: -0.3px;
+	font-size: 18px;
+	font-weight: bold;
+	text-decoration: none;
+	color: #f7f8ff;
+	padding: 10px 5px;
+	transition: color 0.2s ease;
 }
 
 .menu-item>a:hover {
@@ -103,7 +99,7 @@ h2 {
 }
 
 /* =========================
-   SUB MENU
+   서브 메뉴
 ========================= */
 .sub-menu {
    position: absolute;
@@ -128,13 +124,11 @@ h2 {
 }
 
 .sub-menu a {
-   padding: 13px 15px;
-   text-decoration: none;
-   color: #f5f7ff;
-   font-size: 13px;
-   font-weight: 500;
-   letter-spacing: -0.2px;
-   border-bottom: 1px solid #35406b;
+	padding: 13px 15px;
+	text-decoration: none;
+	color: #f5f7ff;
+	font-size: 14px;
+	border-bottom: 1px solid #35406b;
 }
 
 .sub-menu a:last-child {
@@ -146,47 +140,47 @@ h2 {
 }
 
 /* =========================
-   LOGIN / SIGNUP
+   로그인 / 회원가입
 ========================= */
 .member-menu {
-   font-size: 14px;
-   margin-left: auto;
-   display: flex;
-   align-items: center;
-   gap: 10px;
-   white-space: nowrap;
+    font-size: 14px;
+    margin-left: auto;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    white-space: nowrap;
 }
 
 .member-menu form {
-   display: flex;
-   margin: 0;
+    display: flex;
+    margin: 0;
 }
 
 .member-menu span {
-   color: white;
-   font-size: 13px;
-   font-weight: 600;
-   white-space: nowrap;
+    color: white;
+    font-weight: bold;
+    white-space: nowrap;
 }
 
-.login-btn, .sign-btn {
-   border: 1px solid #7180b1;
-   background: transparent;
-   color: white;
-   border-radius: 5px;
-   padding: 6px 10px;
-   cursor: pointer;
-   white-space: nowrap;
-   transition: 0.2s ease;
-   font-family: inherit;
-   font-size: 12px;
-   font-weight: 700;
+.login-btn,
+.sign-btn {
+    border: 1px solid #7180b1;
+    background: transparent;
+    color: white;
+    border-radius: 5px;
+    padding: 6px 10px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: 0.2s ease;
 }
 
-.login-btn:hover, .sign-btn:hover {
-   background: #476aaa;
-   border-color: #476aaa;
-   color: white;
+.login-btn:hover,
+.sign-btn:hover {
+    background: #476aaa;
+    border-color: #476aaa;
+    color: white;
 }
 
 /* =========================
@@ -507,16 +501,29 @@ tbody tr:hover {
 /* =========================
    FOOTER
 ========================= */
-.site-footer {
-   width: 100%;
-   border-top: 1px solid #d8dce3;
-   padding: 28px 16px;
-   text-align: center;
-   font-size: 11px;
-   color: #777;
-   background: rgba(255, 255, 255, 0.5);
-   margin-top: 20px;
+.footer {
+	width: 100%;
+	height: 70px;
+	margin-top: 0;
+	background: #eef1f8;
+	color: #838ec9;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 13px;
+	border: none;
 }
+
+.footer a {
+    margin: 0 4px;
+    text-decoration: none;
+	color: #838ec9;
+}
+
+.footer a:hover {
+	color: #a9b1db;
+}
+
 
 /* =========================
    QUICK MENU
@@ -663,16 +670,16 @@ tbody tr:hover {
          <!-- 야구 -->
          <div class="menu-item">
             <a href="#">야구</a>
-
-            <div class="sub-menu">
-               <a href="#">예매</a> <a
-                  href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a>
-               <a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a>
-               <a
-                  href="${pageContext.request.contextPath}/schedule/rankdetail?tab=pitcher">선수순위</a>
-               <a href="${pageContext.request.contextPath}/board/board?cpage=1">게시판</a>
-            </div>
+           
          </div>
+				<div class="sub-menu">
+					<a href="${pageContext.request.contextPath}/#reservation">예매</a>
+					<a href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a>
+					<a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a>
+					<a href="${pageContext.request.contextPath}/schedule/rankdetail?tab=pitcher">선수순위</a>
+					<a href="${pageContext.request.contextPath}/board/board?cpage=1">게시판</a>
+				</div>
+			</div>
 
          <!-- 축구 -->
          <div class="menu-item">
@@ -687,15 +694,14 @@ tbody tr:hover {
          <!-- 미니게임 -->
          <div class="menu-item">
             <a href="#">미니게임</a>
-
-            <div class="sub-menu">
-               <a href="${pageContext.request.contextPath}/quiz">상식 퀴즈</a> <a
-                  href="${pageContext.request.contextPath}/myteam">나만의 팀</a> <a
-                  href="${pageContext.request.contextPath}/prediction">승부예측</a> <a
-                  href="#">게임 랭킹</a>
-            </div>
-         </div>
-      </nav>
+           
+				<div class="sub-menu">
+					<a href="${pageContext.request.contextPath}/quiz">상식 퀴즈</a> <a
+						href="${pageContext.request.contextPath}/myteam">나만의 팀</a> <a
+						href="${pageContext.request.contextPath}/prediction">승부예측</a>
+				</div>
+			</div>
+		</nav>
 
       <div class="member-menu">
 
@@ -728,10 +734,15 @@ tbody tr:hover {
 
 
       </div>
-
-   </div>
-
-   <main class="wrap">
+	</div>
+	<div class="quick-menu">
+		    <div class="menu">QUICK MENU</div>
+		    <div onclick="location.href='${pageContext.request.contextPath}/'">홈</div>
+		    <div onclick="location.href='${pageContext.request.contextPath}/#reservation'">예매</div>
+		    <div onclick="location.href='${pageContext.request.contextPath}/board/board?cpage=1'">게시판</div>
+		    <div onclick="location.href='${pageContext.request.contextPath}/mypage'">마이페이지</div>
+		</div>
+	<main class="wrap">
 
       <div class="box">
          <h1>야구 상식퀴즈</h1>
@@ -817,107 +828,113 @@ tbody tr:hover {
                                  value="${summary.sumCorrect * 100 / summary.sumTotal}"
                                  maxFractionDigits="1" />%
                         </c:when>
-                           <c:otherwise>0%</c:otherwise>
-                        </c:choose>
-                     </li>
-                  </ul>
+                           
+									<c:otherwise>0%</c:otherwise>
+								</c:choose>
+							</li>
+						</ul>
 
-               </c:when>
+					</c:when>
 
-               <%-- 로그인했지만 아직 퀴즈 기록이 없는 경우 --%>
-               <c:when test="${not empty sessionScope.id}">
-                  <ul>
-                     <li>최근 점수: -</li>
-                     <li>최고 점수: 0점</li>
-                     <li>참여 횟수: 0회</li>
-                     <li>정답률: 0%</li>
-                  </ul>
-               </c:when>
+					<%-- 로그인했지만 아직 퀴즈 기록이 없는 경우 --%>
+					<c:when test="${not empty sessionScope.id}">
+						<ul>
+							<li>최근 점수: -</li>
+							<li>최고 점수: 0점</li>
+							<li>참여 횟수: 0회</li>
+							<li>정답률: 0%</li>
+						</ul>
+					</c:when>
 
-               <%-- 비로그인 상태 --%>
-               <c:otherwise>
-                  <p style="text-align: center; color: #666;">로그인하면 나의 퀴즈 기록을
-                     확인할 수 있습니다.</p>
-               </c:otherwise>
-            </c:choose>
+					<%-- 비로그인 상태 --%>
+					<c:otherwise>
+						<p style="text-align: center; color: #666;">로그인하면 나의 퀴즈 기록을
+							확인할 수 있습니다.</p>
+					</c:otherwise>
+				</c:choose>
 
-            <div class="history-btn-wrap">
-               <a href="${pageContext.request.contextPath}/quiz/history"
-                  class="history-btn"> 전체 기록 보기 </a>
-            </div>
-         </section>
-      </div>
+				<div class="history-btn-wrap">
+					<a href="${pageContext.request.contextPath}/quiz/history"
+						class="history-btn"> 전체 기록 보기 </a>
+				</div>
+			</section>
+		</div>
 
-      <section class="box">
-         <h2>포인트 랭킹</h2>
-         <div class="table-scroll">
-            <table>
-               <thead>
-                  <tr>
-                     <th style="width: 20%">순위</th>
-                     <th style="width: 45%">사용자</th>
-                     <th style="width: 35%">점수</th>
-                  </tr>
-               </thead>
-               <tbody>
-                  <c:choose>
-                     <c:when test="${not empty rankingList}">
-                        <c:forEach var="rank" items="${rankingList}">
-                           <tr>
-                              <td><c:out value="${rank.ranking}" />위</td>
+		<section class="box">
+			<h2>퀴즈 랭킹</h2>
+			<div class="table-scroll">
+				<table>
+					<thead>
+						<tr>
+							<th style="width: 20%">순위</th>
+							<th style="width: 45%">사용자</th>
+							<th style="width: 35%">점수</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:choose>
+							<c:when test="${not empty rankingList}">
+								<c:forEach var="rank" items="${rankingList}">
+									<tr>
+										<td><c:out value="${rank.rankNo}" />위</td>
 
-                              <td><c:out value="${rank.Id}" /></td>
+										<td><c:out value="${rank.memberId}" /></td>
 
-                              <td><c:out value="${rank.point}" />점</td>
-                           </tr>
-                        </c:forEach>
-                     </c:when>
+										<td><c:out value="${rank.score}" />점</td>
+									</tr>
+								</c:forEach>
+							</c:when>
 
-                     <c:otherwise>
-                        <tr>
-                           <td colspan="3">아직 랭킹 데이터가 없습니다.</td>
-                        </tr>
-                     </c:otherwise>
-                  </c:choose>
-               </tbody>
-            </table>
-         </div>
-      </section>
+							<c:otherwise>
+								<tr>
+									<td colspan="3">아직 랭킹 데이터가 없습니다.</td>
+								</tr>
+							</c:otherwise>
+						</c:choose>
+					</tbody>
+				</table>
+			</div>
+		</section>
 
-      <section class="box">
-         <h2>포인트 내역</h2>
-         <div class="table-scroll">
-            <table>
-               <thead>
-                  <tr>
-                     <th style="width: 30%">날짜</th>
-                     <th style="width: 40%">내용</th>
-                     <th style="width: 30%">포인트</th>
-                  </tr>
-               </thead>
-               <tbody>
-                  <tr>
-                     <td></td>
-                     <td></td>
-                     <td></td>
-                  </tr>
-                  <tr>
-                     <td></td>
-                     <td></td>
-                     <td></td>
-                  </tr>
-                  <tr>
-                     <td></td>
-                     <td></td>
-                     <td></td>
-                  </tr>
-               </tbody>
-            </table>
-         </div>
-      </section>
+		<section class="box">
+			<h2>포인트 내역</h2>
+			<div class="table-scroll">
+				<table>
+					<thead>
+						<tr>
+							<th style="width: 30%">날짜</th>
+							<th style="width: 40%">내용</th>
+							<th style="width: 30%">포인트</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
 
-   </main>
+	</main>
+	<div class="footer">
 
-   <footer class="site-footer">YA900</footer>
+			<a href="#">개인정보처리방침</a> | <a href="#">전체 서비스</a> | <a href="#">문제
+				신고</a> | <a href="#">고객센터</a> | <a
+				href="${pageContext.request.contextPath}/admin">관리자</a>
+
+	</div>
 </body>
 </html>

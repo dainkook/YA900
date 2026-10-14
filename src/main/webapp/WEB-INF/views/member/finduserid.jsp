@@ -29,6 +29,9 @@ body {
 	min-height: 100vh;
 }
 
+/* =========================
+   HEADER
+========================= */
 .header {
 	width: 100%;
 	height: 100px;
@@ -37,6 +40,9 @@ body {
 	display: flex;
 	align-items: center;
 	padding: 0 50px;
+	position: sticky;
+	top: 0;
+	z-index: 1000;
 	border-bottom: 1px solid #303b70;
 	box-shadow: 0 3px 15px rgba(11, 16, 38, 0.18);
 }
@@ -44,8 +50,78 @@ body {
 .logo {
 	font-size: 30px;
 	font-weight: bold;
+	margin-right: 60px;
 	color: white;
 	letter-spacing: 1px;
+	cursor:pointer;
+}
+
+.main-menu {
+	height: 100%;
+	display: flex;
+	align-items: center;
+	gap: 40px;
+}
+
+.menu-item {
+	position: relative;
+	height: 100%;
+	display: flex;
+	align-items: center;
+}
+
+.menu-item>a {
+	font-size: 18px;
+	font-weight: bold;
+	text-decoration: none;
+	color: #f7f8ff;
+	padding: 10px 5px;
+	transition: color 0.2s ease;
+}
+
+.menu-item>a:hover {
+	color: #aebee7;
+}
+
+/* =========================
+   서브 메뉴
+========================= */
+.sub-menu {
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-10px);
+	width: 130px;
+	background: #171f46;
+	border: 1px solid #394575;
+	display: flex;
+	flex-direction: column;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.2s ease, transform 0.2s ease;
+	box-shadow: 0 10px 25px rgba(8, 12, 30, 0.25);
+}
+
+.menu-item:hover .sub-menu {
+	opacity: 1;
+	visibility: visible;
+	transform: translateX(-50%) translateY(0);
+}
+
+.sub-menu a {
+	padding: 13px 15px;
+	text-decoration: none;
+	color: #f5f7ff;
+	font-size: 14px;
+	border-bottom: 1px solid #35406b;
+}
+
+.sub-menu a:last-child {
+	border-bottom: none;
+}
+
+.sub-menu a:hover {
+	background: #252f67;
 }
 
 .find-container {
@@ -214,9 +290,51 @@ body {
 
 <body>
 
-	<header class="header">
-		<div class="logo">YA900</div>
-	</header>
+	<div class="header">
+
+		<div class="logo" onclick="location.href='/'">YA900</div>
+
+		<!-- 메인 메뉴 -->
+		<nav class="main-menu">
+
+			<!-- 야구 -->
+			<div class="menu-item">
+				<a href="#">야구</a>
+
+				<div class="sub-menu">
+					<a href="${pageContext.request.contextPath}/#reservation">예매</a> 
+					<a href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a> 
+					<a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a> 
+					<a href="${pageContext.request.contextPath}/schedule/rankdetail?tab=pitcher">선수순위</a> 
+					<a href="${pageContext.request.contextPath}/board/board?cpage=1">게시판</a>
+				</div>
+			</div>
+
+			<!-- 축구 -->
+			<div class="menu-item">
+				<a href="#">축구</a>
+
+				<div class="sub-menu">
+					<a href="#">예매</a> 
+					<a href="#">경기일정</a> 
+					<a href="#">팀순위</a> 
+					<a href="#">선수순위</a> 
+					<a href="#">게시판</a>
+				</div>
+			</div>
+
+			<!-- 미니게임 -->
+			<div class="menu-item">
+				<a href="#">미니게임</a>
+
+				<div class="sub-menu">
+					<a href="${pageContext.request.contextPath}/quiz">상식 퀴즈</a> 
+					<a href="${pageContext.request.contextPath}/myteam">나만의 팀</a> 
+					<a href="${pageContext.request.contextPath}/prediction">승부예측</a> 
+				</div>
+			</div>
+		</nav>
+	</div>
 
 
 	<main class="find-container">
