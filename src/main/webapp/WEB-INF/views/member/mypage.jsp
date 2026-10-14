@@ -739,6 +739,18 @@ button:disabled {
         font-size: 11px;
     }
 }
+.wothdraw-btn {
+    color: #6c757d !important;
+    text-decoration: none !important;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.wothdraw-btn:hover {
+    color: #495057 !important;
+    text-decoration: none !important;
+}
 </style>
 </head>
 
@@ -1046,6 +1058,7 @@ button:disabled {
             </div>
 
             <!-- 하단 버튼 -->
+            <a href="${pageContext.request.contextPath}/withdraw" class= "wothdraw-btn">회원 탈퇴</a>
             <div class="button-area">
                 <button type="button"
                     class="main-btn"

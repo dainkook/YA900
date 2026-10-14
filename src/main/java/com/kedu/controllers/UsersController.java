@@ -58,6 +58,10 @@ public class UsersController {
     public String finduserpw() {
         return "member/finduserpw";
     }
+    @RequestMapping("/withdraw")
+    public String withdraw() {
+    	return "member/withdraw";
+    }
 
     @RequestMapping("/mypage")
     public String myPage(HttpSession session, Model model) {
@@ -351,5 +355,31 @@ public class UsersController {
         }
 
         return "fail";
+    }
+    
+    @RequestMapping(value = "/withdraw/execute", method = RequestMethod.POST)
+    public String withdrawUser(
+            @RequestParam("password") String password,
+            HttpSession session,
+            Model model) {
+
+        String id = (String) session.getAttribute("id");
+
+        if (id == null) {
+            return "redirect:/login";
+        }
+
+        // 비밀번호 검증은 다음 단계에서 추가
+
+        int result =dao.withdraw(id);
+
+        if (result > 0) {
+            session.invalidate();
+            return "redirect:/login";
+        }
+
+        model.addAttribute("message", "회원 탈퇴에 실패했습니다.");
+        return "member/withdraw";
+    }
     }
 }

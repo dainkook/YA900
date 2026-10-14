@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
@@ -8,13 +8,12 @@
 <meta charset="UTF-8">
 <title>YA900 야구 상식 퀴즈</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-   integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-   crossorigin="anonymous"></script>
+	integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+	crossorigin="anonymous"></script>
 <style>
 * {
-   box-sizing: border-box;
+	box-sizing: border-box;
 }
-
 html {
     scroll-behavior: smooth;
 }
@@ -28,20 +27,20 @@ body {
 }
 
 h1 {
-   margin: 0;
-   font-size: 25px;
-   font-weight: 800;
-   letter-spacing: -0.7px;
-   color: #202945;
+	margin: 0;
+	font-size: 25px;
+	font-weight: 800;
+	letter-spacing: -0.7px;
+	color: #202945;
 }
 
 h2 {
-   margin: 0 0 22px;
-   font-size: 20px;
-   font-weight: 800;
-   letter-spacing: -0.5px;
-   text-align: center;
-   color: #202945;
+	margin: 0 0 22px;
+	font-size: 20px;
+	font-weight: 800;
+	letter-spacing: -0.5px;
+	text-align: center;
+	color: #202945;
 }
 
 /* =========================
@@ -92,6 +91,7 @@ h2 {
 	color: #f7f8ff;
 	padding: 10px 5px;
 	transition: color 0.2s ease;
+	letter-spacing: -0.3px;
 }
 
 .menu-item>a:hover {
@@ -127,6 +127,9 @@ h2 {
 	padding: 13px 15px;
 	text-decoration: none;
 	color: #f5f7ff;
+	font-size: 13px;
+	font-weight: 500;
+	letter-spacing: -0.2px;
 	font-size: 14px;
 	border-bottom: 1px solid #35406b;
 }
@@ -187,315 +190,311 @@ h2 {
    CONTAINER
 ========================= */
 .wrap {
-   width: 1310px;
-   max-width: calc(100% - 40px);
-   margin: 110px auto 40px;
+	width: 1310px;
+	max-width: calc(100% - 40px);
+	margin: 110px auto 40px;
 }
 
 /* =========================
    COMMON BOX
 ========================= */
-/* =========================
-   카드 디자인
-========================= */
 .box {
-   background: #ffffff;
-   border: 1px solid #e1e7f2;
-   border-radius: 14px;
-   box-shadow: 0 5px 18px rgba(20, 35, 70, 0.06);
-   padding: 28px;
-   transition: box-shadow 0.2s ease, transform 0.2s ease;
+	background: #ffffff;
+	border: 1px solid #e1e7f2;
+	border-radius: 14px;
+	box-shadow: 0 5px 18px rgba(20, 35, 70, 0.06);
+	padding: 28px;
+	transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .box h2 {
-   position: relative;
-   padding-bottom: 13px;
-   border-bottom: 1px solid #edf0f7;
+	position: relative;
+	padding-bottom: 13px;
+	border-bottom: 1px solid #edf0f7;
 }
 
 /* 퀴즈 시작 카드 설명 */
 .quiz-start p {
-   margin: 5px 0;
-   font-size: 14px;
-   font-weight: 500;
-   color: #68748c;
-   letter-spacing: -0.2px;
+	margin: 5px 0;
+	font-size: 14px;
+	font-weight: 500;
+	color: #68748c;
+	letter-spacing: -0.2px;
 }
 
-/* 퀴즈 시작 카드의 주요 수치 */
 .quiz-start p:first-of-type {
-   color: #344b78;
-   font-size: 16px;
-   font-weight: 700;
+	color: #344b78;
+	font-size: 16px;
+	font-weight: 700;
 }
 
 /* 내 포인트 */
 .point-value {
-   width: 80%;
-   min-height: 75px;
-   border: 1px solid #dfe7f5;
-   border-radius: 10px;
-   background: linear-gradient(135deg, #f7f9ff, #edf2ff);
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   font-size: 26px;
-   font-weight: 800;
-   color: #476aaa;
-   margin-bottom: 20px;
-   letter-spacing: -0.5px;
+	width: 80%;
+	min-height: 75px;
+	border: 1px solid #dfe7f5;
+	border-radius: 10px;
+	background: linear-gradient(135deg, #f7f9ff, #edf2ff);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 26px;
+	font-weight: 800;
+	color: #476aaa;
+	margin-bottom: 20px;
+	letter-spacing: -0.5px;
 }
 
 /* 안내 및 최근 기록 */
 .info ul {
-   margin: 0;
-   padding-left: 20px;
-   display: flex;
-   flex-direction: column;
-   gap: 13px;
-   color: #58647b;
-   font-size: 14px;
-   line-height: 1.7;
+	margin: 0;
+	padding-left: 20px;
+	display: flex;
+	flex-direction: column;
+	gap: 13px;
+	color: #58647b;
+	font-size: 14px;
+	line-height: 1.7;
 }
 
 .info li {
-   padding-left: 4px;
+	padding-left: 4px;
 }
 
 .info li::marker {
-   color: #476aaa;
+	color: #476aaa;
 }
 
 /* 공통 버튼 */
 .btn, .history-btn {
-   font-family: inherit;
-   font-size: 14px;
-   font-weight: 700;
-   letter-spacing: -0.2px;
+	font-family: inherit;
+	font-size: 14px;
+	font-weight: 700;
+	letter-spacing: -0.2px;
 }
 
 .btn {
-   border-radius: 8px;
-   box-shadow: 0 3px 7px rgba(71, 106, 170, 0.13);
+	border-radius: 8px;
+	box-shadow: 0 3px 7px rgba(71, 106, 170, 0.13);
 }
 
 .history-btn {
-   border-radius: 8px;
-   box-shadow: 0 3px 7px rgba(71, 106, 170, 0.12);
+	border-radius: 8px;
+	box-shadow: 0 3px 7px rgba(71, 106, 170, 0.12);
 }
 
 /* 표 제목과 데이터 */
 table {
-   width: 100%;
-   border-collapse: collapse;
-   font-family: inherit;
-   font-size: 14px;
-   text-align: center;
+	width: 100%;
+	border-collapse: collapse;
+	font-family: inherit;
+	font-size: 14px;
+	text-align: center;
 }
 
 th {
-   height: 48px;
-   background: #f4f6fb;
-   border-top: 1px solid #e1e7f2;
-   border-bottom: 1px solid #dce3ef;
-   font-size: 13px;
-   font-weight: 800;
-   letter-spacing: -0.2px;
-   color: #596780;
+	height: 48px;
+	background: #f4f6fb;
+	border-top: 1px solid #e1e7f2;
+	border-bottom: 1px solid #dce3ef;
+	font-size: 13px;
+	font-weight: 800;
+	letter-spacing: -0.2px;
+	color: #596780;
 }
 
 td {
-   height: 52px;
-   padding: 10px 8px;
-   border-bottom: 1px solid #edf0f6;
-   font-size: 14px;
-   font-weight: 500;
-   color: #36425b;
+	height: 52px;
+	padding: 10px 8px;
+	border-bottom: 1px solid #edf0f6;
+	font-size: 14px;
+	font-weight: 500;
+	color: #36425b;
 }
 
 tbody tr:hover {
-   background: #f5f8ff;
+	background: #f5f8ff;
 }
 
 /* 카드 제목과 표 사이의 간격 */
 .table-scroll {
-   border-radius: 8px;
-   overflow-x: auto;
+	border-radius: 8px;
+	overflow-x: auto;
 }
 
 /* 푸터 */
 .site-footer {
-   font-family: inherit;
-   font-size: 12px;
-   letter-spacing: 0.5px;
-   color: #7b8498;
+	font-family: inherit;
+	font-size: 12px;
+	letter-spacing: 0.5px;
+	color: #7b8498;
 }
 
 /* =========================
    TITLE
 ========================= */
 .wrap>.box:first-child {
-   height: 70px;
-   display: flex;
-   align-items: center;
-   margin-bottom: 18px;
+	height: 70px;
+	display: flex;
+	align-items: center;
+	margin-bottom: 18px;
 }
 
 h1 {
-   margin: 0;
-   font-size: 24px;
-   font-weight: bold;
+	margin: 0;
+	font-size: 24px;
+	font-weight: bold;
 }
 
 h2 {
-   margin: 0 0 20px;
-   font-size: 21px;
-   font-weight: bold;
-   text-align: center;
-   color: #222;
+	margin: 0 0 20px;
+	font-size: 21px;
+	font-weight: bold;
+	text-align: center;
+	color: #222;
 }
 
 /* =========================
    ROW
 ========================= */
 .row {
-   display: flex;
-   gap: 20px;
-   margin-bottom: 20px;
+	display: flex;
+	gap: 20px;
+	margin-bottom: 20px;
 }
 
 /* =========================
    QUIZ START
 ========================= */
 .quiz-start {
-   flex: 2;
-   min-height: 300px;
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   justify-content: center;
-   text-align: center;
+	flex: 2;
+	min-height: 300px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
 }
 
 .quiz-start p {
-   margin: 6px 0;
-   font-size: 14px;
-   color: #666;
+	margin: 6px 0;
+	font-size: 14px;
+	color: #666;
 }
 
 /* =========================
    MY POINT
 ========================= */
 .my-point {
-   flex: 1;
-   min-height: 300px;
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   justify-content: center;
+	flex: 1;
+	min-height: 300px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 }
 
 .my-point h2 {
-   margin-bottom: 25px;
+	margin-bottom: 25px;
 }
 
 .point-value {
-   width: 80%;
-   height: 70px;
-   border: 1px solid #e0e3e7;
-   border-radius: 7px;
-   background: #f7f8fa;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   font-size: 20px;
-   font-weight: bold;
-   color: #476aaa;
-   margin-bottom: 20px;
+	width: 80%;
+	height: 70px;
+	border: 1px solid #e0e3e7;
+	border-radius: 7px;
+	background: #f7f8fa;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 20px;
+	font-weight: bold;
+	color: #476aaa;
+	margin-bottom: 20px;
 }
 
 /* =========================
    BUTTON
 ========================= */
 .btn {
-   height: 45px;
-   min-width: 150px;
-   padding: 0 25px;
-   border: none;
-   border-radius: 7px;
-   background: #476aaa;
-   color: white;
-   font-size: 14px;
-   font-weight: bold;
-   cursor: pointer;
-   transition: all 0.15s ease;
+	height: 45px;
+	min-width: 150px;
+	padding: 0 25px;
+	border: none;
+	border-radius: 7px;
+	background: #476aaa;
+	color: white;
+	font-size: 14px;
+	font-weight: bold;
+	cursor: pointer;
+	transition: all 0.15s ease;
 }
 
 .btn:hover {
-   background: #3d5e97;
-   box-shadow: 0 3px 8px rgba(71, 106, 170, 0.2);
+	background: #3d5e97;
+	box-shadow: 0 3px 8px rgba(71, 106, 170, 0.2);
 }
 
 /* =========================
    INFO
 ========================= */
 .info {
-   flex: 1;
-   min-height: 230px;
+	flex: 1;
+	min-height: 230px;
 }
 
 .info ul {
-   margin: 0;
-   padding-left: 20px;
-   display: flex;
-   flex-direction: column;
-   gap: 14px;
-   color: #555;
-   font-size: 14px;
+	margin: 0;
+	padding-left: 20px;
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	color: #555;
+	font-size: 14px;
 }
 
 .info li {
-   padding-left: 4px;
+	padding-left: 4px;
 }
 
 /* =========================
    TABLE
 ========================= */
 .table-scroll {
-   overflow-x: auto;
+	overflow-x: auto;
 }
 
 table {
-   width: 100%;
-   border-collapse: collapse;
-   font-size: 14px;
-   text-align: center;
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 14px;
+	text-align: center;
 }
 
 th {
-   height: 45px;
-   background: #f7f8fa;
-   border-top: 1px solid #e1e4e8;
-   border-bottom: 1px solid #d5d9df;
-   font-weight: bold;
-   color: #555;
+	height: 45px;
+	background: #f7f8fa;
+	border-top: 1px solid #e1e4e8;
+	border-bottom: 1px solid #d5d9df;
+	font-weight: bold;
+	color: #555;
 }
 
 td {
-   height: 48px;
-   border-bottom: 1px solid #eee;
-   color: #444;
+	height: 48px;
+	border-bottom: 1px solid #eee;
+	color: #444;
 }
 
 tbody tr:hover {
-   background: #f7f9fc;
+	background: #f7f9fc;
 }
 
 /* =========================
    BOTTOM BOX
 ========================= */
 .wrap>section.box {
-   margin-bottom: 20px;
+	margin-bottom: 20px;
 }
 
 /* =========================
@@ -529,138 +528,156 @@ tbody tr:hover {
    QUICK MENU
 ========================= */
 .quick-menu {
-   width: 280px;
-   position: fixed;
-   left: -250px;
-   top: 50%;
-   transform: translateY(-50%);
-   border: 1px solid #3b4778;
-   transition: left 0.5s ease;
-   z-index: 1000;
-   background: #111936;
-   color: white;
-   box-shadow: 5px 8px 25px rgba(10, 15, 35, 0.18);
+	width: 280px;
+	position: fixed;
+	left: -250px;
+	top: 50%;
+	transform: translateY(-50%);
+	border: 1px solid #3b4778;
+	transition: left 0.5s ease;
+	z-index: 1000;
+	background: #111936;
+	color: white;
+	box-shadow: 5px 8px 25px rgba(10, 15, 35, 0.18);
 }
 
 .quick-menu:hover {
-   left: 0;
+	left: 0;
 }
 
 .quick-menu div {
-   width: 100%;
-   height: 55px;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   cursor: pointer;
-   border-bottom: 1px solid #303b68;
+	width: 100%;
+	height: 55px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	border-bottom: 1px solid #303b68;
 }
 
 .quick-menu div:last-child {
-   border-bottom: none;
+	border-bottom: none;
 }
 
 .quick-menu div:hover {
-   background: #252f67;
+	background: #252f67;
 }
 
 .quick-menu .menu, .quick-menu .menu:hover {
-   background: #476aaa;
-   color: white;
+	background: #476aaa;
+	color: white;
 }
 
 /* =========================
    RESPONSIVE
 ========================= */
 @media ( max-width : 900px) {
-   .header {
-      padding: 0 25px;
-   }
-   .logo {
-      margin-right: 30px;
-   }
-   .main-menu {
-      gap: 20px;
-   }
-   .wrap {
-      width: 100%;
-      max-width: calc(100% - 30px);
-   }
-   .row {
-      flex-direction: column;
-   }
-   .quiz-start, .my-point, .info {
-      width: 100%;
-   }
+	.header {
+		padding: 0 25px;
+	}
+	.logo {
+		margin-right: 30px;
+	}
+	.main-menu {
+		gap: 20px;
+	}
+	.wrap {
+		width: 100%;
+		max-width: calc(100% - 30px);
+	}
+	.row {
+		flex-direction: column;
+	}
+	.quiz-start, .my-point, .info {
+		width: 100%;
+	}
 }
 
 @media ( max-width : 600px) {
-   .header {
-      height: 80px;
-      padding: 0 15px;
-   }
-   .logo {
-      font-size: 24px;
-      margin-right: 20px;
-   }
-   .main-menu {
-      gap: 10px;
-   }
-   .menu-item>a {
-      font-size: 14px;
-   }
-   .member-menu {
-      display: none;
-   }
-   .wrap {
-      margin-top: 40px;
-      max-width: calc(100% - 20px);
-   }
-   .box {
-      padding: 20px;
-   }
-   h1 {
-      font-size: 20px;
-   }
-   h2 {
-      font-size: 18px;
-   }
-   .quick-menu {
-      display: none;
-   }
+	.header {
+		height: 80px;
+		padding: 0 15px;
+	}
+	.logo {
+		font-size: 24px;
+		margin-right: 20px;
+	}
+	.main-menu {
+		gap: 10px;
+	}
+	.menu-item>a {
+		font-size: 14px;
+	}
+	.member-menu {
+		display: none;
+	}
+	.wrap {
+		margin-top: 40px;
+		max-width: calc(100% - 20px);
+	}
+	.box {
+		padding: 20px;
+	}
+	h1 {
+		font-size: 20px;
+	}
+	h2 {
+		font-size: 18px;
+	}
+	.quick-menu {
+		display: none;
+	}
 }
 
 .history-btn-wrap {
-   margin-top: 22px;
-   text-align: center;
+	margin-top: 22px;
+	text-align: center;
 }
 
 .history-btn {
-   display: inline-flex;
-   align-items: center;
-   justify-content: center;
-   min-width: 150px;
-   height: 42px;
-   padding: 0 20px;
-   background: #476aaa;
-   color: white;
-   border-radius: 7px;
-   font-size: 14px;
-   font-weight: bold;
-   text-decoration: none;
-   transition: all 0.2s ease;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 150px;
+	height: 42px;
+	padding: 0 20px;
+	background: #476aaa;
+	color: white;
+	border-radius: 7px;
+	font-size: 14px;
+	font-weight: bold;
+	text-decoration: none;
+	transition: all 0.2s ease;
 }
 
 .history-btn:hover {
-   background: #3d5e97;
-   box-shadow: 0 3px 8px rgba(71, 106, 170, 0.2);
+	background: #3d5e97;
+	box-shadow: 0 3px 8px rgba(71, 106, 170, 0.2);
+}
+
+.point-history-scroll {
+	max-height: 300px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.point-history-scroll table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.point-history-scroll thead {
+	position: sticky;
+	top: 0;
+	z-index: 1;
+	background-color: #fff;
 }
 </style>
 </head>
 
 <body>
 
-   <div class="header">
+	<div class="header">
 
 		<div class="logo" onclick="location.href='/'">YA900</div>
 
@@ -706,7 +723,6 @@ tbody tr:hover {
 		</nav>
 
 		<div class="member-menu">
-
     <c:choose>
 
         <c:when test="${not empty sessionScope.id}">
@@ -836,15 +852,13 @@ tbody tr:hover {
                                  value="${summary.sumCorrect * 100 / summary.sumTotal}"
                                  maxFractionDigits="1" />%
                         </c:when>
-                           
+                          
 									<c:otherwise>0%</c:otherwise>
 								</c:choose>
 							</li>
 						</ul>
 
 					</c:when>
-
-					<%-- 로그인했지만 아직 퀴즈 기록이 없는 경우 --%>
 					<c:when test="${not empty sessionScope.id}">
 						<ul>
 							<li>최근 점수: -</li>
@@ -853,8 +867,7 @@ tbody tr:hover {
 							<li>정답률: 0%</li>
 						</ul>
 					</c:when>
-
-					<%-- 비로그인 상태 --%>
+              
 					<c:otherwise>
 						<p style="text-align: center; color: #666;">로그인하면 나의 퀴즈 기록을
 							확인할 수 있습니다.</p>
@@ -863,13 +876,15 @@ tbody tr:hover {
 
 				<div class="history-btn-wrap">
 					<a href="${pageContext.request.contextPath}/quiz/history"
-						class="history-btn"> 전체 기록 보기 </a>
+						class="history-btn">전체 기록 보기</a>
 				</div>
 			</section>
 		</div>
 
+		<%-- 포인트 랭킹 --%>
 		<section class="box">
-			<h2>퀴즈 랭킹</h2>
+			<h2>포인트 랭킹</h2>
+
 			<div class="table-scroll">
 				<table>
 					<thead>
@@ -879,16 +894,17 @@ tbody tr:hover {
 							<th style="width: 35%">점수</th>
 						</tr>
 					</thead>
+          
 					<tbody>
 						<c:choose>
 							<c:when test="${not empty rankingList}">
 								<c:forEach var="rank" items="${rankingList}">
 									<tr>
-										<td><c:out value="${rank.rankNo}" />위</td>
 
-										<td><c:out value="${rank.memberId}" /></td>
+										<td><c:out value="${rank.ranking}" />위</td>
+										<td><c:out value="${rank.Id}" /></td>
+										<td><c:out value="${rank.point}" />점</td>
 
-										<td><c:out value="${rank.score}" />점</td>
 									</tr>
 								</c:forEach>
 							</c:when>
@@ -904,9 +920,12 @@ tbody tr:hover {
 			</div>
 		</section>
 
+
+		<%-- 포인트 내역 --%>
 		<section class="box">
 			<h2>포인트 내역</h2>
-			<div class="table-scroll">
+
+			<div class="point-history-scroll">
 				<table>
 					<thead>
 						<tr>
@@ -915,22 +934,31 @@ tbody tr:hover {
 							<th style="width: 30%">포인트</th>
 						</tr>
 					</thead>
+
+
 					<tbody>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
+						<c:choose>
+							<c:when test="${not empty pointHistoryList}">
+								<c:forEach var="history" items="${pointHistoryList}">
+									<tr>
+										<td><fmt:formatDate value="${history.PLAY_DATE}"
+												pattern="yyyy-MM-dd HH:mm" /></td>
+										<td>정답 ${history.CORRECT_COUNT} /
+											${history.TOTAL_COUNT}문제</td>
+										<td>+<fmt:formatNumber value="${history.EARNED_POINT}"
+												pattern="#,##0" /> P
+										</td>
+									</tr>
+								</c:forEach>
+							</c:when>
+
+							<c:otherwise>
+								<tr>
+									<td colspan="3">아직 포인트 내역이 없습니다.</td>
+								</tr>
+							</c:otherwise>
+						</c:choose>
+
 					</tbody>
 				</table>
 			</div>
