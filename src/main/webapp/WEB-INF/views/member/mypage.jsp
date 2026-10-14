@@ -1029,7 +1029,7 @@ function updateUser() {
         return;
     }
 
-    if (!phoneRegex.test(콜)) {
+    if (!phoneRegex.test(phone)) {
         alert("전화번호를 올바르게 입력해주세요.");
         $("#phone").focus();
         return;

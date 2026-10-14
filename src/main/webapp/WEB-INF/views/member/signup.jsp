@@ -441,10 +441,10 @@ body {
 
          <h2 class="signup-title">회원가입</h2>
 
-         <form action="${pageContext.request.contextPath}/signup"
-            method="post" enctype="multipart/form-data" id="signupForm">
-
-            <div class="input-group">
+			<form action="${pageContext.request.contextPath}/signup"
+				method="post" enctype="multipart/form-data" id="signupForm">
+				<input type="hidden" name="admin" value="일반">
+				<div class="input-group">
 
                <label class="title"> 아이디 </label>
 
