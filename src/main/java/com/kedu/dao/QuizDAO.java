@@ -1,4 +1,3 @@
-
 package com.kedu.dao;
 
 import java.sql.Connection;
@@ -10,8 +9,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -25,321 +22,317 @@ import com.kedu.dto.QuizDTO;
 @Repository
 public class QuizDAO {
 
-	@Autowired
-	private JdbcTemplate jdbc;
+    @Autowired
+    private JdbcTemplate jdbc;
 
-	// =========================
-	// ∑£¥˝ ƒ˚¡Ó 10∞≥ ¡∂»∏
-	// =========================
-	public List<QuizDTO> selectQuiz() {
+    public List<QuizDTO> selectQuiz() {
 
-		String sql = "SELECT * FROM (" + "    SELECT * FROM quiz ORDER BY DBMS_RANDOM.VALUE" + ") WHERE ROWNUM <= 10";
+        String sql =
+                "SELECT * FROM ("
+                + " SELECT * FROM quiz ORDER BY DBMS_RANDOM.VALUE"
+                + ") WHERE ROWNUM <= 10";
 
-		return jdbc.query(sql, new BeanPropertyRowMapper<QuizDTO>(QuizDTO.class));
-	}
+        return jdbc.query(
+                sql,
+                new BeanPropertyRowMapper<QuizDTO>(QuizDTO.class)
+        );
+    }
 
-	// =========================
-	// ƒ˚¡Ó ∞·∞˙ π◊ πÆ¡¶∫∞ ¥‰æ» ¿˙¿Â
-	// =========================
-	public int saveQuizResult(final String memberId, final List<Integer> quizIds, final List<String> userAnswers) {
+    public int saveQuizResult(
+            final String memberId,
+            final List<Integer> quizIds,
+            final List<String> userAnswers) {
 
-		if (memberId == null || memberId.trim().isEmpty()) {
-			throw new IllegalArgumentException("»∏ø¯ ID∞° æ¯Ω¿¥œ¥Ÿ.");
-		}
+        if (memberId == null || memberId.trim().isEmpty()) {
+            throw new IllegalArgumentException("ÌöåÏõê IDÍ∞Ä ÏóÜÏäµÎãàÎã§.");
+        }
 
-		if (quizIds == null || userAnswers == null || quizIds.isEmpty() || quizIds.size() != userAnswers.size()
-				|| quizIds.size() > 10) {
+        if (quizIds == null || userAnswers == null
+                || quizIds.isEmpty()
+                || quizIds.size() != userAnswers.size()
+                || quizIds.size() > 10) {
 
-			throw new IllegalArgumentException("ƒ˚¡Ó µ•¿Ã≈Õ∞° ø√πŸ∏£¡ˆ æ Ω¿¥œ¥Ÿ.");
-		}
+            throw new IllegalArgumentException(
+                    "ÌÄ¥Ï¶à Îç∞Ïù¥ÌÑ∞Í∞Ä Ïò¨Î∞îÎ•¥ÏßÄ ÏïäÏäµÎãàÎã§.");
+        }
 
-		// ¡ﬂ∫π πÆ¡¶ ID πÊ¡ˆ
-		Set<Integer> uniqueQuizIds = new HashSet<Integer>();
+        Set<Integer> uniqueQuizIds = new HashSet<Integer>();
 
-		for (Integer quizId : quizIds) {
-			if (quizId == null || quizId <= 0 || !uniqueQuizIds.add(quizId)) {
+        for (Integer quizId : quizIds) {
+            if (quizId == null || quizId <= 0
+                    || !uniqueQuizIds.add(quizId)) {
 
-				throw new IllegalArgumentException("πÆ¡¶ ID∞° ø√πŸ∏£¡ˆ æ Ω¿¥œ¥Ÿ.");
-			}
-		}
+                throw new IllegalArgumentException(
+                        "ÌÄ¥Ï¶à IDÍ∞Ä Ïò¨Î∞îÎ•¥ÏßÄ ÏïäÏäµÎãàÎã§.");
+            }
+        }
 
-		// ±‚¡∏ JdbcTemplate¿Ã ªÁøÎ«œ¥¬ DataSource
-		final DataSource dataSource = jdbc.getDataSource();
+        for (String userAnswer : userAnswers) {
+            if (!"O".equals(userAnswer)
+                    && !"X".equals(userAnswer)) {
 
-		if (dataSource == null) {
-			throw new IllegalStateException("DataSource∞° º≥¡§µ«¡ˆ æ æ“Ω¿¥œ¥Ÿ.");
-		}
+                throw new IllegalArgumentException(
+                        "ÏûòÎ™ªÎêú ÎãµÎ≥ÄÏûÖÎãàÎã§.");
+            }
+        }
 
-		// «— ø¨∞·ø°º≠ ∞·∞˙øÕ ªÛºº ≥ªø™¿ª «‘≤≤ ¿˙¿Â
-		return jdbc.execute(new ConnectionCallback<Integer>() {
+        return jdbc.execute(new ConnectionCallback<Integer>() {
 
-			@Override
-			public Integer doInConnection(Connection conn) throws SQLException, DataAccessException {
+            @Override
+            public Integer doInConnection(Connection conn)
+                    throws SQLException, DataAccessException {
 
-				boolean originalAutoCommit = conn.getAutoCommit();
+                int correctCount = 0;
 
-				try {
+                String answerSql =
+                        "SELECT answer FROM quiz WHERE quiz_id = ?";
 
-					// ∆Æ∑£¿Ëº« Ω√¿€
-					conn.setAutoCommit(false);
+                try (PreparedStatement answerPstmt =
+                             conn.prepareStatement(answerSql)) {
 
-					int correctCount = 0;
+                    for (int i = 0; i < quizIds.size(); i++) {
 
-					// ∏’¿˙ Oracleø° ¿˙¿Âµ» ¡§¥‰¿ª ¡∂»∏«œ∞Ì ¡°ºˆ ∞ËªÍ
-					String answerSql = "SELECT answer FROM quiz WHERE quiz_id = ?";
+                        answerPstmt.setInt(1, quizIds.get(i));
 
-					try (PreparedStatement answerPstmt = conn.prepareStatement(answerSql)) {
+                        try (ResultSet rs =
+                                     answerPstmt.executeQuery()) {
 
-						for (int i = 0; i < quizIds.size(); i++) {
+                            if (!rs.next()) {
+                                throw new SQLException(
+                                        "Ï°¥Ïû¨ÌïòÏßÄ ÏïäÎäî ÌÄ¥Ï¶à ID: "
+                                        + quizIds.get(i));
+                            }
 
-							answerPstmt.setInt(1, quizIds.get(i));
+                            String correctAnswer =
+                                    rs.getString("answer");
 
-							try (ResultSet rs = answerPstmt.executeQuery()) {
+                            String userAnswer = userAnswers.get(i);
 
-								if (!rs.next()) {
-									throw new SQLException("¡∏¿Á«œ¡ˆ æ ¥¬ πÆ¡¶ ID: " + quizIds.get(i));
-								}
+                            if (userAnswer.equals(correctAnswer)) {
+                                correctCount++;
+                            }
+                        }
+                    }
+                }
 
-								String correctAnswer = rs.getString("answer");
-								String userAnswer = userAnswers.get(i);
+                int resultId;
 
-								if (!"O".equals(userAnswer) && !"X".equals(userAnswer)) {
+                String sequenceSql =
+                        "SELECT quiz_result_seq.NEXTVAL FROM dual";
 
-									throw new SQLException("¿ﬂ∏¯µ» ¥‰æ»¿‘¥œ¥Ÿ.");
-								}
+                try (PreparedStatement seqPstmt =
+                             conn.prepareStatement(sequenceSql);
+                     ResultSet rs = seqPstmt.executeQuery()) {
+
+                    if (!rs.next()) {
+                        throw new SQLException(
+                                "Í≤∞Í≥º Î≤àÌò∏ Î∞úÍ∏âÏóê Ïã§Ìå®ÌñàÏäµÎãàÎã§.");
+                    }
 
-								if (userAnswer.equals(correctAnswer)) {
-									correctCount++;
-								}
-							}
-						}
-					}
-
-					// ∞·∞˙ π¯»£ πﬂ±ﬁ
-					int resultId;
-
-					String sequenceSql = "SELECT quiz_result_seq.NEXTVAL FROM dual";
-
-					try (PreparedStatement seqPstmt = conn.prepareStatement(sequenceSql);
-							ResultSet rs = seqPstmt.executeQuery()) {
-
-						if (!rs.next()) {
-							throw new SQLException("∞·∞˙ π¯»£ πﬂ±ﬁø° Ω«∆–«ﬂΩ¿¥œ¥Ÿ.");
-						}
-
-						resultId = rs.getInt(1);
-					}
-
-					// ƒ˚¡Ó ¿¸√º ∞·∞˙ ¿˙¿Â
-					String resultSql = "INSERT INTO quiz_result " + "(result_id, member_id, total_count, "
-							+ "correct_count, play_date) " + "VALUES (?, ?, ?, ?, ?)";
-
-					try (PreparedStatement resultPstmt = conn.prepareStatement(resultSql)) {
-
-						resultPstmt.setInt(1, resultId);
-						resultPstmt.setString(2, memberId);
-						resultPstmt.setInt(3, quizIds.size());
-						resultPstmt.setInt(4, correctCount);
-						resultPstmt.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
-
-						resultPstmt.executeUpdate();
-					}
-
-					// πÆ¡¶∫∞ ¥‰æ» ¿˙¿Â
-					String detailSql = "INSERT INTO quiz_result_detail " + "(detail_id, result_id, quiz_id, "
-							+ "user_answer, is_correct) " + "VALUES (?, ?, ?, ?, ?)";
-
-					String detailSequenceSql = "SELECT quiz_result_detail_seq.NEXTVAL FROM dual";
-
-					try (PreparedStatement detailPstmt = conn.prepareStatement(detailSql);
-							PreparedStatement detailSeqPstmt = conn.prepareStatement(detailSequenceSql)) {
-
-						for (int i = 0; i < quizIds.size(); i++) {
-
-							int detailId;
-
-							try (ResultSet rs = detailSeqPstmt.executeQuery()) {
-
-								if (!rs.next()) {
-									throw new SQLException("ªÛºº π¯»£ πﬂ±ﬁø° Ω«∆–«ﬂΩ¿¥œ¥Ÿ.");
-								}
-
-								detailId = rs.getInt(1);
-							}
-
-							// ∞¢ πÆ¡¶¿« ¡§¥‰¿ª ¥ŸΩ√ »Æ¿Œ
-							String correctAnswer;
-
-							try (PreparedStatement answerPstmt = conn
-									.prepareStatement("SELECT answer FROM quiz WHERE quiz_id = ?")) {
-
-								answerPstmt.setInt(1, quizIds.get(i));
-
-								try (ResultSet rs = answerPstmt.executeQuery()) {
-
-									if (!rs.next()) {
-										throw new SQLException("πÆ¡¶∏¶ √£¿ª ºˆ æ¯Ω¿¥œ¥Ÿ.");
-									}
-
-									correctAnswer = rs.getString("answer");
-								}
-							}
-
-							String userAnswer = userAnswers.get(i);
-
-							int isCorrect = userAnswer.equals(correctAnswer) ? 1 : 0;
-
-							detailPstmt.setInt(1, detailId);
-							detailPstmt.setInt(2, resultId);
-							detailPstmt.setInt(3, quizIds.get(i));
-							detailPstmt.setString(4, userAnswer);
-							detailPstmt.setInt(5, isCorrect);
-
-							detailPstmt.executeUpdate();
-						}
-					}
-
-					// ¿¸√º ¿˙¿Â¿Ã º∫∞¯«— ∞ÊøÏø°∏∏ »Æ¡§
-					conn.commit();
-
-					return correctCount;
-
-				} catch (Exception e) {
-
-					// ¡ﬂ∞£ø° Ω«∆–«œ∏È ∞·∞˙øÕ ªÛºº ≥ªø™ ∏µŒ √Îº“
-					try {
-						conn.rollback();
-					} catch (SQLException rollbackException) {
-						e.addSuppressed(rollbackException);
-					}
-
-					if (e instanceof SQLException) {
-						throw (SQLException) e;
-					}
-
-					throw new SQLException("ƒ˚¡Ó ∞·∞˙ ¿˙¿Â ¡ﬂ ø¿∑˘∞° πﬂª˝«ﬂΩ¿¥œ¥Ÿ.", e);
-
-				} finally {
-
-					// ø¨∞· º≥¡§ ∫πø¯
-					try {
-						conn.setAutoCommit(originalAutoCommit);
-					} catch (SQLException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		});
-	}
-
-	// ƒ˚¡Ó ±‚∑œ ¡∂»∏
-	public List<Map<String, Object>> selectHistory(String memberId) {
-
-	    String sql =
-	        "SELECT " +
-	        "result_id AS \"resultId\", " +
-	        "member_id AS \"memberId\", " +
-	        "total_count AS \"totalCount\", " +
-	        "correct_count AS \"correctCount\", " +
-	        "TO_CHAR(play_date, 'YYYY-MM-DD HH24:MI:SS') AS \"playDate\" " +
-	        "FROM quiz_result " +
-	        "WHERE member_id = ? " +
-	        "ORDER BY play_date DESC, result_id DESC";
-
-	    return jdbc.queryForList(sql, memberId);
-	}
-	
-	// ƒ˚¡Ó ±‚∑œ ªÛºº ¡∂»∏
-	public List<Map<String, Object>> selectHistoryDetail(int resultId, String memberId) {
-
-	    String sql =
-	        "SELECT " +
-	        "    d.detail_id AS \"detailId\", " +
-	        "    d.quiz_id AS \"quizId\", " +
-	        "    q.quiz_contents AS \"quizContents\", " +
-	        "    d.user_answer AS \"userAnswer\", " +
-	        "    q.answer AS \"correctAnswer\", " +
-	        "    d.is_correct AS \"isCorrect\", " +
-	        "    q.explanation AS \"explanation\", " +
-	        "    q.category AS \"category\" " +
-	        "FROM quiz_result_detail d " +
-	        "JOIN quiz q ON d.quiz_id = q.quiz_id " +
-	        "JOIN quiz_result r ON d.result_id = r.result_id " +
-	        "WHERE d.result_id = ? " +
-	        "AND r.member_id = ? " +
-	        "ORDER BY d.detail_id ASC";
-
-	    return jdbc.queryForList(sql, resultId, memberId);
-	}
-	// ¿¸√º ƒ˚¡Ó πÆ¡¶ ºˆ ¡∂»∏
-	public int selectQuizCount() {
-	    String sql = "SELECT COUNT(*) FROM quiz";
-	    return jdbc.queryForObject(sql, Integer.class);
-	}
-
-	// ƒ˚¡Ó «— ∆«ø° √‚¡¶«“ πÆ¡¶ ºˆ
-	public int selectQuizPlayCount() {
-	    return 10;
-	}
-
-	// ¡§¥‰ «— πÆ¡¶¥Á ¡ˆ±ﬁ ∆˜¿Œ∆Æ
-	public int selectPointPerCorrect() {
-	    return 10;
-	}
-
-	// »∏ø¯¿« ƒ˚¡Ó ±‚∑œ ø‰æ‡ ¡∂»∏
-	public Map<String, Object> selectQuizSummary(String memberId) {
-
-	    String sql =
-	        "SELECT " +
-	        "    COUNT(*) AS \"playCount\", " +
-	        "    NVL(MAX(correct_count), 0) AS \"bestScore\", " +
-	        "    NVL(SUM(correct_count), 0) AS \"sumCorrect\", " +
-	        "    NVL(SUM(total_count), 0) AS \"sumTotal\" " +
-	        "FROM quiz_result " +
-	        "WHERE member_id = ?";
-
-	    return jdbc.queryForMap(sql, memberId);
-	}
-	
-	// ∞°¿Â √÷±Ÿ ƒ˚¡Ó ∞·∞˙ ¡∂»∏
-	public Map<String, Object> selectLatestQuizResult(String memberId) {
-
-	    String sql =
-	        "SELECT * FROM ( " +
-	        "    SELECT " +
-	        "        correct_count AS \"correctCount\", " +
-	        "        total_count AS \"totalCount\", " +
-	        "        play_date AS \"playDate\" " +
-	        "    FROM quiz_result " +
-	        "    WHERE member_id = ? " +
-	        "    ORDER BY play_date DESC, result_id DESC " +
-	        ") WHERE ROWNUM = 1";
-
-	    List<Map<String, Object>> list = jdbc.queryForList(sql, memberId);
-
-	    if (list.isEmpty()) {
-	        return null;
-	    }
-
-	    return list.get(0);
-	}
-	// ƒ˚¡Ó ∑©≈∑ ªÛ¿ß 5∏Ì ¡∂»∏ ∞¢ »∏ø¯¿« √÷∞Ì ¡§¥‰ ºˆ∏¶ ±‚¡ÿ¿∏∑Œ ¡§∑ƒ
-	public List<Map<String, Object>> selectQuizRanking() {
-
-	    String sql =
-	        "SELECT * FROM ( " +
-	        "    SELECT " +
-	        "        member_id AS \"memberId\", " +
-	        "        MAX(correct_count) AS \"score\", " +
-	        "        ROW_NUMBER() OVER ( " +
-	        "            ORDER BY MAX(correct_count) DESC, MAX(play_date) DESC " +
-	        "        ) AS \"rankNo\" " +
-	        "    FROM quiz_result " +
-	        "    GROUP BY member_id " +
-	        ") WHERE ROWNUM <= 5 " +
-	        "ORDER BY \"rankNo\"";
-
-	    return jdbc.queryForList(sql);
-	}
+                    resultId = rs.getInt(1);
+                }
+
+                String resultSql =
+                        "INSERT INTO quiz_result "
+                        + "(result_id, member_id, total_count, "
+                        + "correct_count, play_date) "
+                        + "VALUES (?, ?, ?, ?, ?)";
+
+                try (PreparedStatement resultPstmt =
+                             conn.prepareStatement(resultSql)) {
+
+                    resultPstmt.setInt(1, resultId);
+                    resultPstmt.setString(2, memberId);
+                    resultPstmt.setInt(3, quizIds.size());
+                    resultPstmt.setInt(4, correctCount);
+                    resultPstmt.setTimestamp(
+                            5,
+                            new Timestamp(System.currentTimeMillis())
+                    );
+
+                    resultPstmt.executeUpdate();
+                }
+
+                String detailSql =
+                        "INSERT INTO quiz_result_detail "
+                        + "(detail_id, result_id, quiz_id, "
+                        + "user_answer, is_correct) "
+                        + "VALUES (?, ?, ?, ?, ?)";
+
+                String detailSequenceSql =
+                        "SELECT quiz_result_detail_seq.NEXTVAL FROM dual";
+
+                try (PreparedStatement detailPstmt =
+                             conn.prepareStatement(detailSql);
+                     PreparedStatement detailSeqPstmt =
+                             conn.prepareStatement(detailSequenceSql)) {
+
+                    for (int i = 0; i < quizIds.size(); i++) {
+
+                        int detailId;
+
+                        try (ResultSet rs =
+                                     detailSeqPstmt.executeQuery()) {
+
+                            if (!rs.next()) {
+                                throw new SQLException(
+                                        "ÏÉÅÏÑ∏ Î≤àÌò∏ Î∞úÍ∏âÏóê Ïã§Ìå®ÌñàÏäµÎãàÎã§.");
+                            }
+
+                            detailId = rs.getInt(1);
+                        }
+
+                        String correctAnswer;
+
+                        try (PreparedStatement answerPstmt =
+                                     conn.prepareStatement(
+                                             "SELECT answer FROM quiz "
+                                             + "WHERE quiz_id = ?")) {
+
+                            answerPstmt.setInt(1, quizIds.get(i));
+
+                            try (ResultSet rs =
+                                         answerPstmt.executeQuery()) {
+
+                                if (!rs.next()) {
+                                    throw new SQLException(
+                                            "ÌÄ¥Ï¶àÎ•º Ï∞æÏùÑ Ïàò ÏóÜÏäµÎãàÎã§.");
+                                }
+
+                                correctAnswer =
+                                        rs.getString("answer");
+                            }
+                        }
+
+                        String userAnswer = userAnswers.get(i);
+
+                        int isCorrect =
+                                userAnswer.equals(correctAnswer) ? 1 : 0;
+
+                        detailPstmt.setInt(1, detailId);
+                        detailPstmt.setInt(2, resultId);
+                        detailPstmt.setInt(3, quizIds.get(i));
+                        detailPstmt.setString(4, userAnswer);
+                        detailPstmt.setInt(5, isCorrect);
+
+                        detailPstmt.executeUpdate();
+                    }
+                }
+
+                return correctCount;
+            }
+        });
+    }
+
+    public List<Map<String, Object>> selectHistory(String memberId) {
+
+        String sql =
+                "SELECT "
+                + "result_id AS \"resultId\", "
+                + "member_id AS \"memberId\", "
+                + "total_count AS \"totalCount\", "
+                + "correct_count AS \"correctCount\", "
+                + "TO_CHAR(play_date, 'YYYY-MM-DD HH24:MI:SS') "
+                + "AS \"playDate\" "
+                + "FROM quiz_result "
+                + "WHERE member_id = ? "
+                + "ORDER BY play_date DESC, result_id DESC";
+
+        return jdbc.queryForList(sql, memberId);
+    }
+
+    public List<Map<String, Object>> selectHistoryDetail(
+            int resultId,
+            String memberId) {
+
+        String sql =
+                "SELECT "
+                + "d.detail_id AS \"detailId\", "
+                + "d.quiz_id AS \"quizId\", "
+                + "q.quiz_contents AS \"quizContents\", "
+                + "d.user_answer AS \"userAnswer\", "
+                + "q.answer AS \"correctAnswer\", "
+                + "d.is_correct AS \"isCorrect\", "
+                + "q.explanation AS \"explanation\", "
+                + "q.category AS \"category\" "
+                + "FROM quiz_result_detail d "
+                + "JOIN quiz q ON d.quiz_id = q.quiz_id "
+                + "JOIN quiz_result r ON d.result_id = r.result_id "
+                + "WHERE d.result_id = ? "
+                + "AND r.member_id = ? "
+                + "ORDER BY d.detail_id ASC";
+
+        return jdbc.queryForList(sql, resultId, memberId);
+    }
+
+    public int selectQuizCount() {
+
+        String sql = "SELECT COUNT(*) FROM quiz";
+
+        return jdbc.queryForObject(sql, Integer.class);
+    }
+
+    public int selectQuizPlayCount() {
+        return 10;
+    }
+
+    public int selectPointPerCorrect() {
+        return 10;
+    }
+
+    public Map<String, Object> selectQuizSummary(String memberId) {
+
+        String sql =
+                "SELECT "
+                + "COUNT(*) AS \"playCount\", "
+                + "NVL(MAX(correct_count), 0) AS \"bestScore\", "
+                + "NVL(SUM(correct_count), 0) AS \"sumCorrect\", "
+                + "NVL(SUM(total_count), 0) AS \"sumTotal\" "
+                + "FROM quiz_result "
+                + "WHERE member_id = ?";
+
+        return jdbc.queryForMap(sql, memberId);
+    }
+
+    public Map<String, Object> selectLatestQuizResult(String memberId) {
+
+        String sql =
+                "SELECT * FROM ( "
+                + "SELECT "
+                + "correct_count AS \"correctCount\", "
+                + "total_count AS \"totalCount\", "
+                + "play_date AS \"playDate\" "
+                + "FROM quiz_result "
+                + "WHERE member_id = ? "
+                + "ORDER BY play_date DESC, result_id DESC "
+                + ") WHERE ROWNUM = 1";
+
+        List<Map<String, Object>> list =
+                jdbc.queryForList(sql, memberId);
+
+        if (list.isEmpty()) {
+            return null;
+        }
+
+        return list.get(0);
+    }
+
+    public List<Map<String, Object>> selectQuizRanking() {
+
+        String sql =
+                "SELECT * FROM ( "
+                + "SELECT "
+                + "member_id AS \"memberId\", "
+                + "MAX(correct_count) AS \"score\", "
+                + "ROW_NUMBER() OVER ( "
+                + "ORDER BY MAX(correct_count) DESC, "
+                + "MAX(play_date) DESC "
+                + ") AS \"rankNo\" "
+                + "FROM quiz_result "
+                + "GROUP BY member_id "
+                + ") WHERE ROWNUM <= 5 "
+                + "ORDER BY \"rankNo\"";
+
+        return jdbc.queryForList(sql);
+    }
 }

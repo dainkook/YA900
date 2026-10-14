@@ -298,7 +298,10 @@ public class UsersController {
 
         String id = loginUser.getId();
         String profileImg = loginUser.getProfile_img();
-
+        
+        if (team != null && team.trim().isEmpty()) {
+           team= null;
+        }
         if (profileFile != null && !profileFile.isEmpty()) {
 
             String uploadPath = "D:/uploads/";
