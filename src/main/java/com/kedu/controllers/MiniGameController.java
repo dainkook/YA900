@@ -17,10 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kedu.dao.PlayerDAO;
-
 import com.kedu.dao.QuizDAO;
 import com.kedu.dto.MyTeamDTO;
 import com.kedu.dto.PlayerDTO;
+import com.kedu.dto.PredictionResultDTO;
+import com.kedu.dto.PredictionViewDTO;
 import com.kedu.dto.QuizDTO;
 
 @Controller
@@ -218,7 +219,7 @@ public class MiniGameController {
 
         if (memberId == null || memberId.trim().isEmpty()) {
             response.setStatus(401);
-            return "로그인이 필요합니다.";
+            return "濡쒓렇�씤�씠 �븘�슂�빀�땲�떎.";
         }
 
         if (quizIds == null || userAnswers == null
@@ -227,7 +228,7 @@ public class MiniGameController {
                 || quizIds.size() > 10) {
 
             response.setStatus(400);
-            return "ÄûÁî Àü¼Û µ¥ÀÌÅÍ°¡ ¿Ã¹Ù¸£Áö ¾Ê½À´Ï´Ù.";
+            return "횆청횁챤 �체쩌횤 쨉짜�횑횇횒째징 쩔횄쨔횢쨍짙횁철 쩐횎쩍�쨈횕쨈횢.";
         }
 
      
@@ -242,14 +243,14 @@ public class MiniGameController {
                     || !uniqueQuizIds.add(quizId)) {
 
                 response.setStatus(400);
-                return "¹®Á¦ ID°¡ ¿Ã¹Ù¸£Áö ¾Ê½À´Ï´Ù.";
+                return "쨔짰횁짝 ID째징 쩔횄쨔횢쨍짙횁철 쩐횎쩍�쨈횕쨈횢.";
             }
 
             if (answer == null
                     || !("O".equals(answer) || "X".equals(answer))) {
 
                 response.setStatus(400);
-                return "´ä¾ÈÀº O ¶Ç´Â X¸¸ °¡´ÉÇÕ´Ï´Ù.";
+                return "쨈채쩐횊�쨘 O 쨋횉쨈횂 X쨍쨍 째징쨈횋횉횛쨈횕쨈횢.";
             }
         }
 
@@ -267,7 +268,7 @@ public class MiniGameController {
             e.printStackTrace();
 
             response.setStatus(500);
-            return "ÄûÁî °á°ú ÀúÀå¿¡ ½ÇÆÐÇß½À´Ï´Ù.";
+            return "횆청횁챤 째찼째첬 �첬�책쩔징 쩍횉횈횖횉횩쩍�쨈횕쨈횢.";
         }
     }
   
