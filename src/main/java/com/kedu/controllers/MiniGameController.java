@@ -43,12 +43,6 @@ public class MiniGameController {
     @Autowired
     private QuizDAO quizDAO;
     
-    @Autowired
-    private PredictionDAO predictionDAO;
-    
-    @Autowired
-    private PredictionResultDAO predictionresultDAO;
-    
    @Autowired
    private UsersDAO usersDAO;
     
@@ -134,7 +128,6 @@ public class MiniGameController {
         List<Integer> gameIds = predictionDAO.searchGameId();
         for (int i = 0; i < gameIds.size(); i++) {
             predictionDAO.insertPrediction(gameIds.get(i));
-            System.out.println(gameIds.get(i));
         }
         List<PredictionViewDTO> predictionList = predictionDAO.selectAllPredictions();
         model.addAttribute("predictionList", predictionList);

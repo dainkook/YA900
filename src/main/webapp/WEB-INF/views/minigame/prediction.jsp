@@ -488,6 +488,35 @@ tbody tr:hover {
 	border-color: #3d5e97;
 }
 
+/* 예측 내역 스크롤 */
+.prediction-history-scroll {
+    height: 305px;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+/* 테이블 제목 고정 */
+.prediction-history-scroll thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: #f5f6f8;
+}
+
+/* 스크롤바 디자인 */
+.prediction-history-scroll::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+.prediction-history-scroll::-webkit-scrollbar-thumb {
+    background: #b8c4dc;
+    border-radius: 10px;
+}
+
+.prediction-history-scroll::-webkit-scrollbar-track {
+    background: #f5f6f8;
+}
 /* =========================
    푸터
 ========================= */
@@ -500,6 +529,8 @@ tbody tr:hover {
 	font-size: 10px;
 	color: #555;
 }
+
+
 
 /* =========================
    반응형
@@ -793,8 +824,8 @@ tbody tr:hover {
 			<section class="box">
 			    <div class="area-title">예측 내역</div>
 			
-			    <div class="table-scroll">
-			        <table class="my-table">
+			    <div class="table-scroll prediction-history-scroll">
+    				<table class="my-table">
 			            <thead>
 			                <tr>
 			                    <th>날짜</th>
