@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kedu.dto.PageDTO;
 import com.kedu.dto.ReservationDTO;
@@ -18,7 +19,7 @@ public class ReservationDAO {
 	private JdbcTemplate jdbc;
 
 	// =========================================================
-	// °ü¸®ÀÚ - ¿¹¸Å ¸ñ·Ï Á¶È¸
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ - ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½È¸
 	// =========================================================
 	public List<ReservationDTO> selectAll(PageDTO page) {
 
@@ -43,7 +44,7 @@ public class ReservationDAO {
 	}
 
 	// =========================================================
-	// ÀüÃ¼ ¿¹¸Å °³¼ö Á¶È¸
+	// ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸
 	// =========================================================
 	public int getCount() {
 
@@ -53,7 +54,7 @@ public class ReservationDAO {
 	}
 
 	// =========================================================
-	// ¿¹¸Å °Ë»ö
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½
 	// =========================================================
 	public List<ReservationDTO> search(String searchType, String keyword, PageDTO page) {
 
@@ -68,22 +69,22 @@ public class ReservationDAO {
 				+ "JOIN ticket t ON r.ticket_id = t.ticket_id "
 				+ "JOIN schedule s ON t.game_id = s.game_id ";
 
-		// ¿¹¸Å¹øÈ£ °Ë»ö
+		// ï¿½ï¿½ï¿½Å¹ï¿½È£ ï¿½Ë»ï¿½
 		if (searchType.equals("reservation_id")) {
 
 			sql += "WHERE TO_CHAR(r.reservation_id) LIKE ? ";
 
-		// È¸¿ø ID °Ë»ö
+		// È¸ï¿½ï¿½ ID ï¿½Ë»ï¿½
 		} else if (searchType.equals("member_id")) {
 
 			sql += "WHERE r.member_id LIKE ? ";
 
-		// °æ±â Á¦¸ñ °Ë»ö
+		// ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½
 		} else if (searchType.equals("title")) {
 
 			sql += "WHERE s.title LIKE ? ";
 
-		// ÀüÃ¼ °Ë»ö
+		// ï¿½ï¿½Ã¼ ï¿½Ë»ï¿½
 		} else if (searchType.equals("all")) {
 
 			sql += "WHERE TO_CHAR(r.reservation_id) LIKE ? "
@@ -94,7 +95,7 @@ public class ReservationDAO {
 		sql += ") "
 				+ "WHERE rn BETWEEN ? AND ?";
 
-		// ÀüÃ¼ °Ë»öÀÎ °æ¿ì
+		// ï¿½ï¿½Ã¼ ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		if (searchType.equals("all")) {
 
 			String keywordValue = "%" + keyword + "%";
@@ -108,7 +109,7 @@ public class ReservationDAO {
 					page.getStartIndex(),
 					page.getEndIndex());
 
-		// Æ¯Á¤ Á¶°Ç °Ë»öÀÎ °æ¿ì
+		// Æ¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		} else {
 
 			return jdbc.query(
@@ -121,13 +122,13 @@ public class ReservationDAO {
 	}
 
 	// =========================================================
-	// °Ë»ö °á°ú °³¼ö Á¶È¸
+	// ï¿½Ë»ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸
 	// =========================================================
 	public int getSearchCount(String searchType, String keyword) {
 
 		String sql = "";
 
-		// ¿¹¸Å¹øÈ£ °Ë»ö
+		// ï¿½ï¿½ï¿½Å¹ï¿½È£ ï¿½Ë»ï¿½
 		if (searchType.equals("reservation_id")) {
 
 			sql = "SELECT COUNT(*) "
@@ -139,7 +140,7 @@ public class ReservationDAO {
 					Integer.class,
 					"%" + keyword + "%");
 
-		// È¸¿ø ID °Ë»ö
+		// È¸ï¿½ï¿½ ID ï¿½Ë»ï¿½
 		} else if (searchType.equals("member_id")) {
 
 			sql = "SELECT COUNT(*) "
@@ -151,7 +152,7 @@ public class ReservationDAO {
 					Integer.class,
 					"%" + keyword + "%");
 
-		// °æ±â Á¦¸ñ °Ë»ö
+		// ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½
 		} else if (searchType.equals("title")) {
 
 			sql = "SELECT COUNT(*) "
@@ -165,7 +166,7 @@ public class ReservationDAO {
 					Integer.class,
 					"%" + keyword + "%");
 
-		// ÀüÃ¼ °Ë»ö
+		// ï¿½ï¿½Ã¼ ï¿½Ë»ï¿½
 		} else if (searchType.equals("all")) {
 
 			sql = "SELECT COUNT(*) "
@@ -190,7 +191,7 @@ public class ReservationDAO {
 	}
 
 	// =========================================================
-	// Æ¯Á¤ ¿¹¸Å »ó¼¼ Á¶È¸
+	// Æ¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½È¸
 	// =========================================================
 	public ReservationDTO selectById(int reservation_id) {
 
@@ -216,19 +217,19 @@ public class ReservationDAO {
 	}
 
 	// =========================================================
-	// °ü¸®ÀÚ - ¿¹¸Å Ãë¼Ò
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ - ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	// =========================================================
 	public int cancel(int reservation_id) {
 
 		String sql = "UPDATE reservation "
-				+ "SET status = 'Ãë¼Ò' "
+				+ "SET status = 'ï¿½ï¿½ï¿½' "
 				+ "WHERE reservation_id = ?";
 
 		return jdbc.update(sql, reservation_id);
 	}
 
 	// =========================================================
-	// Æ¯Á¤ °æ±â¿¡¼­ ÀÌ¹Ì ¿¹¸ÅµÈ Æ¼ÄÏ ID Á¶È¸
+	// Æ¯ï¿½ï¿½ ï¿½ï¿½â¿¡ï¿½ï¿½ ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½Åµï¿½ Æ¼ï¿½ï¿½ ID ï¿½ï¿½È¸
 	// =========================================================
 	public List<Integer> selectReservedTicketIds(int game_id) {
 
@@ -242,11 +243,11 @@ public class ReservationDAO {
 				sql,
 				(rs, rowNum) -> rs.getInt("ticket_id"),
 				game_id,
-				"¿¹¾à¿Ï·á");
+				"ï¿½ï¿½ï¿½ï¿½Ï·ï¿½");
 	}
 
 	// =========================================================
-	// ¿¹¸Å Á¤º¸ ÀúÀå
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	// =========================================================
 	public int insertReservation(String member_id, int ticket_id) {
 
@@ -258,36 +259,42 @@ public class ReservationDAO {
 				sql,
 				member_id,
 				ticket_id,
-				"¿¹¾à¿Ï·á");
+				"ï¿½ï¿½ï¿½ï¿½Ï·ï¿½");
 	}
 
 	// =========================================================
-	// ÁÂ¼® ¹øÈ£·Î ¿¹¸Å Á¤º¸ ÀúÀå
+	// ï¿½Â¼ï¿½ ï¿½ï¿½È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	// =========================================================
+
 	public int insertReservationBySeatId(
-			String member_id,
-			int game_id,
-			int seat_id,
-			String paymentId) {
-
-		String sql = "INSERT INTO reservation "
-				+ "(reservation_id, member_id, ticket_id, reservation_date, status, payment_id) "
-				+ "SELECT reservation_seq.nextval, ?, ticket_id, SYSTIMESTAMP, ?, ? "
-				+ "FROM ticket "
-				+ "WHERE game_id = ? "
-				+ "AND seat_id = ?";
-
-		return jdbc.update(
-				sql,
-				member_id,
-				"¿¹¾à¿Ï·á",
-				paymentId,
-				game_id,
-				seat_id);
+	        String member_id,
+	        int game_id,
+	        int seat_id,
+	        String paymentId,
+	        int usedPoint) {
+	
+	    String sql =
+	        "INSERT INTO reservation " +
+	        "(reservation_id, member_id, ticket_id, reservation_date, " +
+	        "status, payment_id, used_point) " +
+	        "SELECT reservation_seq.NEXTVAL, ?, ticket_id, SYSTIMESTAMP, ?, ?, ? " +
+	        "FROM ticket " +
+	        "WHERE game_id = ? " +
+	        "AND seat_id = ?";
+	
+	    return jdbc.update(
+	        sql,
+	        member_id,
+	        "ì˜ˆë§¤ì™„ë£Œ",
+	        paymentId,
+	        usedPoint,
+	        game_id,
+	        seat_id
+	    );
 	}
 
 	// =========================================================
-	// Æ¯Á¤ °æ±â¿¡¼­ ÀÌ¹Ì ¿¹¸ÅµÈ ÁÂ¼® ¹øÈ£ Á¶È¸
+	// Æ¯ï¿½ï¿½ ï¿½ï¿½â¿¡ï¿½ï¿½ ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½Åµï¿½ ï¿½Â¼ï¿½ ï¿½ï¿½È£ ï¿½ï¿½È¸
 	// =========================================================
 	public List<Integer> selectReservedSeatIds(int game_id) {
 
@@ -301,11 +308,11 @@ public class ReservationDAO {
 				sql,
 				(rs, rowNum) -> rs.getInt("seat_id"),
 				game_id,
-				"¿¹¾à¿Ï·á");
+				"ì˜ˆë§¤ì™„ë£Œ");
 	}
 
 	// =========================================================
-	// ¸¶ÀÌÆäÀÌÁö - ³» ¿¹¸Å ¸ñ·Ï Á¶È¸
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ - ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½È¸
 	// =========================================================
 	public List<Map<String, Object>> selectMyReservations(String member_id) {
 
@@ -329,7 +336,7 @@ public class ReservationDAO {
 				+ "JOIN team home ON s.home_id = home.team_id "
 				+ "JOIN team away ON s.away_id = away.team_id "
 				+ "WHERE r.member_id = ? "
-				+ "AND r.status = '¿¹¾à¿Ï·á' "
+				+ "AND r.status = ? "
 				+ "GROUP BY "
 				+ "r.status, "
 				+ "r.payment_id, "
@@ -340,12 +347,28 @@ public class ReservationDAO {
 				+ "home.team_name, "
 				+ "away.team_name "
 				+ "ORDER BY MIN(r.reservation_date) DESC";
+		
 
-		return jdbc.queryForList(sql, member_id);
+
+		Integer joinCount = jdbc.queryForObject(
+		    "SELECT COUNT(*) " +
+		    "FROM reservation r " +
+		    "JOIN ticket t ON r.ticket_id = t.ticket_id " +
+		    "JOIN schedule s ON t.game_id = s.game_id " +
+		    "JOIN team home ON s.home_id = home.team_id " +
+		    "JOIN team away ON s.away_id = away.team_id " +
+		    "WHERE r.member_id = ? " +
+		    "AND r.status = 'ì˜ˆë§¤ì™„ë£Œ'",
+		    Integer.class,
+		    member_id
+		);
+
+
+		return jdbc.queryForList(sql, member_id, "ì˜ˆë§¤ì™„ë£Œ");
 	}
 
 	// =========================================================
-	// ¿¹¸Å Ãë¼Ò
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	// =========================================================
 	public int cancelReservation(int reservation_id) {
 
@@ -355,27 +378,31 @@ public class ReservationDAO {
 
 		return jdbc.update(
 				sql,
-				"Ãë¼Ò",
+				"ï¿½ï¿½ï¿½",
 				reservation_id);
 	}
 
 	// =========================================================
-	// °áÁ¦ ID¸¦ ±âÁØÀ¸·Î ¿¹¸Å ÀüÃ¼ Ãë¼Ò
+	// ï¿½ï¿½ï¿½ï¿½ IDï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½
 	// =========================================================
+
 	public int cancelReservationsByPaymentId(String paymentId) {
-
-		String sql = "UPDATE reservation "
-				+ "SET status = ? "
-				+ "WHERE payment_id = ?";
-
-		return jdbc.update(
-				sql,
-				"Ãë¼Ò",
-				paymentId);
+	
+	    String sql = "UPDATE reservation "
+	               + "SET status = ? "
+	               + "WHERE payment_id = ? "
+	               + "AND status = ?";
+	
+	    return jdbc.update(
+	            sql,
+	            "ì·¨ì†Œ",
+	            paymentId,
+	            "ì˜ˆë§¤ì™„ë£Œ"
+	    );
 	}
 
 	// =========================================================
-	// Æ¯Á¤ ¿¹¸ÅÀÇ °áÁ¦ ID Á¶È¸
+	// Æ¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ID ï¿½ï¿½È¸
 	// =========================================================
 	public String selectPaymentId(int reservation_id) {
 
@@ -388,4 +415,200 @@ public class ReservationDAO {
 				String.class,
 				reservation_id);
 	}
+	
+	public int selectMemberPoint(String member_id) {
+		String sql = "SELECT NVL(point, 0) "
+				   + "FROM users "
+				   + "WHERE id = ?";
+		return jdbc.queryForObject(sql, Integer.class, member_id);
+	}
+	
+	@Transactional
+	public void insertReservationWithPoints (
+			String member_id,
+			int game_id,
+			List<Integer> seat_ids,
+			String paymentId,
+			int usedPoints) {
+		if (seat_ids == null || seat_ids.isEmpty()) {
+			 throw new IllegalArgumentException("ì„ íƒí•œ ì¢Œì„ì´ ì—†ìŠµë‹ˆë‹¤.");
+		}
+		
+		if (usedPoints < 0) {
+	        throw new IllegalArgumentException("ì‚¬ìš© í¬ì¸íŠ¸ê°€ ì˜¬ë°”ë¥´ì§€ ì•ŠìŠµë‹ˆë‹¤.");
+	    }
+		
+		// ì¤‘ë³µ ì¢Œì„ ì„ íƒ ë°©ì§€
+	    java.util.Set<Integer> uniqueSeats =
+	            new java.util.HashSet<>(seat_ids);
+
+	    if (uniqueSeats.size() != seat_ids.size()) {
+	        throw new IllegalArgumentException("ì¤‘ë³µëœ ì¢Œì„ì´ ìˆìŠµë‹ˆë‹¤.");
+	    }
+	    
+	    // ì„ íƒí•œ ì¢Œì„ì˜ ì‹¤ì œ í‹°ì¼“ ìˆ˜ì™€ ê°€ê²© í™•ì¸
+	    String placeholders = String.join(
+	            ",", java.util.Collections.nCopies(seat_ids.size(), "?"));
+
+	    String priceSql = "SELECT COUNT(*), NVL(SUM(price), 0) "
+	                    + "FROM ticket "
+	                    + "WHERE game_id = ? "
+	                    + "AND seat_id IN (" + placeholders + ")";
+
+	    Object[] priceParams = new Object[seat_ids.size() + 1];
+	    priceParams[0] = game_id;
+
+	    for (int i = 0; i < seat_ids.size(); i++) {
+	        priceParams[i + 1] = seat_ids.get(i);
+	    }
+
+	    Map<String, Object> priceInfo =
+	            jdbc.queryForMap(priceSql, priceParams);
+
+	    int ticketCount =
+	            ((Number) priceInfo.get("TICKET_COUNT")).intValue();
+
+	    int totalPrice =
+	            ((Number) priceInfo.get("TOTAL_PRICE")).intValue();
+
+	    if (ticketCount != seat_ids.size()) {
+	        throw new IllegalArgumentException(
+	                "ì„ íƒí•œ ì¢Œì„ ì¤‘ ìœ íš¨í•˜ì§€ ì•Šì€ ì¢Œì„ì´ ìˆìŠµë‹ˆë‹¤.");
+	    }
+
+	    if (usedPoints > totalPrice) {
+	        throw new IllegalArgumentException(
+	                "ì‚¬ìš© í¬ì¸íŠ¸ê°€ ê²°ì œ ê¸ˆì•¡ë³´ë‹¤ ë§ìŠµë‹ˆë‹¤.");
+	    }
+
+	    // ì´ë¯¸ ì˜ˆë§¤ëœ ì¢Œì„ì¸ì§€ í™•ì¸
+	    String reservedSql = "SELECT COUNT(*) "
+	                       + "FROM reservation r "
+	                       + "JOIN ticket t ON r.ticket_id = t.ticket_id "
+	                       + "WHERE t.game_id = ? "
+	                       + "AND t.seat_id IN (" + placeholders + ") "
+	                       + "AND r.status = ?";
+
+	    Object[] reservedParams = new Object[seat_ids.size() + 2];
+	    reservedParams[0] = game_id;
+
+	    for (int i = 0; i < seat_ids.size(); i++) {
+	        reservedParams[i + 1] = seat_ids.get(i);
+	    }
+
+	    reservedParams[seat_ids.size() + 1] = "ì˜ˆë§¤ì™„ë£Œ";
+
+	    int reservedCount =
+	            jdbc.queryForObject(reservedSql, Integer.class, reservedParams);
+
+	    if (reservedCount > 0) {
+	        throw new IllegalStateException(
+	                "ì´ë¯¸ ì˜ˆë§¤ëœ ì¢Œì„ì´ ìˆìŠµë‹ˆë‹¤. ì¢Œì„ì„ ë‹¤ì‹œ ì„ íƒí•´ ì£¼ì„¸ìš”.");
+	    }
+
+	    // í¬ì¸íŠ¸ ì°¨ê°: ì”ì•¡ì´ ì¶©ë¶„í•œ ê²½ìš°ì—ë§Œ ì°¨ê°
+	    if (usedPoints > 0) {
+
+	        String pointSql = "UPDATE users "
+	                        + "SET point = NVL(point, 0) - ? "
+	                        + "WHERE id = ? "
+	                        + "AND NVL(point, 0) >= ?";
+
+	        int updated = jdbc.update(
+	                pointSql, usedPoints, member_id, usedPoints);
+
+	        if (updated != 1) {
+	            throw new IllegalStateException(
+	                    "ë³´ìœ  í¬ì¸íŠ¸ê°€ ë¶€ì¡±í•©ë‹ˆë‹¤. ì”ì•¡ì„ í™•ì¸í•´ ì£¼ì„¸ìš”.");
+	        }
+
+	        // í¬ì¸íŠ¸ ì‚¬ìš© ë‚´ì—­ ê¸°ë¡
+	        String historySql =
+	                "INSERT INTO point_history "
+	              + "(point_seq, member_id, amount, reason, regdate) "
+	              + "VALUES (point_seq.NEXTVAL, ?, ?, ?, SYSTIMESTAMP)";
+
+	        jdbc.update(
+	                historySql,
+	                member_id,
+	                -usedPoints,
+	                "í‹°ì¼“ ì˜ˆë§¤ í¬ì¸íŠ¸ ì‚¬ìš©");
+	    }
+
+	    // ì„ íƒí•œ ì¢Œì„ ì˜ˆë§¤ ì €ì¥
+	    for (Integer seat_id : seat_ids) {
+
+	        String insertSql =
+	                "INSERT INTO reservation "
+	              + "(reservation_id, member_id, ticket_id, "
+	              + "reservation_date, status, payment_id) "
+	              + "SELECT reservation_seq.NEXTVAL, ?, t.ticket_id, "
+	              + "SYSTIMESTAMP, ?, ? "
+	              + "FROM ticket t "
+	              + "WHERE t.game_id = ? "
+	              + "AND t.seat_id = ? "
+	              + "AND NOT EXISTS ( "
+	              + "    SELECT 1 FROM reservation r "
+	              + "    WHERE r.ticket_id = t.ticket_id "
+	              + "    AND r.status = ? "
+	              + ")";
+
+	        int inserted = jdbc.update(
+	                insertSql,
+	                member_id,
+	                "ì˜ˆë§¤ì™„ë£Œ",
+	                paymentId,
+	                game_id,
+	                seat_id,
+	                "ì˜ˆë§¤ì™„ë£Œ");
+
+	        if (inserted != 1) {
+	            throw new IllegalStateException(
+	                    "ì¢Œì„ ì˜ˆë§¤ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤. ë‹¤ì‹œ ì‹œë„í•´ ì£¼ì„¸ìš”.");
+	        }
+	    }
+	}
+	
+	public int selectUsedPointByPaymentId(String paymentId) {
+	
+	    String sql = "SELECT NVL(SUM(used_point), 0) "
+	               + "FROM reservation "
+	               + "WHERE payment_id = ?";
+	
+	    return jdbc.queryForObject(
+	            sql,
+	            Integer.class,
+	            paymentId
+	    );
+	}
+
+	public int selectActiveReservationCountByPaymentId(String paymentId) {
+	
+	    String sql = "SELECT COUNT(*) "
+	               + "FROM reservation "
+	               + "WHERE payment_id = ? "
+	               + "AND status = ?";
+	
+	    return jdbc.queryForObject(
+	            sql,
+	            Integer.class,
+	            paymentId,
+	            "ì˜ˆë§¤ì™„ë£Œ"
+	    );
+	}
+	
+	public String selectMemberIdByPaymentId(String paymentId) {
+	
+	    String sql = "SELECT member_id "
+	               + "FROM reservation "
+	               + "WHERE payment_id = ? "
+	               + "AND ROWNUM = 1";
+	
+	    return jdbc.queryForObject(
+	            sql,
+	            String.class,
+	            paymentId
+	    );
+	}
+
 }

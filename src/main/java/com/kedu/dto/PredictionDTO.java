@@ -8,7 +8,7 @@ public class PredictionDTO {
 	private int game_id;
 	private Timestamp start_date;
 	private Timestamp end_date;
-	private int winner;
+	private Integer winner;
 	
 	public PredictionDTO () {}
 
@@ -52,11 +52,11 @@ public class PredictionDTO {
 		this.end_date = end_date;
 	}
 
-	public int getWinner() {
+	public Integer getWinner() {
 		return winner;
 	}
 
-	public void setWinner(int winner) {
+	public void setWinner(Integer winner) {
 		this.winner = winner;
 	}
 	
