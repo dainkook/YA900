@@ -214,25 +214,25 @@ tbody tr:hover {
 	.card-title h2 {
 		font-size: 17px;
 	}
-	
 }
+
 .detail-btn {
-    display: inline-block;
-    padding: 8px 12px;
-    color: #476aaa;
-    background: white;
-    border: 1px solid #476aaa;
-    border-radius: 6px;
-    text-decoration: none;
-    font-size: 12px;
-    font-weight: bold;
-    white-space: nowrap;
-    transition: all 0.2s ease;
+	display: inline-block;
+	padding: 8px 12px;
+	color: #476aaa;
+	background: white;
+	border: 1px solid #476aaa;
+	border-radius: 6px;
+	text-decoration: none;
+	font-size: 12px;
+	font-weight: bold;
+	white-space: nowrap;
+	transition: all 0.2s ease;
 }
 
 .detail-btn:hover {
-    color: white;
-    background: #476aaa;
+	color: white;
+	background: #476aaa;
 }
 </style>
 </head>
@@ -280,7 +280,7 @@ tbody tr:hover {
 
 					<div class="table-scroll">
 						<table>
-							
+
 							<thead>
 								<tr>
 									<th style="width: 7%;">번호</th>
@@ -291,7 +291,7 @@ tbody tr:hover {
 									<th style="width: 14%;">상세</th>
 								</tr>
 							</thead>
-							
+
 
 							<tbody>
 
@@ -299,45 +299,32 @@ tbody tr:hover {
 									varStatus="status">
 
 									<tr>
-    <td>${status.count}</td>
+										<td>${status.count}</td>
 
-    <td>
-        <c:out value="${history.playDate}" />
-    </td>
+										<td><c:out value="${history.playDate}" /></td>
 
-    <td>
-        <c:out value="${history.totalCount}" />문제
-    </td>
+										<td><c:out value="${history.totalCount}" />문제</td>
 
-    <td class="score">
-        <c:out value="${history.correctCount}" />
-        /
-        <c:out value="${history.totalCount}" />
-    </td>
+										<td class="score"><c:out value="${history.correctCount}" />
+											/ <c:out value="${history.totalCount}" /></td>
 
-    <td>
-        <c:choose>
-            <c:when test="${history.totalCount > 0}">
-                <span class="rate">
-                    <fmt:formatNumber
-                        value="${history.correctCount * 100 / history.totalCount}"
-                        maxFractionDigits="0" />%
-                </span>
-            </c:when>
-            <c:otherwise>
+										<td><c:choose>
+												<c:when test="${history.totalCount > 0}">
+													<span class="rate"> <fmt:formatNumber
+															value="${history.correctCount * 100 / history.totalCount}"
+															maxFractionDigits="0" />%
+													</span>
+												</c:when>
+												<c:otherwise>
                 -
             </c:otherwise>
-        </c:choose>
-    </td>
+											</c:choose></td>
 
-    <%-- 해당 퀴즈 기록의 상세 페이지로 이동 --%>
-    <td>
-        <a class="detail-btn"
-           href="${pageContext.request.contextPath}/quiz/history/detail?resultId=${history.resultId}">
-            상세 보기
-        </a>
-    </td>
-</tr>
+										<%-- 해당 퀴즈 기록의 상세 페이지로 이동 --%>
+										<td><a class="detail-btn"
+											href="${pageContext.request.contextPath}/quiz/history/detail?resultId=${history.resultId}">
+												상세 보기 </a></td>
+									</tr>
 
 								</c:forEach>
 
