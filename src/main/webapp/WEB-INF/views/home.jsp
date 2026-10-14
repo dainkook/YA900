@@ -1448,7 +1448,7 @@ body {
 
 				<div class="game-list">
 
-					<c:forEach var="game" items="${scheduleList}">
+					<c:forEach var="game" items="${bookingList}">
 
 						<div class="game-card"
 							onclick="showGame(
