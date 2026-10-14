@@ -123,4 +123,10 @@ public class UsersDAO {
             ") where ranking <=5 order by ranking";
       return jdbc.queryForList(sql);
 }
+   public int withdraw(String id) {
+	   String sql = "delete from users where id =?";
+	   
+	   return jdbc.update(sql ,id);
+	   
+   }
 }
