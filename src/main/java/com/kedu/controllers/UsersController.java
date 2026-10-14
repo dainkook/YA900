@@ -91,7 +91,6 @@ public class UsersController {
         String phone = phone1 + phone2 + phone3;
         String birthString = birth_year + "-" + birth_month + "-" + birth_day;
         Timestamp birth = Timestamp.valueOf(birthString + " 00:00:00");
-      
         dto.setPhone(phone);
         dto.setBirth(birth);
 
@@ -137,7 +136,7 @@ public class UsersController {
         }
 
         session.setAttribute("id", result.getId());
-
+        session.setAttribute("team", result.getTeam());
         return "redirect:/";
     }
 
@@ -169,7 +168,7 @@ public class UsersController {
         Boolean verified = (Boolean) session.getAttribute("emailVerified");
 
         if (verified == null || !verified) {
-            model.addAttribute("message", "이메일 인증을 완료해주세요.");
+            model.addAttribute("message", "�씠硫붿씪 �씤利앹쓣 �셿猷뚰빐二쇱꽭�슂.");
             return "member/finduserid";
         }
 
@@ -178,7 +177,7 @@ public class UsersController {
         model.addAttribute("id", id);
 
         if (id == null) {
-            model.addAttribute("message", "일치하는 회원 정보를 찾을 수 없습니다.");
+            model.addAttribute("message", "�씪移섑븯�뒗 �쉶�썝 �젙蹂대�� 李얠쓣 �닔 �뾾�뒿�땲�떎.");
         }
 
         session.removeAttribute("emailVerified");
@@ -198,8 +197,8 @@ public class UsersController {
 
         emailService.sendEmail(
                 email,
-                "이메일 인증번호 안내",
-                "이메일 인증번호는 " + code + " 입니다."
+                "�씠硫붿씪 �씤利앸쾲�샇 �븞�궡",
+                "�씠硫붿씪 �씤利앸쾲�샇�뒗 " + code + " �엯�땲�떎."
         );
 
         return "success";
@@ -338,7 +337,6 @@ public class UsersController {
         );
 
         if (result > 0) {
-
             loginUser.setPhone(phone);
             loginUser.setEmail(email);
             loginUser.setZipcode(zipcode);

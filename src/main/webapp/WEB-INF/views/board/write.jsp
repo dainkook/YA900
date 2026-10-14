@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -22,7 +23,7 @@
 }
 
 html {
-    scroll-behavior: smooth;
+	scroll-behavior: smooth;
 }
 
 body {
@@ -202,6 +203,60 @@ body {
 	border-radius: 10px;
 	padding: 0 35px;
 	box-shadow: 0 5px 20px rgba(20, 30, 60, 0.035);
+}
+
+/* 게시판 선택 */
+.board-select {
+	padding: 20px 0;
+	border-bottom: 1px solid #e5e7ec;
+}
+
+.board-select-title {
+	display: block;
+	margin-bottom: 15px;
+	font-weight: bold;
+	color: #171f46;
+}
+
+.board-dropdown-menu {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
+.board-option {
+	min-height: 43px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	padding: 8px 15px;
+	border: 1px solid #d5dbea;
+	border-radius: 6px;
+	background-color: white;
+	color: #3c4562;
+	font-size: 14px;
+	font-weight: bold;
+	cursor: pointer;
+	transition: 0.2s ease;
+}
+
+.board-option img {
+	width: 25px;
+	height: 25px;
+	object-fit: contain;
+}
+
+.board-option:hover {
+	border-color: #476aaa;
+	background-color: #f0f3fb;
+}
+
+.board-option.selected {
+	border: 2px solid #293d78;
+	background-color: #293d78;
+	color: white;
+	box-shadow: 0 3px 8px rgba(23, 31, 70, 0.15);
 }
 
 /* 제목 영역 */
@@ -394,6 +449,7 @@ body {
 	background: #476aaa;
 	color: white;
 }
+
 .header>.logo:hover {
 	cursor: pointer;
 }
@@ -426,10 +482,10 @@ body {
 				<a href="#">축구</a>
 
 				<div class="sub-menu">
-					<a href="#">예매</a> 
-					<a href="#">경기일정</a> 
-					<a href="#">팀순위</a> 
-					<a href="#">선수순위</a> 
+					<a href="#">예매</a>
+					<a href="#">경기일정</a>
+					<a href="#">팀순위</a>
+					<a href="#">선수순위</a>
 					<a href="#">게시판</a>
 				</div>
 			</div>
@@ -439,9 +495,9 @@ body {
 				<a href="#">미니게임</a>
 
 				<div class="sub-menu">
-					<a href="#">상식 퀴즈</a> 
-					<a href="#">OX 퀴즈</a> 
-					<a href="#">승부예측</a> 
+					<a href="#">상식 퀴즈</a>
+					<a href="#">OX 퀴즈</a>
+					<a href="#">승부예측</a>
 					<a href="#">게임 랭킹</a>
 				</div>
 			</div>
@@ -449,46 +505,47 @@ body {
 
 		<div class="member-menu">
 
-    <c:choose>
+			<c:choose>
+				<c:when test="${not empty sessionScope.id}">
+					<span>${sessionScope.id}님</span>
 
-        <c:when test="${not empty sessionScope.id}">
-            <span>${sessionScope.id}님</span>
+					<button class="login-btn"
+						onclick="location.href='${pageContext.request.contextPath}/mypage'">
+						마이페이지
+					</button>
 
-            <button class="login-btn"
-                    onclick="location.href='${pageContext.request.contextPath}/mypage'">
-                마이페이지
-            </button>
+					<form action="${pageContext.request.contextPath}/logout"
+						method="post">
+						<button type="submit" class="sign-btn">
+							로그아웃
+						</button>
+					</form>
+				</c:when>
 
-            <form action="${pageContext.request.contextPath}/logout"
-                  method="post">
-                <button type="submit" class="sign-btn">
-                    로그아웃
-                </button>
-            </form>
-        </c:when>
+				<c:otherwise>
+					<button class="login-btn"
+						onclick="location.href='${pageContext.request.contextPath}/login'">
+						로그인
+					</button>
 
-        <c:otherwise>
-            <button class="login-btn"
-                    onclick="location.href='${pageContext.request.contextPath}/login'">
-                로그인
-            </button>
-
-            <button class="sign-btn"
-                    onclick="location.href='${pageContext.request.contextPath}/signup'">
-                회원가입
-            </button>
-        </c:otherwise>
-    </c:choose>
+					<button class="sign-btn"
+						onclick="location.href='${pageContext.request.contextPath}/signup'">
+						회원가입
+					</button>
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</div>
+
 	<!-- 오른쪽 퀵메뉴 -->
 	<div class="quick-menu">
-		   <div class="menu">QUICK MENU</div>
-		   <div onclick="location.href='${pageContext.request.contextPath}/'">홈</div>
-		   <div onclick="location.href='${pageContext.request.contextPath}/#reservation'">예매</div>
-		   <div onclick="location.href='${pageContext.request.contextPath}/board/board?cpage=1'">게시판</div>
-		   <div>마이페이지</div>
+		<div class="menu">QUICK MENU</div>
+		<div onclick="location.href='${pageContext.request.contextPath}/'">홈</div>
+		<div onclick="location.href='${pageContext.request.contextPath}/#reservation'">예매</div>
+		<div onclick="location.href='${pageContext.request.contextPath}/board/board?cpage=1'">게시판</div>
+		<div>마이페이지</div>
 	</div>
+
 	<div class="container">
 
 		<div class="page-heading">
@@ -499,52 +556,113 @@ body {
 			<div class="category">COMMUNITY / WRITE</div>
 		</div>
 
-		
 		<form action="${pageContext.request.contextPath}/board/writeComplete"
-		    enctype="multipart/form-data" method="post">
+			enctype="multipart/form-data" method="post">
 
 			<div class="body">
-					
-			<!-- 게시판 안내 -->
-			<div class="board-select" style="
-			    padding: 20px 0;
-			    border-bottom: 1px solid #e5e7ec;
-			">
-			    <span style="
-			        font-weight: bold;
-			        margin-right: 15px;
-			        color: #171f46;
-			    ">작성 게시판</span>
-			
-			    <span style="
-			        display: inline-block;
-			        padding: 10px 15px;
-			        background: #f5f7fc;
-			        border: 1px solid #d5d8df;
-			        border-radius: 5px;
-			        color: #293d78;
-			        font-weight: bold;
-			    ">
-			        ${selectedTeam} 게시판
-			    </span>
-			
-			    <span style="
-			        margin-left: 10px;
-			        font-size: 13px;
-			        color: #888;
-			    ">
-			        소속 구단 게시판에 등록됩니다.
-			    </span>
-			</div>
-			
+
+				<!-- 게시판 선택 -->
+				<div class="board-select">
+					<span class="board-select-title">작성 게시판</span>
+
+					<input type="hidden" id="teamSubmit" name="team" value="${selectedTeam}">
+					<div id="boardDropdownMenu" class="board-dropdown-menu">
+						<button type="button" class="board-option selected" data-team="">
+    						<span style="font-size: 22px;">⚾</span>
+    						<span>자유게시판</span>
+						</button>
+
+						<button type="button"
+							class="board-option ${selectedTeam == '두산' ? 'selected' : ''}"
+							data-team="두산">
+							<img src="${pageContext.request.contextPath}/resources/images/team/doosan.png"
+								alt="두산 베어스">
+							<span>두산 베어스</span>
+						</button>
+
+						<button type="button"
+							class="board-option ${selectedTeam == 'LG' ? 'selected' : ''}"
+							data-team="LG">
+							<img src="${pageContext.request.contextPath}/resources/images/team/lg.png"
+								alt="LG 트윈스">
+							<span>LG 트윈스</span>
+						</button>
+
+						<button type="button"
+							class="board-option ${selectedTeam == 'KIA' ? 'selected' : ''}"
+							data-team="KIA">
+							<img src="${pageContext.request.contextPath}/resources/images/team/kia.png"
+								alt="KIA 타이거즈">
+							<span>KIA 타이거즈</span>
+						</button>
+
+						<button type="button"
+							class="board-option ${selectedTeam == '삼성' ? 'selected' : ''}"
+							data-team="삼성">
+							<img src="${pageContext.request.contextPath}/resources/images/team/samsung.png"
+								alt="삼성 라이온즈">
+							<span>삼성 라이온즈</span>
+						</button>
+
+						<button type="button"
+							class="board-option ${selectedTeam == 'SSG' ? 'selected' : ''}"
+							data-team="SSG">
+							<img src="${pageContext.request.contextPath}/resources/images/team/ssg.png"
+								alt="SSG 랜더스">
+							<span>SSG 랜더스</span>
+						</button>
+
+						<button type="button"
+							class="board-option ${selectedTeam == 'KT' ? 'selected' : ''}"
+							data-team="KT">
+							<img src="${pageContext.request.contextPath}/resources/images/team/kt.png"
+								alt="KT 위즈">
+							<span>KT 위즈</span>
+						</button>
+
+						<button type="button"
+							class="board-option ${selectedTeam == '롯데' ? 'selected' : ''}"
+							data-team="롯데">
+							<img src="${pageContext.request.contextPath}/resources/images/team/lotte.png"
+								alt="롯데 자이언츠">
+							<span>롯데 자이언츠</span>
+						</button>
+
+						<button type="button"
+							class="board-option ${selectedTeam == '한화' ? 'selected' : ''}"
+							data-team="한화">
+							<img src="${pageContext.request.contextPath}/resources/images/team/hanhwa.png"
+								alt="한화 이글스">
+							<span>한화 이글스</span>
+						</button>
+
+						<button type="button"
+							class="board-option ${selectedTeam == 'NC' ? 'selected' : ''}"
+							data-team="NC">
+							<img src="${pageContext.request.contextPath}/resources/images/team/nc.png"
+								alt="NC 다이노스">
+							<span>NC 다이노스</span>
+						</button>
+
+						<button type="button"
+							class="board-option ${selectedTeam == '키움' ? 'selected' : ''}"
+							data-team="키움">
+							<img src="${pageContext.request.contextPath}/resources/images/team/kiwoom.png"
+								alt="키움 히어로즈">
+							<span>키움 히어로즈</span>
+						</button>
+					</div>
+				</div>
+
 				<div class="title">
 					<div id="title" contenteditable="true"></div>
 					<input id="titleSubmit" type="hidden" name="title" value="">
 				</div>
 
 				<div class="attachments">
-					<input type="file" name="files"> <input type="file"
-						name="files"> <input type="file" name="files">
+					<input type="file" name="files">
+					<input type="file" name="files">
+					<input type="file" name="files">
 				</div>
 
 				<div class="contents">
@@ -559,76 +677,83 @@ body {
 					</div>
 				</div>
 			</div>
-
 		</form>
-
 	</div>
 
 	<script>
 	$("#contents").summernote({
-	    height: 400,
-	    lang: "ko-KR",
-	    placeholder: "게시글 내용을 입력하세요.",
-	    toolbar: [
-	        ["font", ["fontname", "fontsize"]],
-	        ["style", ["bold", "italic", "underline", "strikethrough"]],
-	        ["color", ["color"]],
-	        ["para", ["ul", "ol", "paragraph"]],
-	        ["insert", ["link", "picture"]],
-	        ["view", ["fullscreen", "codeview"]]
-	    ],
-	    callbacks: {
-	        onImageUpload: function(files) {
-	            uploadImage(files[0]);
-	        }
-	    }
+		height: 400,
+		lang: "ko-KR",
+		placeholder: "게시글 내용을 입력하세요.",
+		toolbar: [
+			["font", ["fontname", "fontsize"]],
+			["style", ["bold", "italic", "underline", "strikethrough"]],
+			["color", ["color"]],
+			["para", ["ul", "ol", "paragraph"]],
+			["insert", ["link", "picture"]],
+			["view", ["fullscreen", "codeview"]]
+		],
+		callbacks: {
+			onImageUpload: function(files) {
+				uploadImage(files[0]);
+			}
+		}
 	});
-	
+
 	function uploadImage(file) {
+		let formData = new FormData();
+		formData.append("file", file);
 
-	    let formData = new FormData();
-	    formData.append("file", file);
-
-	    $.ajax({
-	        url: "/board/uploadImage",
-	        type: "POST",
-	        data: formData,
-	        processData: false,
-	        contentType: false,
-	        success: function(result) {
-
-	            if(result.url) {
-	                $("#contents").summernote("insertImage", result.url);
-	            } else {
-	                alert(result.error);
-	            }
-	        }
-	    });
+		$.ajax({
+			url: "/board/uploadImage",
+			type: "POST",
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: function(result) {
+				if (result.url) {
+					$("#contents").summernote("insertImage", result.url);
+				} else {
+					alert(result.error);
+				}
+			}
+		});
 	}
 
+	/* 게시판 선택 */
+	$(".board-option").on("click", function() {
+		$(".board-option").removeClass("selected");
+		$(this).addClass("selected");
 
-		$("#cancel").on("click", function() {
-		    const base = "${pageContext.request.contextPath}/board/board";
-		    const team = "${selectedTeam}";
-	
-		    if (team) {
-		        location.href = base + "?team=" + encodeURIComponent(team) + "&cpage=1";
-		    } else {
-		        location.href = base + "?cpage=1";
-		    }
-		});
+		$("#teamSubmit").val($(this).data("team"));
+	});
 
-		$("form").on("submit", function(e) {
-			let title = $("#title").text().trim();
-			let contents = $("#contents").summernote("code");
-			if (title == "" || $("#contents").summernote("isEmpty")) {
-				e.preventDefault();
-				alert("제목과 내용을 입력해주세요.");
-				return;
-			}
-			$("#titleSubmit").val($("#title").html());
-			$("#contentSubmit").val(contents);
-		});
+	/* 취소 */
+	$("#cancel").on("click", function() {
+		const base = "${pageContext.request.contextPath}/board/board";
+		const team = "${selectedTeam}";
+
+		if (team) {
+			location.href = base + "?team=" + encodeURIComponent(team) + "&cpage=1";
+		} else {
+			location.href = base + "?cpage=1";
+		}
+	});
+
+	/* 게시글 등록 */
+	$(".container > form").on("submit", function(e) {
+		let title = $("#title").text().trim();
+		let contents = $("#contents").summernote("code");
+
+		if (title == "" || $("#contents").summernote("isEmpty")) {
+			e.preventDefault();
+			alert("제목과 내용을 입력해주세요.");
+			return;
+		}
+
+		$("#titleSubmit").val($("#title").html());
+		$("#contentSubmit").val(contents);
+	});
 	</script>
 
 </body>
