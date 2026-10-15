@@ -19,6 +19,7 @@ import com.kedu.dao.PlayerDAO;
 import com.kedu.dao.PredictionDAO;
 import com.kedu.dao.PredictionResultDAO;
 import com.kedu.dao.QuizDAO;
+import com.kedu.dao.QuizResultDAO;
 import com.kedu.dao.UsersDAO;
 import com.kedu.dto.MyTeamDTO;
 import com.kedu.dto.PlayerDTO;
@@ -29,341 +30,318 @@ import com.kedu.dto.QuizDTO;
 @Controller
 public class MiniGameController {
 
-    @Autowired
-    private PlayerDAO playerDAO;
+	@Autowired
+	private PlayerDAO playerDAO;
 
-  
-    @Autowired
-    private PredictionDAO predictionDAO;
-    
-    @Autowired 
-    private PredictionResultDAO predictionresultDAO;
+	@Autowired
+	private PredictionDAO predictionDAO;
 
-    @Autowired
-    private QuizDAO quizDAO;
-    
-   @Autowired
-   private UsersDAO usersDAO;
-    
-  
+	@Autowired
+	private PredictionResultDAO predictionresultDAO;
 
-    @RequestMapping("/myteam")
-    public String myTeam(
-            Model model,
-            HttpSession session,
-            @RequestParam(value = "edit", required = false) String edit) {
+	@Autowired
+	private QuizDAO quizDAO;
 
-        String id = (String) session.getAttribute("id");
+	@Autowired
+	private UsersDAO usersDAO;
 
-        if (id == null) {
-            return "redirect:/login";
-        }
+	@Autowired
+	private QuizResultDAO quizResultDAO;
 
-        int count = playerDAO.countMyTeam(id);
+	@RequestMapping("/myteam")
+	public String myTeam(Model model, HttpSession session,
+			@RequestParam(value = "edit", required = false) String edit) {
 
-        if (count > 0 && !"true".equals(edit)) {
-            return "redirect:/myteamresult";
-        }
+		String id = (String) session.getAttribute("id");
 
-        List<PlayerDTO> playerList = playerDAO.selectAll();
-        List<PlayerDTO> myPlayerList = playerDAO.selectMyTeamPlayers(id);
+		if (id == null) {
+			return "redirect:/login";
+		}
 
-        model.addAttribute("playerList", playerList);
-        model.addAttribute("myPlayerList", myPlayerList);
+		int count = playerDAO.countMyTeam(id);
 
-        return "minigame/myteam";
-    }
+		if (count > 0 && !"true".equals(edit)) {
+			return "redirect:/myteamresult";
+		}
 
+		List<PlayerDTO> playerList = playerDAO.selectAll();
+		List<PlayerDTO> myPlayerList = playerDAO.selectMyTeamPlayers(id);
 
-    @RequestMapping(value = "/myteamresult", method = RequestMethod.GET)
-    public String myTeamResult(HttpSession session, Model model) {
+		model.addAttribute("playerList", playerList);
+		model.addAttribute("myPlayerList", myPlayerList);
 
-        String id = (String) session.getAttribute("id");
-
-        if (id == null) {
-            return "redirect:/login";
-        }
-
-        int result = playerDAO.countMyTeam(id);
-        List<PlayerDTO> myPlayerList = playerDAO.selectMyTeamPlayers(id);
-
-        model.addAttribute("myPlayerList", myPlayerList);
-
-        if (result > 0) {
-            return "minigame/myteamresult";
-        } else {
-            return "minigame/myteam";
-        }
-    }
-
-    @RequestMapping(value = "/myteamresult", method = RequestMethod.POST)
-    public String myTeamResultPost(
-            MyTeamDTO dto,
-            HttpSession session,
-            Model model) {
-
-        String id = (String) session.getAttribute("id");
-
-        if (id == null) {
-            return "redirect:/login";
-        }
-
-        int count = playerDAO.countMyTeam(id);
-
-        if (count > 0) {
-            playerDAO.updateMyTeam(dto, id);
-        } else {
-            playerDAO.addMyTeam(dto, id);
-        }
-
-        return "redirect:/myteamresult";
-    }
-
-    @RequestMapping("/prediction")
-    public String prediction(Model model, HttpSession session) {
-        String id = (String) session.getAttribute("id");
-        List<Integer> gameIds = predictionDAO.searchGameId();
-        for (int i = 0; i < gameIds.size(); i++) {
-            predictionDAO.insertPrediction(gameIds.get(i));
-        }
-        List<PredictionViewDTO> predictionList = predictionDAO.selectAllPredictions();
-        model.addAttribute("predictionList", predictionList);
-        if (id != null) {
-        	predictionresultDAO.isUserCorrect(id);
-        	model.addAttribute("myPoint", predictionresultDAO.getUserPoint(id));
-        	model.addAttribute("predictionCount", predictionresultDAO.getPredictionCount(id));
-        	model.addAttribute("hitRate", predictionresultDAO.getHitRate(id));
-            model.addAttribute("myPredictionList", predictionresultDAO.selectMyPredictions(id));
-        }
-
-        return "minigame/prediction";
-    }
-
-    @RequestMapping(value = "/prediction/submit", method = RequestMethod.POST)
-    public String submitPrediction(@RequestParam("predictionIds") List<Integer> predictionIds, @RequestParam("choices") List<Integer> choices, HttpSession session) {
-
-        String id = (String) session.getAttribute("id");
-
-        for (int i = 0; i < predictionIds.size(); i++) {
-            int predictionId = predictionIds.get(i);
-            int choice = choices.get(i);
-
-            Integer teamId = predictionDAO.selectTeamIdForChoice(predictionId, choice);
-          
-            PredictionResultDTO dto = new PredictionResultDTO();
-            dto.setPrediction_id(predictionId);
-            dto.setMember_id(id);
-            dto.setTeam_id(teamId);
-            dto.setPredicted_result(choice);
-
-            predictionresultDAO.insertPredictionResult(dto);
-        }
-
-	    return "redirect:/prediction";
+		return "minigame/myteam";
 	}
 
-   
+	@RequestMapping(value = "/myteamresult", method = RequestMethod.GET)
+	public String myTeamResult(HttpSession session, Model model) {
 
-    @RequestMapping("/quiz")
-    public String quiz(HttpSession session, Model model) {
+		String id = (String) session.getAttribute("id");
 
-   
-        int quizCount = quizDAO.selectQuizCount();
+		if (id == null) {
+			return "redirect:/login";
+		}
 
-   
-        int playCount = quizDAO.selectQuizPlayCount();
+		int result = playerDAO.countMyTeam(id);
+		List<PlayerDTO> myPlayerList = playerDAO.selectMyTeamPlayers(id);
 
-  
-        int pointPerCorrect = quizDAO.selectPointPerCorrect();
+		model.addAttribute("myPlayerList", myPlayerList);
 
+		if (result > 0) {
+			return "minigame/myteamresult";
+		} else {
+			return "minigame/myteam";
+		}
+	}
 
-        int maxPoint = playCount * pointPerCorrect;
+	@RequestMapping(value = "/myteamresult", method = RequestMethod.POST)
+	public String myTeamResultPost(MyTeamDTO dto, HttpSession session, Model model) {
 
-        model.addAttribute("quizCount", quizCount);
-        model.addAttribute("playCount", playCount);
-        model.addAttribute("pointPerCorrect", pointPerCorrect);
-        model.addAttribute("maxPoint", maxPoint);
+		String id = (String) session.getAttribute("id");
 
-  
-        model.addAttribute("rankingList", quizDAO.selectQuizRanking());
+		if (id == null) {
+			return "redirect:/login";
+		}
 
-        String id = (String) session.getAttribute("id");
+		int count = playerDAO.countMyTeam(id);
 
-        if (id != null) {
-            model.addAttribute("summary", quizDAO.selectQuizSummary(id));
-            model.addAttribute("latest", quizDAO.selectLatestQuizResult(id));
-            model.addAttribute("point", usersDAO.selectUser(id).getPoint());
-            
-            model.addAttribute("pointHistoryList",quizDAO.selectPointHistory(id));
-        }
+		if (count > 0) {
+			playerDAO.updateMyTeam(dto, id);
+		} else {
+			playerDAO.addMyTeam(dto, id);
+		}
 
-        return "minigame/quiz";
-    }
+		return "redirect:/myteamresult";
+	}
 
-    @RequestMapping(value = "/quiz/start", method = RequestMethod.GET)
-    public String quizStart(Model model, HttpSession session) {
+	@RequestMapping("/prediction")
+	public String prediction(Model model, HttpSession session) {
+		String id = (String) session.getAttribute("id");
+		List<Integer> gameIds = predictionDAO.searchGameId();
+		for (int i = 0; i < gameIds.size(); i++) {
+			predictionDAO.insertPrediction(gameIds.get(i));
+		}
+		List<PredictionViewDTO> predictionList = predictionDAO.selectAllPredictions();
+		model.addAttribute("predictionList", predictionList);
+		if (id != null) {
+			predictionresultDAO.isUserCorrect(id);
+			model.addAttribute("myPoint", predictionresultDAO.getUserPoint(id));
+			model.addAttribute("predictionCount", predictionresultDAO.getPredictionCount(id));
+			model.addAttribute("hitRate", predictionresultDAO.getHitRate(id));
+			model.addAttribute("myPredictionList", predictionresultDAO.selectMyPredictions(id));
+		}
 
-        String id = (String) session.getAttribute("id");
+		return "minigame/prediction";
+	}
 
-        if (id == null) {
-            return "redirect:/login";
-        }
+	@RequestMapping(value = "/prediction/submit", method = RequestMethod.POST)
+	public String submitPrediction(@RequestParam("predictionIds") List<Integer> predictionIds,
+			@RequestParam("choices") List<Integer> choices, HttpSession session) {
 
-  
-        List<QuizDTO> list = quizDAO.selectQuiz();
+		String id = (String) session.getAttribute("id");
 
-     
-        if (list == null || list.isEmpty()) {
-            model.addAttribute("list", list);
-            return "minigame/quizPlay";
-        }
+		for (int i = 0; i < predictionIds.size(); i++) {
+			int predictionId = predictionIds.get(i);
+			int choice = choices.get(i);
 
-      
-        model.addAttribute("list", list);
+			Integer teamId = predictionDAO.selectTeamIdForChoice(predictionId, choice);
 
-        return "minigame/quizPlay";
-    }
+			PredictionResultDTO dto = new PredictionResultDTO();
+			dto.setPrediction_id(predictionId);
+			dto.setMember_id(id);
+			dto.setTeam_id(teamId);
+			dto.setPredicted_result(choice);
 
-   
-    
-    @ResponseBody
-    @RequestMapping(value = "/quiz/submit", method = RequestMethod.POST)
-    public String submitQuiz(
-            @RequestParam(value = "quizIds", required = false)
-            List<Integer> quizIds,
+			predictionresultDAO.insertPredictionResult(dto);
+		}
 
-            @RequestParam(value = "userAnswers", required = false)
-            List<String> userAnswers,
+		return "redirect:/prediction";
+	}
 
-            HttpSession session,
-            javax.servlet.http.HttpServletResponse response) {
+	@RequestMapping("/quiz")
+	public String quiz(HttpSession session, Model model) {
 
-    
-        String memberId = (String) session.getAttribute("id");
+		int quizCount = quizDAO.selectQuizCount();
 
-        if (memberId == null || memberId.trim().isEmpty()) {
-            response.setStatus(401);
+		int playCount = quizDAO.selectQuizPlayCount();
 
-            return "login plz";
+		int pointPerCorrect = quizDAO.selectPointPerCorrect();
 
-        }
+		int maxPoint = playCount * pointPerCorrect;
 
-        if (quizIds == null || userAnswers == null
-                || quizIds.isEmpty()
-                || quizIds.size() != userAnswers.size()
-                || quizIds.size() > 10) {
+		model.addAttribute("quizCount", quizCount);
+		model.addAttribute("playCount", playCount);
+		model.addAttribute("pointPerCorrect", pointPerCorrect);
+		model.addAttribute("maxPoint", maxPoint);
 
-            response.setStatus(400);
-            return "no data quiz";
+		model.addAttribute("rankingList", quizDAO.selectQuizRanking());
 
-        }
+		String id = (String) session.getAttribute("id");
 
-     
-        Set<Integer> uniqueQuizIds = new HashSet<Integer>();
+		  if (id != null) {
+		        // 기존 로그인 사용자 정보
+		        model.addAttribute("summary", quizDAO.selectQuizSummary(id));
+		        model.addAttribute("latest", quizDAO.selectLatestQuizResult(id));
+		        model.addAttribute("point", usersDAO.selectUser(id).getPoint());
+		        model.addAttribute("pointHistoryList", quizDAO.selectPointHistory(id));
 
-        for (int i = 0; i < quizIds.size(); i++) {
+		        // 오늘 퀴즈 참여 횟수 조회
+		        int todayCount = quizResultDAO.countTodayPlays(id);
 
-            Integer quizId = quizIds.get(i);
-            String answer = userAnswers.get(i);
+		        // JSP로 참여 횟수 전달
+		        model.addAttribute("todayCount", todayCount);
 
-            if (quizId == null || quizId <= 0
-                    || !uniqueQuizIds.add(quizId)) {
+		    } else {
+		        // 비로그인 상태에서는 참여 횟수를 0으로 표시
+		        model.addAttribute("todayCount", 0);
+		    }
 
-                response.setStatus(400);
-                return "id boom";
+		return "minigame/quiz";
+	}
 
-            }
+	@RequestMapping(value = "/quiz/start", method = RequestMethod.GET)
+	public String quizStart(Model model, HttpSession session) {
 
-            if (answer == null
-                    || !("O".equals(answer) || "X".equals(answer))) {
+		String id = (String) session.getAttribute("id");
 
-                response.setStatus(400);
+		// 로그인 확인
+		if (id == null) {
+			return "redirect:/login";
+		}
 
-                return "O or X";
+		// 오늘 퀴즈 참여 횟수 조회
+		int todayCount = quizResultDAO.countTodayPlays(id);
 
-            }
-        }
+		// 하루 2회 이상 참여했다면 퀴즈 시작 차단
+		if (todayCount >= 2) {
+			return "redirect:/quiz?limit=1";
+		}
 
-        try {
-        	int correctCount = quizDAO.saveQuizResult(memberId, quizIds, userAnswers);
-        	int earnedPoint = correctCount * 10;
-        	int updateRows = usersDAO.updatePoint(memberId, earnedPoint);
-        	
-        	if(updateRows !=1){
-        		throw new IllegalStateException("포인트 적립에 실패했습니다.");
-        	}
-        		return "OK";
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.setStatus(500);
-            return "result quiz save X";
+		// 퀴즈 문제 조회
+		List<QuizDTO> list = quizDAO.selectQuiz();
 
-        }
-    }
-  
-    @RequestMapping(value = "/quiz/history", method = RequestMethod.GET)
-    public String quizHistory(HttpSession session, Model model) {
+		if (list == null || list.isEmpty()) {
+			model.addAttribute("list", list);
+			return "minigame/quizPlay";
+		}
 
-        
-        String id = (String) session.getAttribute("id");
+		model.addAttribute("list", list);
 
-        
-        if (id == null) {
-            return "redirect:/login";
-        }
+		return "minigame/quizPlay";
+	}
 
-        
-        List<Map<String, Object>> historyList =
-                quizDAO.selectHistory(id);
+	@ResponseBody
+	@RequestMapping(value = "/quiz/submit", method = RequestMethod.POST)
+	public String submitQuiz(@RequestParam(value = "quizIds", required = false) List<Integer> quizIds,
 
-  
-        model.addAttribute("historyList", historyList);
+			@RequestParam(value = "userAnswers", required = false) List<String> userAnswers,
 
-    
-        return "minigame/quizHistory";
-    }
-    
-  
-    @RequestMapping(value = "/quiz/history/detail", method = RequestMethod.GET)
-    public String quizHistoryDetail(
-            @RequestParam("resultId") int resultId,
-            HttpSession session,
-            Model model) {
+			HttpSession session, javax.servlet.http.HttpServletResponse response) {
 
- 
-        String id = (String) session.getAttribute("id");
+		String memberId = (String) session.getAttribute("id");
 
-   
-        if (id == null) {
-            return "redirect:/login";
-        }
+		if (memberId == null || memberId.trim().isEmpty()) {
+			response.setStatus(401);
 
-      
-        List<Map<String, Object>> detailList =
-                quizDAO.selectHistoryDetail(resultId, id);
+			return "login plz";
 
-     
-        if (detailList.isEmpty()) {
-            return "redirect:/quiz/history";
-        }
+		}
 
-        model.addAttribute("detailList", detailList);
-        model.addAttribute("resultId", resultId);
+		if (quizIds == null || userAnswers == null || quizIds.isEmpty() || quizIds.size() != userAnswers.size()
+				|| quizIds.size() > 10) {
 
-        return "minigame/quizHistoryDetail";
-    }
-    
-    @RequestMapping("/quiz/pointHistory")
-    	public String pointHistory(HttpSession session, Model model) {
-    	String memberId=(String) session.getAttribute("id");
-    	
-    	if(memberId == null) {
-    		return "redirect:/login";
-    	}
-    	List<Map<String, Object>> pointHistoryList =
-    			quizDAO.selectPointHistory(memberId);
-    	
-    	model.addAttribute("pointHistoryList", pointHistoryList);
-    	return "minigame/quiz";
-    }
+			response.setStatus(400);
+			return "no data quiz";
+
+		}
+
+		Set<Integer> uniqueQuizIds = new HashSet<Integer>();
+
+		for (int i = 0; i < quizIds.size(); i++) {
+
+			Integer quizId = quizIds.get(i);
+			String answer = userAnswers.get(i);
+
+			if (quizId == null || quizId <= 0 || !uniqueQuizIds.add(quizId)) {
+
+				response.setStatus(400);
+				return "id boom";
+
+			}
+
+			if (answer == null || !("O".equals(answer) || "X".equals(answer))) {
+
+				response.setStatus(400);
+
+				return "O or X";
+
+			}
+		}
+
+		try {
+			int correctCount = quizDAO.saveQuizResult(memberId, quizIds, userAnswers);
+			int earnedPoint = correctCount * 10;
+			int updateRows = usersDAO.updatePoint(memberId, earnedPoint);
+
+			if (updateRows != 1) {
+				throw new IllegalStateException("포인트 적립에 실패했습니다.");
+			}
+			return "OK";
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setStatus(500);
+			return "result quiz save X";
+
+		}
+	}
+
+	@RequestMapping(value = "/quiz/history", method = RequestMethod.GET)
+	public String quizHistory(HttpSession session, Model model) {
+
+		String id = (String) session.getAttribute("id");
+
+		if (id == null) {
+			return "redirect:/login";
+		}
+
+		List<Map<String, Object>> historyList = quizDAO.selectHistory(id);
+
+		model.addAttribute("historyList", historyList);
+
+		return "minigame/quizHistory";
+	}
+
+	@RequestMapping(value = "/quiz/history/detail", method = RequestMethod.GET)
+	public String quizHistoryDetail(@RequestParam("resultId") int resultId, HttpSession session, Model model) {
+
+		String id = (String) session.getAttribute("id");
+
+		if (id == null) {
+			return "redirect:/login";
+		}
+
+		List<Map<String, Object>> detailList = quizDAO.selectHistoryDetail(resultId, id);
+
+		if (detailList.isEmpty()) {
+			return "redirect:/quiz/history";
+		}
+
+		model.addAttribute("detailList", detailList);
+		model.addAttribute("resultId", resultId);
+
+		return "minigame/quizHistoryDetail";
+	}
+
+	@RequestMapping("/quiz/pointHistory")
+	public String pointHistory(HttpSession session, Model model) {
+		String memberId = (String) session.getAttribute("id");
+
+		if (memberId == null) {
+			return "redirect:/login";
+		}
+		List<Map<String, Object>> pointHistoryList = quizDAO.selectPointHistory(memberId);
+
+		model.addAttribute("pointHistoryList", pointHistoryList);
+		return "minigame/quiz";
+	}
 }
