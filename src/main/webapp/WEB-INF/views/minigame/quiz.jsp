@@ -901,9 +901,9 @@ tbody tr:hover {
 								<c:forEach var="rank" items="${rankingList}">
 									<tr>
 
-										<td><c:out value="${rank.rankno}" />위</td>
-										<td><c:out value="${rank.memberid}" /></td>
-										<td><c:out value="${rank.score}" />점</td>
+										<td><c:out value="${rank.ranking}" />위</td>
+										<td><c:out value="${rank.id}" /></td>
+										<td><c:out value="${rank.point}" />점</td>
 
 									</tr>
 								</c:forEach>
