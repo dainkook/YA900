@@ -381,5 +381,4 @@ public class UsersController {
         model.addAttribute("message", "회원 탈퇴에 실패했습니다.");
         return "member/withdraw";
     }
-    }
-}
+ }
