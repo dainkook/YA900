@@ -442,7 +442,10 @@ body {
 				</div>
 
 				<div class="question-label" id="questionLabel">QUESTION 01</div>
+
+				<!-- 문제 카테고리 표시 -->
 				<div class="question-category" id="questionCategory">일반</div>
+
 				<div class="question-content" id="questionContent"></div>
 
 				<div class="answer-buttons">
