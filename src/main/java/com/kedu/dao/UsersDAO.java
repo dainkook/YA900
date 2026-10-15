@@ -149,7 +149,8 @@ public class UsersDAO {
 }
    public int withdraw(String id) {
 	   String sql = "delete from users where id =?";
-	   
+	   String sql2 = "delete from board where writer = ?";
+	   jdbc.update(sql2, id);
 	   return jdbc.update(sql ,id);
 	   
 

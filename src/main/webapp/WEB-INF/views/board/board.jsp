@@ -49,7 +49,7 @@
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-<title>자유게시판</title>
+<title>게시판</title>
 
 <style>
 * {
@@ -953,7 +953,7 @@ body.theme-kiwoom {
 			<div class="title board-title-dropdown">
 				<h1>
 					<c:choose>
-						<c:when test="${empty param.team}">
+						<c:when test="${empty selectedTeam}">
 			            전체 게시판
 			        </c:when>
 					<c:otherwise>
@@ -975,6 +975,10 @@ body.theme-kiwoom {
 					<a class="team-item"
 						href="${pageContext.request.contextPath}/board/board?team=free&cpage=1">
 						<span style="font-size: 32px;">⚾</span> <span>자유게시판</span>
+					</a> 
+					<a class="team-item"
+						href="${pageContext.request.contextPath}/board/board?team=notice&cpage=1">
+						<span style="font-size: 32px;">⚾</span> <span>공지사항</span>
 					</a> 
 					<a class="team-item"
 						href="${pageContext.request.contextPath}/board/board?team=두산&cpage=1">
@@ -1046,8 +1050,11 @@ body.theme-kiwoom {
 						<option>내용</option>
 						<option>글쓴이</option>
 					</select> <input type="text" name="search" placeholder="검색할 게시글의 제목을 입력하세요">
-					<input id="option" type="hidden" name="option"> <input
-						type="hidden" name="cpage" value="1">
+					<input id="option" type="hidden" name="option"> 
+					<input type="hidden" name="cpage" value="1">
+					<c:if test="${selectedTeam=='공지'}">
+					<input type="hidden" name="type" value="notice">
+					</c:if>
 					<button type="submit">검색</button>
 				</form>
 			</div>
@@ -1072,8 +1079,14 @@ body.theme-kiwoom {
         								<img src="${i.teamLogo}" style="width:50px; height:40px">
     								</c:if>
 								</td>
-								<td><a href="/board/detail?seq=${i.board_seq}">
-										${i.title} </a></td>
+								<c:choose>
+								<c:when test="${selectedTeam=='공지'}">
+								<td><a href="/board/detail?type=notice&seq=${i.board_seq}">${i.title}</a></td>
+								</c:when>
+								<c:otherwise>
+								<td><a href="/board/detail?seq=${i.board_seq}">${i.title}</a></td>
+								</c:otherwise>
+								</c:choose>
 								<td>${i.writer}</td>
 								<td><fmt:formatDate value="${i.write_date}" pattern="yyyy-MM-dd"/></td>
 								<td>${i.view_count}</td>
@@ -1137,7 +1150,8 @@ let navi =
 let first = document.createElement("a");
 if(isSearch==false) {
 	first.setAttribute("href", "/board/board?cpage=1");
-		} else {first.setAttribute("href", "/board/search?option=" + option + "&search=" + search + "&cpage=1");
+		} else {
+			first.setAttribute("href", "/board/search?option=" + option + "&search=" + search + "&cpage=1");
 				}
 
 first.innerHTML = "<<";
@@ -1145,13 +1159,9 @@ navi.append(first);
 
 if (needPrev) { 
 	let prev = document.createElement("a"); 
-	
+
 	if (isSearch == false) { 
-		prev.setAttribute( 
-			"href", 
-			"/board/board?cpage=" 
-			+ (currentPage - naviCountPerPage)
-		); 
+		prev.setAttribute( "href", "/board/board?team=${team}&cpage=" + (currentPage - naviCountPerPage)); 
 	} else { 
 		prev.setAttribute( 
 			"href", 
@@ -1173,7 +1183,7 @@ for (let i = startNavi; i <= endNavi; i++) {
 	num.innerHTML = i;
 	navi.append(num);
 	} else {
-		num.setAttribute("href", "/board/search?option=" + option + "&search=" + search + "&cpage=" + i);
+		num.setAttribute( "href", "/board/board?team=${team}&cpage=" + (currentPage - naviCountPerPage)); 
 		num.innerHTML = i;
 		navi.append(num);
 	}
@@ -1184,7 +1194,7 @@ if (needNext) {
 	if(isSearch==false) {
 	next.setAttribute("href", "/board/board?cpage=" + (currentPage + naviCountPerPage));
 	} else {
-		next.setAttribute("href", "/board/search?option=" + option + "&search=" + search + "&cpage=" + (currentPage + naviCountPerPage));
+		next.setAttribute( "href", "/board/board?team=${team}&cpage=" + (currentPage - naviCountPerPage)); 
 	}
 	next.innerHTML = ">";
 	navi.append(next);

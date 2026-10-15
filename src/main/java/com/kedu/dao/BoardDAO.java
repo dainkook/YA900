@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kedu.dto.BoardDTO;
 import com.kedu.dto.LiveChatDTO;
+import com.kedu.dto.NoticeDTO;
 import com.kedu.dto.Re_ReplyDTO;
 import com.kedu.dto.ReplyDTO;
 import com.kedu.dto.ReportDTO;
@@ -224,5 +225,20 @@ public class BoardDAO {
 	public String whoIsWriter(int seq) {
 		String sql = "select writer from board where board_seq = ?";
 		return jdbc.queryForObject(sql, String.class, seq);
+	}
+	
+	public List<BoardDTO> noticeToBoard(List<NoticeDTO> notice) {
+		List<BoardDTO> list = new ArrayList<>();
+		for(int i=0; i<notice.size(); i++) {
+			BoardDTO dto = new BoardDTO();
+			dto.setBoard_seq(notice.get(i).getNotice_seq());
+			dto.setTitle(notice.get(i).getTitle());
+			dto.setContents(notice.get(i).getContents());
+			dto.setWriter(notice.get(i).getWriter());
+			dto.setView_count(notice.get(i).getView_count());
+			dto.setWrite_date(notice.get(i).getWrite_date());
+			list.add(dto);
+		}
+		return list;
 	}
 }
