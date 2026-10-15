@@ -62,7 +62,7 @@ public class PredictionResultDAO {
 			for(int j = 0; j<list2.size(); j++) {
 				if(list.get(i).getPrediction_id()==list2.get(j).getPrediction_seq()) {
 					Integer winner = list2.get(j).getWinner();
-					if (winner == null) {
+					if (winner == null || winner == 0) {
 					    continue;
 					}
 					if(list.get(i).getPredicted_result() == winner) {
@@ -73,8 +73,8 @@ public class PredictionResultDAO {
 						String sql5 = "update users set point = ? where id = ?";
 						jdbc.update(sql5, point + 100, id);
 					} else {
-						String sql6 = "update prediction_result SET is_correct = ? where prediction_id = ? and member_id = ?";
-						jdbc.update(sql6, 1, list.get(i).getPrediction_id(), id);
+						String sql3 = "update prediction_result SET is_correct = ? where prediction_id = ? and member_id = ?";
+						jdbc.update(sql3, 1, list.get(i).getPrediction_id(), id);
 					}
 				}
 			}

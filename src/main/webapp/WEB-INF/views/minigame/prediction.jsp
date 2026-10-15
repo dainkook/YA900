@@ -955,7 +955,7 @@ tbody tr:hover {
 			
 			                        <button type="button"
 			                                data-prediction-id="${game.prediction_seq}"
-			                                data-choice="0">
+			                                data-choice="-1">
 			                            무승부
 			                        </button>
 			
@@ -1035,7 +1035,7 @@ tbody tr:hover {
 			                                <td>
 			                                    <c:choose>
 			                                        <c:when test="${item.PREDICTED_RESULT == 1}">홈팀 승</c:when>
-			                                        <c:when test="${item.PREDICTED_RESULT == 0}">무승부</c:when>
+			                                        <c:when test="${item.PREDICTED_RESULT == -1}">무승부</c:when>
 			                                        <c:when test="${item.PREDICTED_RESULT == 2}">원정팀 승</c:when>
 			                                        <c:otherwise>-</c:otherwise>
 			                                    </c:choose>
@@ -1072,6 +1072,7 @@ tbody tr:hover {
 			        </table>
 			    </div>
 			</section>
+	</div>
 	<div class="footer">
 
 			<a href="#">개인정보처리방침</a> | <a href="#">전체 서비스</a> | <a href="#">문제
@@ -1079,7 +1080,6 @@ tbody tr:hover {
 				href="${pageContext.request.contextPath}/admin">관리자</a>
 
 		</div>
-	</div>
 	<script>
 	$(function() {
 		const myPredictions = {};
@@ -1092,7 +1092,7 @@ tbody tr:hover {
 
 		const choiceNames = {
 		    "1": "홈팀 승",
-		    "0": "무승부",
+		    "-1": "무승부",
 		    "2": "원정팀 승"
 		};
 

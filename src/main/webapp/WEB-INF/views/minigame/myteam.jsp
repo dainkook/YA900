@@ -1464,64 +1464,63 @@ body {
 								});
 					});
 
-			$(".player-card")
-					.click(
-							function() {
+			$(".player-card").click(function() {
 
-								if (selectedPosition === null) {
-									alert("먼저 포지션을 선택해주세요.");
-									return;
-								}
+				if (selectedPosition === null) {
+			        alert("먼저 포지션을 선택해주세요.");
+			        return;
+			    }
 
-								let playerName = $(this).find(".player-name")
-										.text().trim();
+			    let playerName = $(this).find(".player-name").text().trim();
+			    let playerPosition = $(this).find(".player-position").text().trim();
+			    let playerTeam = $(this).find(".player-team").text().trim();
 
-								let playerPosition = $(this).find(
-										".player-position").text().trim();
+			    // 현재 선택한 포지션을 제외한 다른 포지션에 같은 선수가 있는지 확인
+			    let duplicated = false;
 
-								let playerTeam = $(this).find(".player-team")
-										.text().trim();
+			    $(".selected-player-row").each(function() {
+			        let rowName = $(this).find(".player-name").text().trim();
+			        let rowPosition = $(this).attr("data-position");
 
-								let positionButton = $(".position[data-position='"
-										+ selectedPosition + "']");
+			        if (rowName === playerName && rowPosition !== selectedPosition) {
+			            duplicated = true;
+			            return false;
+			        }
+			    });
 
-								positionButton.find(".selected-player").text(
-										playerName);
+			    // 다른 포지션에 이미 등록된 선수라면 선택하지 않음
+			    if (duplicated) {
+			        alert("이미 다른 포지션에 등록된 선수입니다.");
+			        return;
+			    }
 
-								$("#" + selectedPosition).val(playerName);
+			    let positionButton = $(".position[data-position='" + selectedPosition + "']");
 
-								$(".position").removeClass("selected");
-								positionButton.addClass("selected");
+			    positionButton.find(".selected-player").text(playerName);
+			    $("#" + selectedPosition).val(playerName);
 
-								let selectedRow = $(".selected-player-row[data-position='"
-										+ selectedPosition + "']");
+			    $(".position").removeClass("selected");
+			    positionButton.addClass("selected");
 
-								if (selectedRow.length > 0) {
+			    let selectedRow = $(".selected-player-row[data-position='" + selectedPosition + "']");
 
-									selectedRow.find(".player-name").text(
-											playerName);
-									selectedRow.find(".player-position").text(
-											playerPosition);
-									selectedRow.find(".player-team").text(
-											playerTeam);
+			    if (selectedRow.length > 0) {
 
-								} else {
+			        selectedRow.find(".player-name").text(playerName);
+			        selectedRow.find(".player-position").text(playerPosition);
+			        selectedRow.find(".player-team").text(playerTeam);
 
-									$(".selected-player-list")
-											.append(
-													"<div class='selected-player-row' data-position='" + selectedPosition + "'>"
-															+ "<span class='player-name'>"
-															+ playerName
-															+ "</span>"
-															+ "<span class='player-position'>"
-															+ playerPosition
-															+ "</span>"
-															+ "<span class='player-team'>"
-															+ playerTeam
-															+ "</span>"
-															+ "</div>");
-								}
-							});
+			    } else {
+
+			        $(".selected-player-list").append(
+			            "<div class='selected-player-row' data-position='" + selectedPosition + "'>"
+			            + "<span class='player-name'>" + playerName + "</span>"
+			            + "<span class='player-position'>" + playerPosition + "</span>"
+			            + "<span class='player-team'>" + playerTeam + "</span>"
+			            + "</div>"
+			        );
+			    }
+			});
 
 		});
 		

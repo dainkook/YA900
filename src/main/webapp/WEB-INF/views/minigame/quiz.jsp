@@ -849,10 +849,6 @@ tbody tr:hover {
                 </c:otherwise>
                </c:choose>
             </div>
-
-            <button type="button" class="btn"
-               onclick="location.href='${pageContext.request.contextPath}/quiz/pointHistory'">
-               포인트 내역</button>
          </section>
 
       </div>
@@ -938,7 +934,7 @@ tbody tr:hover {
 						<tr>
 							<th style="width: 20%">순위</th>
 							<th style="width: 45%">사용자</th>
-							<th style="width: 35%">점수</th>
+							<th style="width: 35%">보유 포인트</th>
 						</tr>
 					</thead>
           
