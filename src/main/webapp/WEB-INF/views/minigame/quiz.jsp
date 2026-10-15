@@ -12,95 +12,120 @@
 	crossorigin="anonymous"></script>
 <style>
 * {
-	box-sizing: border-box;
+    box-sizing: border-box;
 }
+
 html {
     scroll-behavior: smooth;
 }
 
 body {
-	margin: 0;
-	background: linear-gradient(to bottom, #111936 0%, #111936 15%, #0b1026 25%, #171f46
-		35%, #252f67 48%, #71809f 65%, #aeb7ca 76%, #d5dae5 86%, #eef1f8 94%,
-		#eef1f8 100%);
-	color: #18213f;
+    margin: 0;
+    background: linear-gradient(
+        to bottom,
+        #111936 0%,
+        #111936 15%,
+        #0b1026 25%,
+        #171f46 35%,
+        #252f67 48%,
+        #71809f 65%,
+        #aeb7ca 76%,
+        #d5dae5 86%,
+        #eef1f8 94%,
+        #eef1f8 100%
+    );
+    color: #18213f;
+    font-family: Arial, sans-serif;
 }
 
+/* =========================
+   TITLE
+========================= */
 h1 {
-	margin: 0;
-	font-size: 25px;
-	font-weight: 800;
-	letter-spacing: -0.7px;
-	color: #202945;
+    margin: 0;
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.7px;
+    color: #202945;
 }
 
 h2 {
-	margin: 0 0 22px;
-	font-size: 20px;
-	font-weight: 800;
-	letter-spacing: -0.5px;
-	text-align: center;
-	color: #202945;
+    margin: 0 0 20px;
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    text-align: center;
+    color: #202945;
 }
 
 /* =========================
    HEADER
 ========================= */
 .header {
-	width: 100%;
-	height: 100px;
-	background: linear-gradient(135deg, #0b1026, #171f46);
-	color: white;
-	display: flex;
-	align-items: center;
-	padding: 0 50px;
-	position: sticky;
-	top: 0;
-	z-index: 1000;
-	border-bottom: 1px solid #303b70;
-	box-shadow: 0 3px 15px rgba(11, 16, 38, 0.18);
+    width: 100%;
+    min-height: 100px;
+    height: auto;
+    background: linear-gradient(135deg, #0b1026, #171f46);
+    color: white;
+
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+
+    padding: 15px clamp(15px, 4vw, 50px);
+
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    border-bottom: 1px solid #303b70;
+    box-shadow: 0 3px 15px rgba(11, 16, 38, 0.18);
 }
 
 .logo {
-	font-size: 30px;
-	font-weight: bold;
-	margin-right: 60px;
-	color: white;
-	letter-spacing: 1px;
-	cursor:pointer;
+    font-size: clamp(22px, 2.2vw, 30px);
+    font-weight: bold;
+    margin-right: clamp(10px, 3vw, 60px);
+    color: white;
+    letter-spacing: 1px;
+    cursor: pointer;
+    flex-shrink: 0;
 }
 
 .main-menu {
-	height: 100%;
-	display: flex;
-	align-items: center;
-	gap: 40px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: clamp(12px, 3vw, 40px);
+    flex-shrink: 1;
 }
 
 .menu-item {
-	position: relative;
-	height: 100%;
-	display: flex;
-	align-items: center;
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
 }
 
-.menu-item>a {
-	font-size: 18px;
-	font-weight: bold;
-	text-decoration: none;
-	color: #f7f8ff;
-	padding: 10px 5px;
-	transition: color 0.2s ease;
-	letter-spacing: -0.3px;
+.menu-item > a {
+    font-size: clamp(14px, 1.4vw, 18px);
+    font-weight: bold;
+    text-decoration: none;
+    color: #f7f8ff;
+    padding: 10px 5px;
+    white-space: nowrap;
+    transition: color 0.2s ease;
 }
 
-.menu-item>a:hover {
-	color: #aebee7;
+.menu-item > a:hover {
+    color: #aebee7;
 }
 
 /* =========================
-   서브 메뉴
+   SUB MENU
 ========================= */
+
 .sub-menu {
 	position: absolute;
 	top: 100%;
@@ -127,9 +152,6 @@ h2 {
 	padding: 13px 15px;
 	text-decoration: none;
 	color: #f5f7ff;
-	font-size: 13px;
-	font-weight: 500;
-	letter-spacing: -0.2px;
 	font-size: 14px;
 	border-bottom: 1px solid #35406b;
 }
@@ -143,437 +165,413 @@ h2 {
 }
 
 /* =========================
-   로그인 / 회원가입
+   LOGIN / SIGNUP
 ========================= */
+
 .member-menu {
     font-size: 14px;
     margin-left: auto;
-
     display: flex;
     align-items: center;
-    gap: 10px;
-
+    gap: 8px;
     white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .member-menu form {
-    display: flex;
-    margin: 0;
+	display: flex;
+	margin: 0;
 }
 
 .member-menu span {
-    color: white;
-    font-weight: bold;
-    white-space: nowrap;
+	color: white;
+	font-weight: bold;
+	white-space: nowrap;
 }
 
 .login-btn,
 .sign-btn {
-    border: 1px solid #7180b1;
-    background: transparent;
-    color: white;
-    border-radius: 5px;
-    padding: 6px 10px;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: 0.2s ease;
+	border: 1px solid #7180b1;
+	background: transparent;
+	color: white;
+	border-radius: 5px;
+	padding: 6px 10px;
+	cursor: pointer;
+	white-space: nowrap;
+	transition: 0.2s ease;
 }
 
 .login-btn:hover,
 .sign-btn:hover {
-    background: #476aaa;
-    border-color: #476aaa;
-    color: white;
+	background: #476aaa;
+	border-color: #476aaa;
+	color: white;
 }
-
+.container {
+	width: 1050px;
+	margin: 0 auto;
+	background: #f5f6f8;
+	min-height: 100vh;
+	padding-top: 30px;
+	box-shadow: 0 0 30px rgba(17, 25, 54, 0.08);
+}
 /* =========================
-   CONTAINER
+   MAIN CONTAINER
 ========================= */
 .wrap {
-	width: 1310px;
-	max-width: calc(100% - 40px);
-	margin: 110px auto 40px;
+    width: 1310px;
+    max-width: calc(100% - 40px);
+    margin: 110px auto 40px;
 }
 
 /* =========================
    COMMON BOX
 ========================= */
 .box {
-	background: #ffffff;
-	border: 1px solid #e1e7f2;
-	border-radius: 14px;
-	box-shadow: 0 5px 18px rgba(20, 35, 70, 0.06);
-	padding: 28px;
-	transition: box-shadow 0.2s ease, transform 0.2s ease;
+    min-width: 0;
+    background: #ffffff;
+    border: 1px solid #e1e7f2;
+    border-radius: 14px;
+    box-shadow: 0 5px 18px rgba(20, 35, 70, 0.06);
+    padding: 28px;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .box h2 {
-	position: relative;
-	padding-bottom: 13px;
-	border-bottom: 1px solid #edf0f7;
+    position: relative;
+    padding-bottom: 13px;
+    border-bottom: 1px solid #edf0f7;
 }
 
-/* 퀴즈 시작 카드 설명 */
-.quiz-start p {
-	margin: 5px 0;
-	font-size: 14px;
-	font-weight: 500;
-	color: #68748c;
-	letter-spacing: -0.2px;
-}
-
-.quiz-start p:first-of-type {
-	color: #344b78;
-	font-size: 16px;
-	font-weight: 700;
-}
-
-/* 내 포인트 */
-.point-value {
-	width: 80%;
-	min-height: 75px;
-	border: 1px solid #dfe7f5;
-	border-radius: 10px;
-	background: linear-gradient(135deg, #f7f9ff, #edf2ff);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 26px;
-	font-weight: 800;
-	color: #476aaa;
-	margin-bottom: 20px;
-	letter-spacing: -0.5px;
-}
-
-/* 안내 및 최근 기록 */
-.info ul {
-	margin: 0;
-	padding-left: 20px;
-	display: flex;
-	flex-direction: column;
-	gap: 13px;
-	color: #58647b;
-	font-size: 14px;
-	line-height: 1.7;
-}
-
-.info li {
-	padding-left: 4px;
-}
-
-.info li::marker {
-	color: #476aaa;
-}
-
-/* 공통 버튼 */
-.btn, .history-btn {
-	font-family: inherit;
-	font-size: 14px;
-	font-weight: 700;
-	letter-spacing: -0.2px;
-}
-
-.btn {
-	border-radius: 8px;
-	box-shadow: 0 3px 7px rgba(71, 106, 170, 0.13);
-}
-
-.history-btn {
-	border-radius: 8px;
-	box-shadow: 0 3px 7px rgba(71, 106, 170, 0.12);
-}
-
-/* 표 제목과 데이터 */
-table {
-	width: 100%;
-	border-collapse: collapse;
-	font-family: inherit;
-	font-size: 14px;
-	text-align: center;
-}
-
-th {
-	height: 48px;
-	background: #f4f6fb;
-	border-top: 1px solid #e1e7f2;
-	border-bottom: 1px solid #dce3ef;
-	font-size: 13px;
-	font-weight: 800;
-	letter-spacing: -0.2px;
-	color: #596780;
-}
-
-td {
-	height: 52px;
-	padding: 10px 8px;
-	border-bottom: 1px solid #edf0f6;
-	font-size: 14px;
-	font-weight: 500;
-	color: #36425b;
-}
-
-tbody tr:hover {
-	background: #f5f8ff;
-}
-
-/* 카드 제목과 표 사이의 간격 */
-.table-scroll {
-	border-radius: 8px;
-	overflow-x: auto;
-}
-
-/* 푸터 */
-.site-footer {
-	font-family: inherit;
-	font-size: 12px;
-	letter-spacing: 0.5px;
-	color: #7b8498;
-}
-
-/* =========================
-   TITLE
-========================= */
-.wrap>.box:first-child {
-	height: 70px;
-	display: flex;
-	align-items: center;
-	margin-bottom: 18px;
-}
-
-h1 {
-	margin: 0;
-	font-size: 24px;
-	font-weight: bold;
-}
-
-h2 {
-	margin: 0 0 20px;
-	font-size: 21px;
-	font-weight: bold;
-	text-align: center;
-	color: #222;
+/* 페이지 제목 박스 */
+.wrap > .box:first-child {
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px;
 }
 
 /* =========================
    ROW
 ========================= */
 .row {
-	display: flex;
-	gap: 20px;
-	margin-bottom: 20px;
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    min-width: 0;
 }
 
 /* =========================
    QUIZ START
 ========================= */
 .quiz-start {
-	flex: 2;
-	min-height: 300px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	text-align: center;
+    flex: 2;
+    min-width: 0;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 .quiz-start p {
-	margin: 6px 0;
-	font-size: 14px;
-	color: #666;
+    margin: 6px 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: #68748c;
+    letter-spacing: -0.2px;
+}
+
+.quiz-start p:first-of-type {
+    color: #344b78;
+    font-size: 16px;
+    font-weight: 700;
 }
 
 /* =========================
    MY POINT
 ========================= */
 .my-point {
-	flex: 1;
-	min-height: 300px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
+    flex: 1;
+    min-width: 0;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .my-point h2 {
-	margin-bottom: 25px;
+    margin-bottom: 25px;
 }
 
 .point-value {
-	width: 80%;
-	height: 70px;
-	border: 1px solid #e0e3e7;
-	border-radius: 7px;
-	background: #f7f8fa;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 20px;
-	font-weight: bold;
-	color: #476aaa;
-	margin-bottom: 20px;
+    width: 80%;
+    min-height: 75px;
+    border: 1px solid #dfe7f5;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #f7f9ff, #edf2ff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    font-weight: 800;
+    color: #476aaa;
+    margin-bottom: 20px;
+    letter-spacing: -0.5px;
 }
 
 /* =========================
    BUTTON
 ========================= */
+.btn,
+.history-btn {
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+    border-radius: 8px;
+}
+
 .btn {
-	height: 45px;
-	min-width: 150px;
-	padding: 0 25px;
-	border: none;
-	border-radius: 7px;
-	background: #476aaa;
-	color: white;
-	font-size: 14px;
-	font-weight: bold;
-	cursor: pointer;
-	transition: all 0.15s ease;
+    height: 45px;
+    min-width: 150px;
+    padding: 0 25px;
+    border: none;
+    background: #476aaa;
+    color: white;
+    box-shadow: 0 3px 7px rgba(71, 106, 170, 0.13);
+    cursor: pointer;
+    transition: all 0.15s ease;
 }
 
 .btn:hover {
-	background: #3d5e97;
-	box-shadow: 0 3px 8px rgba(71, 106, 170, 0.2);
+    background: #3d5e97;
+    box-shadow: 0 3px 8px rgba(71, 106, 170, 0.2);
 }
 
 /* =========================
    INFO
 ========================= */
 .info {
-	flex: 1;
-	min-height: 230px;
+    flex: 1;
+    min-width: 0;
+    min-height: 230px;
 }
 
 .info ul {
-	margin: 0;
-	padding-left: 20px;
-	display: flex;
-	flex-direction: column;
-	gap: 14px;
-	color: #555;
-	font-size: 14px;
+    margin: 0;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    color: #58647b;
+    font-size: 14px;
+    line-height: 1.7;
 }
 
 .info li {
-	padding-left: 4px;
+    padding-left: 4px;
+}
+
+.info li::marker {
+    color: #476aaa;
+}
+
+/* =========================
+   HISTORY BUTTON
+========================= */
+.history-btn-wrap {
+    margin-top: 22px;
+    text-align: center;
+}
+
+.history-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 150px;
+    min-height: 42px;
+    padding: 0 20px;
+    background: #476aaa;
+    color: white;
+    text-decoration: none;
+    box-shadow: 0 3px 7px rgba(71, 106, 170, 0.12);
+    transition: all 0.2s ease;
+}
+
+.history-btn:hover {
+    background: #3d5e97;
+    box-shadow: 0 3px 8px rgba(71, 106, 170, 0.2);
 }
 
 /* =========================
    TABLE
 ========================= */
 .table-scroll {
-	overflow-x: auto;
+    width: 100%;
+    border-radius: 8px;
+    overflow-x: auto;
 }
 
 table {
-	width: 100%;
-	border-collapse: collapse;
-	font-size: 14px;
-	text-align: center;
+    width: 100%;
+    border-collapse: collapse;
+    font-family: inherit;
+    font-size: 14px;
+    text-align: center;
 }
 
 th {
-	height: 45px;
-	background: #f7f8fa;
-	border-top: 1px solid #e1e4e8;
-	border-bottom: 1px solid #d5d9df;
-	font-weight: bold;
-	color: #555;
+    height: 48px;
+    padding: 8px;
+    background: #f4f6fb;
+    border-top: 1px solid #e1e7f2;
+    border-bottom: 1px solid #dce3ef;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: -0.2px;
+    color: #596780;
 }
 
 td {
-	height: 48px;
-	border-bottom: 1px solid #eee;
-	color: #444;
+    height: 52px;
+    padding: 10px 8px;
+    border-bottom: 1px solid #edf0f6;
+    font-size: 14px;
+    font-weight: 500;
+    color: #36425b;
 }
 
 tbody tr:hover {
-	background: #f7f9fc;
+    background: #f5f8ff;
+}
+
+.wrap > section.box {
+    margin-bottom: 20px;
 }
 
 /* =========================
-   BOTTOM BOX
+   POINT HISTORY SCROLL
 ========================= */
-.wrap>section.box {
-	margin-bottom: 20px;
+.point-history-scroll {
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: auto;
+    border-radius: 8px;
+}
+
+.point-history-scroll table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.point-history-scroll thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: #fff;
+}
+
+.point-history-scroll th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+/* =========================
+   QUICK MENU
+========================= */
+.quick-menu {
+    width: 280px;
+    position: fixed;
+    left: -250px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 1px solid #3b4778;
+    transition: left 0.5s ease;
+    z-index: 1000;
+    background: #111936;
+    color: white;
+    box-shadow: 5px 8px 25px rgba(10, 15, 35, 0.18);
+}
+
+.quick-menu:hover {
+    left: 0;
+}
+
+.quick-menu div {
+    width: 100%;
+    height: 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-bottom: 1px solid #303b68;
+}
+
+.quick-menu div:last-child {
+    border-bottom: none;
+}
+
+.quick-menu div:hover {
+    background: #252f67;
+}
+
+.quick-menu .menu,
+.quick-menu .menu:hover {
+    background: #476aaa;
+    color: white;
 }
 
 /* =========================
    FOOTER
 ========================= */
 .footer {
-	width: 100%;
-	height: 70px;
-	margin-top: 0;
-	background: #eef1f8;
-	color: #838ec9;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 13px;
-	border: none;
+    width: 100%;
+    min-height: 70px;
+    margin-top: 0;
+    padding: 15px 10px;
+    background: #eef1f8;
+    color: #838ec9;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    text-align: center;
+    border: none;
 }
 
 .footer a {
     margin: 0 4px;
     text-decoration: none;
-	color: #838ec9;
+    color: #838ec9;
 }
 
 .footer a:hover {
-	color: #a9b1db;
+    color: #a9b1db;
 }
 
-
-/* =========================
-   QUICK MENU
-========================= */
-.quick-menu {
-	width: 280px;
-	position: fixed;
-	left: -250px;
-	top: 50%;
-	transform: translateY(-50%);
-	border: 1px solid #3b4778;
-	transition: left 0.5s ease;
-	z-index: 1000;
-	background: #111936;
-	color: white;
-	box-shadow: 5px 8px 25px rgba(10, 15, 35, 0.18);
+@media ( max-width : 1100px) {
+	.container {
+		width: 100%;
+	}
+	.main-layout {
+		width: 100%;
+	}
+	.game-detail {
+		width: calc(100% - 320px);
+	}
+	.open-talk {
+		width: 320px;
+	}
 }
 
-.quick-menu:hover {
-	left: 0;
-}
-
-.quick-menu div {
-	width: 100%;
-	height: 55px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	cursor: pointer;
-	border-bottom: 1px solid #303b68;
-}
-
-.quick-menu div:last-child {
-	border-bottom: none;
-}
-
-.quick-menu div:hover {
-	background: #252f67;
-}
-
-.quick-menu .menu, .quick-menu .menu:hover {
-	background: #476aaa;
-	color: white;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-@media ( max-width : 900px) {
+@media ( max-width : 750px) {
 	.header {
-		padding: 0 25px;
+		padding: 0 20px;
 	}
 	.logo {
 		margin-right: 30px;
@@ -581,97 +579,146 @@ tbody tr:hover {
 	.main-menu {
 		gap: 20px;
 	}
-	.wrap {
+	.container {
 		width: 100%;
-		max-width: calc(100% - 30px);
 	}
-	.row {
-		flex-direction: column;
+	.title-area {
+		padding: 25px 15px 0;
 	}
-	.quiz-start, .my-point, .info {
+	.main-layout {
+		display: block;
 		width: 100%;
+	}
+	.game-detail {
+		width: 100%;
+		border-right: none;
+	}
+	.open-talk {
+		width: 100%;
+		height: 500px;
+		position: static;
+		border-top: 1px solid #d6dceb;
+	}
+	.game-teams {
+		gap: 30px;
+	}
+	.team {
+		width: 150px;
+	}
+	.team-name {
+		font-size: 18px;
 	}
 }
 
 @media ( max-width : 600px) {
-	.header {
-		height: 80px;
-		padding: 0 15px;
-	}
-	.logo {
-		font-size: 24px;
-		margin-right: 20px;
+	.user-menu {
+		display: none;
 	}
 	.main-menu {
-		gap: 10px;
+		gap: 15px;
 	}
-	.menu-item>a {
+	.main-menu a {
 		font-size: 14px;
 	}
-	.member-menu {
-		display: none;
+	.game-teams {
+		gap: 10px;
 	}
-	.wrap {
-		margin-top: 40px;
-		max-width: calc(100% - 20px);
+	.team {
+		width: 120px;
 	}
-	.box {
-		padding: 20px;
+	.team-logo {
+		width: 55px;
+		height: 55px;
 	}
-	h1 {
-		font-size: 20px;
+	.team-name {
+		font-size: 16px;
 	}
-	h2 {
-		font-size: 18px;
-	}
-	.quick-menu {
-		display: none;
+	.team-score {
+		font-size: 25px;
 	}
 }
 
-.history-btn-wrap {
-	margin-top: 22px;
-	text-align: center;
+/* 태블릿 및 작은 노트북 */
+@media (max-width: 1100px) {
+    .header {
+        padding: 15px 25px;
+        gap: 10px;
+    }
+
+    .logo {
+        margin-right: 15px;
+    }
+
+    .main-menu {
+        gap: 15px;
+    }
+
+    .member-menu {
+        gap: 5px;
+    }
+
+    .login-btn,
+    .sign-btn {
+        padding: 6px 8px;
+    }
 }
 
-.history-btn {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	min-width: 150px;
-	height: 42px;
-	padding: 0 20px;
-	background: #476aaa;
-	color: white;
-	border-radius: 7px;
-	font-size: 14px;
-	font-weight: bold;
-	text-decoration: none;
-	transition: all 0.2s ease;
+/* 태블릿 및 작은 화면 */
+@media (max-width: 850px) {
+    .header {
+        padding: 15px 20px;
+    }
+
+    .logo {
+        margin-right: 5px;
+    }
+
+    .main-menu {
+        gap: 10px;
+    }
+
+    .menu-item > a {
+        font-size: 14px;
+    }
+
+    .member-menu {
+        font-size: 12px;
+    }
+
+    .member-menu button {
+        font-size: 12px;
+        padding: 6px;
+    }
 }
 
-.history-btn:hover {
-	background: #3d5e97;
-	box-shadow: 0 3px 8px rgba(71, 106, 170, 0.2);
-}
+/* 모바일 */
+@media (max-width: 600px) {
+    .header {
+        justify-content: center;
+        padding: 12px 10px;
+        gap: 8px 15px;
+    }
 
-.point-history-scroll {
-	max-height: 300px;
-	overflow-y: auto;
-	overflow-x: hidden;
-}
+    .logo {
+        font-size: 24px;
+        margin-right: 5px;
+    }
 
-.point-history-scroll table {
-	width: 100%;
-	border-collapse: collapse;
-}
+    .main-menu {
+        gap: 12px;
+        height: 40px;
+    }
 
-.point-history-scroll thead {
-	position: sticky;
-	top: 0;
-	z-index: 1;
-	background-color: #fff;
-}
+    .menu-item > a {
+        font-size: 13px;
+        padding: 8px 2px;
+    }
+
+    .member-menu {
+        margin-left: 0;
+        gap: 5px;
+    }
+
 </style>
 </head>
 
