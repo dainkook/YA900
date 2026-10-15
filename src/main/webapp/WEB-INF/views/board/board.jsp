@@ -49,7 +49,7 @@
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-<title>자유게시판</title>
+<title>게시판</title>
 
 <style>
 * {
@@ -711,6 +711,33 @@ body.theme-kiwoom {
 	height: 40px;
 	font-size: 28px;
 }
+
+/* =========================
+   FOOTER
+========================= */
+.footer {
+	width: 100%;
+	height: 70px;
+	margin-top: 0;
+	background: #eef1f8;
+	color: #838ec9;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 13px;
+	border: none;
+}
+
+.footer a {
+    margin: 0 4px;
+    text-decoration: none;
+	color: #838ec9;
+}
+
+.footer a:hover {
+	color: #a9b1db;
+}
+
 </style>
 </head>
 <body class="theme-${teamTheme}">
@@ -727,11 +754,11 @@ body.theme-kiwoom {
 				<a href="#">야구</a>
 
 				<div class="sub-menu">
-					<a href="#">예매</a> <a
-						href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a>
-					<a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a>
-					<a href="#">선수순위</a> <a
-						href="${pageContext.request.contextPath}/board/board?cpage=1">게시판</a>
+					<a href="${pageContext.request.contextPath}/#reservation">예매</a> 
+					<a href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a> 
+					<a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a> 
+					<a href="${pageContext.request.contextPath}/schedule/rankdetail?tab=pitcher">선수순위</a> 
+					<a href="${pageContext.request.contextPath}/board/board?cpage=1">게시판</a>
 				</div>
 			</div>
 
@@ -750,8 +777,9 @@ body.theme-kiwoom {
 				<a href="#">미니게임</a>
 
 				<div class="sub-menu">
-					<a href="#">상식 퀴즈</a> <a href="#">OX 퀴즈</a> <a href="#">승부예측</a> <a
-						href="#">게임 랭킹</a>
+					<a href="${pageContext.request.contextPath}/quiz">상식 퀴즈</a> 
+					<a href="${pageContext.request.contextPath}/myteam">나만의 팀</a> 
+					<a href="${pageContext.request.contextPath}/prediction">승부예측</a> 
 				</div>
 			</div>
 		</nav>
@@ -804,7 +832,7 @@ body.theme-kiwoom {
 			<div class="title board-title-dropdown">
 				<h1>
 					<c:choose>
-						<c:when test="${empty param.team}">
+						<c:when test="${empty selectedTeam}">
 			            전체 게시판
 			        </c:when>
 					<c:otherwise>
@@ -826,6 +854,10 @@ body.theme-kiwoom {
 					<a class="team-item"
 						href="${pageContext.request.contextPath}/board/board?team=free&cpage=1">
 						<span style="font-size: 32px;">⚾</span> <span>자유게시판</span>
+					</a> 
+					<a class="team-item"
+						href="${pageContext.request.contextPath}/board/board?team=notice&cpage=1">
+						<span style="font-size: 32px;">⚾</span> <span>공지사항</span>
 					</a> 
 					<a class="team-item"
 						href="${pageContext.request.contextPath}/board/board?team=두산&cpage=1">
@@ -897,8 +929,11 @@ body.theme-kiwoom {
 						<option>내용</option>
 						<option>글쓴이</option>
 					</select> <input type="text" name="search" placeholder="검색할 게시글의 제목을 입력하세요">
-					<input id="option" type="hidden" name="option"> <input
-						type="hidden" name="cpage" value="1">
+					<input id="option" type="hidden" name="option"> 
+					<input type="hidden" name="cpage" value="1">
+					<c:if test="${selectedTeam=='공지'}">
+					<input type="hidden" name="type" value="notice">
+					</c:if>
 					<button type="submit">검색</button>
 				</form>
 			</div>
@@ -923,8 +958,14 @@ body.theme-kiwoom {
         								<img src="${i.teamLogo}" style="width:50px; height:40px">
     								</c:if>
 								</td>
-								<td><a href="/board/detail?seq=${i.board_seq}">
-										${i.title} </a></td>
+								<c:choose>
+								<c:when test="${selectedTeam=='공지'}">
+								<td><a href="/board/detail?type=notice&seq=${i.board_seq}">${i.title}</a></td>
+								</c:when>
+								<c:otherwise>
+								<td><a href="/board/detail?seq=${i.board_seq}">${i.title}</a></td>
+								</c:otherwise>
+								</c:choose>
 								<td>${i.writer}</td>
 								<td><fmt:formatDate value="${i.write_date}" pattern="yyyy-MM-dd"/></td>
 								<td>${i.view_count}</td>
@@ -946,6 +987,13 @@ body.theme-kiwoom {
 			</div>
 		</div>
 	</div>
+	<div class="footer">
+
+			<a href="#">개인정보처리방침</a> | <a href="#">전체 서비스</a> | <a href="#">문제
+				신고</a> | <a href="#">고객센터</a> | <a
+				href="${pageContext.request.contextPath}/admin">관리자</a>
+
+		</div>
 	<script>
 let recordTotalCount = ${recordTotalCount};
 let recordCountPerPage = ${recordCountPerPage};

@@ -40,7 +40,8 @@ public class HomeController {
 		model.addAttribute("hitterRanking", playerHitterDAO.getTop10Hitters());
 		model.addAttribute("pitcherRanking", playerPitcherDAO.getTop10Pitchers());
 		model.addAttribute("scheduleList", scheduleDAO.selectHomeSchedules());
-
+		model.addAttribute("bookingList", scheduleDAO.selectBookingSchedules());
+		
 		List<BoardDTO> recentBoards = boardDAO.getRecentBoards();
 		model.addAttribute("recentBoards", recentBoards);
 		

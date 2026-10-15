@@ -1,5 +1,8 @@
 package com.kedu.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -103,12 +106,51 @@ public class UsersDAO {
       return jdbc.queryForObject(sql,new BeanPropertyRowMapper<>(UsersDTO.class),id);
    }
    
+   public int usePoint(String id, int usedPoint) {
+	    if (usedPoint < 0) return 0;
+
+	    String sql = "UPDATE users "
+	               + "SET point = NVL(point, 0) - ? "
+	               + "WHERE id = ? AND NVL(point, 0) >= ?";
+
+	    return jdbc.update(sql, usedPoint, id, usedPoint);
+	}
+   
    public int selectPoint(String id) {
-	   String sql = "select nvl(point, 0) from users where id= ?";
-	   return jdbc.queryForObject(sql, Integer.class, id);
+      String sql = "select nvl(point, 0) from users where id= ?";
+      return jdbc.queryForObject(sql, Integer.class, id);
    }
    public int updatePoint(String id, int earnedPoint) {
-	   String sql= "update users set point =nvl(point, 0) + ? where id= ?";
-	   return jdbc.update(sql, earnedPoint, id);
+      String sql= "update users set point =nvl(point, 0) + ? where id= ?";
+      return jdbc.update(sql, earnedPoint, id);
+   }
+  
+	public int addPoint(String id, int point) {
+	
+	    if (point <= 0) {
+	        return 0;
+	    }
+	
+	    String sql = "UPDATE users "
+	               + "SET point = NVL(point, 0) + ? "
+	               + "WHERE id = ?";
+	
+	    return jdbc.update(sql, point, id);
+	}
+   public List<Map<String, Object>> selectPointRanking(){
+      String sql= "select * from(" +
+            "select row_number() Over(" +
+            "order by point desc, member_seq asc" +
+            ") as ranking, id, point" +
+            " from users" +
+            ") where ranking <=5 order by ranking";
+      return jdbc.queryForList(sql);
+}
+   public int withdraw(String id) {
+	   String sql = "delete from users where id =?";
+	   String sql2 = "delete from board where writer = ?";
+	   jdbc.update(sql2, id);
+	   return jdbc.update(sql ,id);
+	   
    }
 }

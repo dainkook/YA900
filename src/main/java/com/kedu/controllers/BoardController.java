@@ -22,9 +22,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kedu.dao.BoardDAO;
 import com.kedu.dao.FilesDAO;
+import com.kedu.dao.admin.NoticeDAO;
 import com.kedu.dto.BoardDTO;
 import com.kedu.dto.FilesDTO;
 import com.kedu.dto.LiveChatDTO;
+import com.kedu.dto.NoticeDTO;
 import com.kedu.dto.Re_ReplyDTO;
 import com.kedu.dto.ReplyDTO;
 import com.kedu.dto.ReportDTO;
@@ -37,6 +39,8 @@ public class BoardController {
    private BoardDAO dao;
    @Autowired
    private FilesDAO fdao;
+   @Autowired
+   private NoticeDAO ndao;
    
    @RequestMapping("/board")
    public String board(Model model,
@@ -44,18 +48,24 @@ public class BoardController {
            @RequestParam(required = false) String team
    ) throws Exception {
        List<BoardDTO> list;
+       List<NoticeDTO> notice;
        int totalCount;
        if ("free".equals(team)) {
     	   list = dao.listOfPageNotTeam(cpage * 10 - 9, cpage * 10);
     	   totalCount = dao.totalCountFreeBoard();
     	   model.addAttribute("selectedTeam", "자유");
+       } else if("notice".equals(team)){
+           notice = ndao.selectPage(cpage * 10-9, cpage*10);
+           list = dao.noticeToBoard(notice);
+           totalCount = ndao.getCount();
+           model.addAttribute("selectedTeam", "공지");
        } else if(team!=null&&!team.trim().isEmpty()) {
     	   list = dao.listOfPageByTeam(team, cpage * 10 - 9, cpage * 10);
            totalCount = dao.totalCountByTeam(team);
            model.addAttribute("teamLogo", dao.isTeamLogo(team));
            model.addAttribute("selectedTeam", team);
        } else {
-           list = dao.listOfPage(cpage * 10 - 9, cpage * 10);
+    	   list = dao.listOfPage(cpage * 10 - 9, cpage * 10);
            totalCount = dao.totalCount();
        }
        model.addAttribute("list", list);
@@ -68,7 +78,12 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/detail")
-	public String detail(int seq, Model model) throws Exception {
+	public String detail(String type, int seq, Model model) throws Exception {
+		if("notice".equals(type)) {
+		model.addAttribute("board", ndao.selectBySeq(seq));
+		ndao.viewCount(seq);
+		return "/board/noticeBoard";
+		} else {
 		model.addAttribute("board", dao.getDetail(seq));
 		String writer = dao.whoIsWriter(seq);
 		String logo = dao.teamLogoEditer(writer);
@@ -83,6 +98,7 @@ public class BoardController {
 		model.addAttribute("re_replyList", re_replyList);
 		dao.viewCount(seq);
 		return "/board/detail";
+		}
 	}
 	
 	@RequestMapping("/write")
@@ -131,19 +147,33 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/search")
-	public String search(String option, String search, Model model, int cpage) throws Exception {
+	public String search(String type, String option, String search, Model model, int cpage) throws Exception {
 		if(!search.equals("")) {
-		List<BoardDTO> list = dao.searchBoard(option, search, cpage*10-9, cpage*10);
-		model.addAttribute("list", list);
-		model.addAttribute("recordTotalCount", dao.searchCount(option, search));
-		model.addAttribute("recordCountPerPage", 10);
-		model.addAttribute("naviCountPerPage", 10);
-		model.addAttribute("isSearch", true);
-		model.addAttribute("option", option);
-		model.addAttribute("search", search);
-		model.addAttribute("cpage", cpage);
-		System.out.println(dao.searchCount(option, search));
-		return "/board/board";
+			model.addAttribute("recordCountPerPage", 10);
+			model.addAttribute("naviCountPerPage", 10);
+			model.addAttribute("isSearch", true);
+			model.addAttribute("option", option);
+			model.addAttribute("search", search);
+			model.addAttribute("cpage", cpage);
+			if("notice".equals(type)) {
+				if(option.equals("제목")) {
+					List<NoticeDTO> list = ndao.searchPageByTitle(search, cpage*10-9, cpage*10);
+					model.addAttribute("list", list);
+					model.addAttribute("recordTotalCount", ndao.getCountByTitle(search));
+					return "/board/board?team=notice&cpage=1";
+				} else {
+					List<NoticeDTO> list = ndao.searchPageByContents(search, cpage*10-9, cpage*10);
+					model.addAttribute("list", list);
+					model.addAttribute("recordTotalCount", ndao.getCountByContents(search));
+					return "/board/board?team=notice&cpage=1";
+				}
+			} else {
+				List<BoardDTO> list = dao.searchBoard(option, search, cpage*10-9, cpage*10);
+				model.addAttribute("list", list);
+				model.addAttribute("selectedTeam", option);
+				model.addAttribute("recordTotalCount", dao.searchCount(option, search));
+				return "/board/board";
+			}
 		} else {
 			return "redirect:/board/board?cpage=1";		
 			}

@@ -469,10 +469,10 @@ body {
 				<a href="#">야구</a>
 
 				<div class="sub-menu">
-					<a href="#">예매</a>
-					<a href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a>
-					<a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a>
-					<a href="#">선수순위</a>
+					<a href="${pageContext.request.contextPath}/#reservation">예매</a>
+					<a href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a> 
+					<a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a> 
+					<a href="#">선수순위</a> 
 					<a href="${pageContext.request.contextPath}/board/board?cpage=1">게시판</a>
 				</div>
 			</div>
