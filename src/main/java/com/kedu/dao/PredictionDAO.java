@@ -101,4 +101,24 @@ public class PredictionDAO {
             jdbc.update(sql, gameId, gameId);
         }
     }
+    
+    public void predictionUpdate() {
+    	String sql = "UPDATE PREDICTION P SET P.WINNER = ( "
+    	        + "SELECT CASE "
+    	        + "WHEN S.GAME_STATUS != '경기종료' THEN 0 "
+    	        + "WHEN S.HOME_SCORE = S.AWAY_SCORE THEN -1 "
+    	        + "WHEN S.HOME_SCORE > S.AWAY_SCORE THEN 1 "
+    	        + "WHEN S.HOME_SCORE < S.AWAY_SCORE THEN 2 "
+    	        + "ELSE 0 "
+    	        + "END "
+    	        + "FROM SCHEDULE S "
+    	        + "WHERE S.GAME_ID = P.GAME_ID "
+    	        + ") "
+    	        + "WHERE EXISTS ( "
+    	        + "SELECT 1 "
+    	        + "FROM SCHEDULE S "
+    	        + "WHERE S.GAME_ID = P.GAME_ID "
+    	        + ")";
+    	jdbc.update(sql);
+    }
 }

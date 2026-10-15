@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kedu.dto.BoardDTO;
 import com.kedu.dto.LiveChatDTO;
+import com.kedu.dto.NoticeDTO;
 import com.kedu.dto.Re_ReplyDTO;
 import com.kedu.dto.ReplyDTO;
 import com.kedu.dto.ReportDTO;
@@ -190,16 +191,7 @@ public class BoardDAO {
 	}
 
 	public int addReport(ReportDTO dto) {
-
-		System.out.println("target_contents : " + dto.getTarget_contents());
-		System.out.println("target_type : " + dto.getTarget_type());
-		System.out.println("target_seq : " + dto.getTarget_seq());
-		System.out.println("parent_seq : " + dto.getParent_seq());
-		System.out.println("target_id : " + dto.getTarget_id());
-		System.out.println("reporter : " + dto.getReporter());
-		System.out.println("report_type : " + dto.getReport_type());
-
-		String sql = "insert into report values(report_seq.nextval, ?, ?, ?, ?, ?, ?, ?, 'ï¿½ï¿½È®ï¿½ï¿½', sysdate)";
+		String sql = "insert into report values(report_seq.nextval, ?, ?, ?, ?, ?, ?, ?, '¹ÌÈ®ÀÎ', sysdate)";
 		return jdbc.update(sql, dto.getTarget_contents(), dto.getTarget_type(), dto.getTarget_seq(),
 				dto.getParent_seq(), dto.getTarget_id(), dto.getReporter(), dto.getReport_type());
 	}
@@ -233,5 +225,20 @@ public class BoardDAO {
 	public String whoIsWriter(int seq) {
 		String sql = "select writer from board where board_seq = ?";
 		return jdbc.queryForObject(sql, String.class, seq);
+	}
+	
+	public List<BoardDTO> noticeToBoard(List<NoticeDTO> notice) {
+		List<BoardDTO> list = new ArrayList<>();
+		for(int i=0; i<notice.size(); i++) {
+			BoardDTO dto = new BoardDTO();
+			dto.setBoard_seq(notice.get(i).getNotice_seq());
+			dto.setTitle(notice.get(i).getTitle());
+			dto.setContents(notice.get(i).getContents());
+			dto.setWriter(notice.get(i).getWriter());
+			dto.setView_count(notice.get(i).getView_count());
+			dto.setWrite_date(notice.get(i).getWrite_date());
+			list.add(dto);
+		}
+		return list;
 	}
 }

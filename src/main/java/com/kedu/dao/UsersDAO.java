@@ -123,6 +123,7 @@ public class UsersDAO {
    public int updatePoint(String id, int earnedPoint) {
       String sql= "update users set point =nvl(point, 0) + ? where id= ?";
       return jdbc.update(sql, earnedPoint, id);
+
    }
   
 	public int addPoint(String id, int point) {
@@ -148,8 +149,10 @@ public class UsersDAO {
 }
    public int withdraw(String id) {
 	   String sql = "delete from users where id =?";
-	   
+	   String sql2 = "delete from board where writer = ?";
+	   jdbc.update(sql2, id);
 	   return jdbc.update(sql ,id);
 	   
-   }
+
+}
 }

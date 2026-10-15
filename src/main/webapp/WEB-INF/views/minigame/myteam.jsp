@@ -25,54 +25,64 @@ body {
 	min-height: 100vh;
 }
 .header {
-	width: 100%;
-	height: 100px;
-	background: linear-gradient(135deg, #0b1026, #171f46);
-	color: white;
-	display: flex;
-	align-items: center;
-	padding: 0 50px;
-	position: sticky;
-	top: 0;
-	z-index: 1000;
-	border-bottom: 1px solid #303b70;
-	box-shadow: 0 3px 15px rgba(11, 16, 38, 0.18);
+    width: 100%;
+    min-height: 100px;
+    height: auto;
+    background: linear-gradient(135deg, #0b1026, #171f46);
+    color: white;
+
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+
+    padding: 15px clamp(15px, 4vw, 50px);
+
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    border-bottom: 1px solid #303b70;
+    box-shadow: 0 3px 15px rgba(11, 16, 38, 0.18);
 }
 
 .logo {
-	font-size: 30px;
-	font-weight: bold;
-	margin-right: 60px;
-	color: white;
-	letter-spacing: 1px;
-	cursor:pointer;
+    font-size: clamp(22px, 2.2vw, 30px);
+    font-weight: bold;
+    margin-right: clamp(10px, 3vw, 60px);
+    color: white;
+    letter-spacing: 1px;
+    cursor: pointer;
+    flex-shrink: 0;
 }
 
 .main-menu {
-	height: 100%;
-	display: flex;
-	align-items: center;
-	gap: 40px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: clamp(12px, 3vw, 40px);
+    flex-shrink: 1;
 }
 
 .menu-item {
-	position: relative;
-	height: 100%;
-	display: flex;
-	align-items: center;
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
 }
 
-.menu-item>a {
-	font-size: 18px;
-	font-weight: bold;
-	text-decoration: none;
-	color: #f7f8ff;
-	padding: 10px 5px;
-	transition: color 0.2s ease;
+.menu-item > a {
+    font-size: clamp(14px, 1.4vw, 18px);
+    font-weight: bold;
+    text-decoration: none;
+    color: #f7f8ff;
+    padding: 10px 5px;
+    white-space: nowrap;
+    transition: color 0.2s ease;
 }
 
-.menu-item>a:hover {
-	color: #aebee7;
+.menu-item > a:hover {
+    color: #aebee7;
 }
 
 /* =========================
@@ -122,13 +132,13 @@ body {
 .member-menu {
     font-size: 14px;
     margin-left: auto;
-
     display: flex;
     align-items: center;
-    gap: 10px;
-
+    gap: 8px;
     white-space: nowrap;
+    flex-shrink: 0;
 }
+
 
 .member-menu form {
     display: flex;
@@ -691,6 +701,421 @@ body {
 .footer a:hover {
 	color: #a9b1db;
 }
+
+
+/* =========================
+   본문 반응형
+========================= */
+
+/* 작은 노트북 및 태블릿 */
+@media (max-width: 1100px) {
+    .container {
+        width: 100%;
+        max-width: 100%;
+        padding: 0 20px;
+        margin: 50px auto 30px;
+    }
+
+    .main-area {
+        gap: 15px;
+    }
+
+    .team-area,
+    .player-area {
+        width: calc(50% - 8px);
+        min-width: 0;
+        padding: 18px;
+    }
+
+    .field {
+        width: 100%;
+    }
+
+    .position {
+        width: clamp(75px, 10vw, 100px);
+        font-size: 13px;
+    }
+
+    .p-left,
+    .p-third {
+        left: 5%;
+    }
+
+    .p-right,
+    .p-first {
+        right: 5%;
+    }
+
+    .p-center,
+    .p-second,
+    .p-pitcher,
+    .p-catcher {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .p-short {
+        left: 25%;
+    }
+
+    .player-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .position-filter {
+        flex-wrap: wrap;
+    }
+
+    .position-filter button {
+        flex: 1 1 18%;
+        min-width: 48px;
+    }
+}
+
+/* 태블릿 및 작은 화면 */
+@media (max-width: 850px) {
+    .container {
+        padding: 0 15px;
+        margin-top: 35px;
+    }
+
+    .main-area {
+        flex-direction: column;
+    }
+
+    .team-area,
+    .player-area {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .team-area {
+        min-height: auto;
+    }
+
+    .player-area {
+        position: static;
+        height: 650px;
+        align-self: stretch;
+    }
+
+    .field {
+        max-width: 575px;
+        margin: 0 auto;
+    }
+
+    .player-list {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .title {
+        height: auto;
+        min-height: 60px;
+        padding: 15px 20px;
+        font-size: 22px;
+    }
+}
+
+/* 모바일 */
+@media (max-width: 600px) {
+    .container {
+        padding: 0 10px;
+        margin: 25px auto;
+    }
+
+    .title {
+        min-height: 55px;
+        padding: 12px 15px;
+        font-size: 20px;
+    }
+
+    .team-area,
+    .player-area {
+        padding: 12px;
+        border-radius: 8px;
+    }
+
+    .area-title {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+
+    /* 야구장 크기 조절 */
+    .field {
+        height: 390px;
+        width: 100%;
+    }
+
+    /* 포지션 버튼 크기 조절 */
+    .position {
+        width: clamp(68px, 22vw, 95px);
+        height: 52px;
+        padding: 3px;
+        font-size: 12px;
+        gap: 2px;
+    }
+
+    .position-name {
+        font-size: 11px;
+    }
+
+    .selected-player {
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 12px;
+    }
+
+    /* 포지션별 위치 */
+    .p-left {
+        left: 3%;
+        top: 10%;
+    }
+
+    .p-center {
+        left: 50%;
+        top: 5%;
+    }
+
+    .p-right {
+        right: 3%;
+        top: 10%;
+    }
+
+    .p-second {
+        left: 50%;
+        top: 27%;
+    }
+
+    .p-short {
+        left: 22%;
+        top: 40%;
+    }
+
+    .p-pitcher {
+        left: 50%;
+        top: 43%;
+    }
+
+    .p-third {
+        left: 3%;
+        top: 58%;
+    }
+
+    .p-first {
+        right: 3%;
+        top: 58%;
+    }
+
+    .p-catcher {
+        left: 50%;
+        bottom: 5%;
+    }
+
+    /* 선택한 선수 목록 */
+    .team-info {
+        margin-top: 18px;
+        padding-top: 15px;
+    }
+
+    .team-info-header,
+    .selected-player-row {
+        grid-template-columns: 1.2fr 1fr 0.8fr;
+        gap: 4px;
+    }
+
+    .selected-player-row {
+        font-size: 12px;
+    }
+
+    /* 검색창 */
+    .search {
+        width: 100%;
+    }
+
+    .search input {
+        min-width: 0;
+        padding: 0 9px;
+        font-size: 13px;
+    }
+
+    .search button {
+        width: 60px;
+        flex-shrink: 0;
+    }
+
+    /* 포지션 필터 */
+    .position-filter {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+
+    .position-filter button {
+        flex: 1 1 17%;
+        min-width: 0;
+        height: 34px;
+        font-size: 10px;
+    }
+
+    /* 선수 카드 */
+    .player-area {
+        height: 570px;
+    }
+
+    .player-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    .player-card {
+        height: 160px;
+        padding: 6px;
+        min-width: 0;
+    }
+
+    .player-image {
+        height: 90px;
+    }
+
+    .player-name {
+        font-size: 12px;
+    }
+
+    .player-position {
+        font-size: 11px;
+    }
+
+    .player-team {
+        font-size: 10px;
+    }
+
+    /* 하단 버튼 */
+    .save-area {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .save-btn,
+    .reset-btn,
+    .home-btn {
+        width: auto;
+        min-width: 90px;
+        flex: 1 1 28%;
+        height: 44px;
+        margin: 0;
+        font-size: 13px;
+    }
+
+    /* 퀵 메뉴는 모바일에서 숨김 */
+    .quick-menu {
+        display: none;
+    }
+
+    .footer {
+        flex-wrap: wrap;
+        height: auto;
+        min-height: 70px;
+        padding: 15px 8px;
+        font-size: 11px;
+        text-align: center;
+    }
+}
+
+
+/* 태블릿 및 작은 노트북 */
+@media (max-width: 1100px) {
+    .header {
+        padding: 15px 25px;
+        gap: 10px;
+    }
+
+    .logo {
+        margin-right: 15px;
+    }
+
+    .main-menu {
+        gap: 15px;
+    }
+
+    .member-menu {
+        gap: 5px;
+    }
+
+    .login-btn,
+    .sign-btn {
+        padding: 6px 8px;
+    }
+}
+
+/* 태블릿 및 작은 화면 */
+@media (max-width: 850px) {
+    .header {
+        padding: 15px 20px;
+    }
+
+    .logo {
+        margin-right: 5px;
+    }
+
+    .main-menu {
+        gap: 10px;
+    }
+
+    .menu-item > a {
+        font-size: 14px;
+    }
+
+    .member-menu {
+        font-size: 12px;
+    }
+
+    .member-menu button {
+        font-size: 12px;
+        padding: 6px;
+    }
+}
+
+/* 모바일 */
+@media (max-width: 600px) {
+    .header {
+        justify-content: center;
+        padding: 12px 10px;
+        gap: 8px 15px;
+    }
+
+    .logo {
+        font-size: 24px;
+        margin-right: 5px;
+    }
+
+    .main-menu {
+        gap: 12px;
+        height: 40px;
+    }
+
+    .menu-item > a {
+        font-size: 13px;
+        padding: 8px 2px;
+    }
+
+    .member-menu {
+        margin-left: 0;
+        gap: 5px;
+    }
+
+    .member-menu span {
+        font-size: 12px;
+    }
+
+    .member-menu button {
+        font-size: 11px;
+        padding: 5px 7px;
+    }
+}
 </style>
 </head>
 
@@ -1039,64 +1464,63 @@ body {
 								});
 					});
 
-			$(".player-card")
-					.click(
-							function() {
+			$(".player-card").click(function() {
 
-								if (selectedPosition === null) {
-									alert("먼저 포지션을 선택해주세요.");
-									return;
-								}
+				if (selectedPosition === null) {
+			        alert("먼저 포지션을 선택해주세요.");
+			        return;
+			    }
 
-								let playerName = $(this).find(".player-name")
-										.text().trim();
+			    let playerName = $(this).find(".player-name").text().trim();
+			    let playerPosition = $(this).find(".player-position").text().trim();
+			    let playerTeam = $(this).find(".player-team").text().trim();
 
-								let playerPosition = $(this).find(
-										".player-position").text().trim();
+			    // 현재 선택한 포지션을 제외한 다른 포지션에 같은 선수가 있는지 확인
+			    let duplicated = false;
 
-								let playerTeam = $(this).find(".player-team")
-										.text().trim();
+			    $(".selected-player-row").each(function() {
+			        let rowName = $(this).find(".player-name").text().trim();
+			        let rowPosition = $(this).attr("data-position");
 
-								let positionButton = $(".position[data-position='"
-										+ selectedPosition + "']");
+			        if (rowName === playerName && rowPosition !== selectedPosition) {
+			            duplicated = true;
+			            return false;
+			        }
+			    });
 
-								positionButton.find(".selected-player").text(
-										playerName);
+			    // 다른 포지션에 이미 등록된 선수라면 선택하지 않음
+			    if (duplicated) {
+			        alert("이미 다른 포지션에 등록된 선수입니다.");
+			        return;
+			    }
 
-								$("#" + selectedPosition).val(playerName);
+			    let positionButton = $(".position[data-position='" + selectedPosition + "']");
 
-								$(".position").removeClass("selected");
-								positionButton.addClass("selected");
+			    positionButton.find(".selected-player").text(playerName);
+			    $("#" + selectedPosition).val(playerName);
 
-								let selectedRow = $(".selected-player-row[data-position='"
-										+ selectedPosition + "']");
+			    $(".position").removeClass("selected");
+			    positionButton.addClass("selected");
 
-								if (selectedRow.length > 0) {
+			    let selectedRow = $(".selected-player-row[data-position='" + selectedPosition + "']");
 
-									selectedRow.find(".player-name").text(
-											playerName);
-									selectedRow.find(".player-position").text(
-											playerPosition);
-									selectedRow.find(".player-team").text(
-											playerTeam);
+			    if (selectedRow.length > 0) {
 
-								} else {
+			        selectedRow.find(".player-name").text(playerName);
+			        selectedRow.find(".player-position").text(playerPosition);
+			        selectedRow.find(".player-team").text(playerTeam);
 
-									$(".selected-player-list")
-											.append(
-													"<div class='selected-player-row' data-position='" + selectedPosition + "'>"
-															+ "<span class='player-name'>"
-															+ playerName
-															+ "</span>"
-															+ "<span class='player-position'>"
-															+ playerPosition
-															+ "</span>"
-															+ "<span class='player-team'>"
-															+ playerTeam
-															+ "</span>"
-															+ "</div>");
-								}
-							});
+			    } else {
+
+			        $(".selected-player-list").append(
+			            "<div class='selected-player-row' data-position='" + selectedPosition + "'>"
+			            + "<span class='player-name'>" + playerName + "</span>"
+			            + "<span class='player-position'>" + playerPosition + "</span>"
+			            + "<span class='player-team'>" + playerTeam + "</span>"
+			            + "</div>"
+			        );
+			    }
+			});
 
 		});
 		
