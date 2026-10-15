@@ -44,7 +44,7 @@ public class QuizDAO {
             final List<String> userAnswers) {
 
         if (memberId == null || memberId.trim().isEmpty()) {
-            throw new IllegalArgumentException("회원 ID가 없습니다.");
+            throw new IllegalArgumentException("�쉶�썝 ID媛� �뾾�뒿�땲�떎.");
         }
 
         if (quizIds == null || userAnswers == null
@@ -53,7 +53,7 @@ public class QuizDAO {
                 || quizIds.size() > 10) {
 
             throw new IllegalArgumentException(
-                    "퀴즈 데이터가 올바르지 않습니다.");
+                    "�댁쫰 �뜲�씠�꽣媛� �삱諛붾Ⅴ吏� �븡�뒿�땲�떎.");
         }
 
         Set<Integer> uniqueQuizIds = new HashSet<Integer>();
@@ -63,7 +63,7 @@ public class QuizDAO {
                     || !uniqueQuizIds.add(quizId)) {
 
                 throw new IllegalArgumentException(
-                        "퀴즈 ID가 올바르지 않습니다.");
+                        "�댁쫰 ID媛� �삱諛붾Ⅴ吏� �븡�뒿�땲�떎.");
             }
         }
 
@@ -72,7 +72,7 @@ public class QuizDAO {
                     && !"X".equals(userAnswer)) {
 
                 throw new IllegalArgumentException(
-                        "잘못된 답변입니다.");
+                        "�옒紐삳맂 �떟蹂��엯�땲�떎.");
             }
         }
 
@@ -99,7 +99,7 @@ public class QuizDAO {
 
                             if (!rs.next()) {
                                 throw new SQLException(
-                                        "존재하지 않는 퀴즈 ID: "
+                                        "議댁옱�븯吏� �븡�뒗 �댁쫰 ID: "
                                         + quizIds.get(i));
                             }
 
@@ -126,7 +126,7 @@ public class QuizDAO {
 
                     if (!rs.next()) {
                         throw new SQLException(
-                                "결과 번호 발급에 실패했습니다.");
+                                "寃곌낵 踰덊샇 諛쒓툒�뿉 �떎�뙣�뻽�뒿�땲�떎.");
                     }
 
                     resultId = rs.getInt(1);
@@ -176,7 +176,7 @@ public class QuizDAO {
 
                             if (!rs.next()) {
                                 throw new SQLException(
-                                        "상세 번호 발급에 실패했습니다.");
+                                        "�긽�꽭 踰덊샇 諛쒓툒�뿉 �떎�뙣�뻽�뒿�땲�떎.");
                             }
 
                             detailId = rs.getInt(1);
@@ -196,7 +196,7 @@ public class QuizDAO {
 
                                 if (!rs.next()) {
                                     throw new SQLException(
-                                            "퀴즈를 찾을 수 없습니다.");
+                                            "�댁쫰瑜� 李얠쓣 �닔 �뾾�뒿�땲�떎.");
                                 }
 
                                 correctAnswer =
@@ -232,7 +232,7 @@ public class QuizDAO {
                 + "member_id AS \"memberId\", "
                 + "total_count AS \"totalCount\", "
                 + "correct_count AS \"correctCount\", "
-                + "TO_CHAR(play_date, 'YYYY-MM-DD HH24:MI:SS') "
+                + "TO_CHAR(play_date, 'YYYY-MM-DD HH24:MI') "
                 + "AS \"playDate\" "
                 + "FROM quiz_result "
                 + "WHERE member_id = ? "

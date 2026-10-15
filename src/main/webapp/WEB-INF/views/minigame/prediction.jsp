@@ -173,6 +173,49 @@ body {
 	border-color: #476aaa;
 	color: white;
 }
+/* =========================
+   퀵 메뉴
+========================= */
+.quick-menu {
+	width: 280px;
+	position: fixed;
+	left: -250px;
+	top: 50%;
+	transform: translateY(-50%);
+	border: 1px solid #3b4778;
+	transition: left 0.5s ease;
+	z-index: 1000;
+	background: #111936;
+	color: white;
+	box-shadow: 5px 8px 25px rgba(10, 15, 35, 0.18);
+}
+
+.quick-menu:hover {
+	left: 0;
+}
+
+.quick-menu div {
+	width: 100%;
+	height: 55px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	border-bottom: 1px solid #303b68;
+}
+
+.quick-menu div:last-child {
+	border-bottom: none;
+}
+
+.quick-menu div:hover {
+	background: #252f67;
+}
+
+.quick-menu .menu, .quick-menu .menu:hover {
+	background: #476aaa;
+	color: white;
+}
 
 /* =========================
    본문
@@ -336,11 +379,26 @@ body {
     font-size: 16px;
 }
 
+/* 비활성화 버튼 기본 스타일 */
 .match-pick button:disabled {
+    cursor: not-allowed;
+    opacity: 1;
+}
+
+/* 예측 완료된 카드의 버튼 색상 유지 */
+.match-card.completed .match-pick button.active,
+.match-card.completed .match-pick button.active:disabled {
+    background: #476aaa !important;
+    border-color: #476aaa !important;
+    color: white !important;
+    opacity: 1;
+}
+
+/* 선택하지 않은 버튼은 비활성화 스타일 유지 */
+.match-card.completed .match-pick button:not(.active):disabled {
     background: #e5e8ef;
     border-color: #d3d8e2;
     color: #888;
-    cursor: not-allowed;
 }
 
 .team-logo {
@@ -642,7 +700,7 @@ tbody tr:hover {
 				<a href="#">야구</a>
 
 				<div class="sub-menu">
-					<a href="#">예매</a> 
+					<a href="${pageContext.request.contextPath}/#reservation">예매</a>
 					<a href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a> 
 					<a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a> 
 					<a href="${pageContext.request.contextPath}/schedule/rankdetail?tab=pitcher">선수순위</a> 
@@ -670,8 +728,7 @@ tbody tr:hover {
 				<div class="sub-menu">
 					<a href="${pageContext.request.contextPath}/quiz">상식 퀴즈</a> 
 					<a href="${pageContext.request.contextPath}/myteam">나만의 팀</a> 
-					<a href="${pageContext.request.contextPath}/prediction">승부예측</a> 
-					<a href="#">게임 랭킹</a>
+					<a href="${pageContext.request.contextPath}/prediction">승부예측</a>				
 				</div>
 			</div>
 		</nav>
@@ -714,25 +771,58 @@ tbody tr:hover {
 		</div>
 
 	</div>
+	<div class="quick-menu">
+		    <div class="menu">QUICK MENU</div>
+		    <div onclick="location.href='${pageContext.request.contextPath}/'">홈</div>
+		    <div onclick="location.href='${pageContext.request.contextPath}/#reservation'">예매</div>
+		    <div onclick="location.href='${pageContext.request.contextPath}/board/board?cpage=1'">게시판</div>
+		    <div onclick="location.href='${pageContext.request.contextPath}/mypage'">마이페이지</div>
+		</div>
 	<div class="container">
 
 		<div class="title">승부예측</div>
 
 		<div class="summary">
-			<div class="summary-card">
-				보유 포인트 <strong></strong>
-			</div>
-			<div class="summary-card">
-				예측 참여 <strong></strong>
-			</div>
-			<div class="summary-card">
-				적중률 <strong></strong>
-			</div>
+		    <div class="summary-card">
+		        보유 포인트
+		        <strong>
+		            <c:choose>
+		                <c:when test="${not empty sessionScope.id}">
+		                    <fmt:formatNumber value="${myPoint}" pattern="#,##0"/>P
+		                </c:when>
+		                <c:otherwise>로그인 필요</c:otherwise>
+		            </c:choose>
+		        </strong>
+		    </div>
+		
+		    <div class="summary-card">
+		        예측 참여
+		        <strong>
+		            <c:choose>
+		                <c:when test="${not empty sessionScope.id}">
+		                    <fmt:formatNumber value="${predictionCount}" pattern="#,##0"/>회
+		                </c:when>
+		                <c:otherwise>로그인 필요</c:otherwise>
+		            </c:choose>
+		        </strong>
+		    </div>
+		
+		    <div class="summary-card">
+		        적중률
+		        <strong>
+		            <c:choose>
+		                <c:when test="${not empty sessionScope.id}">
+		                    <fmt:formatNumber value="${hitRate}" pattern="0.0"/>%
+		                </c:when>
+		                <c:otherwise>로그인 필요</c:otherwise>
+		            </c:choose>
+		        </strong>
+		    </div>
 		</div>
 
 		
 			<section class="box">
-			    <div class="area-title">오늘의 경기</div>
+			    <div class="area-title">YA900 승부예측</div>
 			
 			    <c:choose>
 			        <c:when test="${not empty predictionList}">
@@ -859,19 +949,22 @@ tbody tr:hover {
 			                                </td>
 			
 			                                <td>
-			                                    <c:choose>
-			                                        <c:when test="${item.IS_CORRECT == 1}">적중</c:when>
-			                                        <c:when test="${item.IS_CORRECT == 0}">미확정</c:when>
-			                                        <c:otherwise>-</c:otherwise>
-			                                    </c:choose>
-			                                </td>
-			
-			                                <td>
-			                                    <c:choose>
-			                                        <c:when test="${item.IS_CORRECT == 1}">적중 포인트</c:when>
-			                                        <c:otherwise>0</c:otherwise>
-			                                    </c:choose>
-			                                </td>
+											    <c:choose>
+											        <c:when test="${item.IS_CORRECT eq 2}">적중</c:when>
+											        <c:when test="${item.IS_CORRECT eq 1}">미적중</c:when>
+											        <c:when test="${item.IS_CORRECT eq 0}">미확정</c:when>
+											        <c:otherwise>-</c:otherwise>
+											    </c:choose>
+											</td>
+											
+											<td>
+											    <c:choose>
+											        <c:when test="${item.IS_CORRECT eq 2}">100P</c:when>
+											        <c:when test="${item.IS_CORRECT eq 1}">0P</c:when>
+											        <c:when test="${item.IS_CORRECT eq 0}">미지급</c:when>
+											        <c:otherwise>-</c:otherwise>
+											    </c:choose>
+											</td>
 			                            </tr>
 			                        </c:forEach>
 			                    </c:when>
@@ -886,11 +979,14 @@ tbody tr:hover {
 			        </table>
 			    </div>
 			</section>
+	<div class="footer">
 
+			<a href="#">개인정보처리방침</a> | <a href="#">전체 서비스</a> | <a href="#">문제
+				신고</a> | <a href="#">고객센터</a> | <a
+				href="${pageContext.request.contextPath}/admin">관리자</a>
+
+		</div>
 	</div>
-
-	<footer class="footer"> YA900 </footer>
-
 	<script>
 	$(function() {
 		const myPredictions = {};
@@ -907,19 +1003,34 @@ tbody tr:hover {
 		    "2": "원정팀 승"
 		};
 
-		// 이미 예측을 제출한 경기 처리
-		$(".match-card").each(function() {
-		    const card = $(this);
+		const submittedPredictions = {
+			    <c:forEach var="item" items="${myPredictionList}" varStatus="status">
+			        "${item.PREDICTION_ID}": "${item.PREDICTED_RESULT}"<c:if test="${!status.last}">,</c:if>
+			    </c:forEach>
+			};
 
-		    const predictionId = Number(
-		        card.find(".match-pick button").first().attr("data-prediction-id")
-		    );
+			// 이미 예측을 제출한 경기 처리
+			$(".match-card").each(function() {
+			    const card = $(this);
 
-		    if (submittedPredictionIds.includes(predictionId)) {
-		        card.addClass("completed");
-		        card.find(".match-pick button").prop("disabled", true);
-		    }
-		});
+			    const predictionId = String(
+			        card.find(".match-pick button").first().attr("data-prediction-id")
+			    );
+
+			    if (Object.prototype.hasOwnProperty.call(submittedPredictions, predictionId)) {
+			        const selectedChoice = submittedPredictions[predictionId];
+
+			        // 예측 완료 도장 표시
+			        card.addClass("completed");
+
+			        // 기존에 선택했던 버튼의 색상 복원
+			        card.find('.match-pick button[data-choice="' + selectedChoice + '"]')
+			            .addClass("active");
+
+			        // 모든 버튼 비활성화
+			        card.find(".match-pick button").prop("disabled", true);
+			    }
+			});
 
 		// 경기별 예측 선택
 		$(document).on("click", ".match-pick button", function() {

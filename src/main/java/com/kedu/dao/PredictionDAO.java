@@ -33,7 +33,7 @@ public class PredictionDAO {
               + "JOIN team a ON s.away_id = a.team_id "
               + "WHERE s.start_date > SYSDATE "
               + "ORDER BY s.start_date ASC "
-              + ") WHERE ROWNUM <= 6";
+              + ") WHERE ROWNUM <= 5";
 
         return jdbc.query(sql, new BeanPropertyRowMapper<>(PredictionViewDTO.class));
     }

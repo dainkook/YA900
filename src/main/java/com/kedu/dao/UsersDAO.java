@@ -106,6 +106,16 @@ public class UsersDAO {
       return jdbc.queryForObject(sql,new BeanPropertyRowMapper<>(UsersDTO.class),id);
    }
    
+   public int usePoint(String id, int usedPoint) {
+	    if (usedPoint < 0) return 0;
+
+	    String sql = "UPDATE users "
+	               + "SET point = NVL(point, 0) - ? "
+	               + "WHERE id = ? AND NVL(point, 0) >= ?";
+
+	    return jdbc.update(sql, usedPoint, id, usedPoint);
+	}
+   
    public int selectPoint(String id) {
       String sql = "select nvl(point, 0) from users where id= ?";
       return jdbc.queryForObject(sql, Integer.class, id);
@@ -115,6 +125,19 @@ public class UsersDAO {
       return jdbc.update(sql, earnedPoint, id);
 
    }
+  
+	public int addPoint(String id, int point) {
+	
+	    if (point <= 0) {
+	        return 0;
+	    }
+	
+	    String sql = "UPDATE users "
+	               + "SET point = NVL(point, 0) + ? "
+	               + "WHERE id = ?";
+	
+	    return jdbc.update(sql, point, id);
+	}
    public List<Map<String, Object>> selectPointRanking(){
       String sql= "select * from(" +
             "select row_number() Over(" +
