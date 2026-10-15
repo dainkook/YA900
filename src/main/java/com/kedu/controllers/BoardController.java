@@ -49,7 +49,6 @@ public class BoardController {
     	   list = dao.listOfPageNotTeam(cpage * 10 - 9, cpage * 10);
     	   totalCount = dao.totalCountFreeBoard();
     	   model.addAttribute("selectedTeam", "자유");
-           
        } else if(team!=null&&!team.trim().isEmpty()) {
     	   list = dao.listOfPageByTeam(team, cpage * 10 - 9, cpage * 10);
            totalCount = dao.totalCountByTeam(team);

@@ -981,7 +981,8 @@ let navi =
 let first = document.createElement("a");
 if(isSearch==false) {
 	first.setAttribute("href", "/board/board?cpage=1");
-		} else {first.setAttribute("href", "/board/search?option=" + option + "&search=" + search + "&cpage=1");
+		} else {
+			first.setAttribute("href", "/board/search?option=" + option + "&search=" + search + "&cpage=1");
 				}
 
 first.innerHTML = "<<";
@@ -989,13 +990,9 @@ navi.append(first);
 
 if (needPrev) { 
 	let prev = document.createElement("a"); 
-	
+
 	if (isSearch == false) { 
-		prev.setAttribute( 
-			"href", 
-			"/board/board?cpage=" 
-			+ (currentPage - naviCountPerPage)
-		); 
+		prev.setAttribute( "href", "/board/board?team=${team}&cpage=" + (currentPage - naviCountPerPage)); 
 	} else { 
 		prev.setAttribute( 
 			"href", 
@@ -1017,7 +1014,7 @@ for (let i = startNavi; i <= endNavi; i++) {
 	num.innerHTML = i;
 	navi.append(num);
 	} else {
-		num.setAttribute("href", "/board/search?option=" + option + "&search=" + search + "&cpage=" + i);
+		num.setAttribute( "href", "/board/board?team=${team}&cpage=" + (currentPage - naviCountPerPage)); 
 		num.innerHTML = i;
 		navi.append(num);
 	}
@@ -1028,7 +1025,7 @@ if (needNext) {
 	if(isSearch==false) {
 	next.setAttribute("href", "/board/board?cpage=" + (currentPage + naviCountPerPage));
 	} else {
-		next.setAttribute("href", "/board/search?option=" + option + "&search=" + search + "&cpage=" + (currentPage + naviCountPerPage));
+		next.setAttribute( "href", "/board/board?team=${team}&cpage=" + (currentPage - naviCountPerPage)); 
 	}
 	next.innerHTML = ">";
 	navi.append(next);
