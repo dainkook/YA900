@@ -357,6 +357,7 @@ public class UsersController {
         return "fail";
     }
     
+
     @RequestMapping(value = "/withdraw/execute", method = RequestMethod.POST)
     public String withdrawUser(
             @RequestParam("password") String password,
@@ -381,4 +382,6 @@ public class UsersController {
         model.addAttribute("message", "회원 탈퇴에 실패했습니다.");
         return "member/withdraw";
     }
- }
+
+    }
+
