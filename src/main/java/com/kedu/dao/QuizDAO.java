@@ -345,4 +345,6 @@ public class QuizDAO {
     	return jdbc.queryForList(sql, pointPerCorrect, memberId);
     	
     }
+    
+    
 }

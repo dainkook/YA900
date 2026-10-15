@@ -16,7 +16,7 @@
 }
 
 html {
-    scroll-behavior: smooth;
+	scroll-behavior: smooth;
 }
 
 body {
@@ -84,13 +84,12 @@ h2 {
 }
 
 .logo {
-    font-size: clamp(22px, 2.2vw, 30px);
-    font-weight: bold;
-    margin-right: clamp(10px, 3vw, 60px);
-    color: white;
-    letter-spacing: 1px;
-    cursor: pointer;
-    flex-shrink: 0;
+	font-size: 30px;
+	font-weight: bold;
+	margin-right: 60px;
+	color: white;
+	letter-spacing: 1px;
+	cursor: pointer;
 }
 
 .main-menu {
@@ -169,13 +168,12 @@ h2 {
 ========================= */
 
 .member-menu {
-    font-size: 14px;
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    white-space: nowrap;
-    flex-shrink: 0;
+	font-size: 14px;
+	margin-left: auto;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	white-space: nowrap;
 }
 
 .member-menu form {
@@ -189,8 +187,7 @@ h2 {
 	white-space: nowrap;
 }
 
-.login-btn,
-.sign-btn {
+.login-btn, .sign-btn {
 	border: 1px solid #7180b1;
 	background: transparent;
 	color: white;
@@ -201,8 +198,7 @@ h2 {
 	transition: 0.2s ease;
 }
 
-.login-btn:hover,
-.sign-btn:hover {
+.login-btn:hover, .sign-btn:hover {
 	background: #476aaa;
 	border-color: #476aaa;
 	color: white;
@@ -243,14 +239,183 @@ h2 {
     border-bottom: 1px solid #edf0f7;
 }
 
-/* 페이지 제목 박스 */
-.wrap > .box:first-child {
-    min-height: 70px;
+/* 퀴즈 시작 카드 설명 */
+
+/* =========================
+   QUIZ START
+========================= */
+.quiz-start {
+    flex: 2;
+    min-height: 300px;
+
     display: flex;
+    flex-direction: column;
     align-items: center;
-    margin-bottom: 18px;
+    justify-content: center;
+    text-align: center;
+
+    padding: 24px 28px;
 }
 
+/* 퀴즈 제목 */
+.quiz-start h2 {
+    margin: 0 0 14px;
+    padding-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* 퀴즈 안내 문구 */
+.quiz-start p {
+    margin: 5px 0;
+    line-height: 1.5;
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+    letter-spacing: -0.2px;
+}
+
+/* 전체 등록 문제 */
+.quiz-start p:first-of-type {
+    margin-top: 0;
+    color: #344b78;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+/* 퀴즈 시작 버튼 */
+.quiz-start .btn {
+    margin-top: 10px;
+    min-width: 150px;
+    height: 45px;
+    padding: 0 25px;
+}
+
+
+/* 내 포인트 */
+.point-value {
+	width: 80%;
+	min-height: 75px;
+	border: 1px solid #dfe7f5;
+	border-radius: 10px;
+	background: linear-gradient(135deg, #f7f9ff, #edf2ff);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 26px;
+	font-weight: 800;
+	color: #476aaa;
+	margin-bottom: 20px;
+	letter-spacing: -0.5px;
+}
+
+/* 안내 및 최근 기록 */
+.info ul {
+	margin: 0;
+	padding-left: 20px;
+	display: flex;
+	flex-direction: column;
+	gap: 13px;
+	color: #58647b;
+	font-size: 14px;
+	line-height: 1.7;
+}
+
+.info li {
+	padding-left: 4px;
+}
+
+.info li::marker {
+	color: #476aaa;
+}
+
+/* 공통 버튼 */
+.btn, .history-btn {
+	font-family: inherit;
+	font-size: 14px;
+	font-weight: 700;
+	letter-spacing: -0.2px;
+}
+
+.btn {
+	border-radius: 8px;
+	box-shadow: 0 3px 7px rgba(71, 106, 170, 0.13);
+}
+
+.history-btn {
+	border-radius: 8px;
+	box-shadow: 0 3px 7px rgba(71, 106, 170, 0.12);
+}
+
+/* 표 제목과 데이터 */
+table {
+	width: 100%;
+	border-collapse: collapse;
+	font-family: inherit;
+	font-size: 14px;
+	text-align: center;
+}
+
+th {
+	height: 48px;
+	background: #f4f6fb;
+	border-top: 1px solid #e1e7f2;
+	border-bottom: 1px solid #dce3ef;
+	font-size: 13px;
+	font-weight: 800;
+	letter-spacing: -0.2px;
+	color: #596780;
+}
+
+td {
+	height: 52px;
+	padding: 10px 8px;
+	border-bottom: 1px solid #edf0f6;
+	font-size: 14px;
+	font-weight: 500;
+	color: #36425b;
+}
+
+tbody tr:hover {
+	background: #f5f8ff;
+}
+
+/* 카드 제목과 표 사이의 간격 */
+.table-scroll {
+	border-radius: 8px;
+	overflow-x: auto;
+}
+
+/* 푸터 */
+.site-footer {
+	font-family: inherit;
+	font-size: 12px;
+	letter-spacing: 0.5px;
+	color: #7b8498;
+}
+
+/* =========================
+   TITLE
+========================= */
+.wrap>.box:first-child {
+	height: 70px;
+	display: flex;
+	align-items: center;
+	margin-bottom: 18px;
+}
+
+h1 {
+	margin: 0;
+	font-size: 24px;
+	font-weight: bold;
+}
+
+h2 {
+	margin: 0 0 20px;
+	font-size: 21px;
+	font-weight: bold;
+	text-align: center;
+	color: #222;
+  }
 /* =========================
    ROW
 ========================= */
@@ -462,9 +627,10 @@ tbody tr:hover {
     border-radius: 8px;
 }
 
-.point-history-scroll table {
-    width: 100%;
-    border-collapse: collapse;
+.footer a {
+	margin: 0 4px;
+	text-decoration: none;
+	color: #838ec9;
 }
 
 .point-history-scroll thead {
@@ -478,8 +644,7 @@ tbody tr:hover {
     position: sticky;
     top: 0;
     z-index: 1;
-}
-
+  }
 /* =========================
    QUICK MENU
 ========================= */
@@ -736,10 +901,11 @@ tbody tr:hover {
 				<a href="#">야구</a>
 
 				<div class="sub-menu">
-					<a href="${pageContext.request.contextPath}/#reservation">예매</a> 
-					<a href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a> 
-					<a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a> 
-					<a href="${pageContext.request.contextPath}/schedule/rankdetail?tab=pitcher">선수순위</a> 
+					<a href="${pageContext.request.contextPath}/#reservation">예매</a> <a
+						href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a>
+					<a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a>
+					<a
+						href="${pageContext.request.contextPath}/schedule/rankdetail?tab=pitcher">선수순위</a>
 					<a href="${pageContext.request.contextPath}/board/board?cpage=1">게시판</a>
 				</div>
 			</div>
@@ -749,11 +915,8 @@ tbody tr:hover {
 				<a href="#">축구</a>
 
 				<div class="sub-menu">
-					<a href="#">예매</a> 
-					<a href="#">경기일정</a> 
-					<a href="#">팀순위</a> 
-					<a href="#">선수순위</a> 
-					<a href="#">게시판</a>
+					<a href="#">예매</a> <a href="#">경기일정</a> <a href="#">팀순위</a> <a
+						href="#">선수순위</a> <a href="#">게시판</a>
 				</div>
 			</div>
 
@@ -762,140 +925,142 @@ tbody tr:hover {
 				<a href="#">미니게임</a>
 
 				<div class="sub-menu">
-					<a href="${pageContext.request.contextPath}/quiz">상식 퀴즈</a> 
-					<a href="${pageContext.request.contextPath}/myteam">나만의 팀</a> 
-					<a href="${pageContext.request.contextPath}/prediction">승부예측</a> 
+					<a href="${pageContext.request.contextPath}/quiz">상식 퀴즈</a> <a
+						href="${pageContext.request.contextPath}/myteam">나만의 팀</a> <a
+						href="${pageContext.request.contextPath}/prediction">승부예측</a>
 				</div>
 			</div>
 		</nav>
 
 		<div class="member-menu">
-    <c:choose>
+			<c:choose>
 
-        <c:when test="${not empty sessionScope.id}">
-            <span>${sessionScope.id}님</span>
+				<c:when test="${not empty sessionScope.id}">
+					<span>${sessionScope.id}님</span>
 
-            <button class="login-btn"
-                    onclick="location.href='${pageContext.request.contextPath}/mypage'">
-                마이페이지
-            </button>
+					<button class="login-btn"
+						onclick="location.href='${pageContext.request.contextPath}/mypage'">
+						마이페이지</button>
 
-            <form action="${pageContext.request.contextPath}/logout"
-                  method="post">
-                <button type="submit" class="sign-btn">
-                    로그아웃
-                </button>
-            </form>
-        </c:when>
+					<form action="${pageContext.request.contextPath}/logout"
+						method="post">
+						<button type="submit" class="sign-btn">로그아웃</button>
+					</form>
+				</c:when>
 
-        <c:otherwise>
-            <button class="login-btn"
-                    onclick="location.href='${pageContext.request.contextPath}/login'">
-                로그인
-            </button>
+				<c:otherwise>
+					<button class="login-btn"
+						onclick="location.href='${pageContext.request.contextPath}/login'">
+						로그인</button>
 
-            <button class="sign-btn"
-                    onclick="location.href='${pageContext.request.contextPath}/signup'">
-                회원가입
-            </button>
-        </c:otherwise>
+					<button class="sign-btn"
+						onclick="location.href='${pageContext.request.contextPath}/signup'">
+						회원가입</button>
+				</c:otherwise>
 
-    </c:choose>
-			
-			
+			</c:choose>
+
+
 		</div>
 
 	</div>
 	<div class="quick-menu">
-		    <div class="menu">QUICK MENU</div>
-		    <div onclick="location.href='${pageContext.request.contextPath}/'">홈</div>
-		    <div onclick="location.href='${pageContext.request.contextPath}/#reservation'">예매</div>
-		    <div onclick="location.href='${pageContext.request.contextPath}/board/board?cpage=1'">게시판</div>
-		    <div onclick="location.href='${pageContext.request.contextPath}/mypage'">마이페이지</div>
-		</div>
+		<div class="menu">QUICK MENU</div>
+		<div onclick="location.href='${pageContext.request.contextPath}/'">홈</div>
+		<div
+			onclick="location.href='${pageContext.request.contextPath}/#reservation'">예매</div>
+		<div
+			onclick="location.href='${pageContext.request.contextPath}/board/board?cpage=1'">게시판</div>
+		<div
+			onclick="location.href='${pageContext.request.contextPath}/mypage'">마이페이지</div>
+	</div>
 	<main class="wrap">
 
-      <div class="box">
-         <h1>야구 상식퀴즈</h1>
-      </div>
+		<div class="box">
+			<h1>야구 상식퀴즈</h1>
+		</div>
 
-      <div class="row">
+		<div class="row">
 
-         <%-- 퀴즈 시작 영역 --%>
-         <section class="box quiz-start">
-            <h2>오늘의 야구 상식퀴즈</h2>
+			<%-- 퀴즈 시작 영역 --%>
+			<section class="box quiz-start">
+				<h2>오늘의 야구 상식퀴즈</h2>
 
-            <p>전체 등록 문제: ${quizCount}문제</p>
-            <p>이번 도전: ${playCount}문제 출제</p>
-            <p>정답 1문제당 ${pointPerCorrect}포인트</p>
-            <p>획득 가능 포인트: 최대 ${maxPoint}포인트</p>
+				<p>전체 등록 문제: ${quizCount}문제</p>
+				<p>이번 도전: ${playCount}문제 출제</p>
+				<p>정답 1문제당 ${pointPerCorrect}포인트 / 최대 ${maxPoint}포인트</p>
+				<p>오늘 참여 횟수: ${todayCount} / 2회</p>
 
-            <button type="button" class="btn"
-               onclick="location.href='${pageContext.request.contextPath}/quiz/start'">
-               퀴즈 시작</button>
-         </section>
+				<button type="button" class="btn"
+					onclick="location.href='${pageContext.request.contextPath}/quiz/start'">
+					퀴즈 시작</button>
+			</section>
 
-         <%-- 내 포인트 영역 --%>
-         <section class="box my-point">
-            <h2>내 포인트</h2>
+			<%-- 내 포인트 영역 --%>
+			<section class="box my-point">
+				<h2>내 포인트</h2>
 
-            <div class="point-value">
-               <c:choose>
-                  <c:when test="${not empty point}">
-                     <fmt:formatNumber value="${point}" pattern="#,##0" /> P
+				<div class="point-value">
+					<c:choose>
+						<c:when test="${not empty point}">
+							<fmt:formatNumber value="${point}" pattern="#,##0" /> P
                 </c:when>
-                  <c:otherwise>
+						<c:otherwise>
                     0 P
                 </c:otherwise>
-               </c:choose>
-            </div>
-         </section>
+					</c:choose>
+				</div>
 
-      </div>
+				<button type="button" class="btn"
+					onclick="location.href='${pageContext.request.contextPath}/quiz/pointHistory'">
+					포인트 내역</button>
+			</section>
 
-      <div class="row">
-         <section class="box info">
-            <h2>퀴즈 안내</h2>
+		</div>
 
-            <ul>
-               <li>전체 등록 문제: ${quizCount}문제</li>
-               <li>한 회차 출제: 10문제</li>
-               <li>정답 확인: 제출 후 결과 확인</li>
-               <li>랭킹 반영: 회원별 최고 정답 수 기준</li>
-            </ul>
-         </section>
+		<div class="row">
+			<section class="box info">
+				<h2>퀴즈 안내</h2>
 
-         <section class="box info">
-            <h2>최근 기록</h2>
+				<ul>
+					<li>전체 등록 문제: ${quizCount}문제</li>
+					<li>한 회차 출제: 10문제</li>
+					<li>정답 확인: 제출 후 결과 확인</li>
+					<li>랭킹 반영: 회원별 최고 정답 수 기준</li>
+				</ul>
+			</section>
 
-            <c:choose>
-               <%-- 로그인한 회원의 기록이 있는 경우 --%>
-               <c:when test="${not empty summary and summary.playCount > 0}">
+			<section class="box info">
+				<h2>최근 기록</h2>
 
-                  <ul>
-                     <li>최근 점수: <c:choose>
-                           <c:when test="${not empty latest}">
-                              <c:out value="${latest.correctCount}" />
+				<c:choose>
+					<%-- 로그인한 회원의 기록이 있는 경우 --%>
+					<c:when test="${not empty summary and summary.playCount > 0}">
+
+						<ul>
+							<li>최근 점수: <c:choose>
+									<c:when test="${not empty latest}">
+										<c:out value="${latest.correctCount}" />
                             /
                             <c:out value="${latest.totalCount}" />점
                         </c:when>
-                           <c:otherwise>-</c:otherwise>
-                        </c:choose>
-                     </li>
+									<c:otherwise>-</c:otherwise>
+								</c:choose>
+							</li>
 
-                     <li>최고 점수: <c:out value="${summary.bestScore}" />점
-                     </li>
+							<li>최고 점수: <c:out value="${summary.bestScore}" />점
+							</li>
 
-                     <li>참여 횟수: <c:out value="${summary.playCount}" />회
-                     </li>
+							<li>참여 횟수: <c:out value="${summary.playCount}" />회
+							</li>
 
-                     <li>정답률: <c:choose>
-                           <c:when test="${summary.sumTotal > 0}">
-                              <fmt:formatNumber
-                                 value="${summary.sumCorrect * 100 / summary.sumTotal}"
-                                 maxFractionDigits="1" />%
+							<li>정답률: <c:choose>
+									<c:when test="${summary.sumTotal > 0}">
+										<fmt:formatNumber
+											value="${summary.sumCorrect * 100 / summary.sumTotal}"
+											maxFractionDigits="1" />%
                         </c:when>
-                          
+
 									<c:otherwise>0%</c:otherwise>
 								</c:choose>
 							</li>
@@ -910,7 +1075,7 @@ tbody tr:hover {
 							<li>정답률: 0%</li>
 						</ul>
 					</c:when>
-              
+
 					<c:otherwise>
 						<p style="text-align: center; color: #666;">로그인하면 나의 퀴즈 기록을
 							확인할 수 있습니다.</p>
@@ -937,7 +1102,7 @@ tbody tr:hover {
 							<th style="width: 35%">보유 포인트</th>
 						</tr>
 					</thead>
-          
+
 					<tbody>
 						<c:choose>
 							<c:when test="${not empty rankingList}">
@@ -1010,10 +1175,18 @@ tbody tr:hover {
 	</main>
 	<div class="footer">
 
-			<a href="#">개인정보처리방침</a> | <a href="#">전체 서비스</a> | <a href="#">문제
-				신고</a> | <a href="#">고객센터</a> | <a
-				href="${pageContext.request.contextPath}/admin">관리자</a>
+		<a href="#">개인정보처리방침</a> | <a href="#">전체 서비스</a> | <a href="#">문제
+			신고</a> | <a href="#">고객센터</a> | <a
+			href="${pageContext.request.contextPath}/admin">관리자</a>
 
 	</div>
+
+	<%-- 오늘 퀴즈 참여 횟수 제한 알림 --%>
+	<c:if test="${param.limit eq '1'}">
+		<script>
+			alert("오늘의 퀴즈 참여 횟수를 모두 사용했습니다.");
+		</script>
+	</c:if>
+
 </body>
 </html>
