@@ -170,7 +170,7 @@ public class BoardController {
 			} else {
 				List<BoardDTO> list = dao.searchBoard(option, search, cpage*10-9, cpage*10);
 				model.addAttribute("list", list);
-				model.addAttribute("selectedTeam", option);
+				model.addAttribute("selectedTeam", type);
 				model.addAttribute("recordTotalCount", dao.searchCount(option, search));
 				return "/board/board";
 			}

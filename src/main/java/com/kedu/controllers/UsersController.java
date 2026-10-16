@@ -369,16 +369,13 @@ public class UsersController {
         if (id == null) {
             return "redirect:/login";
         }
-
-        // 비밀번호 검증은 다음 단계에서 추가
-
         int result =dao.withdraw(id);
 
         if (result > 0) {
             session.invalidate();
             return "redirect:/login";
         }
-
+        session.invalidate();
         model.addAttribute("message", "회원 탈퇴에 실패했습니다.");
         return "member/withdraw";
     }

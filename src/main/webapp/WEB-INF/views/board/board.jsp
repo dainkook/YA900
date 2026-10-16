@@ -1052,9 +1052,14 @@ body.theme-kiwoom {
 					</select> <input type="text" name="search" placeholder="검색할 게시글의 제목을 입력하세요">
 					<input id="option" type="hidden" name="option"> 
 					<input type="hidden" name="cpage" value="1">
-					<c:if test="${selectedTeam=='공지'}">
+					<c:choose>
+					<c:when test="${selectedTeam=='공지'}">
 					<input type="hidden" name="type" value="notice">
-					</c:if>
+					</c:when>
+					<c:otherwise>
+					<input type="hidden" name="type" value="${selectedTeam}">
+					</c:otherwise>
+					</c:choose>
 					<button type="submit">검색</button>
 				</form>
 			</div>
