@@ -138,6 +138,9 @@ public class UsersController {
         if (result == null) {
             return "redirect:/login";
         }
+        if(result.getBlackList()==1) {
+        	return"redirect:/login";
+        }
 
         session.setAttribute("id", result.getId());
         session.setAttribute("team", result.getTeam());
