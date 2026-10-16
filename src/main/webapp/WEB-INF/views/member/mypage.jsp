@@ -1,14 +1,18 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
 <title>YA900 마이페이지</title>
 
 <style>
@@ -34,47 +38,46 @@ body {
    퀵 메뉴
 ========================= */
 .quick-menu {
-	width: 280px;
-	position: fixed;
-	left: -250px;
-	top: 50%;
-	transform: translateY(-50%);
-	border: 1px solid #3b4778;
-	transition: left 0.5s ease;
-	z-index: 1000;
-	background: #111936;
-	color: white;
-	box-shadow: 5px 8px 25px rgba(10, 15, 35, 0.18);
+    width: 280px;
+    position: fixed;
+    left: -250px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 1px solid #3b4778;
+    transition: left 0.5s ease;
+    z-index: 1000;
+    background: #111936;
+    color: white;
+    box-shadow: 5px 8px 25px rgba(10, 15, 35, 0.18);
 }
 
 .quick-menu:hover {
-	left: 0;
+    left: 0;
 }
 
 .quick-menu div {
-	width: 100%;
-	height: 55px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	cursor: pointer;
-	border-bottom: 1px solid #303b68;
+    width: 100%;
+    height: 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-bottom: 1px solid #303b68;
 }
 
 .quick-menu div:last-child {
-	border-bottom: none;
+    border-bottom: none;
 }
 
 .quick-menu div:hover {
-	background: #252f67;
+    background: #252f67;
 }
 
-.quick-menu .menu, .quick-menu .menu:hover {
-	background: #476aaa;
-	color: white;
+.quick-menu .menu,
+.quick-menu .menu:hover {
+    background: #476aaa;
+    color: white;
 }
-
-
 
 /* =========================
    HEADER
@@ -85,18 +88,14 @@ body {
     height: auto;
     background: linear-gradient(135deg, #0b1026, #171f46);
     color: white;
-
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     gap: 15px;
-
     padding: 15px clamp(15px, 4vw, 50px);
-
     position: sticky;
     top: 0;
     z-index: 1000;
-
     border-bottom: 1px solid #303b70;
     box-shadow: 0 3px 15px rgba(11, 16, 38, 0.18);
 }
@@ -140,48 +139,50 @@ body {
     color: #aebee7;
 }
 
-
 /* =========================
    서브 메뉴
 ========================= */
 .sub-menu {
-	position: absolute;
-	top: 100%;
-	left: 50%;
-	transform: translateX(-50%) translateY(-10px);
-	width: 130px;
-	background: #171f46;
-	border: 1px solid #394575;
-	display: flex;
-	flex-direction: column;
-	opacity: 0;
-	visibility: hidden;
-	transition: opacity 0.2s ease, transform 0.2s ease;
-	box-shadow: 0 10px 25px rgba(8, 12, 30, 0.25);
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px);
+    width: 130px;
+    background: #171f46;
+    border: 1px solid #394575;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    box-shadow: 0 10px 25px rgba(8, 12, 30, 0.25);
 }
 
 .menu-item:hover .sub-menu {
-	opacity: 1;
-	visibility: visible;
-	transform: translateX(-50%) translateY(0);
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
 }
 
 .sub-menu a {
-	padding: 13px 15px;
-	text-decoration: none;
-	color: #f5f7ff;
-	font-size: 14px;
-	border-bottom: 1px solid #35406b;
+    padding: 13px 15px;
+    text-decoration: none;
+    color: #f5f7ff;
+    font-size: 14px;
+    border-bottom: 1px solid #35406b;
 }
 
 .sub-menu a:last-child {
-	border-bottom: none;
+    border-bottom: none;
 }
 
 .sub-menu a:hover {
-	background: #252f67;
+    background: #252f67;
 }
 
+/* =========================
+   마이페이지 레이아웃
+========================= */
 .mypage-container {
     width: 100%;
     min-height: calc(100vh - 170px);
@@ -209,6 +210,9 @@ body {
     font-weight: 700;
 }
 
+/* =========================
+   프로필
+========================= */
 .profile-area {
     display: flex;
     align-items: center;
@@ -293,6 +297,9 @@ body {
     border-color: #476aaa;
 }
 
+/* =========================
+   개인정보
+========================= */
 .info-section {
     margin-bottom: 30px;
 }
@@ -369,6 +376,50 @@ body {
     box-shadow: 0 0 0 2px rgba(71, 106, 170, 0.12);
 }
 
+/* =========================
+   정규표현식 검사 박스
+========================= */
+.validation-box {
+    width: 100%;
+    min-width: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+}
+
+/* 검사 결과 메시지 */
+.validation-message {
+    display: block;
+    width: 100%;
+    min-height: 18px;
+    font-size: 12px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+/* 검사 성공 */
+.validation-message.success {
+    color: #2563eb;
+}
+
+/* 검사 실패 */
+.validation-message.error {
+    color: #dc2626;
+}
+
+/* 올바른 입력값 */
+.edit-input.valid {
+    border-color: #2563eb;
+}
+
+/* 잘못된 입력값 */
+.edit-input.invalid {
+    border-color: #dc2626;
+}
+
+/* =========================
+   응원 팀
+========================= */
 .team-select {
     width: 100%;
     height: 42px;
@@ -387,6 +438,9 @@ body {
     box-shadow: 0 0 0 2px rgba(71, 106, 170, 0.12);
 }
 
+/* =========================
+   주소
+========================= */
 .address-edit {
     width: 100%;
 }
@@ -440,6 +494,9 @@ body {
     box-shadow: 0 0 0 2px rgba(71, 106, 170, 0.12);
 }
 
+/* =========================
+   포인트
+========================= */
 .team-point-area {
     margin-top: 30px;
 }
@@ -475,6 +532,9 @@ body {
     font-size: 14px;
 }
 
+/* =========================
+   예매 내역
+========================= */
 .reservation-item {
     border: 1px solid #d6dceb;
     border-radius: 8px;
@@ -550,6 +610,9 @@ body {
     opacity: 0.85;
 }
 
+/* =========================
+   하단 버튼
+========================= */
 .button-area {
     display: flex;
     justify-content: center;
@@ -558,7 +621,8 @@ body {
     margin-top: 35px;
 }
 
-.main-btn, .update-btn {
+.main-btn,
+.update-btn {
     width: 150px;
     min-height: 45px;
     border-radius: 5px;
@@ -594,6 +658,9 @@ button:disabled {
     opacity: 0.6;
 }
 
+/* =========================
+   푸터
+========================= */
 .footer {
     width: 100%;
     min-height: 70px;
@@ -635,6 +702,22 @@ button:disabled {
     background: #7189c2;
 }
 
+.wothdraw-btn {
+    color: #6c757d !important;
+    text-decoration: none !important;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.wothdraw-btn:hover {
+    color: #495057 !important;
+    text-decoration: none !important;
+}
+
+/* =========================
+   반응형
+========================= */
 @media (max-width: 768px) {
     .header {
         height: 80px;
@@ -692,11 +775,13 @@ button:disabled {
         font-size: 12px;
     }
 
-    .info-title, .simple-title {
+    .info-title,
+    .simple-title {
         width: 110px;
     }
 
-    .main-btn, .update-btn {
+    .main-btn,
+    .update-btn {
         width: 130px;
     }
 }
@@ -723,7 +808,8 @@ button:disabled {
         font-size: 11px;
     }
 
-    .info-title, .simple-title {
+    .info-title,
+    .simple-title {
         width: 90px;
         padding-left: 10px;
         font-size: 12px;
@@ -750,368 +836,356 @@ button:disabled {
         font-size: 11px;
     }
 }
-.wothdraw-btn {
-    color: #6c757d !important;
-    text-decoration: none !important;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-}
-
-.wothdraw-btn:hover {
-    color: #495057 !important;
-    text-decoration: none !important;
-}
-
-
 </style>
 </head>
 
 <body>
-    <div class="header">
 
-		<div class="logo" onclick="location.href='/'">YA900</div>
+<div class="header">
+    <div class="logo" onclick="location.href='/'">YA900</div>
 
-		<!-- 메인 메뉴 -->
-		<nav class="main-menu">
-
-			<!-- 야구 -->
-			<div class="menu-item">
-				<a href="#">야구</a>
-
-				<div class="sub-menu">
-					<a href="${pageContext.request.contextPath}/#reservation">예매</a>
-					<a href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a> 
-					<a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a> 
-					<a href="${pageContext.request.contextPath}/schedule/rankdetail?tab=pitcher">선수순위</a> 
-					<a href="${pageContext.request.contextPath}/board/board?cpage=1">게시판</a>
-				</div>
-			</div>
-
-			<!-- 축구 -->
-			<div class="menu-item">
-				<a href="#">축구</a>
-
-				<div class="sub-menu">
-					<a href="${pageContext.request.contextPath}/schedule/soccercommingsoon">예매</a> 
-					<a href="${pageContext.request.contextPath}/schedule/soccercommingsoon">경기일정</a> 
-					<a href="${pageContext.request.contextPath}/schedule/soccercommingsoon">팀순위</a> 
-					<a href="${pageContext.request.contextPath}/schedule/soccercommingsoon">선수순위</a> 
-					<a href="${pageContext.request.contextPath}/schedule/soccercommingsoon">게시판</a>
-				</div>
-			</div>
-
-			<!-- 미니게임 -->
-			<div class="menu-item">
-				<a href="#">미니게임</a>
-
-				<div class="sub-menu">
-					<a href="${pageContext.request.contextPath}/quiz">상식 퀴즈</a> 
-					<a href="${pageContext.request.contextPath}/myteam">나만의 팀</a> 
-					<a href="${pageContext.request.contextPath}/prediction">승부예측</a> 
-				</div>
-			</div>
-		</nav>
-	</div>
-	<div class="quick-menu">
-		    <div class="menu">QUICK MENU</div>
-		    <div onclick="location.href='${pageContext.request.contextPath}/'">홈</div>
-		    <div onclick="location.href='${pageContext.request.contextPath}/#reservation'">예매</div>
-		    <div onclick="location.href='${pageContext.request.contextPath}/board/board?cpage=1'">게시판</div>
-		    <div onclick="location.href='${pageContext.request.contextPath}/mypage'">마이페이지</div>
-		</div>
-    <main class="mypage-container">
-        <div class="mypage-box">
-            <h2 class="mypage-title">마이페이지</h2>
-
-            <!-- 프로필 -->
-            <div class="profile-area">
-                <div class="profile-image-area">
-                    <c:choose>
-                        <c:when test="${not empty user.profile_img}">
-                            <img id="profileImage"
-                                class="profile-image"
-                                src="${pageContext.request.contextPath}/uploads/${user.profile_img}"
-                                alt="프로필 이미지">
-                        </c:when>
-                        <c:otherwise>
-                            <img id="profileImage"
-                                class="profile-image"
-                                src="${pageContext.request.contextPath}resources/images/mypage/default-profile.png"
-                                alt="기본 프로필 이미지">
-                        </c:otherwise>
-                    </c:choose>
-
-                    <div class="edit-mode profile-change-area">
-                        <input type="file" id="profileFile"
-                            accept="image/*" style="display: none;">
-
-                        <button type="button"
-                            class="profile-change-btn"
-                            onclick="document.getElementById('profileFile').click();">
-                            프로필 사진 변경
-                        </button>
-                    </div>
-                </div>
-
-                <div class="profile-info">
-                    <div class="profile-name">${user.name}님</div>
-                    <div class="profile-id">
-                        아이디 <span>${user.id}</span>
-                    </div>
-                    <div class="profile-welcome">
-                        YA900를 이용해 주셔서 감사합니다.
-                    </div>
-                </div>
-            </div>
-
-            <!-- 개인정보 -->
-            <div class="info-section">
-                <div class="section-title">개인정보</div>
-
-                <!-- 아이디: 수정 불가 -->
-                <div class="info-row">
-                    <div class="info-title">아이디</div>
-                    <div class="info-content">
-                        <div class="view-mode fixed-view">${user.id}</div>
-                        <input type="hidden" id="id" name="id"
-                            value="${user.id}">
-                    </div>
-                </div>
-
-                <!-- 이름: 수정 불가 -->
-                <div class="info-row">
-                    <div class="info-title">이름</div>
-                    <div class="info-content">
-                        <div class="view-mode fixed-view">${user.name}</div>
-                    </div>
-                </div>
-
-                <!-- 휴대전화번호 -->
-                <div class="info-row">
-                    <div class="info-title">휴대전화번호</div>
-                    <div class="info-content">
-                        <div class="view-mode">${user.phone}</div>
-                        <input type="text"
-                            class="edit-input edit-mode"
-                            id="phone"
-                            value="${user.phone}"
-                            placeholder="휴대전화번호 입력">
-                    </div>
-                </div>
-
-                <!-- 이메일 -->
-                <div class="info-row">
-                    <div class="info-title">이메일</div>
-                    <div class="info-content">
-                        <div class="view-mode">${user.email}</div>
-                        <input type="text"
-                            class="edit-input edit-mode"
-                            id="email"
-                            value="${user.email}"
-                            placeholder="이메일 입력">
-                    </div>
-                </div>
-
-                <!-- 주소 -->
-                <div class="info-row">
-                    <div class="info-title">주소</div>
-                    <div class="info-content">
-                        <div class="view-mode">
-                            <c:out value="${user.zipcode}" /><br>
-                            <c:out value="${user.address1}" /><br>
-                            <c:out value="${user.address2}" />
-                        </div>
-
-                        <div class="edit-mode address-edit">
-                            <div class="address-box">
-                                <input type="text"
-                                    class="edit-input"
-                                    id="zipcode"
-                                    value="${user.zipcode}"
-                                    placeholder="우편번호"
-                                    readonly>
-
-                                <button type="button"
-                                    class="zipcode-btn"
-                                    id="zipcodeBtn">
-                                    우편번호 찾기
-                                </button>
-                            </div>
-
-                            <input type="text"
-                                class="address-input"
-                                id="address1"
-                                value="${user.address1}"
-                                placeholder="주소"
-                                readonly>
-
-                            <input type="text"
-                                class="address-input"
-                                id="address2"
-                                value="${user.address2}"
-                                placeholder="상세주소">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 응원 팀 -->
-                <div class="info-row">
-                    <div class="info-title">응원 팀</div>
-                    <div class="info-content">
-                        <div class="view-mode">
-                            <c:out value="${user.team}" />
-                        </div>
-
-                        <select class="team-select edit-mode"
-                            name="team" id="team" >
-                            <option value="">응원 팀을 선택하세요</option>
-                            <option value="KT">KT</option>
-                            <option value="삼성">삼성</option>
-                            <option value="한화">한화</option>
-                            <option value="KIA">KIA</option>
-                            <option value="롯데">롯데</option>
-                            <option value="NC">NC</option>
-                            <option value="LG">LG</option>
-                            <option value="두산">두산</option>
-                            <option value="SSG">SSG</option>
-                            <option value="키움">키움</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 포인트 -->
-            <div class="team-point-area">
-                <div class="simple-row">
-                    <div class="simple-title">포인트</div>
-                    <div class="simple-content">
-                        <fmt:formatNumber value="${user.point}"
-                            pattern="#,###" /> P
-                    </div>
-                </div>
-            </div>
-
-            <!-- 예매 내역 -->
-            <div class="reservation-section">
-                <div class="section-title">예매 내역</div>
-
-                <c:choose>
-                    <c:when test="${empty reservationList}">
-                        <div class="no-reservation">
-                            예매한 내역이 없습니다.
-                        </div>
-                    </c:when>
-
-                    <c:otherwise>
-                        <c:forEach var="reservation"
-                            items="${reservationList}">
-
-                            <div class="reservation-item">
-                                <div class="reservation-row">
-                                    <div class="reservation-label">경기</div>
-                                    <div class="reservation-value">
-                                        <c:out value="${reservation.away_team}" />
-                                        vs
-                                        <c:out value="${reservation.home_team}" />
-                                    </div>
-                                </div>
-
-                                <div class="reservation-row">
-                                    <div class="reservation-label">경기일</div>
-                                    <div class="reservation-value">
-                                        <fmt:formatDate
-                                            value="${reservation.start_date}"
-                                            pattern="yyyy-MM-dd" />
-                                    </div>
-                                </div>
-
-                                <div class="reservation-row">
-                                    <div class="reservation-label">경기장</div>
-                                    <div class="reservation-value">
-                                        <c:out value="${reservation.location}" />
-                                    </div>
-                                </div>
-
-                                <div class="reservation-row">
-                                    <div class="reservation-label">좌석</div>
-                                    <div class="reservation-value">
-                                        <c:out value="${reservation.seat_ids}" />번
-                                    </div>
-                                </div>
-
-                                <div class="reservation-row">
-                                    <div class="reservation-label">가격</div>
-                                    <div class="reservation-value">
-                                        <fmt:formatNumber
-                                            value="${reservation.total_price}"
-                                            pattern="#,###" />원
-                                    </div>
-                                </div>
-
-                                <div class="reservation-row">
-                                    <div class="reservation-label">예매상태</div>
-                                    <div class="reservation-value reservation-status">
-                                        <c:out value="${reservation.status}" />
-                                    </div>
-                                </div>
-
-                                <c:if test="${reservation.status eq '예매완료'}">
-                                    <button type="button"
-                                        class="cancel-btn"
-                                        onclick="cancelReservation(${reservation.reservation_id})">
-                                        예매 취소
-                                    </button>
-                                </c:if>
-                            </div>
-
-                        </c:forEach>
-                    </c:otherwise>
-                </c:choose>
-            </div>
-
-            <!-- 하단 버튼 -->
-            <a href="${pageContext.request.contextPath}/withdraw" class= "wothdraw-btn">회원 탈퇴</a>
-            <div class="button-area">
-                <button type="button"
-                    class="main-btn"
-                    id="mainBtn">
-                    메인 페이지
-                </button>
-
-                <button type="button"
-                    class="update-btn"
-                    id="editBtn"
-                    onclick="startEdit()">
-                    개인정보 수정
-                </button>
-
-                <button type="button"
-                    class="update-btn edit-mode"
-                    id="saveBtn"
-                    onclick="updateUser()">
-                    저장
-                </button>
-
-                <button type="button"
-                    class="main-btn edit-mode"
-                    id="cancelBtn"
-                    onclick="cancelEdit()">
-                    취소
-                </button>
+    <nav class="main-menu">
+        <div class="menu-item">
+            <a href="#">야구</a>
+            <div class="sub-menu">
+                <a href="${pageContext.request.contextPath}/#reservation">예매</a>
+                <a href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a>
+                <a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a>
+                <a href="${pageContext.request.contextPath}/schedule/rankdetail?tab=pitcher">선수순위</a>
+                <a href="${pageContext.request.contextPath}/board/board?cpage=1">게시판</a>
             </div>
         </div>
-    </main>
 
-    <footer class="footer">
-        <a href="#">개인정보처리방침</a> |
-        <a href="#">전체 서비스</a> |
-        <a href="#">문제 신고</a> |
-        <a href="#">고객센터</a> |
-        <a href="${pageContext.request.contextPath}/admin">관리자</a>
-    </footer>
+        <div class="menu-item">
+            <a href="#">축구</a>
+            <div class="sub-menu">
+                <a href="${pageContext.request.contextPath}/schedule/soccercommingsoon">예매</a>
+                <a href="${pageContext.request.contextPath}/schedule/soccercommingsoon">경기일정</a>
+                <a href="${pageContext.request.contextPath}/schedule/soccercommingsoon">팀순위</a>
+                <a href="${pageContext.request.contextPath}/schedule/soccercommingsoon">선수순위</a>
+                <a href="${pageContext.request.contextPath}/schedule/soccercommingsoon">게시판</a>
+            </div>
+        </div>
 
-    <script>
+        <div class="menu-item">
+            <a href="#">미니게임</a>
+            <div class="sub-menu">
+                <a href="${pageContext.request.contextPath}/quiz">상식 퀴즈</a>
+                <a href="${pageContext.request.contextPath}/myteam">나만의 팀</a>
+                <a href="${pageContext.request.contextPath}/prediction">승부예측</a>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div class="quick-menu">
+    <div class="menu">QUICK MENU</div>
+    <div onclick="location.href='${pageContext.request.contextPath}/'">홈</div>
+    <div onclick="location.href='${pageContext.request.contextPath}/#reservation'">예매</div>
+    <div onclick="location.href='${pageContext.request.contextPath}/board/board?cpage=1'">게시판</div>
+    <div onclick="location.href='${pageContext.request.contextPath}/mypage'">마이페이지</div>
+</div>
+
+<main class="mypage-container">
+    <div class="mypage-box">
+        <h2 class="mypage-title">마이페이지</h2>
+
+        <!-- 프로필 -->
+        <div class="profile-area">
+            <div class="profile-image-area">
+                <c:choose>
+                    <c:when test="${not empty user.profile_img}">
+                        <img id="profileImage"
+                            class="profile-image"
+                            src="${pageContext.request.contextPath}/uploads/${user.profile_img}"
+                            alt="프로필 이미지">
+                    </c:when>
+                    <c:otherwise>
+                        <img id="profileImage"
+                            class="profile-image"
+                            src="${pageContext.request.contextPath}resources/images/mypage/default-profile.png"
+                            alt="기본 프로필 이미지">
+                    </c:otherwise>
+                </c:choose>
+
+                <div class="edit-mode profile-change-area">
+                    <input type="file" id="profileFile"
+                        accept="image/*" style="display: none;">
+
+                    <button type="button"
+                        class="profile-change-btn"
+                        onclick="document.getElementById('profileFile').click();">
+                        프로필 사진 변경
+                    </button>
+                </div>
+            </div>
+
+            <div class="profile-info">
+                <div class="profile-name">${user.name}님</div>
+                <div class="profile-id">
+                    아이디 <span>${user.id}</span>
+                </div>
+                <div class="profile-welcome">
+                    YA900를 이용해 주셔서 감사합니다.
+                </div>
+            </div>
+        </div>
+
+        <!-- 개인정보 -->
+        <div class="info-section">
+            <div class="section-title">개인정보</div>
+
+            <!-- 아이디: 수정 불가 -->
+            <div class="info-row">
+                <div class="info-title">아이디</div>
+                <div class="info-content">
+                    <div class="view-mode fixed-view">${user.id}</div>
+                    <input type="hidden" id="id" name="id" value="${user.id}">
+                </div>
+            </div>
+
+            <!-- 이름: 수정 불가 -->
+            <div class="info-row">
+                <div class="info-title">이름</div>
+                <div class="info-content">
+                    <div class="view-mode fixed-view">${user.name}</div>
+                </div>
+            </div>
+
+            <!-- 휴대전화번호: 정규표현식 검사 -->
+            <div class="info-row">
+                <div class="info-title">휴대전화번호</div>
+                <div class="info-content">
+                    <div class="view-mode">${user.phone}</div>
+
+                    <div class="edit-mode validation-box" id="phone-validation-box">
+                        <input type="text"
+                            class="edit-input"
+                            id="phone"
+                            value="${user.phone}"
+                            placeholder="010-1234-5678"
+                            autocomplete="tel">
+
+                        <div id="phone-message" class="validation-message"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 이메일: 정규표현식 검사 -->
+            <div class="info-row">
+                <div class="info-title">이메일</div>
+                <div class="info-content">
+                    <div class="view-mode">${user.email}</div>
+
+                    <div class="edit-mode validation-box" id="email-validation-box">
+                        <input type="text"
+                            class="edit-input"
+                            id="email"
+                            value="${user.email}"
+                            placeholder="example@email.com"
+                            autocomplete="email">
+
+                        <div id="email-message" class="validation-message"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 주소 -->
+            <div class="info-row">
+                <div class="info-title">주소</div>
+                <div class="info-content">
+                    <div class="view-mode">
+                        <c:out value="${user.zipcode}" /><br>
+                        <c:out value="${user.address1}" /><br>
+                        <c:out value="${user.address2}" />
+                    </div>
+
+                    <div class="edit-mode address-edit">
+                        <div class="address-box">
+                            <input type="text"
+                                class="edit-input"
+                                id="zipcode"
+                                value="${user.zipcode}"
+                                placeholder="우편번호"
+                                readonly>
+
+                            <button type="button"
+                                class="zipcode-btn"
+                                id="zipcodeBtn">
+                                우편번호 찾기
+                            </button>
+                        </div>
+
+                        <input type="text"
+                            class="address-input"
+                            id="address1"
+                            value="${user.address1}"
+                            placeholder="주소"
+                            readonly>
+
+                        <input type="text"
+                            class="address-input"
+                            id="address2"
+                            value="${user.address2}"
+                            placeholder="상세주소">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 응원 팀 -->
+            <div class="info-row">
+                <div class="info-title">응원 팀</div>
+                <div class="info-content">
+                    <div class="view-mode">
+                        <c:out value="${user.team}" />
+                    </div>
+
+                    <select class="team-select edit-mode" name="team" id="team">
+                        <option value="">응원 팀을 선택하세요</option>
+                        <option value="KT">KT</option>
+                        <option value="삼성">삼성</option>
+                        <option value="한화">한화</option>
+                        <option value="KIA">KIA</option>
+                        <option value="롯데">롯데</option>
+                        <option value="NC">NC</option>
+                        <option value="LG">LG</option>
+                        <option value="두산">두산</option>
+                        <option value="SSG">SSG</option>
+                        <option value="키움">키움</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- 포인트 -->
+        <div class="team-point-area">
+            <div class="simple-row">
+                <div class="simple-title">포인트</div>
+                <div class="simple-content">
+                    <fmt:formatNumber value="${user.point}" pattern="#,###" /> P
+                </div>
+            </div>
+        </div>
+
+        <!-- 예매 내역 -->
+        <div class="reservation-section">
+            <div class="section-title">예매 내역</div>
+
+            <c:choose>
+                <c:when test="${empty reservationList}">
+                    <div class="no-reservation">
+                        예매한 내역이 없습니다.
+                    </div>
+                </c:when>
+
+                <c:otherwise>
+                    <c:forEach var="reservation" items="${reservationList}">
+                        <div class="reservation-item">
+                            <div class="reservation-row">
+                                <div class="reservation-label">경기</div>
+                                <div class="reservation-value">
+                                    <c:out value="${reservation.away_team}" />
+                                    vs
+                                    <c:out value="${reservation.home_team}" />
+                                </div>
+                            </div>
+
+                            <div class="reservation-row">
+                                <div class="reservation-label">경기일</div>
+                                <div class="reservation-value">
+                                    <fmt:formatDate value="${reservation.start_date}"
+                                        pattern="yyyy-MM-dd" />
+                                </div>
+                            </div>
+
+                            <div class="reservation-row">
+                                <div class="reservation-label">경기장</div>
+                                <div class="reservation-value">
+                                    <c:out value="${reservation.location}" />
+                                </div>
+                            </div>
+
+                            <div class="reservation-row">
+                                <div class="reservation-label">좌석</div>
+                                <div class="reservation-value">
+                                    <c:out value="${reservation.seat_ids}" />번
+                                </div>
+                            </div>
+
+                            <div class="reservation-row">
+                                <div class="reservation-label">가격</div>
+                                <div class="reservation-value">
+                                    <fmt:formatNumber value="${reservation.total_price}"
+                                        pattern="#,###" />원
+                                </div>
+                            </div>
+
+                            <div class="reservation-row">
+                                <div class="reservation-label">예매상태</div>
+                                <div class="reservation-value reservation-status">
+                                    <c:out value="${reservation.status}" />
+                                </div>
+                            </div>
+
+                            <c:if test="${reservation.status eq '예매완료'}">
+                                <button type="button"
+                                    class="cancel-btn"
+                                    onclick="cancelReservation(${reservation.reservation_id})">
+                                    예매 취소
+                                </button>
+                            </c:if>
+                        </div>
+                    </c:forEach>
+                </c:otherwise>
+            </c:choose>
+        </div>
+
+        <!-- 하단 버튼 -->
+        <a href="${pageContext.request.contextPath}/withdraw"
+            class="wothdraw-btn">회원 탈퇴</a>
+
+        <div class="button-area">
+            <button type="button" class="main-btn" id="mainBtn">
+                메인 페이지
+            </button>
+
+            <button type="button"
+                class="update-btn"
+                id="editBtn"
+                onclick="startEdit()">
+                개인정보 수정
+            </button>
+
+            <button type="button"
+                class="update-btn edit-mode"
+                id="saveBtn"
+                onclick="updateUser()">
+                저장
+            </button>
+
+            <button type="button"
+                class="main-btn edit-mode"
+                id="cancelBtn"
+                onclick="cancelEdit()">
+                취소
+            </button>
+        </div>
+    </div>
+</main>
+
+<footer class="footer">
+    <a href="#">개인정보처리방침</a> |
+    <a href="#">전체 서비스</a> |
+    <a href="#">문제 신고</a> |
+    <a href="#">고객센터</a> |
+    <a href="${pageContext.request.contextPath}/admin">관리자</a>
+</footer>
+
+<script>
+// 정규표현식은 한 번만 선언해서 실시간 검사와 저장 검사에서 공통으로 사용
+const phoneRegex = /^01[016789]-?\d{3,4}-?\d{4}$/;
+const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+
 $(document).ready(function() {
 
     $(".edit-mode").hide();
@@ -1120,10 +1194,12 @@ $(document).ready(function() {
 
     $("#team").val("${user.team}");
 
+    // 메인 페이지 이동
     $("#mainBtn").on("click", function() {
         location.href = "${pageContext.request.contextPath}/";
     });
 
+    // 프로필 사진 미리보기
     $("#profileFile").on("change", function() {
         const file = this.files[0];
 
@@ -1146,6 +1222,7 @@ $(document).ready(function() {
         reader.readAsDataURL(file);
     });
 
+    // 우편번호 검색
     $("#zipcodeBtn").on("click", function() {
         new daum.Postcode({
             oncomplete: function(data) {
@@ -1157,18 +1234,106 @@ $(document).ready(function() {
             }
         }).open();
     });
+
+    // 전화번호 실시간 정규표현식 검사
+    $("#phone").on("input", function() {
+        const phone = $(this).val().trim();
+
+        if (phone === "") {
+            clearValidation("#phone", "#phone-message");
+            return;
+        }
+
+        if (phoneRegex.test(phone)) {
+            showValidation(
+                "#phone",
+                "#phone-message",
+                "전화번호 형식이 올바릅니다.",
+                true
+            );
+        } else {
+            showValidation(
+                "#phone",
+                "#phone-message",
+                "형식이 올바르지 않습니다. 예: 010-1234-5678",
+                false
+            );
+        }
+    });
+
+    // 이메일 실시간 정규표현식 검사
+    $("#email").on("input", function() {
+        const email = $(this).val().trim();
+
+        if (email === "") {
+            clearValidation("#email", "#email-message");
+            return;
+        }
+
+        if (emailRegex.test(email)) {
+            showValidation(
+                "#email",
+                "#email-message",
+                "이메일 형식이 올바릅니다.",
+                true
+            );
+        } else {
+            showValidation(
+                "#email",
+                "#email-message",
+                "형식이 올바르지 않습니다. 예: example@email.com",
+                false
+            );
+        }
+    });
 });
 
+// 검사 결과 표시
+function showValidation(inputSelector, messageSelector, message, isValid) {
+    $(inputSelector).removeClass("valid invalid");
+    $(messageSelector).removeClass("success error");
+
+    if (isValid) {
+        $(inputSelector).addClass("valid");
+        $(messageSelector)
+            .text(message)
+            .addClass("success");
+    } else {
+        $(inputSelector).addClass("invalid");
+        $(messageSelector)
+            .text(message)
+            .addClass("error");
+    }
+}
+
+// 검사 결과 초기화
+function clearValidation(inputSelector, messageSelector) {
+    $(inputSelector).removeClass("valid invalid");
+
+    $(messageSelector)
+        .text("")
+        .removeClass("success error");
+}
+
+// 개인정보 수정 시작
 function startEdit() {
     $(".view-mode:not(.fixed-view)").hide();
     $(".edit-mode").show();
+
+    // 검사 박스는 세로 배치를 유지
+    $(".validation-box").css("display", "flex");
 
     $("#editBtn").hide();
     $("#mainBtn").hide();
 
     $("#team").val("${user.team}");
+
+    // 수정 모드 진입 시 현재 저장된 값도 검사
+    $("#phone").trigger("input");
+    $("#email").trigger("input");
 }
 
+// 개인정보 수정 취소
 function cancelEdit() {
     $(".edit-mode").hide();
     $(".view-mode").show();
@@ -1184,6 +1349,10 @@ function cancelEdit() {
     $("#team").val("${user.team}");
 
     $("#profileFile").val("");
+
+    // 검사 결과와 입력창 테두리 초기화
+    clearValidation("#phone", "#phone-message");
+    clearValidation("#email", "#email-message");
 
     const originalProfile = "${not empty user.profile_img}";
     const contextPath = "${pageContext.request.contextPath}";
@@ -1201,6 +1370,7 @@ function cancelEdit() {
     }
 }
 
+// 개인정보 수정 저장
 function updateUser() {
     const phone = $("#phone").val().trim();
     const email = $("#email").val().trim();
@@ -1209,33 +1379,59 @@ function updateUser() {
     const address2 = $("#address2").val().trim();
     const team = $("#team").val();
 
-    const phoneRegex = /^01[016789]-?\d{3,4}-?\d{4}$/;
-    const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-
+    // 전화번호 필수 검사
     if (phone === "") {
-        alert("휴대전화번호를 입력해주세요.");
+        showValidation(
+            "#phone",
+            "#phone-message",
+            "휴대전화번호를 입력해주세요.",
+            false
+        );
+
         $("#phone").focus();
         return;
     }
 
+    // 전화번호 정규표현식 검사
     if (!phoneRegex.test(phone)) {
-        alert("전화번호를 올바르게 입력해주세요.");
+        showValidation(
+            "#phone",
+            "#phone-message",
+            "형식이 올바르지 않습니다. 예: 010-1234-5678",
+            false
+        );
+
         $("#phone").focus();
         return;
     }
 
+    // 이메일 필수 검사
     if (email === "") {
-        alert("이메일을 입력해주세요.");
+        showValidation(
+            "#email",
+            "#email-message",
+            "이메일을 입력해주세요.",
+            false
+        );
+
         $("#email").focus();
         return;
     }
 
+    // 이메일 정규표현식 검사
     if (!emailRegex.test(email)) {
-        alert("이메일 형식이 올바르지 않습니다.");
+        showValidation(
+            "#email",
+            "#email-message",
+            "이메일 형식이 올바르지 않습니다.",
+            false
+        );
+
         $("#email").focus();
         return;
     }
 
+    // 주소 검사
     if (zipcode === "") {
         alert("우편번호를 입력해주세요.");
         $("#zipcodeBtn").focus();
@@ -1306,6 +1502,7 @@ function updateUser() {
     });
 }
 
+// 예매 취소
 function cancelReservation(reservationId) {
     if (!confirm("정말 예매를 취소하시겠습니까?")) {
         return;

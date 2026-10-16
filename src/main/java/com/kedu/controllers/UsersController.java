@@ -129,7 +129,7 @@ public class UsersController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String loginCheck(UsersDTO dto, HttpSession session) {
+    public String loginCheck(UsersDTO dto, HttpSession session, Model model) {
 
         String hashedPw = EncryptionUtils.encryptSHA512(dto.getPw());
 
@@ -139,7 +139,9 @@ public class UsersController {
             return "redirect:/login";
         }
         if(result.getBlackList()==1) {
-        	return"redirect:/login";
+        	session.invalidate();
+        	model.addAttribute("loginMessage", "정지된 아이디 입니다.");
+        	return"member/login";
         }
 
         session.setAttribute("id", result.getId());
