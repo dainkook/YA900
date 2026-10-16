@@ -274,8 +274,8 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/replyDelete")
-	public String replyDelete(int re_reply_seq, int parent_seq) throws Exception {
-		dao.deleteReply(re_reply_seq);
+	public String replyDelete(int reply_seq, int parent_seq) throws Exception {
+		dao.deleteReply(reply_seq);
 		return "redirect:/board/detail?seq=" + parent_seq;
 	}
 	
