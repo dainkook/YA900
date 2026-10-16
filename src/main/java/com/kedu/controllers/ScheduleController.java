@@ -117,7 +117,6 @@ public class ScheduleController {
 	    List<PlayerHitterDTO> hitterList = playerHitterDAO.selectAll();
 	    List<TeamOffenDTO> offenlist = teamOffenDAO.selectAll();
 	    List<TeamDefenDTO> dffenlist = teamDefenDAO.selectAll();
-
 	    model.addAttribute("teamrankList", teamrankList);
 	    model.addAttribute("pitcherList", pitcherList);
 	    model.addAttribute("hitterList", hitterList);
@@ -128,7 +127,12 @@ public class ScheduleController {
 
 	    return "schedule/rankdetail";
 	}
-
+	
+	@RequestMapping("/soccercommingsoon")
+	public String commingsoon() {
+		return "soccer/soccercommingsoon";
+	}
+	
 	@ResponseBody
 	@RequestMapping("/pitchers")
 	public List<GameLineUpDTO> pitchers(
