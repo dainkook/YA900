@@ -128,24 +128,44 @@ public class UsersController {
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String loginCheck(UsersDTO dto, HttpSession session) {
-
-        String hashedPw = EncryptionUtils.encryptSHA512(dto.getPw());
-
-        UsersDTO result = dao.login(dto.getId(), hashedPw);
-
-        if (result == null) {
-            return "redirect:/login";
-        }
-        if(result.getBlackList()==1) {
-        	return"redirect:/login";
-        }
-
-        session.setAttribute("id", result.getId());
-        session.setAttribute("team", result.getTeam());
-        return "redirect:/";
-    }
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public String loginCheck(
+	        UsersDTO dto,
+	        HttpSession session,
+	        @RequestParam(value = "fromBooking", required = false)
+	        String fromBooking) {
+	
+	    String hashedPw = EncryptionUtils.encryptSHA512(dto.getPw());
+	    UsersDTO result = dao.login(dto.getId(), hashedPw);
+	
+	    // 로그인 실패
+	    if (result == null) {
+	        if ("1".equals(fromBooking)) {
+	            return "redirect:/login?fromBooking=1";
+	        }
+	        return "redirect:/login";
+	    }
+	
+	    // 블랙리스트 회원
+	    if (result.getBlackList() == 1) {
+	        if ("1".equals(fromBooking)) {
+	            return "redirect:/login?fromBooking=1";
+	        }
+	        return "redirect:/login";
+	    }
+	
+	    // 로그인 성공: 기존 세션 처리 유지
+	    session.setAttribute("id", result.getId());
+	    session.setAttribute("team", result.getTeam());
+	
+	    // 예매 팝업에서 로그인한 경우
+	    if ("1".equals(fromBooking)) {
+	        return "member/loginSuccessPopup";
+	    }
+	
+	    // 일반 로그인은 기존처럼 메인페이지로
+	    return "redirect:/";
+	}
 
     @RequestMapping(value = "/idcheck", method = RequestMethod.POST)
     @ResponseBody
@@ -157,6 +177,12 @@ public class UsersController {
     @ResponseBody
     public int emailCheck(String email) {
         return dao.emailCheck(email);
+    }
+    
+    @RequestMapping(value="/phonecheck", method = RequestMethod.POST)
+    @ResponseBody
+    public int phoneCheck(String phone) {
+    	return dao.phoneCheck(phone);
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
@@ -195,34 +221,109 @@ public class UsersController {
 
     @RequestMapping(value = "/sendemail", method = RequestMethod.POST)
     @ResponseBody
-    public String sendEmail(String email, HttpSession session) {
+    public String sendEmail(
+            String name,
+            String id,
+            String email,
+            HttpSession session) {
 
-        String code = String.valueOf((int) (Math.random() * 900000) + 100000);
-
-        session.setAttribute("emailcode", code);
-        session.removeAttribute("emailVerified");
-
-        emailService.sendEmail(
-                email,
-                "�씠硫붿씪 �씤利앸쾲�샇 �븞�궡",
-                "�씠硫붿씪 �씤利앸쾲�샇�뒗 " + code + " �엯�땲�떎."
-        );
-
-        return "success";
-    }
-
-    @RequestMapping(value = "/verifyemail", method = RequestMethod.POST)
-    @ResponseBody
-    public String verifyEmail(String code, HttpSession session) {
-
-        String savedCode = (String) session.getAttribute("emailcode");
-
-        if (savedCode != null && savedCode.equals(code)) {
-            session.setAttribute("emailVerified", true);
-            return "success";
+        // 1. 입력값 검사
+        if (name == null || name.trim().isEmpty()
+                || email == null || email.trim().isEmpty()) {
+            return "notfound";
         }
 
-        return "fail";
+        name = name.trim();
+        email = email.trim();
+
+        // 2. 비밀번호 찾기: 이름 + 아이디 + 이메일 확인
+        if (id != null && !id.trim().isEmpty()) {
+
+            id = id.trim();
+
+            try {
+                UsersDTO user = dao.findUserPw(name, id, email);
+
+                if (user == null) {
+                    return "notfound";
+                }
+
+            } catch (Exception e) {
+                return "notfound";
+            }
+
+        } else {
+
+            // 3. 아이디 찾기: 이름 + 이메일 확인
+            String foundId = dao.findUserId(name, email);
+
+            if (foundId == null) {
+                return "notfound";
+            }
+        }
+
+        // 4. 이전 인증 상태 초기화
+        session.removeAttribute("emailVerified");
+        session.removeAttribute("emailcode");
+        session.removeAttribute("verifiedEmail");
+
+        // 5. 인증번호 생성
+        String code = String.valueOf(
+            (int) (Math.random() * 900000) + 100000
+        );
+
+        // 6. 세션에 인증번호와 이메일 저장
+        session.setAttribute("emailcode", code);
+        session.setAttribute("verifiedEmail", email);
+
+        // 7. 회원정보가 일치할 때만 이메일 전송
+        try {
+            emailService.sendEmail(
+                email,
+                "이메일 인증번호 안내",
+                "이메일 인증번호는 " + code + " 입니다."
+            );
+
+            return "success";
+
+        } catch (Exception e) {
+            session.removeAttribute("emailcode");
+            session.removeAttribute("verifiedEmail");
+
+            return "fail";
+        }
+    }
+
+    @RequestMapping(value = "/verifyuseridemail", method = RequestMethod.POST)
+    @ResponseBody
+    public String verifyUserIdEmail(
+            String code,
+            String name,
+            String email,
+            HttpSession session) {
+
+        String savedCode =
+                (String) session.getAttribute("emailcode");
+
+        String verifiedEmail =
+                (String) session.getAttribute("verifiedEmail");
+
+        if (savedCode == null
+                || !savedCode.equals(code)
+                || verifiedEmail == null
+                || !verifiedEmail.equals(email)) {
+            return "fail";
+        }
+
+        String foundId = dao.findUserId(name, email);
+
+        if (foundId == null) {
+            return "notfound";
+        }
+
+        session.setAttribute("emailVerified", true);
+
+        return "success:" + foundId;
     }
 
     @RequestMapping(value = "/checkuser", method = RequestMethod.POST)
@@ -251,6 +352,19 @@ public class UsersController {
 
         return "fail";
     }
+    
+    @RequestMapping(value = "/verifyemail", method = RequestMethod.POST)
+    @ResponseBody
+    public String verifyEmail(String code, HttpSession session) {
+        String savedCode = (String) session.getAttribute("emailcode");
+        if (savedCode != null && savedCode.equals(code)) {
+            session.setAttribute("emailVerified", true);
+            return "success";
+        }
+
+        return "fail";
+    }
+    
 
     @RequestMapping(value = "/updatepw", method = RequestMethod.POST)
     @ResponseBody
