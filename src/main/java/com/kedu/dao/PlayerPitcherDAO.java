@@ -251,4 +251,42 @@ public class PlayerPitcherDAO {
             return dto;
         });
     }
+    
+    public PlayerPitcherDTO selectBestPitcherByTeam(String team) {
+
+        String sql =
+                "SELECT * FROM ("
+                + "SELECT "
+                + "pp.player_id, "
+                + "pp.player_team, "
+                + "pp.player_name, "
+                + "pp.era, "
+                + "p.player_image "
+                + "FROM playerPitcher pp "
+                + "JOIN player p ON pp.player_id = p.player_id "
+                + "WHERE pp.player_team = ? "
+                + "AND p.player_image IS NOT NULL "
+                + "AND TRIM(p.player_image) IS NOT NULL "
+                + "ORDER BY pp.era ASC"
+                + ") "
+                + "WHERE ROWNUM = 1";
+
+        List<PlayerPitcherDTO> list = jdbc.query(sql, (rs, rowNum) -> {
+            PlayerPitcherDTO dto = new PlayerPitcherDTO();
+
+            dto.setPlayer_id(rs.getInt("player_id"));
+            dto.setPlayer_team(rs.getString("player_team"));
+            dto.setPlayer_name(rs.getString("player_name"));
+            dto.setPlayer_image(rs.getString("player_image"));
+            dto.setEra(rs.getDouble("era"));
+
+            return dto;
+        }, team);
+
+        if (list.isEmpty()) {
+            return null;
+        }
+
+        return list.get(0);
+    }
 }

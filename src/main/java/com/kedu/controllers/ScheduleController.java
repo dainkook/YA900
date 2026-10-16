@@ -135,6 +135,44 @@ public class ScheduleController {
 
 	    ScheduleDTO schedule = scheduleDAO.selectByGameId(game_id);
 
-	    return gameLineUpDAO.selectByGameId(schedule.getNaver_game_id());
+	    List<GameLineUpDTO> lineupList = new java.util.ArrayList<>();
+	    if (schedule.getNaver_game_id() != null
+	            && !schedule.getNaver_game_id().trim().isEmpty()) {
+
+	        lineupList = gameLineUpDAO.selectByGameId(schedule.getNaver_game_id());
+	    }
+	    if (!lineupList.isEmpty()) {
+	        return lineupList;
+	    }
+	    PlayerPitcherDTO awayPitcher =
+	            playerPitcherDAO.selectBestPitcherByTeam(schedule.getAway_team());
+
+	    PlayerPitcherDTO homePitcher =
+	            playerPitcherDAO.selectBestPitcherByTeam(schedule.getHome_team());
+	    if (awayPitcher != null) {
+	        GameLineUpDTO dto = new GameLineUpDTO();
+
+	        dto.setTeam("away");
+	        dto.setStarter(1);
+	        dto.setPosition("선발투수");
+	        dto.setPlayer_name(awayPitcher.getPlayer_name());
+	        dto.setPlayer_image(awayPitcher.getPlayer_image());
+
+	        lineupList.add(dto);
+	    }
+	    if (homePitcher != null) {
+	        GameLineUpDTO dto = new GameLineUpDTO();
+
+	        dto.setTeam("home");
+	        dto.setStarter(1);
+	        dto.setPosition("선발투수");
+	        dto.setPlayer_name(homePitcher.getPlayer_name());
+	        dto.setPlayer_image(homePitcher.getPlayer_image());
+
+	        lineupList.add(dto);
+	    }
+
+	    return lineupList;
 	}
+	
 }

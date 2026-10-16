@@ -1333,7 +1333,7 @@ body {
 											<div class="player-team-name">${schedule.away_team}</div>
 											<div class="player-info">
 
-												<img src="${pitcher.player_image}" class="player-image" alt="${pitcher.player_name}">
+												<img src="${pitcher.player_image}" class="player-image" alt="${pitcher.player_name}" referrerpolicy="no-referrer">
 
 												<div>
 													<div class="player-name">${pitcher.player_name}</div>
