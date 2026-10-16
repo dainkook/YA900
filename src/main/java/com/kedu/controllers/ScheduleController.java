@@ -117,7 +117,6 @@ public class ScheduleController {
 	    List<PlayerHitterDTO> hitterList = playerHitterDAO.selectAll();
 	    List<TeamOffenDTO> offenlist = teamOffenDAO.selectAll();
 	    List<TeamDefenDTO> dffenlist = teamDefenDAO.selectAll();
-
 	    model.addAttribute("teamrankList", teamrankList);
 	    model.addAttribute("pitcherList", pitcherList);
 	    model.addAttribute("hitterList", hitterList);
@@ -129,12 +128,16 @@ public class ScheduleController {
 	    return "schedule/rankdetail";
 	}
 	
+	@RequestMapping("/soccercommingsoon")
+	public String commingsoon() {
+		return "soccer/soccercommingsoon";
+	}
+	
 	@ResponseBody
 	@RequestMapping("/pitchers")
-	public List<GameLineUpDTO> pitchers(@RequestParam("game_id") int game_id) {
-
+	public List<GameLineUpDTO> pitchers(
+	        @RequestParam("game_id") int game_id) {
 	    ScheduleDTO schedule = scheduleDAO.selectByGameId(game_id);
-
 	    List<GameLineUpDTO> lineupList = new java.util.ArrayList<>();
 	    if (schedule.getNaver_game_id() != null
 	            && !schedule.getNaver_game_id().trim().isEmpty()) {
