@@ -128,13 +128,44 @@ public class ScheduleController {
 
 	    return "schedule/rankdetail";
 	}
-	
+
 	@ResponseBody
 	@RequestMapping("/pitchers")
-	public List<GameLineUpDTO> pitchers(@RequestParam("game_id") int game_id) {
+	public List<GameLineUpDTO> pitchers(
+	        @RequestParam("game_id") int game_id) {
 
 	    ScheduleDTO schedule = scheduleDAO.selectByGameId(game_id);
 
-	    return gameLineUpDAO.selectByGameId(schedule.getNaver_game_id());
+	    if (schedule == null) {
+	        return java.util.Collections.emptyList();
+	    }
+
+	    // 실제 경기 라인업 우선 조회
+	    List<GameLineUpDTO> result =
+	            gameLineUpDAO.selectByGameId(schedule.getNaver_game_id());
+
+	    // 실제 라인업이 있으면 기존 방식 그대로 반환
+	    if (result != null && !result.isEmpty()) {
+	        return result;
+	    }
+
+	    // 라인업이 없으면 빈 목록 반환
+	    // 구단별 투수 정보는 별도의 API에서 조회
+	    return java.util.Collections.emptyList();
+	}
+	
+	@ResponseBody
+	@RequestMapping("/teamPitcher")
+	public PlayerPitcherDTO teamPitcher(
+	        @RequestParam("teamName") String teamName) {
+
+	    List<PlayerPitcherDTO> list =
+	            playerPitcherDAO.selectByTeam(teamName);
+
+	    if (list == null || list.isEmpty()) {
+	        return null;
+	    }
+
+	    return list.get(0);
 	}
 }

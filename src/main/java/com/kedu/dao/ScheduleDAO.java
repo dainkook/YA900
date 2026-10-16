@@ -1,6 +1,7 @@
 package com.kedu.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -253,5 +254,29 @@ public class ScheduleDAO {
 	            sql,
 	            new BeanPropertyRowMapper<>(ScheduleDTO.class)
 	    );
+	}
+	
+	public List<Map<String, Object>> selectStartingPitchers(int gameId) {
+	
+	    String sql =
+	        "SELECT " +
+	        "gl.player_id AS \"player_id\", " +
+	        "p.player_name AS \"player_name\", " +
+	        "gl.team AS \"team\", " +
+	        "gl.position AS \"position\", " +
+	        "gl.starter AS \"starter\" " +
+	        "FROM schedule s " +
+	        "JOIN game_lineup gl " +
+	        "ON gl.game_id = s.naver_game_id " +
+	        "JOIN player p " +
+	        "ON p.player_id = gl.player_id " +
+	        "WHERE s.game_id = ? " +
+	        "AND gl.position = '선발투수' " +
+	        "AND gl.starter = 1 " +
+	        "ORDER BY CASE gl.team " +
+	        "WHEN 'away' THEN 1 " +
+	        "WHEN 'home' THEN 2 END";
+	
+	    return jdbc.queryForList(sql, gameId);
 	}
 }

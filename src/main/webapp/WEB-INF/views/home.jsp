@@ -2001,15 +2001,18 @@ gameList.addEventListener("wheel", function(e) {
 let selectedGame = null;
 
 function showGame(gameId, date, team, time, place, awayLogo, homeLogo) {
+    console.log("경기 카드 클릭됨!", gameId);
 
     const gameInfo = document.getElementById("game-info");
 
     // 같은 경기 다시 클릭하면 닫기
-    if (selectedGame === gameId) {
+    if (selectedGame === String(gameId)) {
         gameInfo.classList.remove("show");
         selectedGame = null;
         return;
     }
+
+    selectedGame = String(gameId);
 
     // 경기 정보
     document.getElementById("info-date").innerText = date;
@@ -2024,78 +2027,141 @@ function showGame(gameId, date, team, time, place, awayLogo, homeLogo) {
     document.getElementById("home-pitcher-logo").src =
         "${pageContext.request.contextPath}" + homeLogo;
 
-    // 기본값
+    // 기본값 초기화
     document.getElementById("away-pitcher-name").innerText = "선발 예정";
     document.getElementById("home-pitcher-name").innerText = "선발 예정";
 
     document.getElementById("away-pitcher-photo").src = "";
     document.getElementById("home-pitcher-photo").src = "";
 
-    console.log("현재 경기 ID:", gameId);
+    gameInfo.classList.add("show");
 
-    // 경기별 선발투수 조회
-    fetch("${pageContext.request.contextPath}/schedule/pitchers?game_id=" + gameId)
+    // 기존 경기별 실제 라인업 먼저 조회
+    fetch("${pageContext.request.contextPath}/schedule/pitchers?game_id="
+            + encodeURIComponent(gameId))
         .then(response => {
-
-            console.log("응답 상태:", response.status);
-
+            if (!response.ok) {
+                throw new Error("서버 오류: " + response.status);
+            }
             return response.json();
         })
         .then(data => {
+            // 실제 선발 투수가 있는지 확인
+            let hasAwayStarter = false;
+            let hasHomeStarter = false;
 
-            console.log("받아온 선발 데이터:", data);
+            if (Array.isArray(data)) {
+                data.forEach(player => {
+                    const isStarter =
+                        Number(player.starter) === 1 ||
+                        String(player.starter).toLowerCase() === "true";
 
-            data.forEach(player => {
+                    const position = (player.position || "").trim();
+                    const side = (player.team || "").trim().toLowerCase();
 
-                console.log(
-                    "선수:",
-                    player.player_name,
-                    "| 팀:",
-                    player.team,
-                    "| starter:",
-                    player.starter,
-                    "| position:",
-                    player.position
-                );
+                    if (!isStarter || position !== "선발투수") {
+                        return;
+                    }
 
-                if (Number(player.starter) !== 1 || player.position !== "선발투수") {
-                    return;
-                }
-
-                if (player.team === "away") {
-
-                    document.getElementById("away-pitcher-name").innerText =
-                        player.player_name || "선발 예정";
+                    let photoUrl = "";
 
                     if (player.player_image) {
+                        photoUrl =
+                            "${pageContext.request.contextPath}" +
+                            player.player_image;
+                    } else if (player.player_id) {
+                        photoUrl =
+                            "https://sports-phinf.pstatic.net/player/kbo/default/"
+                            + player.player_id + ".png";
+                    }
+
+                    if (side === "away") {
+                        document.getElementById("away-pitcher-name").innerText =
+                            player.player_name || "선발 예정";
+
                         document.getElementById("away-pitcher-photo").src =
-                            "${pageContext.request.contextPath}" + player.player_image;
-                    }
-                }
+                            photoUrl;
 
-                if (player.team === "home") {
+                        hasAwayStarter = true;
+                    } else if (side === "home") {
+                        document.getElementById("home-pitcher-name").innerText =
+                            player.player_name || "선발 예정";
 
-                    document.getElementById("home-pitcher-name").innerText =
-                        player.player_name || "선발 예정";
-
-                    if (player.player_image) {
                         document.getElementById("home-pitcher-photo").src =
-                            "${pageContext.request.contextPath}" + player.player_image;
+                            photoUrl;
+
+                        hasHomeStarter = true;
                     }
-                }
+                });
+            }
 
-            });
+            // 실제 라인업에 원정팀 선발이 없으면 구단별 투수 조회
+            const teams = team.split(" VS ");
 
-            gameInfo.classList.add("show");
+            const awayTeam = teams[0] ? teams[0].trim() : "";
+            const homeTeam = teams[1] ? teams[1].trim() : "";
+
+            const fallbackRequests = [];
+
+            if (!hasAwayStarter && awayTeam) {
+                fallbackRequests.push(
+                    fetch("${pageContext.request.contextPath}/schedule/teamPitcher?teamName="
+                            + encodeURIComponent(awayTeam))
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error("원정팀 투수 조회 실패");
+                            }
+                            return response.json();
+                        })
+                        .then(player => {
+                            if (selectedGame !== String(gameId) || !player) {
+                                return;
+                            }
+
+                            document.getElementById("away-pitcher-name").innerText =
+                                player.player_name || "선발 예정";
+
+                            document.getElementById("away-pitcher-photo").src =
+                                player.player_id
+                                    ? "https://sports-phinf.pstatic.net/player/kbo/default/"
+                                        + player.player_id + ".png"
+                                    : "";
+                        })
+                );
+            }
+
+            if (!hasHomeStarter && homeTeam) {
+                fallbackRequests.push(
+                    fetch("${pageContext.request.contextPath}/schedule/teamPitcher?teamName="
+                            + encodeURIComponent(homeTeam))
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error("홈팀 투수 조회 실패");
+                            }
+                            return response.json();
+                        })
+                        .then(player => {
+                            if (selectedGame !== String(gameId) || !player) {
+                                return;
+                            }
+
+                            document.getElementById("home-pitcher-name").innerText =
+                                player.player_name || "선발 예정";
+
+                            document.getElementById("home-pitcher-photo").src =
+                                player.player_id
+                                    ? "https://sports-phinf.pstatic.net/player/kbo/default/"
+                                        + player.player_id + ".png"
+                                    : "";
+                        })
+                );
+            }
+
+            return Promise.all(fallbackRequests);
         })
         .catch(error => {
-
-            console.error("선발투수 정보를 불러오지 못했습니다.", error);
-
-            gameInfo.classList.add("show");
+            console.error("투수 정보를 불러오지 못했습니다.", error);
         });
-
-    selectedGame = gameId;
 }
 
 function openBooking(event, url) {

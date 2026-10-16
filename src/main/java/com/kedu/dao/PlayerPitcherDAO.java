@@ -251,4 +251,49 @@ public class PlayerPitcherDAO {
             return dto;
         });
     }
+    
+    public List<PlayerPitcherDTO> selectByTeam(String teamName) {
+
+        String sql =
+                "SELECT * FROM ("
+                + "SELECT "
+                + "pp.player_id, "
+                + "pp.player_team, "
+                + "pp.player_name, "
+                + "pp.era, "
+                + "pp.games, "
+                + "pp.wins, "
+                + "pp.losses, "
+                + "pp.innings, "
+                + "p.player_image, "
+                + "t.team_name, "
+                + "t.team_logo "
+                + "FROM playerPitcher pp "
+                + "LEFT JOIN player p ON pp.player_id = p.player_id "
+                + "LEFT JOIN team t ON pp.player_team = t.team_name "
+                + "WHERE pp.player_team = ? "
+                + "AND p.player_image IS NOT NULL "
+                + "AND TRIM(p.player_image) IS NOT NULL "
+                + "ORDER BY pp.era ASC"
+                + ") "
+                + "WHERE ROWNUM = 1";
+
+        return jdbc.query(sql, (rs, rowNum) -> {
+            PlayerPitcherDTO dto = new PlayerPitcherDTO();
+
+            dto.setPlayer_id(rs.getInt("player_id"));
+            dto.setPlayer_team(rs.getString("player_team"));
+            dto.setPlayer_name(rs.getString("player_name"));
+            dto.setPlayer_image(rs.getString("player_image"));
+            dto.setTeam_name(rs.getString("team_name"));
+            dto.setTeam_logo(rs.getString("team_logo"));
+            dto.setEra(rs.getDouble("era"));
+            dto.setGames(rs.getInt("games"));
+            dto.setWins(rs.getInt("wins"));
+            dto.setLosses(rs.getInt("losses"));
+            dto.setInnings(rs.getString("innings"));
+
+            return dto;
+        }, teamName);
+    }
 }
