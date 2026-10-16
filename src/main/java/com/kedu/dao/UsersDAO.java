@@ -123,6 +123,7 @@ public class UsersDAO {
    public int updatePoint(String id, int earnedPoint) {
       String sql= "update users set point =nvl(point, 0) + ? where id= ?";
       return jdbc.update(sql, earnedPoint, id);
+
    }
   
 	public int addPoint(String id, int point) {
@@ -152,5 +153,6 @@ public class UsersDAO {
 	   jdbc.update(sql2, id);
 	   return jdbc.update(sql ,id);
 	   
-   }
+
+}
 }

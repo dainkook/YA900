@@ -30,54 +30,64 @@ body {
 ========================= */
 
 .header {
-	width: 100%;
-	height: 100px;
-	background: linear-gradient(135deg, #0b1026, #171f46);
-	color: white;
-	display: flex;
-	align-items: center;
-	padding: 0 50px;
-	position: sticky;
-	top: 0;
-	z-index: 1000;
-	border-bottom: 1px solid #303b70;
-	box-shadow: 0 3px 15px rgba(11, 16, 38, 0.18);
+    width: 100%;
+    min-height: 100px;
+    height: auto;
+    background: linear-gradient(135deg, #0b1026, #171f46);
+    color: white;
+
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+
+    padding: 15px clamp(15px, 4vw, 50px);
+
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    border-bottom: 1px solid #303b70;
+    box-shadow: 0 3px 15px rgba(11, 16, 38, 0.18);
 }
 
 .logo {
-	font-size: 30px;
-	font-weight: bold;
-	margin-right: 60px;
-	color: white;
-	letter-spacing: 1px;
-	cursor: pointer;
+    font-size: clamp(22px, 2.2vw, 30px);
+    font-weight: bold;
+    margin-right: clamp(10px, 3vw, 60px);
+    color: white;
+    letter-spacing: 1px;
+    cursor: pointer;
+    flex-shrink: 0;
 }
 
 .main-menu {
-	height: 100%;
-	display: flex;
-	align-items: center;
-	gap: 40px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: clamp(12px, 3vw, 40px);
+    flex-shrink: 1;
 }
 
 .menu-item {
-	position: relative;
-	height: 100%;
-	display: flex;
-	align-items: center;
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
 }
 
 .menu-item > a {
-	font-size: 18px;
-	font-weight: bold;
-	text-decoration: none;
-	color: #f7f8ff;
-	padding: 10px 5px;
-	transition: color 0.2s ease;
+    font-size: clamp(14px, 1.4vw, 18px);
+    font-weight: bold;
+    text-decoration: none;
+    color: #f7f8ff;
+    padding: 10px 5px;
+    white-space: nowrap;
+    transition: color 0.2s ease;
 }
 
 .menu-item > a:hover {
-	color: #aebee7;
+    color: #aebee7;
 }
 
 /* =========================
@@ -127,12 +137,13 @@ body {
 ========================= */
 
 .member-menu {
-	font-size: 14px;
-	margin-left: auto;
-	display: flex;
-	align-items: center;
-	gap: 10px;
-	white-space: nowrap;
+    font-size: 14px;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .member-menu form {
@@ -960,6 +971,88 @@ body {
 	.team-score {
 		font-size: 25px;
 	}
+}
+
+/* 태블릿 및 작은 노트북 */
+@media (max-width: 1100px) {
+    .header {
+        padding: 15px 25px;
+        gap: 10px;
+    }
+
+    .logo {
+        margin-right: 15px;
+    }
+
+    .main-menu {
+        gap: 15px;
+    }
+
+    .member-menu {
+        gap: 5px;
+    }
+
+    .login-btn,
+    .sign-btn {
+        padding: 6px 8px;
+    }
+}
+
+/* 태블릿 및 작은 화면 */
+@media (max-width: 850px) {
+    .header {
+        padding: 15px 20px;
+    }
+
+    .logo {
+        margin-right: 5px;
+    }
+
+    .main-menu {
+        gap: 10px;
+    }
+
+    .menu-item > a {
+        font-size: 14px;
+    }
+
+    .member-menu {
+        font-size: 12px;
+    }
+
+    .member-menu button {
+        font-size: 12px;
+        padding: 6px;
+    }
+}
+
+/* 모바일 */
+@media (max-width: 600px) {
+    .header {
+        justify-content: center;
+        padding: 12px 10px;
+        gap: 8px 15px;
+    }
+
+    .logo {
+        font-size: 24px;
+        margin-right: 5px;
+    }
+
+    .main-menu {
+        gap: 12px;
+        height: 40px;
+    }
+
+    .menu-item > a {
+        font-size: 13px;
+        padding: 8px 2px;
+    }
+
+    .member-menu {
+        margin-left: 0;
+        gap: 5px;
+    }
 }
 
 /* =========================

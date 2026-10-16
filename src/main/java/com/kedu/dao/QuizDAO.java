@@ -322,19 +322,17 @@ public class QuizDAO {
         String sql =
                 "SELECT * FROM ( "
                 + "SELECT "
-                + "member_id AS \"memberId\", "
-                + "MAX(correct_count) AS \"score\", "
-                + "ROW_NUMBER() OVER ( "
-                + "ORDER BY MAX(correct_count) DESC, "
-                + "MAX(play_date) DESC "
-                + ") AS \"rankNo\" "
-                + "FROM quiz_result "
-                + "GROUP BY member_id "
-                + ") WHERE ROWNUM <= 5 "
-                + "ORDER BY \"rankNo\"";
-
+                + "id AS \"id\", "
+                + "point as \"point\", "
+                + "row_number() over ( "
+                + "order by point desc "
+                + ") as \"ranking\" "
+                + "from users "
+                + ") where rownum <= 5 "
+                + "order by \"ranking\"";
         return jdbc.queryForList(sql);
     }
+    
     public List<Map<String, Object>> selectPointHistory(String memberId){
     	String sql = "select play_date, total_count, correct_count, "+
     "	correct_count * ? AS earned_point " +
@@ -347,4 +345,6 @@ public class QuizDAO {
     	return jdbc.queryForList(sql, pointPerCorrect, memberId);
     	
     }
+    
+    
 }

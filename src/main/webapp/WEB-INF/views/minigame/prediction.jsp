@@ -38,55 +38,68 @@ body {
    HEADER
 ========================= */
 
+/* =========================
+   HEADER
+========================= */
 .header {
-	width: 100%;
-	height: 100px;
-	background: linear-gradient(135deg, #0b1026, #171f46);
-	color: white;
-	display: flex;
-	align-items: center;
-	padding: 0 50px;
-	position: sticky;
-	top: 0;
-	z-index: 1000;
-	border-bottom: 1px solid #303b70;
-	box-shadow: 0 3px 15px rgba(11, 16, 38, 0.18);
+    width: 100%;
+    min-height: 100px;
+    height: auto;
+    background: linear-gradient(135deg, #0b1026, #171f46);
+    color: white;
+
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+
+    padding: 15px clamp(15px, 4vw, 50px);
+
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    border-bottom: 1px solid #303b70;
+    box-shadow: 0 3px 15px rgba(11, 16, 38, 0.18);
 }
 
 .logo {
-	font-size: 30px;
-	font-weight: bold;
-	margin-right: 60px;
-	color: white;
-	letter-spacing: 1px;
-	cursor: pointer;
+    font-size: clamp(22px, 2.2vw, 30px);
+    font-weight: bold;
+    margin-right: clamp(10px, 3vw, 60px);
+    color: white;
+    letter-spacing: 1px;
+    cursor: pointer;
+    flex-shrink: 0;
 }
 
 .main-menu {
-	height: 100%;
-	display: flex;
-	align-items: center;
-	gap: 40px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: clamp(12px, 3vw, 40px);
+    flex-shrink: 1;
 }
 
 .menu-item {
-	position: relative;
-	height: 100%;
-	display: flex;
-	align-items: center;
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
 }
 
 .menu-item > a {
-	font-size: 18px;
-	font-weight: bold;
-	text-decoration: none;
-	color: #f7f8ff;
-	padding: 10px 5px;
-	transition: color 0.2s ease;
+    font-size: clamp(14px, 1.4vw, 18px);
+    font-weight: bold;
+    text-decoration: none;
+    color: #f7f8ff;
+    padding: 10px 5px;
+    white-space: nowrap;
+    transition: color 0.2s ease;
 }
 
 .menu-item > a:hover {
-	color: #aebee7;
+    color: #aebee7;
 }
 
 /* =========================
@@ -136,12 +149,13 @@ body {
 ========================= */
 
 .member-menu {
-	font-size: 14px;
-	margin-left: auto;
-	display: flex;
-	align-items: center;
-	gap: 10px;
-	white-space: nowrap;
+    font-size: 14px;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .member-menu form {
@@ -172,6 +186,14 @@ body {
 	background: #476aaa;
 	border-color: #476aaa;
 	color: white;
+}
+.container {
+	width: 1050px;
+	margin: 0 auto;
+	background: #f5f6f8;
+	min-height: 100vh;
+	padding-top: 30px;
+	box-shadow: 0 0 30px rgba(17, 25, 54, 0.08);
 }
 /* =========================
    퀵 메뉴
@@ -590,100 +612,171 @@ tbody tr:hover {
 
 
 
-/* =========================
-   반응형
-========================= */
-
-@media (max-width: 900px) {
-
-	.header {
-		padding: 0 25px;
+@media ( max-width : 1100px) {
+	.container {
+		width: 100%;
 	}
+	.main-layout {
+		width: 100%;
+	}
+	.game-detail {
+		width: calc(100% - 320px);
+	}
+	.open-talk {
+		width: 320px;
+	}
+}
 
+@media ( max-width : 750px) {
+	.header {
+		padding: 0 20px;
+	}
 	.logo {
 		margin-right: 30px;
 	}
-
 	.main-menu {
 		gap: 20px;
 	}
-
-	.menu-item > a {
-		font-size: 16px;
-	}
-
 	.container {
-		max-width: 100%;
-		margin-top: 30px;
+		width: 100%;
 	}
-
-	.summary {
-		grid-template-columns: 1fr;
+	.title-area {
+		padding: 25px 15px 0;
 	}
-
-	.match-info {
-		grid-template-columns: 1fr 1fr 50px 1fr;
+	.main-layout {
+		display: block;
+		width: 100%;
 	}
-
+	.game-detail {
+		width: 100%;
+		border-right: none;
+	}
+	.open-talk {
+		width: 100%;
+		height: 500px;
+		position: static;
+		border-top: 1px solid #d6dceb;
+	}
+	.game-teams {
+		gap: 30px;
+	}
+	.team {
+		width: 150px;
+	}
+	.team-name {
+		font-size: 18px;
+	}
 }
 
-@media (max-width: 600px) {
-
-	.header {
-		height: auto;
-		min-height: 100px;
-		padding: 20px;
-		flex-wrap: wrap;
-	}
-
-	.logo {
-		margin-right: 20px;
-	}
-
-	.main-menu {
-		order: 3;
-		width: 100%;
-		justify-content: center;
-		gap: 15px;
-		margin-top: 15px;
-	}
-
-	.menu-item > a {
-		font-size: 14px;
-	}
-
-	.member-menu {
-		margin-left: auto;
-	}
-
-	.container {
-		padding: 0 12px;
-		margin-top: 20px;
-	}
-
-	.title {
-		height: 60px;
-		font-size: 19px;
-	}
-
-	.box {
-		padding: 18px;
-	}
-
-	.match-info {
-		grid-template-columns: 1fr;
-		gap: 8px;
-	}
-
-	.match-vs {
+@media ( max-width : 600px) {
+	.user-menu {
 		display: none;
 	}
-
-	.match-pick {
-		grid-template-columns: 1fr 1fr 1fr;
+	.main-menu {
+		gap: 15px;
 	}
-
+	.main-menu a {
+		font-size: 14px;
+	}
+	.game-teams {
+		gap: 10px;
+	}
+	.team {
+		width: 120px;
+	}
+	.team-logo {
+		width: 55px;
+		height: 55px;
+	}
+	.team-name {
+		font-size: 16px;
+	}
+	.team-score {
+		font-size: 25px;
+	}
 }
+
+/* 태블릿 및 작은 노트북 */
+@media (max-width: 1100px) {
+    .header {
+        padding: 15px 25px;
+        gap: 10px;
+    }
+
+    .logo {
+        margin-right: 15px;
+    }
+
+    .main-menu {
+        gap: 15px;
+    }
+
+    .member-menu {
+        gap: 5px;
+    }
+
+    .login-btn,
+    .sign-btn {
+        padding: 6px 8px;
+    }
+}
+
+/* 태블릿 및 작은 화면 */
+@media (max-width: 850px) {
+    .header {
+        padding: 15px 20px;
+    }
+
+    .logo {
+        margin-right: 5px;
+    }
+
+    .main-menu {
+        gap: 10px;
+    }
+
+    .menu-item > a {
+        font-size: 14px;
+    }
+
+    .member-menu {
+        font-size: 12px;
+    }
+
+    .member-menu button {
+        font-size: 12px;
+        padding: 6px;
+    }
+}
+
+/* 모바일 */
+@media (max-width: 600px) {
+    .header {
+        justify-content: center;
+        padding: 12px 10px;
+        gap: 8px 15px;
+    }
+
+    .logo {
+        font-size: 24px;
+        margin-right: 5px;
+    }
+
+    .main-menu {
+        gap: 12px;
+        height: 40px;
+    }
+
+    .menu-item > a {
+        font-size: 13px;
+        padding: 8px 2px;
+    }
+
+    .member-menu {
+        margin-left: 0;
+        gap: 5px;
+    }
+
 </style>
 </head>
 
@@ -862,7 +955,7 @@ tbody tr:hover {
 			
 			                        <button type="button"
 			                                data-prediction-id="${game.prediction_seq}"
-			                                data-choice="0">
+			                                data-choice="-1">
 			                            무승부
 			                        </button>
 			
@@ -942,7 +1035,7 @@ tbody tr:hover {
 			                                <td>
 			                                    <c:choose>
 			                                        <c:when test="${item.PREDICTED_RESULT == 1}">홈팀 승</c:when>
-			                                        <c:when test="${item.PREDICTED_RESULT == 0}">무승부</c:when>
+			                                        <c:when test="${item.PREDICTED_RESULT == -1}">무승부</c:when>
 			                                        <c:when test="${item.PREDICTED_RESULT == 2}">원정팀 승</c:when>
 			                                        <c:otherwise>-</c:otherwise>
 			                                    </c:choose>
@@ -979,6 +1072,7 @@ tbody tr:hover {
 			        </table>
 			    </div>
 			</section>
+	</div>
 	<div class="footer">
 
 			<a href="#">개인정보처리방침</a> | <a href="#">전체 서비스</a> | <a href="#">문제
@@ -986,7 +1080,6 @@ tbody tr:hover {
 				href="${pageContext.request.contextPath}/admin">관리자</a>
 
 		</div>
-	</div>
 	<script>
 	$(function() {
 		const myPredictions = {};
@@ -999,7 +1092,7 @@ tbody tr:hover {
 
 		const choiceNames = {
 		    "1": "홈팀 승",
-		    "0": "무승부",
+		    "-1": "무승부",
 		    "2": "원정팀 승"
 		};
 

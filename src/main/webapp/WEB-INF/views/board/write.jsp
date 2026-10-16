@@ -38,57 +38,70 @@ body {
    상단 헤더
 ========================= */
 .header {
-	width: 100%;
-	height: 100px;
-	background: linear-gradient(135deg, #0b1026, #171f46);
-	color: white;
-	display: flex;
-	align-items: center;
-	padding: 0 50px;
-	position: sticky;
-	top: 0;
-	z-index: 1000;
-	border-bottom: 1px solid #303b70;
-	box-shadow: 0 3px 15px rgba(11, 16, 38, 0.18);
+    width: 100%;
+    min-height: 100px;
+    height: auto;
+    background: linear-gradient(135deg, #0b1026, #171f46);
+    color: white;
+
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+
+    padding: 15px clamp(15px, 4vw, 50px);
+
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    border-bottom: 1px solid #303b70;
+    box-shadow: 0 3px 15px rgba(11, 16, 38, 0.18);
 }
 
 .logo {
-	font-size: 30px;
-	font-weight: bold;
-	margin-right: 60px;
-	color: white;
-	letter-spacing: 1px;
-	cursor: pointer;
+    font-size: clamp(22px, 2.2vw, 30px);
+    font-weight: bold;
+    margin-right: clamp(10px, 3vw, 60px);
+    color: white;
+    letter-spacing: 1px;
+    cursor: pointer;
+    flex-shrink: 0;
 }
 
 .main-menu {
-	height: 100%;
-	display: flex;
-	align-items: center;
-	gap: 40px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: clamp(12px, 3vw, 40px);
+    flex-shrink: 1;
 }
 
 .menu-item {
-	position: relative;
-	height: 100%;
-	display: flex;
-	align-items: center;
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
 }
 
-.menu-item>a {
-	font-size: 18px;
-	font-weight: bold;
-	text-decoration: none;
-	color: #f7f8ff;
-	padding: 10px 5px;
-	transition: color 0.2s ease;
+.menu-item > a {
+    font-size: clamp(14px, 1.4vw, 18px);
+    font-weight: bold;
+    text-decoration: none;
+    color: #f7f8ff;
+    padding: 10px 5px;
+    white-space: nowrap;
+    transition: color 0.2s ease;
 }
 
-.menu-item>a:hover {
-	color: #aebee7;
+.menu-item > a:hover {
+    color: #aebee7;
 }
 
-/* 서브 메뉴 */
+/* =========================
+   SUB MENU
+========================= */
+
 .sub-menu {
 	position: absolute;
 	top: 100%;
@@ -127,28 +140,69 @@ body {
 	background: #252f67;
 }
 
-/* 로그인 / 회원가입 */
+/* =========================
+   LOGIN / SIGNUP
+========================= */
+
 .member-menu {
-	font-size: 14px;
+    font-size: 14px;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.member-menu form {
+	display: flex;
+	margin: 0;
+}
+
+.member-menu span {
+	color: white;
+	font-weight: bold;
+	white-space: nowrap;
+}
+
+.login-btn,
+.sign-btn {
+	border: 1px solid #7180b1;
+	background: transparent;
+	color: white;
+	border-radius: 5px;
+	padding: 6px 10px;
+	cursor: pointer;
+	white-space: nowrap;
+	transition: 0.2s ease;
+}
+
+.login-btn:hover,
+.sign-btn:hover {
+	background: #476aaa;
+	border-color: #476aaa;
+	color: white;
+}
+
+.user-menu {
 	margin-left: auto;
 	display: flex;
 	gap: 8px;
 }
 
-.login-btn, .sign-btn {
-	padding: 10px 17px;
-	border: 1px solid #7180b1;
+.user-menu button {
 	background: transparent;
-	color: white;
+	border: 1px solid #7180b1;
 	border-radius: 5px;
+	padding: 8px 15px;
+	color: white;
 	cursor: pointer;
 	transition: 0.2s ease;
 }
 
-.login-btn:hover, .sign-btn:hover {
+.user-menu button:hover {
 	background: #476aaa;
 	border-color: #476aaa;
-	color: white;
 }
 
 /* =========================
@@ -178,7 +232,7 @@ body {
 	margin: 0;
 	font-size: 27px;
 	font-weight: bold;
-	color: #171f46;
+	color: white;
 	letter-spacing: -0.5px;
 }
 
@@ -453,6 +507,97 @@ body {
 .header>.logo:hover {
 	cursor: pointer;
 }
+
+/* 태블릿 및 작은 노트북 */
+@media (max-width: 1100px) {
+    .header {
+        padding: 15px 25px;
+        gap: 10px;
+    }
+
+    .logo {
+        margin-right: 15px;
+    }
+
+    .main-menu {
+        gap: 15px;
+    }
+
+    .member-menu {
+        gap: 5px;
+    }
+
+    .login-btn,
+    .sign-btn {
+        padding: 6px 8px;
+    }
+}
+
+/* 태블릿 및 작은 화면 */
+@media (max-width: 850px) {
+    .header {
+        padding: 15px 20px;
+    }
+
+    .logo {
+        margin-right: 5px;
+    }
+
+    .main-menu {
+        gap: 10px;
+    }
+
+    .menu-item > a {
+        font-size: 14px;
+    }
+
+    .member-menu {
+        font-size: 12px;
+    }
+
+    .member-menu button {
+        font-size: 12px;
+        padding: 6px;
+    }
+}
+
+/* 모바일 */
+@media (max-width: 600px) {
+    .header {
+        justify-content: center;
+        padding: 12px 10px;
+        gap: 8px 15px;
+    }
+
+    .logo {
+        font-size: 24px;
+        margin-right: 5px;
+    }
+
+    .main-menu {
+        gap: 12px;
+        height: 40px;
+    }
+
+    .menu-item > a {
+        font-size: 13px;
+        padding: 8px 2px;
+    }
+
+    .member-menu {
+        margin-left: 0;
+        gap: 5px;
+    }
+
+    .member-menu span {
+        font-size: 12px;
+    }
+
+    .member-menu button {
+        font-size: 11px;
+        padding: 5px 7px;
+    }
+}
 </style>
 </head>
 <body>
@@ -469,10 +614,10 @@ body {
 				<a href="#">야구</a>
 
 				<div class="sub-menu">
-					<a href="${pageContext.request.contextPath}/#reservation">예매</a>
+					<a href="${pageContext.request.contextPath}/#reservation">예매</a> 
 					<a href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a> 
 					<a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a> 
-					<a href="#">선수순위</a> 
+					<a href="${pageContext.request.contextPath}/schedule/rankdetail?tab=pitcher">선수순위</a> 
 					<a href="${pageContext.request.contextPath}/board/board?cpage=1">게시판</a>
 				</div>
 			</div>
@@ -482,10 +627,10 @@ body {
 				<a href="#">축구</a>
 
 				<div class="sub-menu">
-					<a href="#">예매</a>
-					<a href="#">경기일정</a>
-					<a href="#">팀순위</a>
-					<a href="#">선수순위</a>
+					<a href="#">예매</a> 
+					<a href="#">경기일정</a> 
+					<a href="#">팀순위</a> 
+					<a href="#">선수순위</a> 
 					<a href="#">게시판</a>
 				</div>
 			</div>
@@ -495,48 +640,51 @@ body {
 				<a href="#">미니게임</a>
 
 				<div class="sub-menu">
-					<a href="#">상식 퀴즈</a>
-					<a href="#">OX 퀴즈</a>
-					<a href="#">승부예측</a>
-					<a href="#">게임 랭킹</a>
+					<a href="${pageContext.request.contextPath}/quiz">상식 퀴즈</a> 
+					<a href="${pageContext.request.contextPath}/myteam">나만의 팀</a> 
+					<a href="${pageContext.request.contextPath}/prediction">승부예측</a>
 				</div>
 			</div>
 		</nav>
 
 		<div class="member-menu">
 
-			<c:choose>
-				<c:when test="${not empty sessionScope.id}">
-					<span>${sessionScope.id}님</span>
+    <c:choose>
 
-					<button class="login-btn"
-						onclick="location.href='${pageContext.request.contextPath}/mypage'">
-						마이페이지
-					</button>
+        <c:when test="${not empty sessionScope.id}">
+            <span>${sessionScope.id}님</span>
 
-					<form action="${pageContext.request.contextPath}/logout"
-						method="post">
-						<button type="submit" class="sign-btn">
-							로그아웃
-						</button>
-					</form>
-				</c:when>
+            <button class="login-btn"
+                    onclick="location.href='${pageContext.request.contextPath}/mypage'">
+                마이페이지
+            </button>
 
-				<c:otherwise>
-					<button class="login-btn"
-						onclick="location.href='${pageContext.request.contextPath}/login'">
-						로그인
-					</button>
+            <form action="${pageContext.request.contextPath}/logout"
+                  method="post">
+                <button type="submit" class="sign-btn">
+                    로그아웃
+                </button>
+            </form>
+        </c:when>
 
-					<button class="sign-btn"
-						onclick="location.href='${pageContext.request.contextPath}/signup'">
-						회원가입
-					</button>
-				</c:otherwise>
-			</c:choose>
+        <c:otherwise>
+            <button class="login-btn"
+                    onclick="location.href='${pageContext.request.contextPath}/login'">
+                로그인
+            </button>
+
+            <button class="sign-btn"
+                    onclick="location.href='${pageContext.request.contextPath}/signup'">
+                회원가입
+            </button>
+        </c:otherwise>
+
+    </c:choose>
+			
+			
 		</div>
-	</div>
 
+	</div>
 	<!-- 오른쪽 퀵메뉴 -->
 	<div class="quick-menu">
 		<div class="menu">QUICK MENU</div>

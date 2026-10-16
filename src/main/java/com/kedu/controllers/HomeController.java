@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.kedu.dao.BoardDAO;
 import com.kedu.dao.PlayerHitterDAO;
 import com.kedu.dao.PlayerPitcherDAO;
+import com.kedu.dao.PredictionDAO;
 import com.kedu.dao.ScheduleDAO;
 import com.kedu.dao.TeamRankDAO;
 import com.kedu.dto.BoardDTO;
@@ -35,6 +36,9 @@ public class HomeController {
 	@Autowired
     private ScheduleDAO scheduleDAO;
 	
+	@Autowired
+	private PredictionDAO predictionDAO;
+	
 	@RequestMapping(value = "/")
 	public String home(Locale locale, Model model) {
 	
@@ -49,6 +53,8 @@ public class HomeController {
 		
 		List<BoardDTO> recentBoards = boardDAO.getRecentBoards();
 		model.addAttribute("recentBoards", recentBoards);
+		
+		predictionDAO.predictionUpdate();
 		
 		return "home";
 	}
