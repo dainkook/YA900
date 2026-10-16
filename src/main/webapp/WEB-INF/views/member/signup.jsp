@@ -546,11 +546,11 @@ body {
 				<a href="#">축구</a>
 
 				<div class="sub-menu">
-					<a href="#">예매</a> 
-					<a href="#">경기일정</a> 
-					<a href="#">팀순위</a> 
-					<a href="#">선수순위</a> 
-					<a href="#">게시판</a>
+					<a href="${pageContext.request.contextPath}/schedule/soccercommingsoon">예매</a> 
+					<a href="${pageContext.request.contextPath}/schedule/soccercommingsoon">경기일정</a> 
+					<a href="${pageContext.request.contextPath}/schedule/soccercommingsoon">팀순위</a> 
+					<a href="${pageContext.request.contextPath}/schedule/soccercommingsoon">선수순위</a> 
+					<a href="${pageContext.request.contextPath}/schedule/soccercommingsoon">게시판</a>
 				</div>
 			</div>
 
@@ -1423,6 +1423,11 @@ signupForm.addEventListener("submit", function(e){
 
       return;
 
+   }
+   if(Number(age.value)<8){
+	   alert("만 8세 이상만 회원가입할 수 있습니다.");
+	   e.preventDefault();
+	   return;
    }
 
    let zipcode =
