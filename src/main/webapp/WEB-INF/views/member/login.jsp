@@ -250,7 +250,9 @@ body {
 </head>
 
 <body>
-
+	<c:if test="${not empty loginMessage}">
+	<script>alert("${loginMessage}");</script>
+	</c:if>
 	<div class="header">
 
 		<div class="logo" onclick="location.href='/'">YA900</div>

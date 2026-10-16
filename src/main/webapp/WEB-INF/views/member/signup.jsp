@@ -961,6 +961,20 @@ body {
 
 <script>
 
+let idRegex = /^[가-힣A-Za-z0-9]{6,12}$/;
+
+let emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+
+let pwRegex = /^(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/;
+
+let nameRegex = /^[가-힣]{2,5}$/;
+
+let phone1Regex = /^[0-9]{3}$/;
+let phone2Regex = /^[0-9]{4}$/;
+let phone3Regex = /^[0-9]{4}$/;
+
+
+
 let idCheckOk = false;
 
 let idRegex =
