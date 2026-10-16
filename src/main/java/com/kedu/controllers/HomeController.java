@@ -15,6 +15,7 @@ import com.kedu.dao.PredictionDAO;
 import com.kedu.dao.ScheduleDAO;
 import com.kedu.dao.TeamRankDAO;
 import com.kedu.dto.BoardDTO;
+import com.kedu.dto.PlayerPitcherDTO;
 
 @Controller
 public class HomeController {
@@ -49,9 +50,10 @@ public class HomeController {
 		List<BoardDTO> recentBoards = boardDAO.getRecentBoards();
 		model.addAttribute("recentBoards", recentBoards);
 		
+		List<PlayerPitcherDTO> pitcherList = playerPitcherDAO.selectAll();
+		model.addAttribute("pitcherList", pitcherList);
 		predictionDAO.predictionUpdate();
 		
 		return "home";
 	}
-	
 }
