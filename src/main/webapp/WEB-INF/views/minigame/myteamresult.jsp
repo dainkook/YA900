@@ -848,7 +848,7 @@ body {
 				    <div class="squad-player s-center">
 				        <div class="squad-position">중견수</div>
 				        <div class="squad-image">
-				            <img src="${CF.player_image}" alt="${CF.player_name}">
+				            <img src="${CF.player_image}" alt="${CF.player_name}"  referrerpolicy="no-referrer">
 				        </div>
 				        <div class="squad-name">${CF.player_name}</div>
 				        <div class="squad-team">${CF.player_team}</div>
@@ -859,7 +859,7 @@ body {
 				    <div class="squad-player s-right">
 				        <div class="squad-position">우익수</div>
 				        <div class="squad-image">
-				            <img src="${RF.player_image}" alt="${RF.player_name}">
+				            <img src="${RF.player_image}" alt="${RF.player_name}" referrerpolicy="no-referrer">
 				        </div>
 				        <div class="squad-name">${RF.player_name}</div>
 				        <div class="squad-team">${RF.player_team}</div>
@@ -870,7 +870,7 @@ body {
 				    <div class="squad-player s-short">
 				        <div class="squad-position">유격수</div>
 				        <div class="squad-image">
-				            <img src="${SS.player_image}" alt="${SS.player_name}">
+				            <img src="${SS.player_image}" alt="${SS.player_name}" referrerpolicy="no-referrer">
 				        </div>
 				        <div class="squad-name">${SS.player_name}</div>
 				        <div class="squad-team">${SS.player_team}</div>
@@ -881,7 +881,7 @@ body {
 				    <div class="squad-player s-second">
 				        <div class="squad-position">2루수</div>
 				        <div class="squad-image">
-				            <img src="${B2.player_image}" alt="${B2.player_name}">
+				            <img src="${B2.player_image}" alt="${B2.player_name}" referrerpolicy="no-referrer">
 				        </div>
 				        <div class="squad-name">${B2.player_name}</div>
 				        <div class="squad-team">${B2.player_team}</div>
@@ -892,7 +892,7 @@ body {
 				    <div class="squad-player s-third">
 				        <div class="squad-position">3루수</div>
 				        <div class="squad-image">
-				            <img src="${B3.player_image}" alt="${B3.player_name}">
+				            <img src="${B3.player_image}" alt="${B3.player_name}" referrerpolicy="no-referrer">
 				        </div>
 				        <div class="squad-name">${B3.player_name}</div>
 				        <div class="squad-team">${B3.player_team}</div>
@@ -903,7 +903,7 @@ body {
 				    <div class="squad-player s-pitcher">
 				        <div class="squad-position">선발투수</div>
 				        <div class="squad-image">
-				            <img src="${SP.player_image}" alt="${SP.player_name}">
+				            <img src="${SP.player_image}" alt="${SP.player_name}" referrerpolicy="no-referrer">
 				        </div>
 				        <div class="squad-name">${SP.player_name}</div>
 				        <div class="squad-team">${SP.player_team}</div>
@@ -914,7 +914,7 @@ body {
 				    <div class="squad-player s-first">
 				        <div class="squad-position">1루수</div>
 				        <div class="squad-image">
-				            <img src="${B1.player_image}" alt="${B1.player_name}">
+				            <img src="${B1.player_image}" alt="${B1.player_name}" referrerpolicy="no-referrer">
 				        </div>
 				        <div class="squad-name">${B1.player_name}</div>
 				        <div class="squad-team">${B1.player_team}</div>
@@ -925,7 +925,7 @@ body {
 				    <div class="squad-player s-catcher">
 				        <div class="squad-position">포수</div>
 				        <div class="squad-image">
-				            <img src="${C.player_image}" alt="${C.player_name}">
+				            <img src="${C.player_image}" alt="${C.player_name}" referrerpolicy="no-referrer">
 				        </div>
 				        <div class="squad-name">${C.player_name}</div>
 				        <div class="squad-team">${C.player_team}</div>

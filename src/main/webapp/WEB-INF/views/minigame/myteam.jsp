@@ -1339,8 +1339,7 @@ body {
 							<div class="player-card" data-player-id="${player.player_id}">
 
 								<div class="player-image">
-									<img src="${player.player_image}"
-										alt="${player.player_name}">
+									<img src="${player.player_image}" referrerpolicy="no-referrer" alt="${player.player_name}">
 								</div>
 
 								<div class="player-name">${player.player_name}</div>
