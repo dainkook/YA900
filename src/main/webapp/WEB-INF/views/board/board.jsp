@@ -49,82 +49,90 @@
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-<title>자유게시판</title>
+<title>게시판</title>
 
 <style>
 * {
 	box-sizing: border-box;
 }
 
-html {
-	scroll-behavior: smooth;
-}
-
 body {
 	margin: 0;
-	background: linear-gradient(to bottom, #111936 0%, #111936 15%, #0b1026 25%, #171f46
-		35%, #252f67 48%, #71809f 65%, #aeb7ca 76%, #d5dae5 86%, #eef1f8 94%,
-		#eef1f8 100%);
+	background: linear-gradient(to bottom, #111936 0%, #111936 12%, #171f46 22%, #252f67
+		32%, #71809f 43%, #aeb7ca 55%, #d5dae5 70%, #eef1f8 85%, #eef1f8 100%);
+	font-family: Arial, "Malgun Gothic", sans-serif;
 	color: #18213f;
-	font-family: Arial, sans-serif;
+	min-height: 100vh;
 }
 
 /* =========================
    HEADER
 ========================= */
 .header {
-	width: 100%;
-	height: 100px;
-	background: linear-gradient(135deg, #0b1026, #171f46);
-	color: white;
-	display: flex;
-	align-items: center;
-	padding: 0 50px;
-	position: sticky;
-	top: 0;
-	z-index: 1000;
-	border-bottom: 1px solid #303b70;
-	box-shadow: 0 3px 15px rgba(11, 16, 38, 0.18);
+    width: 100%;
+    min-height: 100px;
+    height: auto;
+    background: linear-gradient(135deg, #0b1026, #171f46);
+    color: white;
+
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+
+    padding: 15px clamp(15px, 4vw, 50px);
+
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    border-bottom: 1px solid #303b70;
+    box-shadow: 0 3px 15px rgba(11, 16, 38, 0.18);
 }
 
 .logo {
-	font-size: 30px;
-	font-weight: bold;
-	margin-right: 60px;
-	color: white;
-	letter-spacing: 1px;
+    font-size: clamp(22px, 2.2vw, 30px);
+    font-weight: bold;
+    margin-right: clamp(10px, 3vw, 60px);
+    color: white;
+    letter-spacing: 1px;
+    cursor: pointer;
+    flex-shrink: 0;
 }
 
 .main-menu {
-	height: 100%;
-	display: flex;
-	align-items: center;
-	gap: 40px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: clamp(12px, 3vw, 40px);
+    flex-shrink: 1;
 }
 
 .menu-item {
-	position: relative;
-	height: 100%;
-	display: flex;
-	align-items: center;
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
 }
 
-.menu-item>a {
-	font-size: 18px;
-	font-weight: bold;
-	text-decoration: none;
-	color: #f7f8ff;
-	padding: 10px 5px;
-	transition: color 0.2s ease;
+.menu-item > a {
+    font-size: clamp(14px, 1.4vw, 18px);
+    font-weight: bold;
+    text-decoration: none;
+    color: #f7f8ff;
+    padding: 10px 5px;
+    white-space: nowrap;
+    transition: color 0.2s ease;
 }
 
-.menu-item>a:hover {
-	color: #aebee7;
+.menu-item > a:hover {
+    color: #aebee7;
 }
 
 /* =========================
-   서브 메뉴
+   SUB MENU
 ========================= */
+
 .sub-menu {
 	position: absolute;
 	top: 100%;
@@ -164,15 +172,17 @@ body {
 }
 
 /* =========================
-   로그인 / 회원가입
+   LOGIN / SIGNUP
 ========================= */
+
 .member-menu {
-	font-size: 14px;
-	margin-left: auto;
-	display: flex;
-	align-items: center;
-	gap: 10px;
-	white-space: nowrap;
+    font-size: 14px;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .member-menu form {
@@ -186,7 +196,8 @@ body {
 	white-space: nowrap;
 }
 
-.login-btn, .sign-btn {
+.login-btn,
+.sign-btn {
 	border: 1px solid #7180b1;
 	background: transparent;
 	color: white;
@@ -197,12 +208,33 @@ body {
 	transition: 0.2s ease;
 }
 
-.login-btn:hover, .sign-btn:hover {
+.login-btn:hover,
+.sign-btn:hover {
 	background: #476aaa;
 	border-color: #476aaa;
 	color: white;
 }
 
+.user-menu {
+	margin-left: auto;
+	display: flex;
+	gap: 8px;
+}
+
+.user-menu button {
+	background: transparent;
+	border: 1px solid #7180b1;
+	border-radius: 5px;
+	padding: 8px 15px;
+	color: white;
+	cursor: pointer;
+	transition: 0.2s ease;
+}
+
+.user-menu button:hover {
+	background: #476aaa;
+	border-color: #476aaa;
+}
 /* =========================
    게시판 전체
 ========================= */
@@ -738,6 +770,97 @@ body.theme-kiwoom {
 	color: #a9b1db;
 }
 
+/* 태블릿 및 작은 노트북 */
+@media (max-width: 1100px) {
+    .header {
+        padding: 15px 25px;
+        gap: 10px;
+    }
+
+    .logo {
+        margin-right: 15px;
+    }
+
+    .main-menu {
+        gap: 15px;
+    }
+
+    .member-menu {
+        gap: 5px;
+    }
+
+    .login-btn,
+    .sign-btn {
+        padding: 6px 8px;
+    }
+}
+
+/* 태블릿 및 작은 화면 */
+@media (max-width: 850px) {
+    .header {
+        padding: 15px 20px;
+    }
+
+    .logo {
+        margin-right: 5px;
+    }
+
+    .main-menu {
+        gap: 10px;
+    }
+
+    .menu-item > a {
+        font-size: 14px;
+    }
+
+    .member-menu {
+        font-size: 12px;
+    }
+
+    .member-menu button {
+        font-size: 12px;
+        padding: 6px;
+    }
+}
+
+/* 모바일 */
+@media (max-width: 600px) {
+    .header {
+        justify-content: center;
+        padding: 12px 10px;
+        gap: 8px 15px;
+    }
+
+    .logo {
+        font-size: 24px;
+        margin-right: 5px;
+    }
+
+    .main-menu {
+        gap: 12px;
+        height: 40px;
+    }
+
+    .menu-item > a {
+        font-size: 13px;
+        padding: 8px 2px;
+    }
+
+    .member-menu {
+        margin-left: 0;
+        gap: 5px;
+    }
+
+    .member-menu span {
+        font-size: 12px;
+    }
+
+    .member-menu button {
+        font-size: 11px;
+        padding: 5px 7px;
+    }
+}
+
 </style>
 </head>
 <body class="theme-${teamTheme}">
@@ -819,20 +942,18 @@ body.theme-kiwoom {
 	</div>
 	<!-- 오른쪽 퀵메뉴 -->
 	<div class="quick-menu">
-		<div class="menu">QUICK MENU</div>
-		<div onclick="location.href='${pageContext.request.contextPath}/'">홈</div>
-		<div
-			onclick="location.href='${pageContext.request.contextPath}/#reservation'">예매</div>
-		<div
-			onclick="location.href='${pageContext.request.contextPath}/board/board?cpage=1'">게시판</div>
-		<div>마이페이지</div>
-	</div>
+		    <div class="menu">QUICK MENU</div>
+		    <div onclick="location.href='${pageContext.request.contextPath}/'">홈</div>
+		    <div onclick="location.href='${pageContext.request.contextPath}/#reservation'">예매</div>
+		    <div onclick="location.href='${pageContext.request.contextPath}/board/board?cpage=1'">게시판</div>
+		    <div onclick="location.href='${pageContext.request.contextPath}/mypage'">마이페이지</div>
+		</div>
 	<div class="container">
 		<div class="board-header">
 			<div class="title board-title-dropdown">
 				<h1>
 					<c:choose>
-						<c:when test="${empty param.team}">
+						<c:when test="${empty selectedTeam}">
 			            전체 게시판
 			        </c:when>
 					<c:otherwise>
@@ -854,6 +975,10 @@ body.theme-kiwoom {
 					<a class="team-item"
 						href="${pageContext.request.contextPath}/board/board?team=free&cpage=1">
 						<span style="font-size: 32px;">⚾</span> <span>자유게시판</span>
+					</a> 
+					<a class="team-item"
+						href="${pageContext.request.contextPath}/board/board?team=notice&cpage=1">
+						<span style="font-size: 32px;">⚾</span> <span>공지사항</span>
 					</a> 
 					<a class="team-item"
 						href="${pageContext.request.contextPath}/board/board?team=두산&cpage=1">
@@ -925,8 +1050,11 @@ body.theme-kiwoom {
 						<option>내용</option>
 						<option>글쓴이</option>
 					</select> <input type="text" name="search" placeholder="검색할 게시글의 제목을 입력하세요">
-					<input id="option" type="hidden" name="option"> <input
-						type="hidden" name="cpage" value="1">
+					<input id="option" type="hidden" name="option"> 
+					<input type="hidden" name="cpage" value="1">
+					<c:if test="${selectedTeam=='공지'}">
+					<input type="hidden" name="type" value="notice">
+					</c:if>
 					<button type="submit">검색</button>
 				</form>
 			</div>
@@ -951,8 +1079,14 @@ body.theme-kiwoom {
         								<img src="${i.teamLogo}" style="width:50px; height:40px">
     								</c:if>
 								</td>
-								<td><a href="/board/detail?seq=${i.board_seq}">
-										${i.title} </a></td>
+								<c:choose>
+								<c:when test="${selectedTeam=='공지'}">
+								<td><a href="/board/detail?type=notice&seq=${i.board_seq}">${i.title}</a></td>
+								</c:when>
+								<c:otherwise>
+								<td><a href="/board/detail?seq=${i.board_seq}">${i.title}</a></td>
+								</c:otherwise>
+								</c:choose>
 								<td>${i.writer}</td>
 								<td><fmt:formatDate value="${i.write_date}" pattern="yyyy-MM-dd"/></td>
 								<td>${i.view_count}</td>
@@ -1016,7 +1150,8 @@ let navi =
 let first = document.createElement("a");
 if(isSearch==false) {
 	first.setAttribute("href", "/board/board?cpage=1");
-		} else {first.setAttribute("href", "/board/search?option=" + option + "&search=" + search + "&cpage=1");
+		} else {
+			first.setAttribute("href", "/board/search?option=" + option + "&search=" + search + "&cpage=1");
 				}
 
 first.innerHTML = "<<";
@@ -1024,13 +1159,9 @@ navi.append(first);
 
 if (needPrev) { 
 	let prev = document.createElement("a"); 
-	
+
 	if (isSearch == false) { 
-		prev.setAttribute( 
-			"href", 
-			"/board/board?cpage=" 
-			+ (currentPage - naviCountPerPage)
-		); 
+		prev.setAttribute( "href", "/board/board?team=${team}&cpage=" + (currentPage - naviCountPerPage)); 
 	} else { 
 		prev.setAttribute( 
 			"href", 
@@ -1052,7 +1183,7 @@ for (let i = startNavi; i <= endNavi; i++) {
 	num.innerHTML = i;
 	navi.append(num);
 	} else {
-		num.setAttribute("href", "/board/search?option=" + option + "&search=" + search + "&cpage=" + i);
+		num.setAttribute( "href", "/board/board?team=${team}&cpage=" + (currentPage - naviCountPerPage)); 
 		num.innerHTML = i;
 		navi.append(num);
 	}
@@ -1063,7 +1194,7 @@ if (needNext) {
 	if(isSearch==false) {
 	next.setAttribute("href", "/board/board?cpage=" + (currentPage + naviCountPerPage));
 	} else {
-		next.setAttribute("href", "/board/search?option=" + option + "&search=" + search + "&cpage=" + (currentPage + naviCountPerPage));
+		next.setAttribute( "href", "/board/board?team=${team}&cpage=" + (currentPage - naviCountPerPage)); 
 	}
 	next.innerHTML = ">";
 	navi.append(next);

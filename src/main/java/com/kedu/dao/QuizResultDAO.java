@@ -76,4 +76,15 @@ public class QuizResultDAO {
             quizId
         );
     }
+    
+    // ¿À´Ã ÄûÁî Âü¿© È½¼ö Á¶È¸
+    public int countTodayPlays(String memberId) {
+    	String sql = "SELECT COUNT(*) " +
+    	        "FROM quiz_result " +
+    	        "WHERE member_id = ? " +
+    	        "AND play_date >= TRUNC(SYSDATE) " +
+    	        "AND play_date < TRUNC(SYSDATE) + 1";
+    	
+    	return jdbc.queryForObject(sql, Integer.class, memberId);
+    }
 }
