@@ -1424,6 +1424,11 @@ signupForm.addEventListener("submit", function(e){
       return;
 
    }
+   if(Number(age.value)<8){
+	   alert("만 8세 이상만 회원가입할 수 있습니다.");
+	   e.preventDefault();
+	   return;
+   }
 
    let zipcode =
       document.getElementById("zipcode");
