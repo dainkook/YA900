@@ -1536,7 +1536,7 @@ function goPayment() {
         alert("결제를 진행하려면 로그인이 필요합니다.");
 
         location.href =
-            "${pageContext.request.contextPath}/login";
+            "${pageContext.request.contextPath}/login?fromBooking=1";
 
         return;
     }
@@ -1803,7 +1803,7 @@ async function completePayment() {
 
                     alert("로그인이 필요합니다.");
                     location.href =
-                        "${pageContext.request.contextPath}/login";
+                        "${pageContext.request.contextPath}/login?fromBooking=1";
 
                 } else if (result === "POINT_INSUFFICIENT") {
 
