@@ -170,7 +170,7 @@ public class BoardController {
 			} else {
 				List<BoardDTO> list = dao.searchBoard(option, search, cpage*10-9, cpage*10);
 				model.addAttribute("list", list);
-				model.addAttribute("selectedTeam", option);
+				model.addAttribute("selectedTeam", type);
 				model.addAttribute("recordTotalCount", dao.searchCount(option, search));
 				return "/board/board";
 			}
@@ -274,8 +274,8 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/replyDelete")
-	public String replyDelete(int re_reply_seq, int parent_seq) throws Exception {
-		dao.deleteReply(re_reply_seq);
+	public String replyDelete(int reply_seq, int parent_seq) throws Exception {
+		dao.deleteReply(reply_seq);
 		return "redirect:/board/detail?seq=" + parent_seq;
 	}
 	

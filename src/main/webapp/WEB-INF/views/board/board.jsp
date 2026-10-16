@@ -1055,9 +1055,14 @@ body.theme-kiwoom {
 					</select> <input type="text" name="search" placeholder="검색할 게시글의 제목을 입력하세요">
 					<input id="option" type="hidden" name="option"> 
 					<input type="hidden" name="cpage" value="1">
-					<c:if test="${selectedTeam=='공지'}">
+					<c:choose>
+					<c:when test="${selectedTeam=='공지'}">
 					<input type="hidden" name="type" value="notice">
-					</c:if>
+					</c:when>
+					<c:otherwise>
+					<input type="hidden" name="type" value="${selectedTeam}">
+					</c:otherwise>
+					</c:choose>
 					<button type="submit">검색</button>
 				</form>
 			</div>
@@ -1105,11 +1110,14 @@ body.theme-kiwoom {
 			</table>
 		</div>
 		<div class="footer">
-			<div class="navi"></div>
-			<div class="write">
-				<button id="write">글쓰기</button>
-			</div>
-		</div>
+   		 	<div class="navi"></div>
+
+   			 <c:if test="${selectedTeam ne '공지'}">
+       			 <div class="write">
+            	<button id="write">글쓰기</button>
+        </div>
+    </c:if>
+</div>
 	</div>
 	<div class="footer">
 
@@ -1119,98 +1127,95 @@ body.theme-kiwoom {
 
 		</div>
 	<script>
-let recordTotalCount = ${recordTotalCount};
-let recordCountPerPage = ${recordCountPerPage};
-let naviCountPerPage = ${naviCountPerPage};
-let currentPage = ${cpage};
-let isSearch = ${isSearch};
-let option = "${option}";
-let search = "${search}";
-let pageTotalCount =
-	Math.ceil(recordTotalCount / recordCountPerPage);
+	let recordTotalCount = ${recordTotalCount};
+	let recordCountPerPage = ${recordCountPerPage};
+	let naviCountPerPage = ${naviCountPerPage};
+	let currentPage = ${cpage};
+	let isSearch = ${isSearch};
+	let option = "${option}";
+	let search = "${search}";
+	let team = "${param.team}";
+	let isNotice = team === "notice";
 
-let startNavi =
-	Math.floor((currentPage - 1) / naviCountPerPage)
-	* naviCountPerPage + 1;
+	let pageTotalCount =
+	    Math.ceil(recordTotalCount / recordCountPerPage);
 
-let endNavi =
-	startNavi + naviCountPerPage - 1;
-
-if (endNavi > pageTotalCount) {
-	endNavi = pageTotalCount;
-}
-
-if (currentPage > pageTotalCount) {
-	currentPage = pageTotalCount;
-}
-
-let needPrev = startNavi > 1;
-let needNext = endNavi < pageTotalCount;
-
-let navi =
-	document.querySelector(".navi");
-
-let first = document.createElement("a");
-if(isSearch==false) {
-	first.setAttribute("href", "/board/board?cpage=1");
-		} else {
-			first.setAttribute("href", "/board/search?option=" + option + "&search=" + search + "&cpage=1");
-				}
-
-first.innerHTML = "<<";
-navi.append(first);
-
-if (needPrev) { 
-	let prev = document.createElement("a"); 
-
-	if (isSearch == false) { 
-		prev.setAttribute( "href", "/board/board?team=${team}&cpage=" + (currentPage - naviCountPerPage)); 
-	} else { 
-		prev.setAttribute( 
-			"href", 
-			"/board/search?option=" + option 
-			+ "&search=" + search 
-			+ "&cpage=" 
-			+ (currentPage - naviCountPerPage)
-		); 
-	} 
-	
-	prev.innerHTML = "<"; 
-	navi.append(prev); 
-}
-
-for (let i = startNavi; i <= endNavi; i++) {
-	let num = document.createElement("a");
-	if(isSearch==false) {
-	num.setAttribute("href", "/board/board?cpage=" + i);
-	num.innerHTML = i;
-	navi.append(num);
-	} else {
-		num.setAttribute( "href", "/board/board?team=${team}&cpage=" + (currentPage - naviCountPerPage)); 
-		num.innerHTML = i;
-		navi.append(num);
+	if (pageTotalCount > 0 && currentPage > pageTotalCount) {
+	    currentPage = pageTotalCount;
 	}
-}
 
-if (needNext) {
-	let next = document.createElement("a");
-	if(isSearch==false) {
-	next.setAttribute("href", "/board/board?cpage=" + (currentPage + naviCountPerPage));
-	} else {
-		next.setAttribute( "href", "/board/board?team=${team}&cpage=" + (currentPage - naviCountPerPage)); 
+	let startNavi =
+	    Math.floor((currentPage - 1) / naviCountPerPage)
+	    * naviCountPerPage + 1;
+
+	let endNavi =
+	    startNavi + naviCountPerPage - 1;
+
+	if (endNavi > pageTotalCount) {
+	    endNavi = pageTotalCount;
 	}
-	next.innerHTML = ">";
-	navi.append(next);
-}
 
-let last = document.createElement("a");
-if(isSearch==false) {
-last.setAttribute("href", "/board/board?cpage=" + pageTotalCount);
-} else {
-	last.setAttribute("href", "/board/search?option=" + option + "&search=" + search + "&cpage=" + pageTotalCount);
-}
-last.innerHTML = ">>";
-navi.append(last);
+	let needPrev = startNavi > 1;
+	let needNext = endNavi < pageTotalCount;
+
+	let navi = document.querySelector(".navi");
+	function getPageUrl(page) {
+	    if (isSearch) {
+	        let url = "/board/search?option=" + encodeURIComponent(option)
+	            + "&search=" + encodeURIComponent(search)
+	            + "&cpage=" + page;
+
+	        if (isNotice) {
+	            url += "&type=notice";
+	        }
+
+	        return url;
+	    }
+
+	    let url = "/board/board?cpage=" + page;
+
+	    if (team !== "") {
+	        url += "&team=" + encodeURIComponent(team);
+	    }
+
+	    return url;
+	}
+
+	if (pageTotalCount > 0) {
+	    let first = document.createElement("a");
+	    first.setAttribute("href", getPageUrl(1));
+	    first.innerHTML = "<<";
+	    navi.append(first);
+	    if (needPrev) {
+	        let prev = document.createElement("a");
+	        prev.setAttribute("href", getPageUrl(startNavi - 1));
+	        prev.innerHTML = "<";
+	        navi.append(prev);
+	    }
+	    for (let i = startNavi; i <= endNavi; i++) {
+	        let num = document.createElement("a");
+	        num.setAttribute("href", getPageUrl(i));
+	        num.innerHTML = i;
+
+	        if (i === currentPage) {
+	            num.style.fontWeight = "bold";
+	            num.style.backgroundColor = "#111936";
+	            num.style.color = "white";
+	        }
+
+	        navi.append(num);
+	    }
+	    if (needNext) {
+	        let next = document.createElement("a");
+	        next.setAttribute("href", getPageUrl(endNavi + 1));
+	        next.innerHTML = ">";
+	        navi.append(next);
+	    }
+	    let last = document.createElement("a");
+	    last.setAttribute("href", getPageUrl(pageTotalCount));
+	    last.innerHTML = ">>";
+	    navi.append(last);
+	}
 
 $("#write").on("click", function() {
 	if ('${id}' == '') {

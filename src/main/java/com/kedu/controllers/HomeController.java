@@ -16,6 +16,7 @@ import com.kedu.dao.ScheduleDAO;
 import com.kedu.dao.TeamRankDAO;
 import com.kedu.dto.BoardDTO;
 import com.kedu.dto.PlayerPitcherDTO;
+import com.kedu.dto.ScheduleDTO;
 
 @Controller
 public class HomeController {
@@ -45,7 +46,10 @@ public class HomeController {
 		model.addAttribute("hitterRanking", playerHitterDAO.getTop10Hitters());
 		model.addAttribute("pitcherRanking", playerPitcherDAO.getTop10Pitchers());
 		model.addAttribute("scheduleList", scheduleDAO.selectHomeSchedules());
-		model.addAttribute("bookingList", scheduleDAO.selectBookingSchedules());
+		List<ScheduleDTO> list = scheduleDAO.selectBookingSchedules();
+		model.addAttribute("bookingList", list);
+		List<PlayerPitcherDTO> pitcherList = playerPitcherDAO.selectAll();
+		model.addAttribute("pitcherList", pitcherList);
 		
 		List<BoardDTO> recentBoards = boardDAO.getRecentBoards();
 		model.addAttribute("recentBoards", recentBoards);

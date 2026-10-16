@@ -830,77 +830,104 @@ body {
 
 	<script>
 	$("#contents").summernote({
-		height: 400,
-		lang: "ko-KR",
-		placeholder: "게시글 내용을 입력하세요.",
-		toolbar: [
-			["font", ["fontname", "fontsize"]],
-			["style", ["bold", "italic", "underline", "strikethrough"]],
-			["color", ["color"]],
-			["para", ["ul", "ol", "paragraph"]],
-			["insert", ["link", "picture"]],
-			["view", ["fullscreen", "codeview"]]
-		],
-		callbacks: {
-			onImageUpload: function(files) {
-				uploadImage(files[0]);
-			}
-		}
+	    height: 400,
+	    lang: "ko-KR",
+	    placeholder: "게시글 내용을 입력하세요.",
+	    toolbar: [
+	        ["font", ["fontname", "fontsize"]],
+	        ["style", ["bold", "italic", "underline", "strikethrough"]],
+	        ["color", ["color"]],
+	        ["para", ["ul", "ol", "paragraph"]],
+	        ["insert", ["link", "picture"]],
+	        ["view", ["fullscreen", "codeview"]]
+	    ],
+	    callbacks: {
+	        onImageUpload: function(files) {
+	            uploadImage(files[0]);
+	        }
+	    }
 	});
 
 	function uploadImage(file) {
-		let formData = new FormData();
-		formData.append("file", file);
+	    let formData = new FormData();
+	    formData.append("file", file);
 
-		$.ajax({
-			url: "/board/uploadImage",
-			type: "POST",
-			data: formData,
-			processData: false,
-			contentType: false,
-			success: function(result) {
-				if (result.url) {
-					$("#contents").summernote("insertImage", result.url);
-				} else {
-					alert(result.error);
-				}
-			}
-		});
+	    $.ajax({
+	        url: "/board/uploadImage",
+	        type: "POST",
+	        data: formData,
+	        processData: false,
+	        contentType: false,
+	        success: function(result) {
+	            if (result.url) {
+	                $("#contents").summernote("insertImage", result.url);
+	            } else {
+	                alert(result.error);
+	            }
+	        }
+	    });
 	}
 
-	/* 게시판 선택 */
 	$(".board-option").on("click", function() {
-		$(".board-option").removeClass("selected");
-		$(this).addClass("selected");
+	    $(".board-option").removeClass("selected");
+	    $(this).addClass("selected");
 
-		$("#teamSubmit").val($(this).data("team"));
+	    $("#teamSubmit").val($(this).data("team"));
 	});
 
-	/* 취소 */
 	$("#cancel").on("click", function() {
-		const base = "${pageContext.request.contextPath}/board/board";
-		const team = "${selectedTeam}";
+	    const base = "${pageContext.request.contextPath}/board/board";
+	    const team = "${selectedTeam}";
 
-		if (team) {
-			location.href = base + "?team=" + encodeURIComponent(team) + "&cpage=1";
-		} else {
-			location.href = base + "?cpage=1";
-		}
+	    if (team) {
+	        location.href = base + "?team=" + encodeURIComponent(team) + "&cpage=1";
+	    } else {
+	        location.href = base + "?cpage=1";
+	    }
 	});
 
-	/* 게시글 등록 */
+	$("#title").on("input", function() {
+	    let title = $(this).text();
+
+	    if (title.length > 100) {
+	        $(this).text(title.substring(0, 100));
+
+	        let range = document.createRange();
+	        let selection = window.getSelection();
+
+	        range.selectNodeContents(this);
+	        range.collapse(false);
+
+	        selection.removeAllRanges();
+	        selection.addRange(range);
+	    }
+	});
+
 	$(".container > form").on("submit", function(e) {
-		let title = $("#title").text().trim();
-		let contents = $("#contents").summernote("code");
+	    let title = $("#title").text().trim();
+	    let contents = $("#contents").summernote("code");
+	    let text = $("<div>").html(contents).text().trim();
 
-		if (title == "" || $("#contents").summernote("isEmpty")) {
-			e.preventDefault();
-			alert("제목과 내용을 입력해주세요.");
-			return;
-		}
+	    if (title == "" || $("#contents").summernote("isEmpty")) {
+	        e.preventDefault();
+	        alert("제목과 내용을 입력해주세요.");
+	        return;
+	    }
 
-		$("#titleSubmit").val($("#title").html());
-		$("#contentSubmit").val(contents);
+	    if (title.length > 100) {
+	        e.preventDefault();
+	        alert("제목은 100자까지 작성할 수 있습니다.");
+	        return;
+	    }
+
+	    if (text.length > 1000) {
+	        e.preventDefault();
+	        alert("게시글은 1000자까지 작성할 수 있습니다.");
+	        return;
+	    }
+
+	    $("#titleSubmit").val(title);
+	    $("#contentSubmit").val(contents);
 	});
 	</script>
 
