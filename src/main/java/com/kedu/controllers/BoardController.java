@@ -123,13 +123,17 @@ public class BoardController {
 	    int seq = dao.getNextval();
 	    dto.setBoard_seq(seq);
 	    dao.write(dto);
-	    String path = "d:/uploads/";
+	    String path = "D:/uploads/";
+	    File uploadDir = new File(path);
+	    if (!uploadDir.exists()) {
+	        uploadDir.mkdirs();
+	    }
 	    if (files != null) {
 	        for (MultipartFile file : files) {
 	            if (file == null || file.isEmpty()) {
 	                continue;
 	            }
-	            String oriName = file.getOriginalFilename();
+	            String oriName = new File(file.getOriginalFilename()).getName();
 	            String sysName = UUID.randomUUID() + "_" + oriName;
 	            file.transferTo(new File(path + sysName));
 	            fdao.insertFile(
@@ -180,9 +184,86 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/updateDetail")
-	public String updateDetail(int seq, String title, String contents) throws Exception {
-		dao.updateDetail(seq, title, contents);
-		return "redirect:/board/detail?seq="+seq;
+	public String updateDetail(int seq, String title, String contents,
+	        HttpSession session,
+	        @RequestParam(value = "files", required = false) MultipartFile[] files,
+	        @RequestParam(value = "removedImages", required = false) String[] removedImages,
+	        @RequestParam(value = "removedFileSeqs", required = false) Integer[] removedFileSeqs) throws Exception {
+
+	    String id = (String) session.getAttribute("id");
+	    BoardDTO board = dao.getDetail(seq);
+
+	    // 작성자 본인만 수정할 수 있도록 확인
+	    if (id == null || !id.equals(board.getWriter())) {
+	        return "redirect:/board/detail?seq=" + seq;
+	    }
+
+	    dao.updateDetail(seq, title, contents);
+
+	    // 본문에서 제거한 기존 Summernote 이미지 파일 삭제
+	    if (removedImages != null) {
+	        for (String imageUrl : removedImages) {
+	            if (imageUrl == null || !imageUrl.startsWith("/uploads/files/")) {
+	                continue;
+	            }
+	            // 최종 본문에 이미지가 남아 있으면 실제 파일은 삭제하지 않음
+	            if (contents != null && contents.contains(imageUrl)) {
+	                continue;
+	            }
+
+	            String fileName = imageUrl.substring("/uploads/files/".length());
+	            if (!fileName.isEmpty() && !fileName.contains("/") && !fileName.contains("\\")) {
+	                File imageFile = new File("D:/uploads/files/" + fileName);
+	                if (imageFile.exists() && imageFile.isFile()) {
+	                    imageFile.delete();
+	                }
+	            }
+	        }
+	    }
+
+	    // 삭제 체크한 기존 첨부파일 제거
+	    if (removedFileSeqs != null) {
+	        List<FilesDTO> savedFiles = fdao.getFiles(seq);
+	        for (Integer fileSeq : removedFileSeqs) {
+	            if (fileSeq == null) {
+	                continue;
+	            }
+	            for (FilesDTO savedFile : savedFiles) {
+	                if (savedFile.getFile_seq() == fileSeq) {
+	                    int deleted = fdao.deleteFile(fileSeq, seq);
+	                    if (deleted > 0) {
+	                        File target = new File("D:/uploads/" + savedFile.getSysName());
+	                        if (target.exists() && target.isFile()) {
+	                            target.delete();
+	                        }
+	                    }
+	                    break;
+	                }
+	            }
+	        }
+	    }
+
+	    // 수정 화면에서 새로 첨부한 파일 저장
+	    String path = "D:/uploads/";
+	    File uploadDir = new File(path);
+	    if (!uploadDir.exists()) {
+	        uploadDir.mkdirs();
+	    }
+
+	    if (files != null) {
+	        for (MultipartFile file : files) {
+	            if (file == null || file.isEmpty()) {
+	                continue;
+	            }
+
+	            String oriName = new File(file.getOriginalFilename()).getName();
+	            String sysName = UUID.randomUUID().toString() + "_" + oriName;
+	            file.transferTo(new File(path + sysName));
+	            fdao.insertFile(new FilesDTO(0, oriName, sysName, null, seq));
+	        }
+	    }
+
+	    return "redirect:/board/detail?seq=" + seq;
 	}
 	
 	@RequestMapping("/delete")
@@ -217,8 +298,8 @@ public class BoardController {
 	@ResponseBody
 	public Map<String, String> uploadImage(@RequestParam("file") MultipartFile file) throws Exception {
 		Map<String, String> result = new HashMap<>();
-		if(file.isEmpty()) {
-			result.put("error", "");
+		if(file == null || file.isEmpty()) {
+			result.put("error", "업로드할 이미지 파일을 선택해주세요.");
 			return result;
 		}
 		
@@ -226,7 +307,7 @@ public class BoardController {
 		String extension = oriName.substring(oriName.lastIndexOf(".") + 1).toLowerCase();
 		
 		if(!extension.matches("jpg|jpeg|png|gif|webp")) {
-			result.put("error", "");
+			result.put("error", "JPG, JPEG, PNG, GIF, WEBP 이미지 파일만 업로드할 수 있습니다.");
 			return result;
 		}
 		
@@ -240,6 +321,34 @@ public class BoardController {
 		file.transferTo(new File(path + sysName));
 		result.put("url", "/uploads/files/" + sysName);
 		return result;
+	}
+	
+	@RequestMapping("/deleteImage")
+	@ResponseBody
+	public Map<String, Object> deleteImage(@RequestParam("imageUrl") String imageUrl) throws Exception {
+	    Map<String, Object> result = new HashMap<>();
+
+	    if (imageUrl == null || !imageUrl.startsWith("/uploads/files/")) {
+	        result.put("success", false);
+	        return result;
+	    }
+
+	    String fileName = imageUrl.substring("/uploads/files/".length());
+
+	    if (fileName.isEmpty() || fileName.contains("/") || fileName.contains("\\")) {
+	        result.put("success", false);
+	        return result;
+	    }
+
+	    File file = new File("D:/uploads/files/" + fileName);
+
+	    if (file.exists() && file.isFile()) {
+	        result.put("success", file.delete());
+	    } else {
+	        result.put("success", true);
+	    }
+
+	    return result;
 	}
 	
 	@RequestMapping("/chat")
