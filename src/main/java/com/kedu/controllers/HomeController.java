@@ -53,7 +53,6 @@ public class HomeController {
 		
 		List<BoardDTO> recentBoards = boardDAO.getRecentBoards();
 		model.addAttribute("recentBoards", recentBoards);
-		
 		predictionDAO.predictionUpdate();
 		
 		return "home";
