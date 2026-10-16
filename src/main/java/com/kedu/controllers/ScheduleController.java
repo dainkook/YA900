@@ -129,6 +129,11 @@ public class ScheduleController {
 	    return "schedule/rankdetail";
 	}
 	
+	@RequestMapping("/soccercommingsoon")
+	public String commingsoon() {
+		return "soccer/soccercommingsoon";
+	}
+	
 	@ResponseBody
 	@RequestMapping("/pitchers")
 	public List<GameLineUpDTO> pitchers(@RequestParam("game_id") int game_id) {
