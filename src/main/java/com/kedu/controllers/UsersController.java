@@ -129,26 +129,33 @@ public class UsersController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String loginCheck(UsersDTO dto, HttpSession session, Model model) {
+public String loginCheck(UsersDTO dto,HttpSession session,Model model,@RequestParam(value = "fromBooking", required = false) String fromBooking) {
 
-        String hashedPw = EncryptionUtils.encryptSHA512(dto.getPw());
+    String hashedPw = EncryptionUtils.encryptSHA512(dto.getPw());
+    UsersDTO result = dao.login(dto.getId(), hashedPw);
 
-        UsersDTO result = dao.login(dto.getId(), hashedPw);
-
-        if (result == null) {
-            return "redirect:/login";
+    if (result == null) {
+        if ("1".equals(fromBooking)) {
+            return "redirect:/login?fromBooking=1";
         }
-        if(result.getBlackList()==1) {
-        	session.invalidate();
-        	model.addAttribute("loginMessage", "정지된 아이디 입니다.");
-        	return"member/login";
-        }
-
-        session.setAttribute("id", result.getId());
-        session.setAttribute("team", result.getTeam());
-        return "redirect:/";
+        return "redirect:/login";
     }
 
+    if (result.getBlackList() == 1) {
+        session.invalidate();
+        model.addAttribute("loginMessage", "정지된 아이디 입니다.");
+        return "member/login";
+    }
+
+    session.setAttribute("id", result.getId());
+    session.setAttribute("team", result.getTeam());
+
+    if ("1".equals(fromBooking)) {
+        return "member/loginSuccessPopup";
+    }
+
+    return "redirect:/";
+}
     @RequestMapping(value = "/idcheck", method = RequestMethod.POST)
     @ResponseBody
     public int idcheck(String id) {

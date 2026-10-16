@@ -308,6 +308,7 @@ body {
 
 
 			<form action="${pageContext.request.contextPath}/login" method="post">
+			<input type="hidden" name="fromBooking" value="${param.fromBooking}">
 
 				<input type="text" class="login-input" id="id" name="id"
 					placeholder="아이디" required> <input type="password"

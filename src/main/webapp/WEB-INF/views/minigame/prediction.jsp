@@ -1202,6 +1202,14 @@ tbody tr:hover {
 
 		// 예측 저장
 		$(".save-btn").on("click", function() {
+
+		    // 비로그인 상태 확인
+		    if ("${empty sessionScope.id}" === "true") {
+		        alert("로그인이 필요한 서비스입니다.");
+		        location.href = "${pageContext.request.contextPath}/login";
+		        return;
+		    }
+
 		    const ids = Object.keys(myPredictions);
 
 		    if (ids.length === 0) {

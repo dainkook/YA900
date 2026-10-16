@@ -36,70 +36,65 @@ body {
    HEADER
 ========================= */
 .header {
-    width: 100%;
-    min-height: 100px;
-    height: auto;
-    background: linear-gradient(135deg, #0b1026, #171f46);
-    color: white;
-
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 15px;
-
-    padding: 15px clamp(15px, 4vw, 50px);
-
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-
-    border-bottom: 1px solid #303b70;
-    box-shadow: 0 3px 15px rgba(11, 16, 38, 0.18);
+	width: 100%;
+	min-height: 100px;
+	height: auto;
+	background: linear-gradient(135deg, #0b1026, #171f46);
+	color: white;
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 15px;
+	padding: 15px clamp(15px, 4vw, 50px);
+	position: sticky;
+	top: 0;
+	z-index: 1000;
+	border-bottom: 1px solid #303b70;
+	box-shadow: 0 3px 15px rgba(11, 16, 38, 0.18);
 }
 
 .logo {
-    font-size: clamp(22px, 2.2vw, 30px);
-    font-weight: bold;
-    margin-right: clamp(10px, 3vw, 60px);
-    color: white;
-    letter-spacing: 1px;
-    cursor: pointer;
-    flex-shrink: 0;
+	font-size: clamp(22px, 2.2vw, 30px);
+	font-weight: bold;
+	margin-right: clamp(10px, 3vw, 60px);
+	color: white;
+	letter-spacing: 1px;
+	cursor: pointer;
+	flex-shrink: 0;
 }
 
 .main-menu {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    gap: clamp(12px, 3vw, 40px);
-    flex-shrink: 1;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	gap: clamp(12px, 3vw, 40px);
+	flex-shrink: 1;
 }
 
 .menu-item {
-    position: relative;
-    height: 100%;
-    display: flex;
-    align-items: center;
+	position: relative;
+	height: 100%;
+	display: flex;
+	align-items: center;
 }
 
-.menu-item > a {
-    font-size: clamp(14px, 1.4vw, 18px);
-    font-weight: bold;
-    text-decoration: none;
-    color: #f7f8ff;
-    padding: 10px 5px;
-    white-space: nowrap;
-    transition: color 0.2s ease;
+.menu-item>a {
+	font-size: clamp(14px, 1.4vw, 18px);
+	font-weight: bold;
+	text-decoration: none;
+	color: #f7f8ff;
+	padding: 10px 5px;
+	white-space: nowrap;
+	transition: color 0.2s ease;
 }
 
-.menu-item > a:hover {
-    color: #aebee7;
+.menu-item>a:hover {
+	color: #aebee7;
 }
 
 /* =========================
    SUB MENU
 ========================= */
-
 .sub-menu {
 	position: absolute;
 	top: 100%;
@@ -141,15 +136,14 @@ body {
 /* =========================
    LOGIN / SIGNUP
 ========================= */
-
 .member-menu {
-    font-size: 14px;
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    white-space: nowrap;
-    flex-shrink: 0;
+	font-size: 14px;
+	margin-left: auto;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	white-space: nowrap;
+	flex-shrink: 0;
 }
 
 .member-menu form {
@@ -163,8 +157,7 @@ body {
 	white-space: nowrap;
 }
 
-.login-btn,
-.sign-btn {
+.login-btn, .sign-btn {
 	border: 1px solid #7180b1;
 	background: transparent;
 	color: white;
@@ -175,8 +168,7 @@ body {
 	transition: 0.2s ease;
 }
 
-.login-btn:hover,
-.sign-btn:hover {
+.login-btn:hover, .sign-btn:hover {
 	background: #476aaa;
 	border-color: #476aaa;
 	color: white;
@@ -324,6 +316,39 @@ body {
 
 #files a:hover {
 	text-decoration: underline;
+}
+
+.edit-only {
+	display: none;
+}
+
+.attached-file {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin-bottom: 5px;
+}
+
+.file-remove {
+	color: #b33b45;
+	cursor: pointer;
+}
+
+#newFileInputs {
+	margin-top: 12px;
+	padding-top: 10px;
+	border-top: 1px dashed #d5d8df;
+}
+
+#newFileInputs p {
+	margin: 0 0 8px;
+	font-weight: bold;
+}
+
+#newFileInputs input[type="file"] {
+	display: block;
+	margin: 6px 0;
+	max-width: 100%;
 }
 
 #files:empty {
@@ -788,21 +813,39 @@ body {
 
 /* 기존 대댓글 한 개 */
 .reReplyItem {
-	padding: 10px 12px;
-	margin-bottom: 5px;
-	border-radius: 5px;
-	transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.reReplyItem:hover {
-	background-color: #f0f2f8;
-}
-
-/* 대댓글 본문 */
 .reReplyForm {
-	display: flex;
-	align-items: center;
-	gap: 10px;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+}
+
+.re_replyReportForm {
+    flex-shrink: 0;
+    margin: 0;
+}
+
+.re_replyReport {
+    height: 35px;
+    width: 50px;
+    padding: 0;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    border: 1px solid #b33b45 !important;
+    background-color: #b33b45 !important;
+    color: white !important;
+}
+
+.re_replyReport:hover {
+    background-color: #8f2d36 !important;
+    border-color: #8f2d36 !important;
 }
 
 .reReplyForm textarea {
@@ -839,94 +882,96 @@ body {
 }
 
 /* 태블릿 및 작은 노트북 */
-@media (max-width: 1100px) {
-    .header {
-        padding: 15px 25px;
-        gap: 10px;
-    }
-
-    .logo {
-        margin-right: 15px;
-    }
-
-    .main-menu {
-        gap: 15px;
-    }
-
-    .member-menu {
-        gap: 5px;
-    }
-
-    .login-btn,
-    .sign-btn {
-        padding: 6px 8px;
-    }
+@media ( max-width : 1100px) {
+	.header {
+		padding: 15px 25px;
+		gap: 10px;
+	}
+	.logo {
+		margin-right: 15px;
+	}
+	.main-menu {
+		gap: 15px;
+	}
+	.member-menu {
+		gap: 5px;
+	}
+	.login-btn, .sign-btn {
+		padding: 6px 8px;
+	}
 }
 
 /* 태블릿 및 작은 화면 */
-@media (max-width: 850px) {
-    .header {
-        padding: 15px 20px;
-    }
-
-    .logo {
-        margin-right: 5px;
-    }
-
-    .main-menu {
-        gap: 10px;
-    }
-
-    .menu-item > a {
-        font-size: 14px;
-    }
-
-    .member-menu {
-        font-size: 12px;
-    }
-
-    .member-menu button {
-        font-size: 12px;
-        padding: 6px;
-    }
+@media ( max-width : 850px) {
+	.header {
+		padding: 15px 20px;
+	}
+	.logo {
+		margin-right: 5px;
+	}
+	.main-menu {
+		gap: 10px;
+	}
+	.menu-item>a {
+		font-size: 14px;
+	}
+	.member-menu {
+		font-size: 12px;
+	}
+	.member-menu button {
+		font-size: 12px;
+		padding: 6px;
+	}
 }
 
 /* 모바일 */
-@media (max-width: 600px) {
-    .header {
-        justify-content: center;
-        padding: 12px 10px;
-        gap: 8px 15px;
-    }
+@media ( max-width : 600px) {
+	.header {
+		justify-content: center;
+		padding: 12px 10px;
+		gap: 8px 15px;
+	}
+	.logo {
+		font-size: 24px;
+		margin-right: 5px;
+	}
+	.main-menu {
+		gap: 12px;
+		height: 40px;
+	}
+	.menu-item>a {
+		font-size: 13px;
+		padding: 8px 2px;
+	}
+	.member-menu {
+		margin-left: 0;
+		gap: 5px;
+	}
+	.member-menu span {
+		font-size: 12px;
+	}
+	.member-menu button {
+		font-size: 11px;
+		padding: 5px 7px;
+	}
+}
 
-    .logo {
-        font-size: 24px;
-        margin-right: 5px;
-    }
+.re_replyReport {
+	height: 35px;
+	width: 50px;
+	padding: 0;
+	border-radius: 5px;
+	font-size: 13px;
+	font-weight: bold;
+	cursor: pointer;
+	border: 1px solid #b33b45 !important;
+	background-color: #b33b45 !important;
+	color: white !important;
+}
 
-    .main-menu {
-        gap: 12px;
-        height: 40px;
-    }
-
-    .menu-item > a {
-        font-size: 13px;
-        padding: 8px 2px;
-    }
-
-    .member-menu {
-        margin-left: 0;
-        gap: 5px;
-    }
-
-    .member-menu span {
-        font-size: 12px;
-    }
-
-    .member-menu button {
-        font-size: 11px;
-        padding: 5px 7px;
-    }
+.re_replyReport:hover {
+	background-color: #8f2d36 !important;
+	border-color: #8f2d36 !important;
 }
 </style>
 </head>
@@ -943,10 +988,11 @@ body {
 				<a href="#">야구</a>
 
 				<div class="sub-menu">
-					<a href="${pageContext.request.contextPath}/#reservation">예매</a> 
-					<a href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a> 
-					<a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a> 
-					<a href="${pageContext.request.contextPath}/schedule/rankdetail?tab=pitcher">선수순위</a> 
+					<a href="${pageContext.request.contextPath}/#reservation">예매</a> <a
+						href="${pageContext.request.contextPath}/schedule/schedule">경기일정</a>
+					<a href="${pageContext.request.contextPath}/schedule/rankdetail">팀순위</a>
+					<a
+						href="${pageContext.request.contextPath}/schedule/rankdetail?tab=pitcher">선수순위</a>
 					<a href="${pageContext.request.contextPath}/board/board?cpage=1">게시판</a>
 				</div>
 			</div>
@@ -956,11 +1002,16 @@ body {
 				<a href="#">축구</a>
 
 				<div class="sub-menu">
+<<<<<<< HEAD
+					<a href="#">예매</a> <a href="#">경기일정</a> <a href="#">팀순위</a> <a
+						href="#">선수순위</a> <a href="#">게시판</a>
+=======
 					<a href="${pageContext.request.contextPath}/schedule/soccercommingsoon">예매</a> 
 					<a href="${pageContext.request.contextPath}/schedule/soccercommingsoon">경기일정</a> 
 					<a href="${pageContext.request.contextPath}/schedule/soccercommingsoon">팀순위</a> 
 					<a href="${pageContext.request.contextPath}/schedule/soccercommingsoon">선수순위</a> 
 					<a href="${pageContext.request.contextPath}/schedule/soccercommingsoon">게시판</a>
+>>>>>>> 0adc3e05b5b58be4a054f4601ae5a5be27fd44fc
 				</div>
 			</div>
 
@@ -969,48 +1020,43 @@ body {
 				<a href="#">미니게임</a>
 
 				<div class="sub-menu">
-					<a href="${pageContext.request.contextPath}/quiz">상식 퀴즈</a> 
-					<a href="${pageContext.request.contextPath}/myteam">나만의 팀</a> 
-					<a href="${pageContext.request.contextPath}/prediction">승부예측</a> 
+					<a href="${pageContext.request.contextPath}/quiz">상식 퀴즈</a> <a
+						href="${pageContext.request.contextPath}/myteam">나만의 팀</a> <a
+						href="${pageContext.request.contextPath}/prediction">승부예측</a>
 				</div>
 			</div>
 		</nav>
 
 		<div class="member-menu">
 
-    <c:choose>
+			<c:choose>
 
-        <c:when test="${not empty sessionScope.id}">
-            <span>${sessionScope.id}님</span>
+				<c:when test="${not empty sessionScope.id}">
+					<span>${sessionScope.id}님</span>
 
-            <button class="login-btn"
-                    onclick="location.href='${pageContext.request.contextPath}/mypage'">
-                마이페이지
-            </button>
+					<button class="login-btn"
+						onclick="location.href='${pageContext.request.contextPath}/mypage'">
+						마이페이지</button>
 
-            <form action="${pageContext.request.contextPath}/logout"
-                  method="post">
-                <button type="submit" class="sign-btn">
-                    로그아웃
-                </button>
-            </form>
-        </c:when>
+					<form action="${pageContext.request.contextPath}/logout"
+						method="post">
+						<button type="submit" class="sign-btn">로그아웃</button>
+					</form>
+				</c:when>
 
-        <c:otherwise>
-            <button class="login-btn"
-                    onclick="location.href='${pageContext.request.contextPath}/login'">
-                로그인
-            </button>
+				<c:otherwise>
+					<button class="login-btn"
+						onclick="location.href='${pageContext.request.contextPath}/login'">
+						로그인</button>
 
-            <button class="sign-btn"
-                    onclick="location.href='${pageContext.request.contextPath}/signup'">
-                회원가입
-            </button>
-        </c:otherwise>
+					<button class="sign-btn"
+						onclick="location.href='${pageContext.request.contextPath}/signup'">
+						회원가입</button>
+				</c:otherwise>
 
-    </c:choose>
-			
-			
+			</c:choose>
+
+
 		</div>
 
 	</div>
@@ -1025,8 +1071,7 @@ body {
 	</div>
 	<div class="container">
 		<div class="page-heading">
-			<div class="heading-text">
-			</div>
+			<div class="heading-text"></div>
 			<div class="category">COMMUNITY / DETAIL</div>
 		</div>
 		<div class="body">
@@ -1046,17 +1091,28 @@ body {
 				</div>
 
 				<div>
-					<span>작성일</span><fmt:formatDate value="${board.write_date}" pattern="yyyy-MM-dd HH:mm"/>
+					<span>작성일</span>
+					<fmt:formatDate value="${board.write_date}"
+						pattern="yyyy-MM-dd HH:mm" />
 				</div>
 
 			</div>
 			<div id="files">
 				<c:forEach var="file" items="${files}">
-					<div>
-						<a
-							href="/board/download?oriName=${file.oriName}&sysName=${file.sysName}">${file.oriName}</a>
+					<div class="attached-file">
+						<a href="${pageContext.request.contextPath}/board/download?oriName=${file.oriName}&sysName=${file.sysName}">${file.oriName}</a>
+						<label class="edit-only file-remove">
+							<input type="checkbox" name="removedFileSeqs" value="${file.file_seq}" form="updateForm">
+							삭제
+						</label>
 					</div>
 				</c:forEach>
+				<div id="newFileInputs" class="edit-only">
+					<p>새 첨부파일 추가 (최대 3개)</p>
+					<input type="file" name="files" form="updateForm">
+					<input type="file" name="files" form="updateForm">
+					<input type="file" name="files" form="updateForm">
+				</div>
 			</div>
 			<div class="contents">
 				<div id="contents" contenteditable="false">${board.contents}</div>
@@ -1106,8 +1162,8 @@ body {
 													value="${board.board_seq}"> <input type="hidden"
 													name="reply_seq" value="${reply.reply_seq}"> <span
 													class="replyWriter">${reply.writer}</span> <span
-													class="replyDate">${reply.write_date}</span>
-
+													class="replyDate"><fmt:formatDate value="${reply.write_date}" pattern="yyyy-MM-dd HH:mm"/></span>
+													
 												<c:if test="${id == reply.writer}">
 													<button type="button" class="replyFix">수정</button>
 													<button type="button" class="replyDel">삭제</button>
@@ -1134,7 +1190,8 @@ body {
 
 										<div class="reReplyArea">
 
-											<form action="/board/re_replyWrite" class="reReplyWrite" style="display: none;">
+											<form action="/board/re_replyWrite" class="reReplyWrite"
+												style="display: none;">
 												<textarea name="contents" placeholder="답글을 입력해주세요..."></textarea>
 												<input type="hidden" name="writer" value="${id}"> <input
 													type="hidden" name="parent_seq" value="${reply.reply_seq}">
@@ -1156,12 +1213,26 @@ body {
 																	type="hidden" name="boards_seq"
 																	value="${board.board_seq}"> <span
 																	class="replyWriter">${re_reply.writer}</span> <span
-																	class="replyDate">${re_reply.write_date}</span>
+																	class="replyDate"><fmt:formatDate value="${re_reply.write_date}" pattern="yyyy-MM-dd HH:mm"/></span>
 
 																<c:if test="${id == re_reply.writer}">
 																	<button type="button" class="replyFix reReplyFix">수정</button>
 																	<button type="button" class="replyDel reReplyDel">삭제</button>
 																</c:if>
+															</form>
+															<form action="/board/reportComplete"
+																class="re_replyReportForm">
+																<input type="hidden" name="target_contents"
+																	value="${re_reply.contents}"> <input type="hidden"
+																	name="target_type" value="대댓글"> <input
+																	type="hidden" name="target_seq"
+																	value="${re_reply.re_reply_seq}"> <input
+																	type="hidden" name="target_id" value="${re_reply.writer}">
+																<input type="hidden" name="parent_seq"
+																	value="${board.board_seq}"> <input
+																	type="hidden" name="reporter" value="${id}"> <input
+																	type="hidden" class="report_type" name="report_type">
+																<button type="button" class="re_replyReport">신고</button>
 															</form>
 														</div>
 													</c:if>
@@ -1183,140 +1254,295 @@ body {
 			</table>
 		</div>
 	</div>
-	<form id="updateForm" action="/board/updateDetail" method="get"
-		style="display: none;">
-		<input type="hidden" name="seq" value="${board.board_seq}"> <input
-			type="hidden" id="updateTitle" name="title"> <input
-			type="hidden" id="updateContents" name="contents">
+	<form id="updateForm" action="${pageContext.request.contextPath}/board/updateDetail" method="post" enctype="multipart/form-data" style="display: none;">
+    	<input type="hidden" name="seq" value="${board.board_seq}">
+    	<input type="hidden" id="updateTitle" name="title">
+    	<input type="hidden" id="updateContents" name="contents">
+    <div id="removedImages"></div>
 	</form>
-	<script>
-		let originalTitle = $("#title").html();
-		let originalContents = $("#contents").html();
-		$("#list").on("click", function() {
+<script>
+	let originalTitle = $("#title").html();
+	let originalContents = $("#contents").html();
 
-			location.href = "/board/board?cpage=1";
+	let uploadedImages = [];
+	let removedImages = [];
+	let isSubmitting = false;
 
-		});
-		if ("${id}" == "${board.writer}") {
-			let update = $("<button>");
-			let del = $("<button>");
-			update.attr("id", "update");
-			del.attr("id", "delete");
-			update.text("수정");
-			del.text("삭제");
-			$(".buttons").prepend(update, del);
+	$("#list").on("click", function() {
+		location.href = "/board/board?cpage=1";
+	});
 
-		}
-		$(".buttons").on("click", "#update", function() {
-			if ($(this).text() == "수정") {
-				$("#title").attr("contenteditable", true);
-				$("#contents").summernote({
-					height : 400,
-					lang : "ko-KR",
-					toolbar : [[
-						"font",[
-							"fontname", "fontsize" ] ], [
-								"style",["bold", "italic", "underline", "strikethrough" ] ],
-									[ "color", [ "color" ] ], [
-										"para", ["ul", "ol", "paragraph" ] ],
-											["insert", [ "link", "picture" ] ],
-												["view", ["fullscreen", "codeview" ] ] ]
-				});
+	if ("${id}" == "${board.writer}") {
+		let update = $("<button>");
+		let del = $("<button>");
 
-				$(this).text("수정완료");
-				$("#delete").text("취소");
-				$("#title").focus(); 
-					} else {
-						if ($("#title").text().trim() == "" || $("#contents").summernote("isEmpty")) {
-							alert("제목과 내용을 입력해주세요.");
-								return;
-							}
-								if (!confirm("수정한 내용을 저장하시겠습니까?")) {
-									return;
+		update.attr("id", "update");
+		del.attr("id", "delete");
+
+		update.text("수정");
+		del.text("삭제");
+
+		$(".buttons").prepend(update, del);
+	}
+
+	// 수정 버튼 및 수정 완료
+	$(".buttons").on("click", "#update", function() {
+		if ($(this).text() == "수정") {
+			uploadedImages = [];
+			removedImages = [];
+			isSubmitting = false;
+
+			$("#title").attr("contenteditable", true);
+			$(".edit-only").show();
+
+			$("#contents").summernote({
+				height: 400,
+				lang: "ko-KR",
+				toolbar: [
+					["font", ["fontname", "fontsize"]],
+					["style", ["bold", "italic", "underline", "strikethrough"]],
+					["color", ["color"]],
+					["para", ["ul", "ol", "paragraph"]],
+					["insert", ["link", "picture"]],
+					["view", ["fullscreen", "codeview"]]
+				],
+				callbacks: {
+					onImageUpload: function(files) {
+						uploadImage(files[0]);
+					},
+					onMediaDelete: function(target) {
+						let imageUrl = target.attr("src");
+
+						// 수정 화면에서 새로 업로드한 이미지
+						if (uploadedImages.includes(imageUrl)) {
+							$.ajax({
+								url: "${pageContext.request.contextPath}/board/deleteImage",
+								type: "POST",
+								data: {
+									imageUrl: imageUrl
+								},
+								success: function(result) {
+									if (result.success) {
+										uploadedImages = uploadedImages.filter(function(url) {
+											return url != imageUrl;
+										});
+									} else {
+										alert("이미지 파일 삭제에 실패했습니다.");
+									}
+								},
+								error: function() {
+									alert("이미지 파일 삭제 요청에 실패했습니다.");
 								}
-								$("#updateTitle").val($("#title").text());
-								$("#updateContents").val(
-										$("#contents").summernote("code"));
-								$("#updateForm").submit();
+							});
+						} else if (imageUrl.startsWith("/uploads/files/")) {
+							// 기존 이미지 파일은 수정 완료 전까지 삭제하지 않음
+							if (!removedImages.includes(imageUrl)) {
+								removedImages.push(imageUrl);
 							}
-						});
-		$(".buttons").on("click", "#delete", function() {
-			if ($(this).text() == "삭제") {
-				if (confirm("정말 삭제하시겠습니까?")) {
-					location.href = "/board/delete?seq=${board.board_seq}";
+						}
+					}
 				}
-			} else {
-				$("#contents").summernote("destroy");
-				$("#contents").html(originalContents);
-				$("#title").html(originalTitle);
-				$("#contents").attr("contenteditable", false);
-				$("#title").attr("contenteditable", false);
-				$("#update").text("수정");
-				$(this).text("삭제");
-			}
-		});
+			});
 
-		$("#replyForm").on("submit", function(e) {
-			if ("${id}" == "") {
-				e.preventDefault();
-				alert("로그인 후 이용 가능한 서비스입니다.");
+			$(this).text("수정완료");
+			$("#delete").text("취소");
+			$("#title").focus();
+
+		} else {
+			let title = $("#title").text().trim();
+			let contents = $("#contents").summernote("code");
+			let text = $("<div>").html(contents).text().trim();
+
+			if (title == "" || $("#contents").summernote("isEmpty")) {
+				alert("제목과 내용을 입력해주세요.");
 				return;
 			}
-			if ($("#reply").val() == "") {
-				e.preventDefault();
+
+			if (title.length > 100) {
+				alert("제목은 100자까지 작성할 수 있습니다.");
+				return;
+			}
+
+			if (text.length > 1000) {
+				alert("게시글은 1000자까지 작성할 수 있습니다.");
+				return;
+			}
+
+			if (!confirm("수정한 내용을 저장하시겠습니까?")) {
+				return;
+			}
+
+			$("#updateTitle").val(title);
+			$("#updateContents").val(contents);
+
+			// 삭제할 기존 이미지 목록 전달
+			$("#removedImages").empty();
+
+			removedImages.forEach(function(imageUrl) {
+				$("<input>")
+					.attr("type", "hidden")
+					.attr("name", "removedImages")
+					.val(imageUrl)
+					.appendTo("#removedImages");
+			});
+
+			// 정상 제출 시 페이지 이탈 정리에서 새 이미지를 삭제하지 않음
+			isSubmitting = true;
+			$("#updateForm").submit();
+		}
+	});
+
+	// 게시글 삭제 및 수정 취소
+	$(".buttons").on("click", "#delete", function() {
+		if ($(this).text() == "삭제") {
+			if (confirm("정말 삭제하시겠습니까?")) {
+				location.href = "/board/delete?seq=${board.board_seq}";
+			}
+		} else {
+			// 수정 취소: 새로 업로드한 이미지 파일 정리
+			deleteUploadedImages();
+
+			// 기존 이미지 삭제 예약 취소
+			removedImages = [];
+
+			$("#contents").summernote("destroy");
+			$("#contents").html(originalContents);
+			$("#title").html(originalTitle);
+
+			$("#contents").attr("contenteditable", false);
+			$("#title").attr("contenteditable", false);
+			$(".edit-only").hide();
+			$("#updateForm input[name='removedFileSeqs']").prop("checked", false);
+			$("#newFileInputs input[type='file']").val("");
+
+			$("#update").text("수정");
+			$(this).text("삭제");
+		}
+	});
+
+	// 새로 업로드한 이미지 파일 삭제
+	function deleteUploadedImages() {
+		let imagesToDelete = uploadedImages.slice();
+
+		uploadedImages = [];
+
+		imagesToDelete.forEach(function(imageUrl) {
+			$.ajax({
+				url: "${pageContext.request.contextPath}/board/deleteImage",
+				type: "POST",
+				data: {
+					imageUrl: imageUrl
+				}
+			});
+		});
+	}
+
+	// 수정 화면을 벗어날 때 미사용 이미지 정리
+	window.addEventListener("pagehide", function() {
+		if (isSubmitting) {
+			return;
+		}
+
+		uploadedImages.forEach(function(imageUrl) {
+			let formData = new URLSearchParams();
+			formData.append("imageUrl", imageUrl);
+
+			navigator.sendBeacon(
+				"${pageContext.request.contextPath}/board/deleteImage",
+				formData
+			);
+		});
+	});
+
+	// 댓글 작성
+	$("#replyForm").on("submit", function(e) {
+		if ("${id}" == "") {
+			e.preventDefault();
+			alert("로그인 후 이용 가능한 서비스입니다.");
+			return;
+		}
+
+		if ($("#reply").val() == "") {
+			e.preventDefault();
+			alert("댓글의 내용을 입력해주세요");
+			return;
+		}
+	});
+
+	// 댓글 수정
+	$(".replyFix:not(.reReplyFix)").on("click", function() {
+		let form = $(this).closest(".replyForm");
+		let contents = form.find(".replyContents");
+
+		if (contents.prop("readonly")) {
+			contents.prop("readonly", false);
+			contents.focus();
+
+			contents[0].style.height = "auto";
+			contents[0].style.height = contents[0].scrollHeight + "px";
+
+			$(this).text("완료");
+			$(this).parent().find($(".replyDel")).text("취소");
+		} else {
+			if (contents.val() == "") {
 				alert("댓글의 내용을 입력해주세요");
-				return;
-			}
-		});
-
-		$(".replyFix:not(.reReplyFix)").on("click", function() {
-			let form = $(this).closest(".replyForm");
-			let contents = form.find(".replyContents");
-
-			if (contents.prop("readonly")) {
-				contents.prop("readonly", false);
-				contents.focus();
-
-				contents[0].style.height = "auto";
-				contents[0].style.height = contents[0].scrollHeight + "px";
 			} else {
+				if (!confirm("댓글을 수정하시겠습니까?")) {
+					return;
+				}
+
 				form.submit();
 			}
-		});
+		}
+	});
 
-		$(".replyDel:not(.reReplyDel)").on("click", function() {
+	// 댓글 삭제 및 수정 취소
+	$(".replyDel:not(.reReplyDel)").on("click", function() {
+		if ($(this).text() == "취소") {
+			location.href = "/board/detail?seq=" + ${board.board_seq};
+		} else {
 			if (!confirm("댓글을 삭제하시겠습니까?")) {
 				return;
 			}
-			let replySeq = $(this).closest(".replyForm").find(
-					"input[name='reply_seq']").val();
+
+			let replySeq = $(this).closest(".replyForm")
+				.find("input[name='reply_seq']").val();
+
 			location.href = "/board/replyDelete?reply_seq=" + replySeq
-					+ "&parent_seq=${board.board_seq}";
-		});
+				+ "&parent_seq=${board.board_seq}";
+		}
+	});
 
-		$(".reReplyFix").on("click", function() {
-			let form = $(this).closest(".reReplyForm");
-			let contents = form.find("textarea");
+	// 대댓글 수정
+	$(".reReplyFix").on("click", function() {
+		let form = $(this).closest(".reReplyForm");
+		let contents = form.find("textarea");
 
-			if (contents.prop("readonly")) {
-				contents.prop("readonly", false);
-				contents.focus();
-				$(this).text("수정완료");
-			} else {
-				if (contents.val().trim() == "") {
-					alert("대댓글 내용을 입력해주세요.");
-					return;
-				}
+		if (contents.prop("readonly")) {
+			contents.prop("readonly", false);
+			contents.focus();
 
-				if (!confirm("대댓글을 수정하시겠습니까?")) {
-					return;
-				}
-
-				form.submit();
+			$(this).text("완료");
+			$(this).parent().find($(".reReplyDel")).text("취소");
+		} else {
+			if (contents.val().trim() == "") {
+				alert("대댓글 내용을 입력해주세요.");
+				return;
 			}
-		});
 
-		$(".reReplyDel").on("click", function() {
+			if (!confirm("대댓글을 수정하시겠습니까?")) {
+				return;
+			}
+
+			form.submit();
+		}
+	});
+
+	// 대댓글 삭제 및 수정 취소
+	$(".reReplyDel").on("click", function() {
+		if ($(this).text() == "취소") {
+			location.href = "/board/detail?seq=" + ${board.board_seq};
+		} else {
 			if (!confirm("대댓글을 삭제하시겠습니까?")) {
 				return;
 			}
@@ -1326,60 +1552,118 @@ body {
 			let boardsSeq = form.find("input[name='boards_seq']").val();
 
 			location.href = "/board/re_replyDelete?re_reply_seq="
-					+ reReplySeq + "&boards_seq=" + boardsSeq;
+				+ reReplySeq + "&boards_seq=" + boardsSeq;
+		}
+	});
+
+	// 게시글 신고
+	$(".boardReport").on("click", function() {
+		if ("${id}" != "") {
+			$("#target_contents").val($("#contents").text());
+
+			let params = $("#boardReport").serialize();
+
+			window.open(
+				"/board/report?" + params,
+				"report",
+				"width=500, height=500"
+			);
+		} else {
+			alert("로그인 후 이용 가능한 서비스입니다.");
+		}
+	});
+
+	// 댓글 신고
+	$(".replyReport").on("click", function() {
+		if ("${id}" != "") {
+			let reportForm = $(this).closest(".replyReportForm");
+			let params = reportForm.serialize();
+
+			window.open(
+				"/board/report?" + params,
+				"report",
+				"width=500, height=500"
+			);
+		} else {
+			alert("로그인 후 이용 가능한 서비스입니다.");
+		}
+	});
+
+	// 대댓글 신고
+	$(".re_replyReport").on("click", function() {
+		if ("${id}" != "") {
+			let reportForm = $(this).closest(".re_replyReportForm");
+			let params = reportForm.serialize();
+
+			window.open(
+				"/board/report?" + params,
+				"report",
+				"width=500, height=500"
+			);
+		} else {
+			alert("로그인 후 이용 가능한 서비스입니다.");
+		}
+	});
+
+	// 댓글 높이 자동 조절
+	$(".replyContents").each(function() {
+		this.style.height = "auto";
+		this.style.height = this.scrollHeight + "px";
+	});
+
+	// 대댓글 입력창 열기/닫기
+	$(".reply").on("click", ".reReplyOpen", function() {
+		let form = $(this).closest(".replyItem").find(".reReplyWrite");
+
+		if (form.is(":visible")) {
+			form.hide();
+			$(this).text("↳ 답글 달기");
+		} else {
+			form.show();
+			$(this).text("접기");
+			form.find("textarea").focus();
+		}
+	});
+
+	// 대댓글 작성
+	$(".reReplyWrite").on("submit", function(e) {
+		if ("${id}" == "") {
+			e.preventDefault();
+			alert("로그인이 필요한 서비스입니다.");
+			return;
+		}
+
+		if ($(this).find("textarea").val().trim() == "") {
+			e.preventDefault();
+			alert("대댓글 내용을 입력해주세요.");
+			return;
+		}
+	});
+
+	// 본문 이미지 업로드
+	function uploadImage(file) {
+		let formData = new FormData();
+		formData.append("file", file);
+
+		$.ajax({
+			url: "${pageContext.request.contextPath}/board/uploadImage",
+			type: "POST",
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: function(result) {
+				if (result.url) {
+					$("#contents").summernote("insertImage", result.url);
+					uploadedImages.push(result.url);
+				} else {
+					alert(result.error || "이미지 업로드에 실패했습니다.");
+				}
+			},
+			error: function() {
+				alert("이미지 업로드 요청에 실패했습니다.");
+			}
 		});
-
-		$(".boardReport").on("click", function() {
-			if ("${id}" != "") {
-				$("#target_contents").val($("#contents").text());
-				let params = $("#boardReport").serialize();
-				window.open("/board/report?" + params, "report", "width=500, height=500");
-					} else {
-						alert("로그인 후 이용 가능한 서비스입니다.");
-					}
-				});
-
-		$(".replyReport").on("click", function() {
-			if ("${id}" != "") {
-				let reportForm = $(this).closest(".replyReportForm");
-				let params = reportForm.serialize();
-				window.open("/board/report?" + params, "report", "width=500, height=500");
-					} else {
-						alert("로그인 후 이용 가능한 서비스입니다.");
-					}
-				});
-
-		$(".replyContents").each(function() {
-			this.style.height = "auto";
-			this.style.height = this.scrollHeight + "px";
-		});
-
-		$(".reply").on("click", ".reReplyOpen", function() {
-		    let form = $(this).closest(".replyItem").find(".reReplyWrite");
-
-		    if (form.is(":visible")) {
-		        form.hide();
-		        $(this).text("↳ 답글 달기");
-		    } else {
-		        form.show();
-		        $(this).text("접기");
-		        form.find("textarea").focus();
-		    }
-		});
-
-		$(".reReplyWrite").on("submit", function(e) {
-		    if ("${id}" == "") {
-		        e.preventDefault();
-		        alert("로그인이 필요한 서비스입니다.");
-		        return;
-		    }
-
-		    if ($(this).find("textarea").val().trim() == "") {
-		        e.preventDefault();
-		        alert("대댓글 내용을 입력해주세요.");
-		        return;
-		    }
-		});
-	</script>
+	}
+</script>
 </body>
 </html>

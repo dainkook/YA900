@@ -137,39 +137,45 @@ public class ScheduleController {
 	@RequestMapping("/pitchers")
 	public List<GameLineUpDTO> pitchers(
 	        @RequestParam("game_id") int game_id) {
-
 	    ScheduleDTO schedule = scheduleDAO.selectByGameId(game_id);
+	    List<GameLineUpDTO> lineupList = new java.util.ArrayList<>();
+	    if (schedule.getNaver_game_id() != null
+	            && !schedule.getNaver_game_id().trim().isEmpty()) {
 
-	    if (schedule == null) {
-	        return java.util.Collections.emptyList();
+	        lineupList = gameLineUpDAO.selectByGameId(schedule.getNaver_game_id());
+	    }
+	    if (!lineupList.isEmpty()) {
+	        return lineupList;
+	    }
+	    PlayerPitcherDTO awayPitcher =
+	            playerPitcherDAO.selectBestPitcherByTeam(schedule.getAway_team());
+
+	    PlayerPitcherDTO homePitcher =
+	            playerPitcherDAO.selectBestPitcherByTeam(schedule.getHome_team());
+	    if (awayPitcher != null) {
+	        GameLineUpDTO dto = new GameLineUpDTO();
+
+	        dto.setTeam("away");
+	        dto.setStarter(1);
+	        dto.setPosition("��������");
+	        dto.setPlayer_name(awayPitcher.getPlayer_name());
+	        dto.setPlayer_image(awayPitcher.getPlayer_image());
+
+	        lineupList.add(dto);
+	    }
+	    if (homePitcher != null) {
+	        GameLineUpDTO dto = new GameLineUpDTO();
+
+	        dto.setTeam("home");
+	        dto.setStarter(1);
+	        dto.setPosition("��������");
+	        dto.setPlayer_name(homePitcher.getPlayer_name());
+	        dto.setPlayer_image(homePitcher.getPlayer_image());
+
+	        lineupList.add(dto);
 	    }
 
-	    // 실제 경기 라인업 우선 조회
-	    List<GameLineUpDTO> result =
-	            gameLineUpDAO.selectByGameId(schedule.getNaver_game_id());
-
-	    // 실제 라인업이 있으면 기존 방식 그대로 반환
-	    if (result != null && !result.isEmpty()) {
-	        return result;
-	    }
-
-	    // 라인업이 없으면 빈 목록 반환
-	    // 구단별 투수 정보는 별도의 API에서 조회
-	    return java.util.Collections.emptyList();
+	    return lineupList;
 	}
 	
-	@ResponseBody
-	@RequestMapping("/teamPitcher")
-	public PlayerPitcherDTO teamPitcher(
-	        @RequestParam("teamName") String teamName) {
-
-	    List<PlayerPitcherDTO> list =
-	            playerPitcherDAO.selectByTeam(teamName);
-
-	    if (list == null || list.isEmpty()) {
-	        return null;
-	    }
-
-	    return list.get(0);
-	}
 }

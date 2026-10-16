@@ -15,6 +15,8 @@
 		window.opener.location.href = "/board/detail?seq=" + "${seq}";
 	} else if("${param.target_type}" == "댓글") {
 		window.opener.location.href = "/board/detail?seq=" + "${seq}";
+	} else if("${param.target_type}" == "대댓글") {
+		window.opener.location.href = "/board/detail?seq=" + "${seq}";
 	} else {
 		window.opener.location.href = "/schedule/scheduledetail?game_id=" + "${seq}";
 	}

@@ -1748,11 +1748,11 @@ body {
 				            <div class="player-image-wrap">
 							    <img class="player-photo"
 							         src="https://sports-phinf.pstatic.net/player/kbo/default/${player.player_id}.png"
-							         alt="${player.player_name}">
+							         alt="${player.player_name}" referrerpolicy="no-referrer">
 							
 							    <img class="player-team-logo"
 							         src="${pageContext.request.contextPath}${player.team_logo}"
-							         alt="${player.player_team}">
+							         alt="${player.player_team}" referrerpolicy="no-referrer">
 							</div>
 							
 							<span class="team">
@@ -1783,11 +1783,11 @@ body {
 				           <div class="player-image-wrap">
 							    <img class="player-photo"
 							         src="https://sports-phinf.pstatic.net/player/kbo/default/${player.player_id}.png"
-							         alt="${player.player_name}">
+							         alt="${player.player_name}" referrerpolicy="no-referrer">
 							
 							    <img class="player-team-logo"
 							         src="${pageContext.request.contextPath}${player.team_logo}"
-							         alt="${player.player_team}">
+							         alt="${player.player_team}" referrerpolicy="no-referrer">
 							
 							</div>
 							
@@ -2085,42 +2085,34 @@ body {
 
 
 <script>
-
 function showRanking(type, button) {
-
     document.getElementById("team-ranking").style.display = "none";
     document.getElementById("hitter-ranking").style.display = "none";
     document.getElementById("pitcher-ranking").style.display = "none";
 
-
-    if(type == "team") {
+    if (type == "team") {
         document.getElementById("team-ranking").style.display = "block";
-    }
-
-    else if(type == "hitter") {
+    } else if (type == "hitter") {
         document.getElementById("hitter-ranking").style.display = "block";
-    }
-
-    else if(type == "pitcher") {
+    } else if (type == "pitcher") {
         document.getElementById("pitcher-ranking").style.display = "block";
     }
 
-
-    // 기존 active 제거
     document.querySelectorAll(".record-tab").forEach(function(tab) {
         tab.classList.remove("active");
     });
 
-    // 클릭한 버튼에 active 추가
     button.classList.add("active");
 }
 
 const gameList = document.querySelector(".game-list");
 
-gameList.addEventListener("wheel", function(e) {
-    e.preventDefault();
-    gameList.scrollLeft += e.deltaY;
-});
+if (gameList) {
+    gameList.addEventListener("wheel", function(e) {
+        e.preventDefault();
+        gameList.scrollLeft += e.deltaY;
+    });
+}
 
 let selectedGame = null;
 
@@ -2129,7 +2121,6 @@ function showGame(gameId, date, team, time, place, awayLogo, homeLogo) {
 
     const gameInfo = document.getElementById("game-info");
 
-    // 같은 경기 다시 클릭하면 닫기
     if (selectedGame === String(gameId)) {
         gameInfo.classList.remove("show");
         selectedGame = null;
@@ -2138,20 +2129,17 @@ function showGame(gameId, date, team, time, place, awayLogo, homeLogo) {
 
     selectedGame = String(gameId);
 
-    // 경기 정보
     document.getElementById("info-date").innerText = date;
     document.getElementById("info-team").innerText = team;
     document.getElementById("info-time").innerText = time;
     document.getElementById("info-place").innerText = place;
 
-    // 팀 로고
     document.getElementById("away-pitcher-logo").src =
         "${pageContext.request.contextPath}" + awayLogo;
 
     document.getElementById("home-pitcher-logo").src =
         "${pageContext.request.contextPath}" + homeLogo;
 
-    // 기본값 초기화
     document.getElementById("away-pitcher-name").innerText = "선발 예정";
     document.getElementById("home-pitcher-name").innerText = "선발 예정";
 
@@ -2160,7 +2148,6 @@ function showGame(gameId, date, team, time, place, awayLogo, homeLogo) {
 
     gameInfo.classList.add("show");
 
-    // 기존 경기별 실제 라인업 먼저 조회
     fetch("${pageContext.request.contextPath}/schedule/pitchers?game_id="
             + encodeURIComponent(gameId))
         .then(response => {
@@ -2170,7 +2157,6 @@ function showGame(gameId, date, team, time, place, awayLogo, homeLogo) {
             return response.json();
         })
         .then(data => {
-            // 실제 선발 투수가 있는지 확인
             let hasAwayStarter = false;
             let hasHomeStarter = false;
 
@@ -2187,39 +2173,35 @@ function showGame(gameId, date, team, time, place, awayLogo, homeLogo) {
                         return;
                     }
 
-                    let photoUrl = "";
-
-                    if (player.player_image) {
-                        photoUrl =
-                            "${pageContext.request.contextPath}" +
-                            player.player_image;
-                    } else if (player.player_id) {
-                        photoUrl =
-                            "https://sports-phinf.pstatic.net/player/kbo/default/"
-                            + player.player_id + ".png";
-                    }
-
                     if (side === "away") {
                         document.getElementById("away-pitcher-name").innerText =
                             player.player_name || "선발 예정";
 
-                        document.getElementById("away-pitcher-photo").src =
-                            photoUrl;
+                        if (player.player_image) {
+                            document.getElementById("away-pitcher-photo").referrerPolicy =
+                                "no-referrer";
+                            document.getElementById("away-pitcher-photo").src =
+                                player.player_image;
+                        }
 
                         hasAwayStarter = true;
+
                     } else if (side === "home") {
                         document.getElementById("home-pitcher-name").innerText =
                             player.player_name || "선발 예정";
 
-                        document.getElementById("home-pitcher-photo").src =
-                            photoUrl;
+                        if (player.player_image) {
+                            document.getElementById("home-pitcher-photo").referrerPolicy =
+                                "no-referrer";
+                            document.getElementById("home-pitcher-photo").src =
+                                player.player_image;
+                        }
 
                         hasHomeStarter = true;
                     }
                 });
             }
 
-            // 실제 라인업에 원정팀 선발이 없으면 구단별 투수 조회
             const teams = team.split(" VS ");
 
             const awayTeam = teams[0] ? teams[0].trim() : "";
@@ -2308,8 +2290,6 @@ function openBooking(event, url) {
     );
 }
 
-/* KBO 구단 볼거리 슬라이더 */
-
 const contentTrack = document.querySelector(".content-track");
 const contentCards = document.querySelectorAll(".content-card");
 
@@ -2319,10 +2299,12 @@ const contentNext = document.querySelector(".next-btn");
 let contentIndex = 0;
 
 function moveContentSlider() {
+    if (!contentTrack || contentCards.length === 0) {
+        return;
+    }
 
     const cardWidth = contentCards[0].offsetWidth + 12;
-
-    const maxIndex = contentCards.length - 3;
+    const maxIndex = Math.max(0, contentCards.length - 3);
 
     if (contentIndex < 0) {
         contentIndex = 0;
@@ -2336,27 +2318,27 @@ function moveContentSlider() {
         "translateX(-" + (contentIndex * cardWidth) + "px)";
 }
 
-
-contentNext.addEventListener("click", function() {
-
-    contentIndex++;
-
-    moveContentSlider();
-
-});
-
-
-contentPrev.addEventListener("click", function() {
-
-    contentIndex--;
-
-    moveContentSlider();
-
-});
-document.querySelector(".more-btn").onclick = function () {
-    location.href = "${pageContext.request.contextPath}/schedule/schedule";
+if (contentNext) {
+    contentNext.addEventListener("click", function() {
+        contentIndex++;
+        moveContentSlider();
+    });
 }
 
+if (contentPrev) {
+    contentPrev.addEventListener("click", function() {
+        contentIndex--;
+        moveContentSlider();
+    });
+}
+
+const moreButton = document.querySelector(".more-btn");
+
+if (moreButton) {
+    moreButton.onclick = function() {
+        location.href = "${pageContext.request.contextPath}/schedule/schedule";
+    };
+}
 </script>
 
 </html>
