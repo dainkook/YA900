@@ -54,8 +54,6 @@ public class HomeController {
 		List<BoardDTO> recentBoards = boardDAO.getRecentBoards();
 		model.addAttribute("recentBoards", recentBoards);
 		
-		List<PlayerPitcherDTO> pitcherList = playerPitcherDAO.selectAll();
-		model.addAttribute("pitcherList", pitcherList);
 		predictionDAO.predictionUpdate();
 		
 		return "home";

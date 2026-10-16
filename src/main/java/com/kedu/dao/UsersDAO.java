@@ -65,9 +65,16 @@ public class UsersDAO {
       String sql= "select count(*) from users where id = ?";
       return jdbc.queryForObject(sql, Integer.class, id);
    }
+   
    public int emailCheck(String email) {
       String sql = "select count(*) from users where email =?";
       return jdbc.queryForObject(sql, Integer.class, email);
+   }
+   
+   public int phoneCheck(String phone) {
+	   String sql= "select count(*) from users where phone =?";
+	   
+	   return jdbc.queryForObject(sql, Integer.class, phone);
    }
 
    public String findUserId(String name, String email) {
@@ -86,9 +93,14 @@ public class UsersDAO {
       }
    }
    public UsersDTO findUserPw(String name, String id, String email) {
-      String sql= "select * from users where id=? and name=? and email=?";
-      return  jdbc.queryForObject(sql, new BeanPropertyRowMapper<>(UsersDTO.class), id,name,email);
-   }
+	    String sql = "select * from users where id=? and name=? and email=?";
+
+	    return jdbc.queryForObject(
+	        sql,
+	        new BeanPropertyRowMapper<>(UsersDTO.class),
+	        id, name, email
+	    );
+	}
    public int updatePw(String id, String newPw) {
       String sql = "update users set pw=? where id=?";
       return jdbc.update(sql, newPw, id);

@@ -1196,6 +1196,7 @@ nameInput.addEventListener("input", function(){
 
 });
 
+
 let phone1 = document.getElementById("phone1");
 let phone2 = document.getElementById("phone2");
 let phone3 = document.getElementById("phone3");
@@ -1204,29 +1205,96 @@ let phone1Regex = /^[0-9]{3}$/;
 let phone2Regex = /^[0-9]{4}$/;
 let phone3Regex = /^[0-9]{4}$/;
 
-function checkPhone(){
+let phoneCheckOk = false;
 
-   if(phone1.value === "" || phone2.value === "" || phone3.value === ""){
-      return;
-   }
 
-   if(!phone1Regex.test(phone1.value)){
-      return;
-   }
+function checkPhone() {
 
-   if(!phone2Regex.test(phone2.value)){
-      return;
-   }
+    phoneCheckOk = false;
 
-   if(!phone3Regex.test(phone3.value)){
-      return;
-   }
+    $("#phone-message").text("");
 
+   
+    if (
+        phone1.value === "" ||
+        phone2.value === "" ||
+        phone3.value === ""
+    ) {
+        return;
+    }
+
+  
+    if (
+        !phone1Regex.test(phone1.value) ||
+        !phone2Regex.test(phone2.value) ||
+        !phone3Regex.test(phone3.value)
+    ) {
+        $("#phone-message").text(
+            "휴대전화번호를 올바르게 입력해주세요."
+        );
+        return;
+    }
+
+   
+    let phone =
+        phone1.value + 
+        phone2.value + 
+        phone3.value;
+
+    $.ajax({
+
+        url: "${pageContext.request.contextPath}/phonecheck",
+        type: "POST",
+
+        data: {
+            phone: phone
+        },
+
+        success: function(result) {
+
+         
+            let currentPhone =
+                phone1.value + 
+                phone2.value + 
+                phone3.value;
+
+            if (currentPhone !== phone) {
+                return;
+            }
+
+            if (result == 0) {
+
+                $("#phone-message").text(
+                    "사용 가능한 전화번호입니다."
+                );
+
+                phoneCheckOk = true;
+
+            } else {
+
+                $("#phone-message").text(
+                    "이미 가입된 전화번호입니다."
+                );
+
+                phoneCheckOk = false;
+            }
+        },
+
+        error: function() {
+
+            $("#phone-message").text(
+                "전화번호 중복검사에 실패했습니다. 다시 입력해주세요."
+            );
+
+            phoneCheckOk = false;
+        }
+    });
 }
 
 phone1.addEventListener("input", checkPhone);
 phone2.addEventListener("input", checkPhone);
 phone3.addEventListener("input", checkPhone);
+
 
 let birthYear =
    document.getElementById("birth_year");

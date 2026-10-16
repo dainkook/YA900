@@ -457,7 +457,7 @@ $(function() {
         } else if (nameRegex.test(name.value)) {
 
             namemessage.textContent =
-                "사용 가능한 이름입니다.";
+                "올바른 형식의 이름입니다.";
 
         } else {
 
@@ -553,7 +553,9 @@ $(function() {
 
             data: {
 
-                email: email.value
+                email: email.value,
+                id: id.value,
+                name:name.value
 
             },
 
