@@ -1748,11 +1748,11 @@ body {
 				            <div class="player-image-wrap">
 							    <img class="player-photo"
 							         src="https://sports-phinf.pstatic.net/player/kbo/default/${player.player_id}.png"
-							         alt="${player.player_name}">
+							         alt="${player.player_name}" referrerpolicy="no-referrer">
 							
 							    <img class="player-team-logo"
 							         src="${pageContext.request.contextPath}${player.team_logo}"
-							         alt="${player.player_team}">
+							         alt="${player.player_team}" referrerpolicy="no-referrer">
 							</div>
 							
 							<span class="team">
@@ -1783,11 +1783,11 @@ body {
 				           <div class="player-image-wrap">
 							    <img class="player-photo"
 							         src="https://sports-phinf.pstatic.net/player/kbo/default/${player.player_id}.png"
-							         alt="${player.player_name}">
+							         alt="${player.player_name}" referrerpolicy="no-referrer">
 							
 							    <img class="player-team-logo"
 							         src="${pageContext.request.contextPath}${player.team_logo}"
-							         alt="${player.player_team}">
+							         alt="${player.player_team}" referrerpolicy="no-referrer">
 							
 							</div>
 							
@@ -2190,31 +2190,24 @@ function showGame(gameId, date, team, time, place, awayLogo, homeLogo) {
                     let photoUrl = "";
 
                     if (player.player_image) {
-                        photoUrl =
-                            "${pageContext.request.contextPath}" +
-                            player.player_image;
-                    } else if (player.player_id) {
-                        photoUrl =
-                            "https://sports-phinf.pstatic.net/player/kbo/default/"
-                            + player.player_id + ".png";
+                    	document.getElementById("away-pitcher-photo").referrerPolicy = "no-referrer";
+                    	document.getElementById("away-pitcher-photo").src = player.player_image;
+                            "${pageContext.request.contextPath}" + player.player_image;
                     }
 
-                    if (side === "away") {
-                        document.getElementById("away-pitcher-name").innerText =
-                            player.player_name || "선발 예정";
-
-                        document.getElementById("away-pitcher-photo").src =
-                            photoUrl;
+                } 
 
                         hasAwayStarter = true;
                     } else if (side === "home") {
                         document.getElementById("home-pitcher-name").innerText =
                             player.player_name || "선발 예정";
+                    document.getElementById("home-pitcher-name").innerText =
+                        player.player_name || "선발 예정";
 
-                        document.getElementById("home-pitcher-photo").src =
-                            photoUrl;
-
-                        hasHomeStarter = true;
+                    if (player.player_image) {
+                    	document.getElementById("home-pitcher-photo").referrerPolicy = "no-referrer";
+                    	document.getElementById("home-pitcher-photo").src = player.player_image;
+                            "${pageContext.request.contextPath}" + player.player_image;
                     }
                 });
             }

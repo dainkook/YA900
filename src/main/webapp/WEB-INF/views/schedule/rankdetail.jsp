@@ -925,7 +925,7 @@ body {
 									<td class="rank">${status.count}</td>
 									<td>
 										<div class="player-cell">
-											<img src="${player.player_image}" class="player-img"> <span>${player.player_name}</span>
+											<img src="${player.player_image}" class="player-img" referrerpolicy="no-referrer"> <span>${player.player_name}</span>
 										</div>
 									</td>
 
@@ -981,7 +981,7 @@ body {
 
 											<c:choose>
 												<c:when test="${not empty player.player_image}">
-													<img src="${player.player_image}" class="player-img">
+													<img src="${player.player_image}" class="player-img" referrerpolicy="no-referrer">
 												</c:when>
 
 												<c:otherwise>

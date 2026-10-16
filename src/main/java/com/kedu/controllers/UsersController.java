@@ -128,24 +128,44 @@ public class UsersController {
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String loginCheck(UsersDTO dto, HttpSession session) {
-
-        String hashedPw = EncryptionUtils.encryptSHA512(dto.getPw());
-
-        UsersDTO result = dao.login(dto.getId(), hashedPw);
-
-        if (result == null) {
-            return "redirect:/login";
-        }
-        if(result.getBlackList()==1) {
-        	return"redirect:/login";
-        }
-
-        session.setAttribute("id", result.getId());
-        session.setAttribute("team", result.getTeam());
-        return "redirect:/";
-    }
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public String loginCheck(
+	        UsersDTO dto,
+	        HttpSession session,
+	        @RequestParam(value = "fromBooking", required = false)
+	        String fromBooking) {
+	
+	    String hashedPw = EncryptionUtils.encryptSHA512(dto.getPw());
+	    UsersDTO result = dao.login(dto.getId(), hashedPw);
+	
+	    // 로그인 실패
+	    if (result == null) {
+	        if ("1".equals(fromBooking)) {
+	            return "redirect:/login?fromBooking=1";
+	        }
+	        return "redirect:/login";
+	    }
+	
+	    // 블랙리스트 회원
+	    if (result.getBlackList() == 1) {
+	        if ("1".equals(fromBooking)) {
+	            return "redirect:/login?fromBooking=1";
+	        }
+	        return "redirect:/login";
+	    }
+	
+	    // 로그인 성공: 기존 세션 처리 유지
+	    session.setAttribute("id", result.getId());
+	    session.setAttribute("team", result.getTeam());
+	
+	    // 예매 팝업에서 로그인한 경우
+	    if ("1".equals(fromBooking)) {
+	        return "member/loginSuccessPopup";
+	    }
+	
+	    // 일반 로그인은 기존처럼 메인페이지로
+	    return "redirect:/";
+	}
 
     @RequestMapping(value = "/idcheck", method = RequestMethod.POST)
     @ResponseBody
