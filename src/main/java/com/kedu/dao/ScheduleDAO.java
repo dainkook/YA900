@@ -116,11 +116,10 @@ public class ScheduleDAO {
 		try {
 			return jdbc.queryForObject(sql, String.class, teamId);
 		} catch (Exception e) {
-			return "��������";
+			return "占쏙옙占쏙옙占쏙옙占쏙옙";
 		}
 	}
 
-	// 메인 화면 경기 일정: 오늘부터 예정된 경기 5개
 	public List<ScheduleDTO> selectHomeSchedules() {
 
 	    String sql = "SELECT * "
@@ -172,8 +171,8 @@ public class ScheduleDAO {
 				+ "s.away_score, "
 				+ "CASE "
 				+ "WHEN s.end_date IS NOT NULL AND s.end_date <= SYSTIMESTAMP "
-				+ "THEN '�������' "
-				+ "ELSE '��⿹��' "
+				+ "THEN '占쏙옙占쏙옙占쏙옙占�' "
+				+ "ELSE '占쏙옙藪뱄옙占�' "
 				+ "END AS game_status, "
 				+ "h.team_name AS home_team, "
 				+ "a.team_name AS away_team, "
@@ -219,7 +218,6 @@ public class ScheduleDAO {
 	    );
 	}
 	
-	// 메인 화면 예매 영역: 현재 시각 이후 경기 5개
 	public List<ScheduleDTO> selectBookingSchedules() {
 
 	    String sql = "SELECT * "
