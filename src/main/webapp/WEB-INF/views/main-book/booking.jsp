@@ -532,10 +532,12 @@ body {
     width: 100%;
     height: 100vh;
 
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
 
     background: var(--bg);
 }
+
 
 .payment-title {
     height: 45px;
@@ -567,9 +569,10 @@ body {
 .payment-content {
     width: 650px;
 
-    margin: 18px auto;
-}
+    margin: 18px auto 25px;
 
+    padding-bottom: 10px;
+}
 
 /* =========================
    결제 박스
@@ -1567,10 +1570,14 @@ function goPayment() {
     document.querySelector(".game-info").style.display = "none";
     document.querySelector(".booking-content").style.display = "none";
 
-
+    
     // 결제 화면 표시
+    const paymentPage = document.getElementById("paymentPage");
 
-    document.getElementById("paymentPage").style.display = "block";
+    paymentPage.style.display = "block";
+
+    // 결제창을 열 때 항상 맨 위에서 시작
+    paymentPage.scrollTop = 0;
 
 }
 

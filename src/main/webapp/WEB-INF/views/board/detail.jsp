@@ -1002,8 +1002,16 @@ body {
 				<a href="#">축구</a>
 
 				<div class="sub-menu">
+<<<<<<< HEAD
 					<a href="#">예매</a> <a href="#">경기일정</a> <a href="#">팀순위</a> <a
 						href="#">선수순위</a> <a href="#">게시판</a>
+=======
+					<a href="${pageContext.request.contextPath}/schedule/soccercommingsoon">예매</a> 
+					<a href="${pageContext.request.contextPath}/schedule/soccercommingsoon">경기일정</a> 
+					<a href="${pageContext.request.contextPath}/schedule/soccercommingsoon">팀순위</a> 
+					<a href="${pageContext.request.contextPath}/schedule/soccercommingsoon">선수순위</a> 
+					<a href="${pageContext.request.contextPath}/schedule/soccercommingsoon">게시판</a>
+>>>>>>> 0adc3e05b5b58be4a054f4601ae5a5be27fd44fc
 				</div>
 			</div>
 

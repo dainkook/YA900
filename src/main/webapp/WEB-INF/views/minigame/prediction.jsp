@@ -806,11 +806,11 @@ tbody tr:hover {
 				<a href="#">축구</a>
 
 				<div class="sub-menu">
-					<a href="#">예매</a> 
-					<a href="#">경기일정</a> 
-					<a href="#">팀순위</a> 
-					<a href="#">선수순위</a> 
-					<a href="#">게시판</a>
+					<a href="${pageContext.request.contextPath}/schedule/soccercommingsoon">예매</a> 
+					<a href="${pageContext.request.contextPath}/schedule/soccercommingsoon">경기일정</a> 
+					<a href="${pageContext.request.contextPath}/schedule/soccercommingsoon">팀순위</a> 
+					<a href="${pageContext.request.contextPath}/schedule/soccercommingsoon">선수순위</a> 
+					<a href="${pageContext.request.contextPath}/schedule/soccercommingsoon">게시판</a>
 				</div>
 			</div>
 
@@ -1202,6 +1202,14 @@ tbody tr:hover {
 
 		// 예측 저장
 		$(".save-btn").on("click", function() {
+
+		    // 비로그인 상태 확인
+		    if ("${empty sessionScope.id}" === "true") {
+		        alert("로그인이 필요한 서비스입니다.");
+		        location.href = "${pageContext.request.contextPath}/login";
+		        return;
+		    }
+
 		    const ids = Object.keys(myPredictions);
 
 		    if (ids.length === 0) {
