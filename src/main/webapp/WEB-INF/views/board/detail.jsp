@@ -902,7 +902,6 @@ body {
 	<div class="container">
 		<div class="page-heading">
 			<div class="heading-text">
-				<h2>자유게시판</h2>
 			</div>
 			<div class="category">COMMUNITY / DETAIL</div>
 		</div>
