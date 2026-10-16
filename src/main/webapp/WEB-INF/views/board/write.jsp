@@ -829,6 +829,9 @@ body {
 	</div>
 
 	<script>
+	let uploadedImages = [];
+	let isSubmitting = false;
+
 	$("#contents").summernote({
 	    height: 400,
 	    lang: "ko-KR",
@@ -844,6 +847,31 @@ body {
 	    callbacks: {
 	        onImageUpload: function(files) {
 	            uploadImage(files[0]);
+	        },
+	        onMediaDelete: function(target) {
+	            let imageUrl = target.attr("src");
+
+	            if (uploadedImages.includes(imageUrl)) {
+	                $.ajax({
+	                    url: "${pageContext.request.contextPath}/board/deleteImage",
+	                    type: "POST",
+	                    data: {
+	                        imageUrl: imageUrl
+	                    },
+	                    success: function(result) {
+	                        if (result.success) {
+	                            uploadedImages = uploadedImages.filter(function(url) {
+	                                return url != imageUrl;
+	                            });
+	                        } else {
+	                            alert("이미지 파일 삭제에 실패했습니다.");
+	                        }
+	                    },
+	                    error: function() {
+	                        alert("이미지 파일 삭제 요청에 실패했습니다.");
+	                    }
+	                });
+	            }
 	        }
 	    }
 	});
@@ -853,7 +881,7 @@ body {
 	    formData.append("file", file);
 
 	    $.ajax({
-	        url: "/board/uploadImage",
+	        url: "${pageContext.request.contextPath}/board/uploadImage",
 	        type: "POST",
 	        data: formData,
 	        processData: false,
@@ -861,12 +889,31 @@ body {
 	        success: function(result) {
 	            if (result.url) {
 	                $("#contents").summernote("insertImage", result.url);
+	                uploadedImages.push(result.url);
 	            } else {
-	                alert(result.error);
+	                alert(result.error || "이미지 업로드에 실패했습니다.");
 	            }
+	        },
+	        error: function() {
+	            alert("이미지 업로드 요청에 실패했습니다.");
 	        }
 	    });
 	}
+	window.addEventListener("pagehide", function() {
+	    if (isSubmitting) {
+	        return;
+	    }
+
+	    uploadedImages.forEach(function(imageUrl) {
+	        let formData = new URLSearchParams();
+	        formData.append("imageUrl", imageUrl);
+
+	        navigator.sendBeacon(
+	            "${pageContext.request.contextPath}/board/deleteImage",
+	            formData
+	        );
+	    });
+	});
 
 	$(".board-option").on("click", function() {
 	    $(".board-option").removeClass("selected");
@@ -925,7 +972,7 @@ body {
 	        alert("게시글은 1000자까지 작성할 수 있습니다.");
 	        return;
 	    }
-
+	    isSubmitting = true;
 	    $("#titleSubmit").val(title);
 	    $("#contentSubmit").val(contents);
 	});
