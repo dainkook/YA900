@@ -15,7 +15,6 @@ public class TicketDAO {
     @Autowired
     private JdbcTemplate jdbc;
 
-    // 해당 경기의 전체 티켓(좌석) 조회
     public List<TicketDTO> selectByGameId(int game_id) {
 
         String sql = "SELECT "
@@ -27,10 +26,6 @@ public class TicketDAO {
                 + "WHERE game_id = ? "
                 + "ORDER BY ticket_id";
 
-        return jdbc.query(
-                sql,
-                new BeanPropertyRowMapper<>(TicketDTO.class),
-                game_id
-        );
+        return jdbc.query(sql, new BeanPropertyRowMapper<>(TicketDTO.class), game_id);
     }
 }

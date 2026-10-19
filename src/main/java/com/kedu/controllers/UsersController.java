@@ -190,7 +190,7 @@ public String loginCheck(UsersDTO dto,HttpSession session,Model model,@RequestPa
         Boolean verified = (Boolean) session.getAttribute("emailVerified");
 
         if (verified == null || !verified) {
-            model.addAttribute("message", "�씠硫붿씪 �씤利앹쓣 �셿猷뚰빐二쇱꽭�슂.");
+            model.addAttribute("message", "이메일 인증을 완료해주세요.");
             return "member/finduserid";
         }
 
@@ -199,7 +199,7 @@ public String loginCheck(UsersDTO dto,HttpSession session,Model model,@RequestPa
         model.addAttribute("id", id);
 
         if (id == null) {
-            model.addAttribute("message", "�씪移섑븯�뒗 �쉶�썝 �젙蹂대�� 李얠쓣 �닔 �뾾�뒿�땲�떎.");
+            model.addAttribute("message", "일치하는 회원 정보를 찾을 수 없습니다.");
         }
 
         session.removeAttribute("emailVerified");

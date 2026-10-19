@@ -117,7 +117,7 @@ public class ScheduleDAO {
 		try {
 			return jdbc.queryForObject(sql, String.class, teamId);
 		} catch (Exception e) {
-			return "�뜝�룞�삕�뜝�룞�삕�뜝�룞�삕�뜝�룞�삕";
+			return "조회 실패";
 		}
 	}
 
@@ -172,8 +172,8 @@ public class ScheduleDAO {
 				+ "s.away_score, "
 				+ "CASE "
 				+ "WHEN s.end_date IS NOT NULL AND s.end_date <= SYSTIMESTAMP "
-				+ "THEN '�뜝�룞�삕�뜝�룞�삕�뜝�룞�삕�뜝占�' "
-				+ "ELSE '�뜝�룞�삕�뿪諭꾩삕�뜝占�' "
+				+ "THEN '승리' "
+				+ "ELSE '패배' "
 				+ "END AS game_status, "
 				+ "h.team_name AS home_team, "
 				+ "a.team_name AS away_team, "
@@ -269,7 +269,7 @@ public class ScheduleDAO {
 	        "JOIN player p " +
 	        "ON p.player_id = gl.player_id " +
 	        "WHERE s.game_id = ? " +
-	        "AND gl.position = '�꽑諛쒗닾�닔' " +
+	        "AND gl.position = '선발투수' " +
 	        "AND gl.starter = 1 " +
 	        "ORDER BY CASE gl.team " +
 	        "WHEN 'away' THEN 1 " +

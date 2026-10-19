@@ -1013,10 +1013,6 @@ tbody tr:hover {
                 </c:otherwise>
 					</c:choose>
 				</div>
-
-				<button type="button" class="btn"
-					onclick="location.href='${pageContext.request.contextPath}/quiz/pointHistory'">
-					포인트 내역</button>
 			</section>
 
 		</div>

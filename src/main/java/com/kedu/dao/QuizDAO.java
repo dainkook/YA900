@@ -44,7 +44,7 @@ public class QuizDAO {
             final List<String> userAnswers) {
 
         if (memberId == null || memberId.trim().isEmpty()) {
-            throw new IllegalArgumentException("�쉶�썝 ID媛� �뾾�뒿�땲�떎.");
+            throw new IllegalArgumentException("회원 ID가 필요합니다.");
         }
 
         if (quizIds == null || userAnswers == null
@@ -53,7 +53,7 @@ public class QuizDAO {
                 || quizIds.size() > 10) {
 
             throw new IllegalArgumentException(
-                    "�댁쫰 �뜲�씠�꽣媛� �삱諛붾Ⅴ吏� �븡�뒿�땲�떎.");
+                    "퀴즈 목록과 답변을 확인해 주세요.");
         }
 
         Set<Integer> uniqueQuizIds = new HashSet<Integer>();
@@ -63,7 +63,7 @@ public class QuizDAO {
                     || !uniqueQuizIds.add(quizId)) {
 
                 throw new IllegalArgumentException(
-                        "�댁쫰 ID媛� �삱諛붾Ⅴ吏� �븡�뒿�땲�떎.");
+                        "퀴즈 ID를 확인해 주세요.");
             }
         }
 
@@ -72,7 +72,7 @@ public class QuizDAO {
                     && !"X".equals(userAnswer)) {
 
                 throw new IllegalArgumentException(
-                        "�옒紐삳맂 �떟蹂��엯�땲�떎.");
+                        "답변은 O 또는 X로 입력해주세요.");
             }
         }
 
@@ -98,9 +98,7 @@ public class QuizDAO {
                                      answerPstmt.executeQuery()) {
 
                             if (!rs.next()) {
-                                throw new SQLException(
-                                        "議댁옱�븯吏� �븡�뒗 �댁쫰 ID: "
-                                        + quizIds.get(i));
+                                throw new SQLException("존재하지 않는 퀴즈 ID : " + quizIds.get(i));
                             }
 
                             String correctAnswer =
@@ -125,8 +123,7 @@ public class QuizDAO {
                      ResultSet rs = seqPstmt.executeQuery()) {
 
                     if (!rs.next()) {
-                        throw new SQLException(
-                                "寃곌낵 踰덊샇 諛쒓툒�뿉 �떎�뙣�뻽�뒿�땲�떎.");
+                        throw new SQLException("퀴즈 결과 ID를 생성하지 못했습니다.");
                     }
 
                     resultId = rs.getInt(1);
@@ -175,8 +172,7 @@ public class QuizDAO {
                                      detailSeqPstmt.executeQuery()) {
 
                             if (!rs.next()) {
-                                throw new SQLException(
-                                        "�긽�꽭 踰덊샇 諛쒓툒�뿉 �떎�뙣�뻽�뒿�땲�떎.");
+                                throw new SQLException("퀴즈 상세 ID를 생성하지 못했습니다.");
                             }
 
                             detailId = rs.getInt(1);
@@ -195,8 +191,7 @@ public class QuizDAO {
                                          answerPstmt.executeQuery()) {
 
                                 if (!rs.next()) {
-                                    throw new SQLException(
-                                            "�댁쫰瑜� 李얠쓣 �닔 �뾾�뒿�땲�떎.");
+                                    throw new SQLException("퀴즈 정답을 찾을 수 없습니다.");
                                 }
 
                                 correctAnswer =

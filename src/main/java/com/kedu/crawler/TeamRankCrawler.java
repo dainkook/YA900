@@ -19,43 +19,28 @@ public class TeamRankCrawler {
 
     public static void main(String[] args) {
 
-        ApplicationContext context =
-                new FileSystemXmlApplicationContext(
-                        "src/main/webapp/WEB-INF/spring/root-context.xml"
-                );
+        ApplicationContext context = new FileSystemXmlApplicationContext(
+                "src/main/webapp/WEB-INF/spring/root-context.xml");
 
-        TeamRankDAO dao =
-                context.getBean(TeamRankDAO.class);
+        TeamRankDAO dao = context.getBean(TeamRankDAO.class);
 
         try {
-
-            String urlString =
-                    "https://api-gw.sports.naver.com/statistics/categories/kbo/seasons/2026/teams?gameType=REGULAR_SEASON";
+            String urlString = "https://api-gw.sports.naver.com/statistics/categories/kbo/seasons/2026/teams?gameType=REGULAR_SEASON";
 
             URL url = new URL(urlString);
-
-            HttpURLConnection conn =
-                    (HttpURLConnection) url.openConnection();
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
             conn.setRequestMethod("GET");
             conn.setRequestProperty("User-Agent", "Mozilla/5.0");
             conn.setRequestProperty("Accept", "application/json");
 
             int responseCode = conn.getResponseCode();
-
             System.out.println("응답 코드 : " + responseCode);
 
-            BufferedReader br =
-                    new BufferedReader(
-                            new InputStreamReader(
-                                    conn.getInputStream(),
-                                    "UTF-8"
-                            )
-                    );
+            BufferedReader br = new BufferedReader(
+                    new InputStreamReader(conn.getInputStream(), "UTF-8"));
 
-            StringBuilder responseBody =
-                    new StringBuilder();
-
+            StringBuilder responseBody = new StringBuilder();
             String line;
 
             while ((line = br.readLine()) != null) {
@@ -65,106 +50,29 @@ public class TeamRankCrawler {
             br.close();
 
             JSONParser parser = new JSONParser();
-
-            JSONObject root =
-                    (JSONObject) parser.parse(
-                            responseBody.toString()
-                    );
-
-            JSONObject result =
-                    (JSONObject) root.get("result");
-
-            JSONArray teams =
-                    (JSONArray) result.get("seasonTeamStats");
+            JSONObject root = (JSONObject) parser.parse(responseBody.toString());
+            JSONObject result = (JSONObject) root.get("result");
+            JSONArray teams = (JSONArray) result.get("seasonTeamStats");
 
             System.out.println("팀 수 : " + teams.size());
 
             for (Object obj : teams) {
+                JSONObject team = (JSONObject) obj;
+                TeamRankDTO dto = new TeamRankDTO();
 
-                JSONObject team =
-                        (JSONObject) obj;
-
-                TeamRankDTO dto =
-                        new TeamRankDTO();
-
-                String teamName =
-                        (String) team.get("teamName");
-
+                String teamName = (String) team.get("teamName");
                 dto.setTeam_name(teamName);
+                dto.setTeam_id(dao.findTeamId(teamName));
 
-                dto.setTeam_id(
-                        dao.findTeamId(teamName)
-                );
-
-                dto.setWin_rate(
-                        Double.parseDouble(
-                                String.valueOf(
-                                        team.get("wra")
-                                )
-                        )
-                );
-
-                dto.setGames_behind(
-                        Double.parseDouble(
-                                String.valueOf(
-                                        team.get("gameBehind")
-                                )
-                        )
-                );
-
-                dto.setGames(
-                        Integer.parseInt(
-                                String.valueOf(
-                                        team.get("gameCount")
-                                )
-                        )
-                );
-
-                dto.setWins(
-                        Integer.parseInt(
-                                String.valueOf(
-                                        team.get("winGameCount")
-                                )
-                        )
-                );
-
-                dto.setLosses(
-                        Integer.parseInt(
-                                String.valueOf(
-                                        team.get("loseGameCount")
-                                )
-                        )
-                );
-
-                dto.setDraws(
-                        Integer.parseInt(
-                                String.valueOf(
-                                        team.get("drawnGameCount")
-                                )
-                        )
-                );
-
-                dto.setWinning_streak(
-                        String.valueOf(
-                                team.get("continuousGameResult")
-                        )
-                );
-
-                dto.setBatting_avg(
-                        Double.parseDouble(
-                                String.valueOf(
-                                        team.get("offenseHra")
-                                )
-                        )
-                );
-
-                dto.setEra(
-                        Double.parseDouble(
-                                String.valueOf(
-                                        team.get("defenseEra")
-                                )
-                        )
-                );
+                dto.setWin_rate(Double.parseDouble(String.valueOf(team.get("wra"))));
+                dto.setGames_behind(Double.parseDouble(String.valueOf(team.get("gameBehind"))));
+                dto.setGames(Integer.parseInt(String.valueOf(team.get("gameCount"))));
+                dto.setWins(Integer.parseInt(String.valueOf(team.get("winGameCount"))));
+                dto.setLosses(Integer.parseInt(String.valueOf(team.get("loseGameCount"))));
+                dto.setDraws(Integer.parseInt(String.valueOf(team.get("drawnGameCount"))));
+                dto.setWinning_streak(String.valueOf(team.get("continuousGameResult")));
+                dto.setBatting_avg(Double.parseDouble(String.valueOf(team.get("offenseHra"))));
+                dto.setEra(Double.parseDouble(String.valueOf(team.get("defenseEra"))));
 
                 System.out.println(
                         dto.getTeam_name()
@@ -183,7 +91,6 @@ public class TeamRankCrawler {
             }
 
             System.out.println("팀 순위 크롤링 완료");
-
             conn.disconnect();
 
         } catch (Exception e) {

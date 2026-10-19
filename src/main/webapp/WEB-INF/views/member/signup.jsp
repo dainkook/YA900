@@ -977,9 +977,6 @@ let phone3Regex = /^[0-9]{4}$/;
 
 let idCheckOk = false;
 
-let idRegex =
-   /^[가-힣A-Za-z0-9]{6,12}$/;
-
 $("#id-check").on("click", function(){
 
    let id = $("#id").val();
@@ -1049,9 +1046,6 @@ $("#id").on("input", function(){
 });
 
 let emailCheckOk = false;
-
-let emailRegex =
-   /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
 $("#email-check").on("click", function(){
 
@@ -1130,9 +1124,6 @@ let pw_check =
 let pw_message =
    document.getElementById("pw-message");
 
-let pwRegex =
-   /^(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/;
-
 pw.addEventListener("input", function(){
 
    let password = pw.value;
@@ -1185,9 +1176,6 @@ let nameInput =
 let nameMessage =
    document.getElementById("name-message");
 
-let nameRegex =
-   /^[가-힣]{2,5}$/;
-
 nameInput.addEventListener("input", function(){
 
    if(nameInput.value === ""){
@@ -1214,10 +1202,6 @@ nameInput.addEventListener("input", function(){
 let phone1 = document.getElementById("phone1");
 let phone2 = document.getElementById("phone2");
 let phone3 = document.getElementById("phone3");
-
-let phone1Regex = /^[0-9]{3}$/;
-let phone2Regex = /^[0-9]{4}$/;
-let phone3Regex = /^[0-9]{4}$/;
 
 let phoneCheckOk = false;
 

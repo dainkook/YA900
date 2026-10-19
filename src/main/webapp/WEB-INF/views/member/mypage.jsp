@@ -954,7 +954,7 @@ button:disabled {
 
             <!-- 휴대전화번호: 정규표현식 검사 -->
             <div class="info-row">
-                <div class="info-title">휴대전화번호</div>
+                <div class="info-title">전화번호</div>
                 <div class="info-content">
                     <div class="view-mode">${user.phone}</div>
 
@@ -963,7 +963,7 @@ button:disabled {
                             class="edit-input"
                             id="phone"
                             value="${user.phone}"
-                            placeholder="010-1234-5678"
+                            placeholder="01012345678"
                             autocomplete="tel">
 
                         <div id="phone-message" class="validation-message"></div>
@@ -1183,7 +1183,7 @@ button:disabled {
 
 <script>
 // 정규표현식은 한 번만 선언해서 실시간 검사와 저장 검사에서 공통으로 사용
-const phoneRegex = /^01[016789]-?\d{3,4}-?\d{4}$/;
+const phoneRegex = /^010-?\d{4}-?\d{4}$/;
 const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
 $(document).ready(function() {
@@ -1255,7 +1255,7 @@ $(document).ready(function() {
             showValidation(
                 "#phone",
                 "#phone-message",
-                "형식이 올바르지 않습니다. 예: 010-1234-5678",
+                "형식이 올바르지 않습니다. 예: 01012345678",
                 false
             );
         }
@@ -1397,7 +1397,7 @@ function updateUser() {
         showValidation(
             "#phone",
             "#phone-message",
-            "형식이 올바르지 않습니다. 예: 010-1234-5678",
+            "형식이 올바르지 않습니다. 예: 01012345678",
             false
         );
 

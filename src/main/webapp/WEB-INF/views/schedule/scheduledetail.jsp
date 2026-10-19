@@ -1581,7 +1581,7 @@ body {
 
 															<div class="lineup-player">
 																<img src="${lineup.player_image}"
-																	class="lineup-player-image" alt="${lineup.player_name}">
+																	class="lineup-player-image" alt="${lineup.player_name}" referrerpolicy="no-referrer">
 																<span class="lineup-player-name">${lineup.player_name}</span>
 															</div>
 														</c:if>
@@ -1608,7 +1608,7 @@ body {
 
 															<div class="lineup-player">
 																<img src="${lineup.player_image}"
-																	class="lineup-player-image" alt="${lineup.player_name}">
+																	class="lineup-player-image" alt="${lineup.player_name}" referrerpolicy="no-referrer">
 																<span class="lineup-player-name">${lineup.player_name}</span>
 															</div>
 														</c:if>

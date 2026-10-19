@@ -14,24 +14,25 @@ public class EmailService {
 
         try {
 
-            // mail.properties 읽기
             Properties props = new Properties();
 
             InputStream input =
                     getClass().getClassLoader().getResourceAsStream("mail.properties");
 
-            props.load(input);
-            
+            if (input == null) {
+                throw new IllegalStateException("mail.properties 파일을 찾을 수 없습니다.");
+            }
 
-            // 이메일과 비밀번호 가져오기
+            
+            props.load(input);
+            input.close();
+
             String username =
                     props.getProperty("mail.username");
 
             String password =
                     props.getProperty("mail.password");
-
-
-            // 메일 서버 설정
+           
             JavaMailSenderImpl mailSender =
                     new JavaMailSenderImpl();
 
@@ -42,27 +43,28 @@ public class EmailService {
             mailSender.setPassword(password);
 
 
-            // SMTP 설정
-            Properties mailProperties =
-                    mailSender.getJavaMailProperties();
+     
+            Properties mailProperties = mailSender.getJavaMailProperties();
 
             mailProperties.put("mail.smtp.auth", "true");
             mailProperties.put(
                     "mail.smtp.starttls.enable",
                     "true"
             );
+     
+            SimpleMailMessage message = new SimpleMailMessage();
 
-
-            // 이메일 내용
-            SimpleMailMessage message =
-                    new SimpleMailMessage();
-
+            message.setFrom(username);
             message.setTo(to);
-            message.setSubject(subject);
-            message.setText(text);
+            message.setSubject("[YA900] 이메일 인증 안내");
+            message.setText(
+                "안녕하세요. YA900입니다.\n\n"
+                + text + "\n\n"
+                + "본인이 요청하지 않은 메일이라면 무시하셔도 됩니다.\n"
+                + "감사합니다.\n"
+                + "YA900 팀 드림"
+            );
 
-
-            // 이메일 전송
             mailSender.send(message);
 
         } catch (Exception e) {
